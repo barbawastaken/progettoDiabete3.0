@@ -87,7 +87,7 @@ public class LoginFrame extends Application {
                             if(accessSet.getString("password").equals(passwordField.getText())){
 
                                 if(accessSet.getString("userType").equals("PAZIENTE")){
-                                    PazienteFrame frame = new PazienteFrame();
+                                    PazienteFrame frame = new PazienteFrame(usernameField.getText());
                                     frame.start(Loginstage);
                                 } else if(accessSet.getString("userType").equals("DIABETOLOGO")){
                                     DiabetologoFrame frame = new DiabetologoFrame();
