@@ -5,11 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -28,8 +24,7 @@ public class AggiungiUtenteFrame extends Application {
         Stage addUser = new Stage();
         addUser.setTitle("Aggiungi Utente");
 
-        VBox vbox = new VBox();
-        Scene scene = new Scene(vbox, 320, 240);
+
         Group group = new Group();
 
 
@@ -57,15 +52,15 @@ public class AggiungiUtenteFrame extends Application {
 
         Button resetButton = new Button("Reset");
         resetButton.setLayoutX(70);
-        resetButton.setLayoutY(210);
+        resetButton.setLayoutY(310);
         resetButton.setOnAction(buttonPressed -> {
             usernameField.setText("");
             passwordField.setText("");
         });
 
         Button sendButton = new Button("Aggiungi Utente");
-        sendButton.setLayoutX(90);
-        sendButton.setLayoutY(210);
+        sendButton.setLayoutX(140);
+        sendButton.setLayoutY(310);
 
         sendButton.setOnAction(new EventHandler<>() {
             public void handle(ActionEvent buttonPressed) {
@@ -75,7 +70,7 @@ public class AggiungiUtenteFrame extends Application {
                     PreparedStatement pstmt = conn.prepareStatement(query);
                     pstmt.setString(1, usernameField.getText());
                     pstmt.setString(2, passwordField.getText());
-                    pstmt.setString(3, "admin");
+                    pstmt.setString(3, "AMMINISTRATORE");
                     pstmt.executeUpdate();
                     System.out.println("Dati inseriti");
 
@@ -86,11 +81,24 @@ public class AggiungiUtenteFrame extends Application {
                 }
             }
         });
+        ToggleGroup toggleGroup = new ToggleGroup();
 
-        vbox.getChildren().add(group);
-        vbox.getChildren().add(resetButton);
-        vbox.getChildren().add(sendButton);
+        RadioButton admin = new RadioButton("AMMINISTRATORE");
+        RadioButton diab = new RadioButton("DIABETOLOGO");
+        RadioButton utente = new RadioButton("PAZIENTE");
+
+        admin.setToggleGroup(toggleGroup);
+        diab.setToggleGroup(toggleGroup);
+        utente.setToggleGroup(toggleGroup);
+
+        //group.getChildren().add(toggleGroup);         //ancora non worka quindi commentiamo
+
+
+        group.getChildren().add(resetButton);
+        group.getChildren().add(sendButton);
+        Scene scene = new Scene(group, 320, 240);
         stage.setScene(scene);
+
         stage.setTitle("Aggiungi Utente");
         stage.show();
 

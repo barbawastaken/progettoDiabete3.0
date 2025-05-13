@@ -19,10 +19,10 @@ public class AmministratoreFrame extends Application {
 
     @Override
     public void start(Stage loginStage) {
-
-        Stage amministratoreStage = new Stage();
-        VBox vBox = new VBox();
         Group group = new Group();
+        Stage amministratoreStage = new Stage();
+
+
 
         Button addUser = new Button("Aggiungi un nuovo utente");            //Creo il bottone che aprirà AggiungiUtenteFrame e che mi farà inserire un utente
         addUser.setOnAction(e -> {
@@ -40,9 +40,8 @@ public class AmministratoreFrame extends Application {
         addUser.setLayoutY(210);
 
         group.getChildren().add(addUser); //Aggiungo il bottone a "group"
-        vBox.getChildren().add(group);      //Aggiungo il group a vBox
 
-        Scene scene = new Scene(vBox);      //Metto nella scena "scene" vBox
+        Scene scene = new Scene(group);      //Metto nella scena "scene" vBox
 
         amministratoreStage.setScene(scene);    //Metto nello stage "scene"
         amministratoreStage.setHeight(loginStage.getHeight());
