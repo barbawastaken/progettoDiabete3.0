@@ -1,22 +1,24 @@
-package HomePages;
+package controller;
 
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import model.DiabetologoModel;
+import view.DiabetologoView;
 import javafx.stage.Stage;
 
-public class DiabetologoFrame extends Application {
+public class DiabetologoController {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private DiabetologoModel diabetologoModel;
+    private DiabetologoView diabetologoView;
 
-    @Override
-    public void start(Stage loginStage) {
+    public DiabetologoController(DiabetologoModel diabetologoModel, DiabetologoView diabetologoView, Stage loginStage){
+
+        this.diabetologoModel = diabetologoModel;
+        this.diabetologoView = diabetologoView;
 
         Stage diabetologoStage = new Stage();
-        diabetologoStage.setScene(new Scene(new HBox(new Group())));
+        diabetologoStage.setScene(diabetologoView.getScene());
         diabetologoStage.setHeight(loginStage.getHeight());
         diabetologoStage.setWidth(loginStage.getWidth());
         diabetologoStage.setX(loginStage.getX());
@@ -27,6 +29,6 @@ public class DiabetologoFrame extends Application {
         diabetologoStage.setTitle("Homepage diabetologo");
         loginStage.close();
         diabetologoStage.show();
-
     }
+
 }
