@@ -6,9 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.AmministratoreModel;
 import model.DiabetologoModel;
 import model.LoginModel;
 import model.PazienteModel;
+import view.AmministratoreView;
 import view.DiabetologoView;
 import view.LoginView;
 import view.PazienteView;
@@ -48,17 +50,19 @@ public class LoginController {
 
                             switch (userType) {
                                 case "PAZIENTE" -> {
-                                    PazienteModel pm = new PazienteModel();
-                                    PazienteView pv = new PazienteView();
-                                    new PazienteController(pm, pv, stage);
+                                    PazienteModel model = new PazienteModel();
+                                    PazienteView view = new PazienteView();
+                                    new PazienteController(model, view, stage);
                                 }
                                 case "DIABETOLOGO" -> {
-                                    DiabetologoModel dm = new DiabetologoModel();
-                                    DiabetologoView dv = new DiabetologoView();
-                                    new DiabetologoController(dm, dv, stage);
+                                    DiabetologoModel model = new DiabetologoModel();
+                                    DiabetologoView view = new DiabetologoView();
+                                    new DiabetologoController(model, view, stage);
                                 }
                                 case "AMMINISTRATORE" -> {
-                                    new HomePages.AmministratoreFrame().start(stage);
+                                    AmministratoreModel model = new AmministratoreModel();
+                                    AmministratoreView view = new AmministratoreView();
+                                    new AmministratoreController(model, view, stage);
                                 }
                             }
                             return;
