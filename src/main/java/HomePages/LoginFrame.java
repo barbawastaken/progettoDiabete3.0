@@ -1,5 +1,7 @@
 package HomePages;
 
+import controller.DiabetologoController;
+import controller.PazienteController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +16,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.DiabetologoModel;
+import model.PazienteModel;
+import view.DiabetologoView;
+import view.PazienteView;
+
 import java.io.IOException;
 import java.sql.*;
 
@@ -87,11 +94,21 @@ public class LoginFrame extends Application {
                             if(accessSet.getString("password").equals(passwordField.getText())){
 
                                 if(accessSet.getString("userType").equals("PAZIENTE")){
-                                    PazienteFrame frame = new PazienteFrame();
-                                    frame.start(Loginstage);
+
+                                    PazienteModel model = new PazienteModel();
+                                    PazienteView view = new PazienteView();
+                                    new PazienteController(model, view, Loginstage);
+
+                                    /*PazienteFrame frame = new PazienteFrame();
+                                    frame.start(Loginstage);*/
                                 } else if(accessSet.getString("userType").equals("DIABETOLOGO")){
-                                    DiabetologoFrame frame = new DiabetologoFrame();
-                                    frame.start(Loginstage);
+                                   /* DiabetologoFrame frame = new DiabetologoFrame();
+                                    frame.start(Loginstage);*/
+
+                                    DiabetologoModel model = new DiabetologoModel();
+                                    DiabetologoView view = new DiabetologoView();
+                                    new DiabetologoController(model, view, Loginstage);
+
                                 } else if(accessSet.getString("userType").equals("AMMINISTRATORE")){
                                     AmministratoreFrame frame = new AmministratoreFrame();
                                     frame.start(Loginstage);
