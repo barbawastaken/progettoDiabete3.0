@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LoginView {
-    private final TextField usernameField = new TextField();
+    private final TextField taxCodeField = new TextField();
     private final PasswordField passwordField = new PasswordField();
     private final Button accessButton = new Button("Accedi");
     private final Button resetButton = new Button("Reset");
@@ -22,13 +22,13 @@ public class LoginView {
         HBox hbox = new HBox();
         Scene scene = new Scene(hbox, 320, 240);
 
-        Text usernameText = new Text("Username");
-        usernameText.setX(70);
-        usernameText.setY(70);
-        usernameText.setFont(Font.font(16));
+        Text taxCodeText = new Text("Username");
+        taxCodeText.setX(70);
+        taxCodeText.setY(70);
+        taxCodeText.setFont(Font.font(16));
 
-        usernameField.setLayoutX(70);
-        usernameField.setLayoutY(80);
+        taxCodeField.setLayoutX(70);
+        taxCodeField.setLayoutY(80);
 
         Text passwordText = new Text("Password");
         passwordText.setX(70);
@@ -44,7 +44,7 @@ public class LoginView {
         accessButton.setLayoutX(160);
         accessButton.setLayoutY(210);
 
-        group.getChildren().addAll(usernameText, usernameField, passwordText, passwordField, resetButton, accessButton);
+        group.getChildren().addAll(taxCodeText, taxCodeField, passwordText, passwordField, resetButton, accessButton);
 
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().add(group);
@@ -56,7 +56,7 @@ public class LoginView {
         stage.show();
     }
 
-    public TextField getUsernameField() { return usernameField; }
+    public TextField getTaxCodeField() { return taxCodeField; }
 
     public PasswordField getPasswordField() { return passwordField; }
 

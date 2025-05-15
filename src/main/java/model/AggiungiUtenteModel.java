@@ -9,11 +9,11 @@ public class AggiungiUtenteModel {
 
     private static final String URL = "jdbc:sqlite:mydatabase.db";
 
-    public void inserisciUtente(String username, String password, String userType) throws SQLException {
+    public void inserisciUtente(String taxCode, String password, String userType) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL)) {
-            String query = "INSERT INTO loginTable (username, password, userType) VALUES (?, ?, ?);";
+            String query = "INSERT INTO loginTable (taxCode, password, userType) VALUES (?, ?, ?);";
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, username);
+                pstmt.setString(1, taxCode);
                 pstmt.setString(2, password);
                 pstmt.setString(3, userType);
                 pstmt.executeUpdate();

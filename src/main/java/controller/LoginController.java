@@ -30,7 +30,7 @@ public class LoginController {
         view.initialize(stage);
 
         view.getResetButton().setOnAction(e -> {
-            view.getUsernameField().setText("");
+            view.getTaxCodeField().setText("");
             view.getPasswordField().setText("");
         });
 
@@ -42,7 +42,7 @@ public class LoginController {
                     boolean found = false;
 
                     while (rs.next()) {
-                        if (rs.getString("username").equals(view.getUsernameField().getText())
+                        if (rs.getString("taxCode").equals(view.getTaxCodeField().getText())
                                 && rs.getString("password").equals(view.getPasswordField().getText())) {
 
                             found = true;
@@ -77,7 +77,7 @@ public class LoginController {
                         errorText.setFill(Color.RED);
                         view.getGroup().getChildren().add(errorText);
 
-                        view.getUsernameField().setText("");
+                        view.getTaxCodeField().setText("");
                         view.getPasswordField().setText("");
                     }
 

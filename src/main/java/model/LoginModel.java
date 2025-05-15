@@ -10,7 +10,7 @@ public class LoginModel {
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM loginTable");
             while (rs.next()) {
-                System.out.println("username: " + rs.getString("username") +
+                System.out.println("username: " + rs.getString("taxCode") +
                         "\t\t\t password: " + rs.getString("password") +
                         "\t\t\t userType: " + rs.getString("userType"));
             }
