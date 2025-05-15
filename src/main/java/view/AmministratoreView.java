@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -13,6 +14,7 @@ public class AmministratoreView {
 
     private VBox layout;
     private Button addUserButton;
+    private Button viewUserListButton;
 
     public AmministratoreView() {
         layout = new VBox(10); // Imposta un gap tra gli elementi
@@ -33,9 +35,13 @@ public class AmministratoreView {
             System.out.println("Errore nel caricamento dell'immagine: " + e.getMessage());
         }
 
-        // Crea il bottone
+        // Crea il bottone aggiunta user
         addUserButton = new Button("Aggiungi un nuovo utente");
         addUserButton.setLayoutX(70);  // Imposta la posizione del bottone
+
+        // Crea il bottone visualizza lista utenti
+        viewUserListButton = new Button("Visualizza lista utenti");
+        viewUserListButton.setLayoutX(160);
 
         // Aggiungi gli elementi al layout
         layout.getChildren().add(header);
@@ -43,6 +49,7 @@ public class AmministratoreView {
             layout.getChildren().add(userImageView);
         }
         layout.getChildren().add(addUserButton);
+        layout.getChildren().add(viewUserListButton); // permette di visualizzare bottone
     }
 
     public Button getAddUserButton() {
@@ -52,4 +59,6 @@ public class AmministratoreView {
     public Scene getScene() {
         return new Scene(layout);
     }
+
+    public Button getViewUserListButton() {return viewUserListButton;}
 }

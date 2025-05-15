@@ -3,8 +3,10 @@ package controller;
 import javafx.stage.Stage;
 import model.AggiungiUtenteModel;
 import model.AmministratoreModel;
+import model.VisualizzaListaUtentiModel;
 import view.AggiungiUtenteView;
 import view.AmministratoreView;
+import view.VisualizzaListaUtentiView;
 
 public class AmministratoreController {
 
@@ -24,6 +26,14 @@ public class AmministratoreController {
             AggiungiUtenteView aggiungiUtenteView = new AggiungiUtenteView();
             new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView, amministratoreStage);
         });
+
+        // Bottone visualizza lista utenti
+        view.getViewUserListButton().setOnAction(e -> {
+            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
+            VisualizzaListaUtentiView visualizzaListaUtentiView= new VisualizzaListaUtentiView();
+            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, amministratoreStage);
+        });
+
 
         amministratoreStage.setScene(view.getScene());
         amministratoreStage.setHeight(loginStage.getHeight());

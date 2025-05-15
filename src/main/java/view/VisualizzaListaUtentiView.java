@@ -1,0 +1,71 @@
+package view;
+
+import controller.VisualizzaListaUtentiController;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import model.Utente;
+
+public class VisualizzaListaUtentiView {
+    private final TableView<Utente> tabellaUtenti = new TableView<>();
+    private VisualizzaListaUtentiController controller;
+
+    public void start(Stage stage) {
+        // Imposta dimensioni minime per la TableView
+        tabellaUtenti.setMinWidth(800);
+        tabellaUtenti.setMinHeight(400);
+
+        //aggiunta colonne contenenti info utente
+        TableColumn<Utente, String> colTaxCode = new TableColumn<>("Codice Fiscale");
+        colTaxCode.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTaxCode()));
+        TableColumn<Utente, String> colPassword = new TableColumn<>("Password");
+        colPassword.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPassword()));
+        TableColumn<Utente, String> colNome = new TableColumn<>("Nome");
+        colNome.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+        TableColumn<Utente, String> colCognome = new TableColumn<>("Cognome");
+        colCognome.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCognome()));
+        TableColumn<Utente, String> colEmail = new TableColumn<>("Email");
+        colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+        TableColumn<Utente, String> colBirthDate = new TableColumn<>("Data di Nascita");
+        colBirthDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthDate().toString()));
+        TableColumn<Utente, String> colAddress = new TableColumn<>("Indirizzo");
+        colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
+        TableColumn<Utente, Number> colNumber = new TableColumn<>("Numero Civico");
+        colNumber.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNumber()));
+        TableColumn<Utente, String> colCity = new TableColumn<>("Città");
+        colCity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCity()));
+        TableColumn<Utente, Number> colCap = new TableColumn<>("CAP");
+        colCap.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getCap()));
+        TableColumn<Utente, String> colGender = new TableColumn<>("Genere");
+        colGender.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGender()));
+        TableColumn<Utente, Number> colTelephone = new TableColumn<>("Telefono");
+        colTelephone.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getTelephoneNumber()));
+
+
+        tabellaUtenti.getColumns().addAll(colTaxCode, colPassword, colNome, colCognome, colEmail, colBirthDate, colAddress, colNumber, colCity, colCap, colGender, colTelephone);
+        // Imposta larghezza minima per ogni colonna
+        tabellaUtenti.getColumns().forEach(col -> col.setMinWidth(100));
+
+        Button visualizzaButton = new Button("Visualizza Lista Utenti");
+        visualizzaButton.setOnAction(e -> controller.caricaUtenti(tabellaUtenti));
+
+        VBox layout = new VBox(10, visualizzaButton, tabellaUtenti);
+        layout.setStyle("-fx-padding: 20");
+
+        // Aumenta le dimensioni della scena
+        Scene scene = new Scene(layout, 1000, 600);
+
+        // Imposta dimensioni minime per la finestra
+        stage.setMinWidth(1000);
+        stage.setMinHeight(600);
+        stage.setTitle("Visualizza Lista Utenti");
+        stage.setScene(scene);
+        stage.show();
+
+    }
+}
