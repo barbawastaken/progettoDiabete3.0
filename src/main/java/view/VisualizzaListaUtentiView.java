@@ -13,9 +13,9 @@ import model.Utente;
 
 public class VisualizzaListaUtentiView {
     private final TableView<Utente> tabellaUtenti = new TableView<>();
-    private VisualizzaListaUtentiController controller;
+    //private VisualizzaListaUtentiController controller;
 
-    public void start(Stage stage) {
+    public void start(Stage stage, VisualizzaListaUtentiController controller) {
         // Imposta dimensioni minime per la TableView
         tabellaUtenti.setMinWidth(800);
         tabellaUtenti.setMinHeight(400);
@@ -44,7 +44,7 @@ public class VisualizzaListaUtentiView {
         TableColumn<Utente, String> colGender = new TableColumn<>("Genere");
         colGender.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGender()));
         TableColumn<Utente, Number> colTelephone = new TableColumn<>("Telefono");
-        colTelephone.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getTelephoneNumber()));
+        colTelephone.setCellValueFactory(cellData -> new javafx.beans.property.SimpleLongProperty(cellData.getValue().getTelephoneNumber()));
 
 
         tabellaUtenti.getColumns().addAll(colTaxCode, colPassword, colNome, colCognome, colEmail, colBirthDate, colAddress, colNumber, colCity, colCap, colGender, colTelephone);

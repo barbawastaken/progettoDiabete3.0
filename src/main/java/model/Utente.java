@@ -14,9 +14,9 @@ public class Utente {
     private String city;
     private int cap;
     private String gender;
-    private int telephoneNumber;
+    private long telephoneNumber;
 
-    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address, int number, String city, int cap, String gender, int telephoneNumber) {
+    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address, int number, String city, int cap, String gender, long telephoneNumber) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -27,6 +27,8 @@ public class Utente {
         this.number = number;
         this.city = city;
         this.cap = cap;
+        this.gender = gender;
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getTaxCode() { return taxCode; }
@@ -40,5 +42,5 @@ public class Utente {
     public String getCity() { return city; }
     public int getCap() { return cap; }
     public String getGender() { return gender; }
-    public int getTelephoneNumber() { return telephoneNumber; }
+    public long getTelephoneNumber() { return telephoneNumber; }
 }

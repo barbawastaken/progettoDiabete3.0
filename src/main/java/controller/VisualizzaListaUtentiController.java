@@ -16,12 +16,13 @@ public class VisualizzaListaUtentiController {
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
         this.model = model;
         this.view = view;
-        view.start(stage);
+        view.start(stage, this);
+
     }
 
     public void caricaUtenti(TableView<Utente> tabella) {
-        this.model = model;
-        this.view = view;
+        /*this.model = model;
+        this.view = view;*/
 
         ObservableList<Utente> lista = FXCollections.observableArrayList(model.getTuttiGliUtenti());
         tabella.setItems(lista);
