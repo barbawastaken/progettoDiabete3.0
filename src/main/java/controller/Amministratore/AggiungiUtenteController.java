@@ -9,6 +9,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 
 import java.time.LocalDate;
+import java.sql.*;
 
 public class AggiungiUtenteController {
 
@@ -43,9 +44,18 @@ public class AggiungiUtenteController {
                         LocalDate birthday = view.datePicker.getValue();                    //sono i dati nella "loginTable", ma in futuro verrà tutto messo su utentiTable
                         String userType = selected.getText();
                         String taxCode = view.taxCodeField.getText();
+                        String address = view.addressField.getText();
+                        String cap = view.capField.getText();
+                        String email = view.emailField.getText();
+                        String city = view.cityField.getText();
+                        String number = view.numberField.getText();
+                        String gender = view.genderField.getValue();
+                        String telephone = view.telephoneField.getText();
 
-                        model.inserisciUtente(taxCode, password, userType);
+                        model.inserisciUtente(taxCode, password, nome, cognome, address, cap, city, email, gender, birthday, number, telephone);
+                        model.inserisciLogin(taxCode, password, userType);
                         System.out.println("Dati inseriti");
+
                     } else {
                         System.out.println("Nessun tipo utente selezionato");
                     }

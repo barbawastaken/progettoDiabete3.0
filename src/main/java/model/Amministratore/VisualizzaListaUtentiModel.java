@@ -34,6 +34,7 @@ public class VisualizzaListaUtentiModel {
 
                 Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, gender, telephoneNumber);
                 lista.add(utente);
+                conn.close();
                 //System.out.println(utente);
             }
 
