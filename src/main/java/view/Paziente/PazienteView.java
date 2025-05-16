@@ -2,25 +2,25 @@ package view.Paziente;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
-
-import java.awt.*;
+import javafx.scene.text.Font;
 
 public class PazienteView {
 
-    private StackPane root;
+    private final Scene scene;
     private Button logoutButton = new Button("Logout");
 
     public PazienteView() {
-        root = new StackPane();
+        BorderPane root = new BorderPane();
 
-        // Fascia blu piena larghezza
+        //Composizione fascia alta
+
         HBox headerBox = new HBox();
         headerBox.setAlignment(Pos.CENTER_LEFT);
         headerBox.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -28,12 +28,14 @@ public class PazienteView {
         headerBox.setMaxHeight(100);
         headerBox.setPrefHeight(100);
 
-        ImageView userImageView = null;
         try {
             Image userImage = new Image(getClass().getResource("/images/userImage.png").toExternalForm());
-            userImageView = new ImageView(userImage);
+
+            ImageView userImageView = new ImageView(userImage);
             userImageView.setFitWidth(100);
             userImageView.setFitHeight(100);
+            headerBox.getChildren().add(userImageView);
+
         } catch (Exception e) {
             System.out.println("Errore nel caricamento dell'immagine: " + e.getMessage());
         }
@@ -41,59 +43,64 @@ public class PazienteView {
         Region spacer = new Region(); // Spazio flessibile tra immagine e bottone
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        headerBox.getChildren().addAll(userImageView, spacer, logoutButton);
+        logoutButton.setPadding(new Insets(10, 10, 10, 10));
 
-        VBox mainLayout = new VBox();
-        mainLayout.getChildren().add(headerBox);
-        VBox.setVgrow(headerBox, Priority.NEVER);
+        headerBox.getChildren().add(spacer);
+        headerBox.getChildren().add(logoutButton);
 
-        // Fai occupare tutto lo spazio
-        root.getChildren().add(mainLayout);
-        root.setPrefSize(800, 600); // inizialmente, ma si adatta
+        //Composizione fascia centrale
 
-        // Stretch automatico
-        mainLayout.prefWidthProperty().bind(root.widthProperty());
-        headerBox.prefWidthProperty().bind(mainLayout.widthProperty());
+        Group firstRow = new Group();
+        Group secondRow = new Group();
+
+        Button rilevazioniGlicemiaButton = new Button("Rilevazioni Glicemia");
+        rilevazioniGlicemiaButton.setLayoutX(30);
+        rilevazioniGlicemiaButton.setLayoutY(100);
+        //rilevazioniGlicemiaButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        rilevazioniGlicemiaButton.setFont(new Font(18));
+
+        Button inserimentoSintomiButton = new Button("Inserimento Sintomi");
+        inserimentoSintomiButton.setLayoutX(230);
+        inserimentoSintomiButton.setLayoutY(100);
+        //inserimentoSintomiButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        inserimentoSintomiButton.setFont(new Font(18));
+
+        Button assunzioneFarmaciButton = new Button("Assunzione Farmaci");
+        assunzioneFarmaciButton.setLayoutX(30);
+        assunzioneFarmaciButton.setLayoutY(250);
+        //assunzioneFarmaciButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        assunzioneFarmaciButton.setFont(new Font(18));
+
+        Button disturbiTerapieButton = new Button("Disturbi/Terapie concomitanti");
+        disturbiTerapieButton.setLayoutX(230);
+        disturbiTerapieButton.setLayoutY(250);
+        //disturbiTerapieButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        disturbiTerapieButton.setFont(new Font(18));
+
+        firstRow.getChildren().add(rilevazioniGlicemiaButton);
+        firstRow.getChildren().add(inserimentoSintomiButton);
+
+        secondRow.getChildren().add(assunzioneFarmaciButton);
+        secondRow.getChildren().add(disturbiTerapieButton);
+
+        Group centralBox = new Group();
+        centralBox.getChildren().addAll(firstRow, secondRow);
+
+        root.setTop(headerBox);
+        root.setCenter(centralBox);
+
+        this.scene = new Scene(root);
+        root.prefWidthProperty().bind(scene.widthProperty());
+        root.prefHeightProperty().bind(scene.heightProperty());
+
     }
 
     public Scene getScene() {
-        return new Scene(root, 800, 600);
+        return scene;
     }
 
-    /*private HBox hbox = new HBox();
-    private StackPane layout;
-    Button logoutButton = new Button("Logout");
-
-    public PazienteView() {
-        layout = new StackPane();
-
-        Rectangle header = new Rectangle(1980, 100);
-        header.setFill(Color.DARKBLUE);
-
-        ImageView userImageView = null;
-        try {
-            Image userImage = new Image(getClass().getResource("/images/userImage.png").toExternalForm());
-            userImageView = new ImageView(userImage);
-            userImageView.setFitWidth(100);
-            userImageView.setFitHeight(100);
-        } catch (Exception e) {
-            System.out.println("Errore nel caricamento dell'immagine: " + e.getMessage());
-        }
-
-        logoutButton.setLayoutX(250);
-        logoutButton.setLayoutY(250);
-
-        layout.getChildren().add(header);
-        if (userImageView != null)
-            layout.getChildren().add(userImageView);
-
-        layout.setAlignment(Pos.TOP_LEFT);
-        hbox.getChildren().add(layout);
-        hbox.getChildren().add(logoutButton);
+    public Button getLogoutButton() {
+        return logoutButton;
     }
-
-    public Scene getScene() {
-        return new Scene(hbox);
-    }*/
 }
 
