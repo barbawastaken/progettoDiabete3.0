@@ -15,8 +15,11 @@ public class Utente {
     private final int cap;
     private final String gender;
     private final String telephoneNumber;
+    private final String userType;
+    private final String diabetologo;
 
-    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address, int number, String city, int cap, String gender, String telephoneNumber) {
+    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address,
+                  int number, String city, int cap, String gender, String telephoneNumber, String userType, String diabetologo) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -29,6 +32,8 @@ public class Utente {
         this.cap = cap;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
+        this.userType = userType;
+        this.diabetologo = diabetologo;
     }
 
     public String getTaxCode() { return taxCode; }
@@ -43,4 +48,7 @@ public class Utente {
     public int getCap() { return cap; }
     public String getGender() { return gender; }
     public String getTelephoneNumber() { return telephoneNumber; }
+    public String getUserType() { return userType; }
+    public String getDiabetologo() { return diabetologo; }
+
 }

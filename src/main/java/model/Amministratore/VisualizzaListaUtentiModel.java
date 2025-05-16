@@ -13,7 +13,7 @@ public class VisualizzaListaUtentiModel {
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti SORT BY nome")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti")) {
 
             while (rs.next()) {
                 String taxCode = rs.getString("taxCode");
@@ -29,12 +29,14 @@ public class VisualizzaListaUtentiModel {
                 int cap = rs.getInt("cap");
                 String gender = rs.getString("gender");
                 String telephoneNumber = rs.getString("telephoneNumber");
+                String userType = rs.getString("userType");
+                String diabetologo = rs.getString("diabetologo");
 
-                Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, gender, telephoneNumber);
+                Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, gender, telephoneNumber, userType, diabetologo);
                 lista.add(utente);
-                conn.close();
-                //System.out.println(utente);
+
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();

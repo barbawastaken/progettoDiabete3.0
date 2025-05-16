@@ -55,10 +55,17 @@ public class VisualizzaListaUtentiView {
         TableColumn<Utente, String> colTelephone = new TableColumn<>("Telefono");
         colTelephone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelephoneNumber()));
 
+        TableColumn<Utente, String> colUserType = new TableColumn<>("Tipo Utente");
+        colUserType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUserType()));
+
+        TableColumn<Utente, String> colDiabetologo = new TableColumn<>("Diabetologo");
+        colDiabetologo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDiabetologo()));
+        
         // Aggiunta delle colonne alla tabella
         tabellaUtenti.getColumns().addAll(
                 colTaxCode, colPassword, colNome, colCognome, colEmail, colBirthDate,
-                colAddress, colNumber, colCity, colCap, colGender, colTelephone
+                colAddress, colNumber, colCity, colCap, colGender, colTelephone,
+                colUserType, colDiabetologo
         );
 
         // Imposta larghezza minima per ogni colonna
