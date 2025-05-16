@@ -42,6 +42,7 @@ public class AmministratoreView {
         viewUserListButton = new Button("Visualizza lista utenti");
         viewUserListButton.setLayoutX(160);
 
+
         // Aggiungi gli elementi al layout
         layout.getChildren().add(header);
         if (userImageView != null) {

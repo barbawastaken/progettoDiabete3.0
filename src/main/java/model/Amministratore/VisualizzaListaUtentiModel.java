@@ -11,11 +11,9 @@ public class VisualizzaListaUtentiModel {
     public List<Utente> getTuttiGliUtenti() {
         List<Utente> lista = new ArrayList<>();
 
-        //String query = "SELECT * FROM utenti";
-
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti SORT BY nome")) {
 
             while (rs.next()) {
                 String taxCode = rs.getString("taxCode");
@@ -30,7 +28,7 @@ public class VisualizzaListaUtentiModel {
                 String city = rs.getString("city");
                 int cap = rs.getInt("cap");
                 String gender = rs.getString("gender");
-                long telephoneNumber = rs.getLong("telephoneNumber");
+                String telephoneNumber = rs.getString("telephoneNumber");
 
                 Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, gender, telephoneNumber);
                 lista.add(utente);

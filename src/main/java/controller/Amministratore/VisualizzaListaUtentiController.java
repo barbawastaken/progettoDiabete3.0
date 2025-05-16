@@ -8,6 +8,8 @@ import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.util.List;
+
 public class VisualizzaListaUtentiController {
     private VisualizzaListaUtentiModel model ;
     private VisualizzaListaUtentiView view;
@@ -20,10 +22,8 @@ public class VisualizzaListaUtentiController {
     }
 
     public void caricaUtenti(TableView<Utente> tabella) {
-        /*this.model = model;
-        this.view = view;*/
-
-        ObservableList<Utente> lista = FXCollections.observableArrayList(model.getTuttiGliUtenti());
-        tabella.setItems(lista);
+        ObservableList<Utente> utenti = FXCollections.observableArrayList(model.getTuttiGliUtenti());
+        tabella.setItems(utenti);
     }
+
 }

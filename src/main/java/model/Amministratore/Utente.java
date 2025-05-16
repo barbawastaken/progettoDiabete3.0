@@ -3,20 +3,20 @@ package model.Amministratore;
 import java.util.Date;
 
 public class Utente {
-    private String taxCode;
-    private String password;
-    private String nome;
-    private String cognome;
-    private String email;
-    private Date birthDate;
-    private String address;
-    private int number;
-    private String city;
-    private int cap;
-    private String gender;
-    private long telephoneNumber;
+    private final String taxCode;
+    private final String password;
+    private final String nome;
+    private final String cognome;
+    private final String email;
+    private final Date birthDate;
+    private final String address;
+    private final int number;
+    private final String city;
+    private final int cap;
+    private final String gender;
+    private final String telephoneNumber;
 
-    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address, int number, String city, int cap, String gender, long telephoneNumber) {
+    public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address, int number, String city, int cap, String gender, String telephoneNumber) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -42,5 +42,5 @@ public class Utente {
     public String getCity() { return city; }
     public int getCap() { return cap; }
     public String getGender() { return gender; }
-    public long getTelephoneNumber() { return telephoneNumber; }
+    public String getTelephoneNumber() { return telephoneNumber; }
 }
