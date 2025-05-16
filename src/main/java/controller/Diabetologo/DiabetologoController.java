@@ -1,10 +1,7 @@
-package controller;
+package controller.Diabetologo;
 
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import model.DiabetologoModel;
-import view.DiabetologoView;
+import model.Diabetologo.DiabetologoModel;
+import view.Diabetologo.DiabetologoView;
 import javafx.stage.Stage;
 
 public class DiabetologoController {

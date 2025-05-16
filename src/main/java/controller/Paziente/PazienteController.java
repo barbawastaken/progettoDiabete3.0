@@ -1,8 +1,8 @@
-package controller;
+package controller.Paziente;
 
 import javafx.stage.Stage;
-import model.PazienteModel;
-import view.PazienteView;
+import model.Paziente.PazienteModel;
+import view.Paziente.PazienteView;
 
 public class PazienteController {
 

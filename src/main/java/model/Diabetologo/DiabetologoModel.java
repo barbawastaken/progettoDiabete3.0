@@ -1,4 +1,4 @@
-package model;
+package model.Diabetologo;
 
 public class DiabetologoModel {
 }

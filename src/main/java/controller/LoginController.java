@@ -1,19 +1,22 @@
 package controller;
 
+import controller.Amministratore.AmministratoreController;
+import controller.Diabetologo.DiabetologoController;
+import controller.Paziente.PazienteController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.AmministratoreModel;
-import model.DiabetologoModel;
+import model.Amministratore.AmministratoreModel;
+import model.Diabetologo.DiabetologoModel;
 import model.LoginModel;
-import model.PazienteModel;
-import view.AmministratoreView;
-import view.DiabetologoView;
+import model.Paziente.PazienteModel;
+import view.Amministratore.AmministratoreView;
+import view.Diabetologo.DiabetologoView;
 import view.LoginView;
-import view.PazienteView;
+import view.Paziente.PazienteView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

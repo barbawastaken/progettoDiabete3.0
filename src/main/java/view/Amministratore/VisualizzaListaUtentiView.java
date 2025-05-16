@@ -1,6 +1,6 @@
-package view;
+package view.Amministratore;
 
-import controller.VisualizzaListaUtentiController;
+import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -8,8 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import model.Utente;
+import model.Amministratore.Utente;
 
 public class VisualizzaListaUtentiView {
     private final TableView<Utente> tabellaUtenti = new TableView<>();

@@ -1,13 +1,12 @@
-package controller;
+package controller.Amministratore;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import model.AggiungiUtenteModel;
-import model.Utente;
-import model.VisualizzaListaUtentiModel;
-import view.VisualizzaListaUtentiView;
+import model.Amministratore.Utente;
+import model.Amministratore.VisualizzaListaUtentiModel;
+import view.Amministratore.VisualizzaListaUtentiView;
 
 public class VisualizzaListaUtentiController {
     private VisualizzaListaUtentiModel model ;

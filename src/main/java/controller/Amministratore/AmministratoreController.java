@@ -1,12 +1,12 @@
-package controller;
+package controller.Amministratore;
 
 import javafx.stage.Stage;
-import model.AggiungiUtenteModel;
-import model.AmministratoreModel;
-import model.VisualizzaListaUtentiModel;
-import view.AggiungiUtenteView;
-import view.AmministratoreView;
-import view.VisualizzaListaUtentiView;
+import model.Amministratore.AggiungiUtenteModel;
+import model.Amministratore.AmministratoreModel;
+import model.Amministratore.VisualizzaListaUtentiModel;
+import view.Amministratore.AggiungiUtenteView;
+import view.Amministratore.AmministratoreView;
+import view.Amministratore.VisualizzaListaUtentiView;
 
 public class AmministratoreController {
 

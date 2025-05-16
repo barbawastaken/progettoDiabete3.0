@@ -1,5 +1,5 @@
 
-package model;
+package model.Amministratore;
 
 import java.sql.*;
 import java.util.ArrayList;
