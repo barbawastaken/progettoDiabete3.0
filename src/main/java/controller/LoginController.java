@@ -29,7 +29,7 @@ public class LoginController {
         this.model = model;
         this.view = view;
 
-        model.printAllUsers();
+        //model.printAllUsers();
         view.initialize(stage);
 
         view.getResetButton().setOnAction(e -> {

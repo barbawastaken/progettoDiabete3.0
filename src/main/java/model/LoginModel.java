@@ -3,7 +3,7 @@ package model;
 import java.sql.*;
 
 public class LoginModel {
-    private final String url = "jdbc:sqlite:mydatabase.db";
+    private final String url = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
     public void printAllUsers() throws SQLException {
         try (Connection conn = DriverManager.getConnection(url);
@@ -14,6 +14,7 @@ public class LoginModel {
                         "\t\t\t password: " + rs.getString("password") +
                         "\t\t\t userType: " + rs.getString("userType"));
             }
+            stmt.close();
         }
     }
 
