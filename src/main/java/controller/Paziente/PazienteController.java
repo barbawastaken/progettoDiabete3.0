@@ -1,11 +1,15 @@
 package controller.Paziente;
 
 import controller.LoginController;
+import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
 import javafx.stage.Stage;
 import model.LoginModel;
 import model.Paziente.PazienteModel;
+import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
 import view.LoginView;
 import view.Paziente.PazienteView;
+import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
+
 import java.sql.SQLException;
 
 public class PazienteController {
@@ -28,8 +32,8 @@ public class PazienteController {
         pazienteStage.setX(loginStage.getX());
         pazienteStage.setY(loginStage.getY());
         pazienteStage.alwaysOnTopProperty();
-        pazienteStage.setMinHeight(320);
-        pazienteStage.setMinWidth(240);
+        /*pazienteStage.setMinHeight(320);
+        pazienteStage.setMinWidth(240);*/
         loginStage.close();
         pazienteStage.show();
 
@@ -39,7 +43,19 @@ public class PazienteController {
             try {
                 new LoginController(loginModel, loginView, pazienteStage);
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                System.out.println("Errore: " + ex.getMessage());
+            }
+        });
+
+        pazienteView.getRilevazioniGlicemiaButton().setOnAction(e -> {
+
+            RilevazioneGlicemiaModel rilevazioneGlicemiaModel = new RilevazioneGlicemiaModel();
+            RilevazioneGlicemiaView rilevazioneGlicemiaView = new RilevazioneGlicemiaView();
+
+            try {
+                new RilevazioneGlicemiaController(rilevazioneGlicemiaModel, rilevazioneGlicemiaView, pazienteStage);
+            } catch (Exception ex) {
+                System.out.println("Errore: " + ex.getMessage());
             }
         });
     }

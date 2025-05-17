@@ -14,7 +14,11 @@ import javafx.scene.text.Font;
 public class PazienteView {
 
     private final Scene scene;
-    private Button logoutButton = new Button("Logout");
+    private final Button logoutButton = new Button("Logout");
+    private final Button rilevazioniGlicemiaButton = new Button("Rilevazioni Glicemia");
+    private final Button inserimentoSintomiButton = new Button("Inserimento Sintomi");
+    private final Button assunzioneFarmaciButton = new Button("Assunzione Farmaci");
+    private final Button disturbiTerapieButton = new Button("Disturbi/Terapie concomitanti");
 
     public PazienteView() {
         BorderPane root = new BorderPane();
@@ -53,25 +57,22 @@ public class PazienteView {
         Group firstRow = new Group();
         Group secondRow = new Group();
 
-        Button rilevazioniGlicemiaButton = new Button("Rilevazioni Glicemia");
         rilevazioniGlicemiaButton.setLayoutX(30);
         rilevazioniGlicemiaButton.setLayoutY(100);
         //rilevazioniGlicemiaButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         rilevazioniGlicemiaButton.setFont(new Font(18));
 
-        Button inserimentoSintomiButton = new Button("Inserimento Sintomi");
         inserimentoSintomiButton.setLayoutX(230);
         inserimentoSintomiButton.setLayoutY(100);
         //inserimentoSintomiButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         inserimentoSintomiButton.setFont(new Font(18));
 
-        Button assunzioneFarmaciButton = new Button("Assunzione Farmaci");
+
         assunzioneFarmaciButton.setLayoutX(30);
         assunzioneFarmaciButton.setLayoutY(250);
         //assunzioneFarmaciButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         assunzioneFarmaciButton.setFont(new Font(18));
 
-        Button disturbiTerapieButton = new Button("Disturbi/Terapie concomitanti");
         disturbiTerapieButton.setLayoutX(230);
         disturbiTerapieButton.setLayoutY(250);
         //disturbiTerapieButton.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -101,6 +102,22 @@ public class PazienteView {
 
     public Button getLogoutButton() {
         return logoutButton;
+    }
+
+    public Button getRilevazioniGlicemiaButton() {
+        return rilevazioniGlicemiaButton;
+    }
+
+    public Button getInserimentoSintomiButton() {
+        return inserimentoSintomiButton;
+    }
+
+    public Button getAssunzioneFarmaciButton() {
+        return assunzioneFarmaciButton;
+    }
+
+    public Button getDisturbiTerapieButton() {
+        return disturbiTerapieButton;
     }
 }
 
