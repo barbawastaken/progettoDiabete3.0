@@ -44,4 +44,19 @@ public class VisualizzaListaUtentiModel {
 
         return lista;
     }
+    public void rimuoviUtente(Utente utente) {
+        String sql = "DELETE FROM utenti WHERE taxCode = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, utente.getTaxCode());
+            pstmt.executeUpdate();
+
+            System.out.println("Utente eliminato: " + utente.getTaxCode());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
