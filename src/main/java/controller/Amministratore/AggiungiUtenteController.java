@@ -10,6 +10,9 @@ import javafx.scene.control.Toggle;
 
 import java.time.LocalDate;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class AggiungiUtenteController {
 
@@ -41,8 +44,11 @@ public class AggiungiUtenteController {
                         String nome = view.nomeField.getText();                             //qui sto aggiungendo tutti quanti i dati che dovranno
                         String cognome = view.cognomeField.getText();                       //essere inseriti all'interno del database "utenti", ora sta venendo
                         String password = view.passwordField.getText();                     //ancora creato, quindi le uniche cose che vengono caricate nel database
-                        LocalDate birthday = view.datePicker.getValue();                    //sono i dati nella "loginTable", ma in futuro verrà tutto messo su utentiTable
+                        LocalDate birthday = view.datePicker.getValue();
+                        java.sql.Date birthdayForSQL = java.sql.Date.valueOf(birthday);
+                        System.out.println(birthday.toString());                            //sono i dati nella "loginTable", ma in futuro verrà tutto messo su utentiTable
                         String userType = selected.getText();
+                        System.out.println(userType);
                         String taxCode = view.taxCodeField.getText();
                         String address = view.addressField.getText();
                         String cap = view.capField.getText();
@@ -51,9 +57,11 @@ public class AggiungiUtenteController {
                         String number = view.numberField.getText();
                         String gender = view.genderField.getValue();
                         String telephone = view.telephoneField.getText();
+                        String diabetologoSelezionato = view.diabetologoSelection.getValue();
 
-                        model.inserisciUtente(taxCode, password, nome, cognome, address, cap, city, email, gender, birthday, number, telephone);
-                        model.inserisciLogin(taxCode, password, userType);
+                        model.inserisciUtente(taxCode, password, nome, cognome, address, cap, city, email, gender, birthdayForSQL,
+                                number, telephone, userType, diabetologoSelezionato);
+
                         System.out.println("Dati inseriti");
 
                     } else {
@@ -64,5 +72,38 @@ public class AggiungiUtenteController {
                 }
             }
         });
+
+        view.toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(newValue != null) {
+                RadioButton radioButton = (RadioButton) newValue;
+                String val = radioButton.getText();
+                System.out.println(val);
+                if ("PAZIENTE".equals(val)) {
+
+                    try {
+                        HashMap<String, String> map = model.getDiabetologi();
+                       for(String s : map.keySet()){
+                           view.diabetologoSelection.getItems().add(s);
+                       }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    view.diabetologoSelection.setVisible(true);
+                    view.diabetologoSelection.setManaged(true);
+                    view.diabetologoSelectionText.setVisible(true);
+                    view.diabetologoSelectionText.setManaged(true);
+                } else {
+                    view.diabetologoSelection.setVisible(false);
+                    view.diabetologoSelection.setManaged(false);
+                    view.diabetologoSelectionText.setVisible(false);
+                    view.diabetologoSelectionText.setManaged(false);
+                }
+            }
+        });
+
+
     }
 }

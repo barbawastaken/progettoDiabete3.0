@@ -28,6 +28,9 @@ public class AggiungiUtenteView {
     public Button resetButton = new Button("Reset");
     public Button sendButton = new Button("Aggiungi Utente");
     public ToggleGroup toggleGroup = new ToggleGroup();
+    public Text diabetologoSelectionText = new Text("Medico curante");
+    public ComboBox<String> diabetologoSelection = new ComboBox<>();
+
 
     public RadioButton admin = new RadioButton("AMMINISTRATORE");
     public RadioButton diab = new RadioButton("DIABETOLOGO");
@@ -39,7 +42,10 @@ public class AggiungiUtenteView {
 
     public void start(Stage stage) {
 
-
+        diabetologoSelection.setVisible(false);
+        diabetologoSelection.setManaged(false);
+        diabetologoSelectionText.setVisible(false);
+        diabetologoSelection.setManaged(false);
         Text nomeText = new Text("Nome");
         nomeText.setFont(Font.font(16));
 
@@ -62,7 +68,7 @@ public class AggiungiUtenteView {
         Text numberText = new Text("Numero");
         numberText.setFont(Font.font(16));
 
-        Text cityText = new Text("City");
+        Text cityText = new Text("Città");
         cityText.setFont(Font.font(16));
 
         Text capText = new Text("CAP");
@@ -71,6 +77,7 @@ public class AggiungiUtenteView {
         genderField.getItems().addAll("Maschio", "Femmina", "Altro");
         Text genderText = new Text("Sesso");
         genderText.setFont(Font.font(16));
+
 
         Text telephoneText = new Text("Telefono");
         telephoneText.setFont(Font.font(16));
@@ -81,6 +88,8 @@ public class AggiungiUtenteView {
         admin.setToggleGroup(toggleGroup);
         diab.setToggleGroup(toggleGroup);
         utente.setToggleGroup(toggleGroup);
+
+        diab.setSelected(true);
 
         layout.setAlignment(Pos.CENTER_LEFT);
         layout.setPadding(new Insets(50, 80, 80, 80));
@@ -99,6 +108,7 @@ public class AggiungiUtenteView {
                 telephoneText, telephoneField,
                 emailText, emailField,
                 admin, diab, utente,
+                diabetologoSelectionText, diabetologoSelection,
                 resetButton, sendButton
         );
 
