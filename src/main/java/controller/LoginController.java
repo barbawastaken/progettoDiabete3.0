@@ -1,24 +1,8 @@
 package controller;
 
-import controller.Amministratore.AmministratoreController;
-import controller.Diabetologo.DiabetologoController;
-import controller.Paziente.PazienteController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Amministratore.AmministratoreModel;
-import model.Diabetologo.DiabetologoModel;
 import model.LoginModel;
-import model.Paziente.PazienteModel;
-import view.Amministratore.AmministratoreView;
-import view.Diabetologo.DiabetologoView;
 import view.LoginView;
-import view.Paziente.PazienteView;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -37,7 +21,7 @@ public class LoginController {
             view.getPasswordField().setText("");
         });
 
-        view.getAccessButton().setOnAction(new EventHandler<>() {
+        /*view.getAccessButton().setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent buttonPressed) {
                 try {
@@ -48,6 +32,7 @@ public class LoginController {
                         if (rs.getString("taxCode").equals(view.getTaxCodeField().getText())
                                 && rs.getString("password").equals(view.getPasswordField().getText())) {
 
+                            String taxCode = rs.getString("taxCode");
                             found = true;
                             String userType = rs.getString("userType");
 
@@ -55,7 +40,7 @@ public class LoginController {
                                 case "PAZIENTE" -> {
                                     PazienteModel model = new PazienteModel();
                                     PazienteView view = new PazienteView();
-                                    new PazienteController(model, view, stage);
+                                    new PazienteController(taxCode, model, view, stage);
                                 }
                                 case "DIABETOLOGO" -> {
                                     DiabetologoModel model = new DiabetologoModel();
@@ -89,6 +74,15 @@ public class LoginController {
                     throw new RuntimeException(e);
                 }
             }
+        });*/
+
+        view.getAccessButton().setOnAction(e -> {
+
+            String taxCode = view.getTaxCodeField().getText();
+            String password = view.getPasswordField().getText();
+
+            model.checkLogin(taxCode, password, stage, view);
+
         });
     }
 }

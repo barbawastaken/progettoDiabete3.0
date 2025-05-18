@@ -17,7 +17,7 @@ public class PazienteController {
     private final PazienteModel pazienteModel;
     private final PazienteView pazienteView;
 
-    public PazienteController(PazienteModel pazienteModel, PazienteView pazienteView, Stage loginStage) {
+    public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView, Stage loginStage) {
 
         this.pazienteModel = pazienteModel;
         this.pazienteView = pazienteView;
@@ -53,7 +53,7 @@ public class PazienteController {
             RilevazioneGlicemiaView rilevazioneGlicemiaView = new RilevazioneGlicemiaView();
 
             try {
-                new RilevazioneGlicemiaController(rilevazioneGlicemiaModel, rilevazioneGlicemiaView, pazienteStage);
+                new RilevazioneGlicemiaController(taxCode, rilevazioneGlicemiaModel, rilevazioneGlicemiaView, pazienteStage);
             } catch (Exception ex) {
                 System.out.println("Errore: " + ex.getMessage());
             }
