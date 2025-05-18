@@ -4,6 +4,7 @@ import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
@@ -74,8 +75,12 @@ public class VisualizzaListaUtentiView {
         // Carica gli utenti automaticamente
         controller.caricaUtenti(tabellaUtenti);
 
-        // Layout e scena
-        VBox layout = new VBox(10, tabellaUtenti);
+        // Rendi la tabella scrollabile orizzontalmente
+        ScrollPane scrollPane = new ScrollPane(tabellaUtenti);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        VBox layout = new VBox(10, scrollPane);
         layout.setStyle("-fx-padding: 20");
 
         Scene scene = new Scene(layout, 1000, 600);
