@@ -18,26 +18,6 @@ import view.Paziente.PazienteView;
 import java.sql.*;
 
 public class LoginModel {
-    //private final String url = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
-
-    /*public void printAllUsers() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM loginTable");
-            while (rs.next()) {
-                System.out.println("username: " + rs.getString("taxCode") +
-                        "\t\t\t password: " + rs.getString("password") +
-                        "\t\t\t userType: " + rs.getString("userType"));
-            }
-            stmt.close();
-        }
-    }*/
-
-    /*public ResultSet getLoginData() throws SQLException {
-        conn = DriverManager.getConnection(url);
-        stmt = conn.createStatement();
-        return stmt.executeQuery("SELECT * FROM loginTable");
-    }*/
 
     public void checkLogin(String taxCode, String password, Stage loginStage, LoginView loginView){
 
@@ -71,20 +51,20 @@ public class LoginModel {
                             AmministratoreView view = new AmministratoreView();
                             new AmministratoreController(model, view, loginStage);
                         }
-                        default -> {
-                            Text errorText = new Text("Username e/o password invalidi");
-                            errorText.setFont(Font.font(14));
-                            errorText.setX(50);
-                            errorText.setY(40);
-                            errorText.setFill(Color.RED);
-                            loginView.getGroup().getChildren().add(errorText);
 
-                            loginView.getTaxCodeField().setText("");
-                            loginView.getPasswordField().setText("");
-                        }
                     }
                 }
             }
+
+            Text errorText = new Text("Username e/o password invalidi");
+            errorText.setFont(Font.font(14));
+            errorText.setX(50);
+            errorText.setY(40);
+            errorText.setFill(Color.RED);
+            loginView.getGroup().getChildren().add(errorText);
+
+            loginView.getTaxCodeField().setText("");
+            loginView.getPasswordField().setText("");
 
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());
