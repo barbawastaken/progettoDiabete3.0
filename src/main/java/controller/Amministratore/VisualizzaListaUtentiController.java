@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
+import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.util.List;
@@ -59,8 +60,13 @@ public class VisualizzaListaUtentiController {
             return row;
         });
     }
+
     private void apriFinestraModifica(Utente utente) {
-        System.out.println("Modifica utente: " + utente.getTaxCode());
-        // TODO: Qui puoi aprire una nuova finestra o dialog con i dati dell'utente
+        ModificaUtenteView modificaView = new ModificaUtenteView();
+        ModificaUtenteController modificaController = new ModificaUtenteController(modificaView, utente, model);
+        Stage modificaStage = new Stage();
+        modificaView.start(modificaStage, utente, modificaController);
+        // Quando la finestra viene chiusa, ricarica la tabella
+        modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
     }
 }

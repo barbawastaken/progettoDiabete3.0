@@ -59,4 +59,10 @@ public class VisualizzaListaUtentiModel {
             e.printStackTrace();
         }
     }
+    public void aggiornaUtente(Utente utente) {
+        // Esegui update nel database, ad es. con JDBC
+        // Esempio placeholder:
+        System.out.println("Aggiornamento utente nel DB: " + utente.getTaxCode());
+        // TODO: Implementazione reale
+    }
 }

@@ -92,4 +92,7 @@ public class VisualizzaListaUtentiView {
         stage.setScene(scene);
         stage.show();
     }
+    public TableView<Utente> getTabellaUtenti() {
+        return tabellaUtenti;
+    }
 }
