@@ -1,6 +1,7 @@
 package controller.Paziente.RilevazioneGlicemia;
 
 import controller.Paziente.PazienteController;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
@@ -54,12 +55,18 @@ public class RilevazioneGlicemiaController {
 
         view.getConfermaButton().setOnAction(e -> {
 
-            int quantitaInserita = Integer.parseInt(view.getQuantitaRilevazioneTextField().getText());
+            int quantitaInserita = 0;
+            if(!view.getQuantitaRilevazioneTextField().getText().isEmpty()) {
+                quantitaInserita = Integer.parseInt(view.getQuantitaRilevazioneTextField().getText());
+            }
             String momentoGiornata = view.getMomentoGiornataField().getValue();
             String prePost = view.getPrePostField().getValue();
             LocalDate dataInserita = view.getDataField().getValue();
 
-            if(model.inserimentoRilevazioneGlicemia(taxCode, quantitaInserita, momentoGiornata, prePost, dataInserita)){
+            int risultatoInserimento = model.inserimentoRilevazioneGlicemia(taxCode, quantitaInserita, momentoGiornata, prePost, dataInserita);
+
+            if(risultatoInserimento == 0){
+
                 System.out.println("Valori inseriti correttamente");
 
                 PazienteModel pazienteModel = new PazienteModel();
@@ -67,9 +74,47 @@ public class RilevazioneGlicemiaController {
 
                 new PazienteController(taxCode, pazienteModel, pazienteView, rilevazioneGlicemiaStage);
 
-            } else {
-                System.out.println("Valori non inseriti");
-            }
+            } else { checkOutput(risultatoInserimento); }
         });
+    }
+
+    public void checkOutput(int valoreOutput) {
+
+        System.out.println("Valori non inseriti");
+
+        view.getQuantitaRilevazioneTextField().clear();
+        view.getMomentoGiornataField().setValue("");
+        view.getPrePostField().setValue("");
+        view.getDataField().setValue(null);
+
+        if(valoreOutput == 1) {
+
+            messaggioErrore("Non puoi inserire due rilevazioni nello stesso momento!");
+
+        } else if(valoreOutput == 2) {
+
+            messaggioErrore("I valori di glicemia devono essere validi");
+
+        } else if(valoreOutput == 3) {
+
+            messaggioErrore("Non puoi inserire rilevazioni future!");
+
+        } else if(valoreOutput == 4) {
+
+            messaggioErrore("Tutti i campi devono essere compilati");
+
+        } else if(valoreOutput == 5) {
+
+            messaggioErrore("Errore inserimento database. Riprovare più tardi!");
+        }
+
+    }
+
+    public void messaggioErrore(String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore!!!");
+        alert.setHeaderText(null); // oppure "Attenzione!"
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
 }
