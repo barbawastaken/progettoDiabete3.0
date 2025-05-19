@@ -7,6 +7,7 @@ import model.Amministratore.AggiungiUtenteModel;
 import view.Amministratore.AggiungiUtenteView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
+import java.util.regex.Pattern;
 
 import java.time.LocalDate;
 import java.sql.*;
@@ -31,22 +32,34 @@ public class AggiungiUtenteController {
             view.nomeField.setText("");
             view.cognomeField.setText("");
             view.passwordField.setText("");
+            view.datePicker.setValue(null);
+            view.emailField.setText("");
+            view.addressField.setText("");
+            view.cityField.setText("");
+            view.capField.setText("");
+            view.genderField.setValue(null);
+            view.taxCodeField.setText("");
+            view.numberField.setText("");
+            view.telephoneField.setText("");
+
+
 
         });
 
-        view.sendButton.setOnAction(new EventHandler<>() {
-            @Override
+        view.sendButton.setOnAction(new EventHandler<>() {          //con questo metodo raccogliamo tutti i valori inseriti in "aggiungi utente",
+            @Override                                               //dopodiché chiamiamo model.inserisciUtente() che inserisce tutti i dati nel database
             public void handle(ActionEvent event) {
                 try {
                     Toggle selectedToggle = view.toggleGroup.getSelectedToggle();
                     if (selectedToggle != null) {
                         RadioButton selected = (RadioButton) selectedToggle;
-                        String nome = view.nomeField.getText();                             //qui sto aggiungendo tutti quanti i dati che dovranno
-                        String cognome = view.cognomeField.getText();                       //essere inseriti all'interno del database "utenti", ora sta venendo
-                        String password = view.passwordField.getText();                     //ancora creato, quindi le uniche cose che vengono caricate nel database
+                        String nome = view.nomeField.getText();
+
+                        String cognome = view.cognomeField.getText();
+                        String password = view.passwordField.getText();
                         LocalDate birthday = view.datePicker.getValue();
                         java.sql.Date birthdayForSQL = java.sql.Date.valueOf(birthday);
-                        System.out.println(birthday.toString());                            //sono i dati nella "loginTable", ma in futuro verrà tutto messo su utentiTable
+                        System.out.println(birthday);
                         String userType = selected.getText();
                         System.out.println(userType);
                         String taxCode = view.taxCodeField.getText();
@@ -59,6 +72,7 @@ public class AggiungiUtenteController {
                         String telephone = view.telephoneField.getText();
                         String diabetologoSelezionato = view.diabetologoSelection.getValue();
 
+
                         model.inserisciUtente(taxCode, password, nome, cognome, address, cap, city, email, gender, birthdayForSQL,
                                 number, telephone, userType, diabetologoSelezionato);
 
@@ -70,6 +84,41 @@ public class AggiungiUtenteController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        view.emailField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");      //[\\w.-] -> campo "libero", con lettere, punti e trattini
+                                                                                            //@ -> simbolo obbligatorio
+                                                                                            //\\.\\w{2,}$ ->almeno due caratteri preceduti da un punto
+            int i = 0;
+            if(!validEmail.matcher(newValue).matches()) {
+
+                i++;
+                System.out.println(i + " Email invalido");
+            } else{
+                System.out.println("VALIDOOO");
+            }
+
+        });
+
+        view.taxCodeField.textProperty().addListener((observable, oldValue, newValue) -> {
+           if(newValue.length() != 3){
+               System.out.println("A che ghe son solo 3 caratteri");
+           }
+        });
+
+        view.numberField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Pattern soloNumeri = Pattern.compile("^[0-9]*");
+            int i=0;
+            if(!soloNumeri.matcher(newValue).matches()){
+                i++;
+                System.out.println(i + " Il numero di telefono può contenere solo numeri, non lettere!");
+
+            }
+
+            if(newValue.length()!= 10){
+                System.out.println("Il numero di telefono deve avere 10 numeri");
             }
         });
 

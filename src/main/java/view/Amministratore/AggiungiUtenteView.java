@@ -42,8 +42,8 @@ public class AggiungiUtenteView {
 
     public void start(Stage stage) {
 
-        diabetologoSelection.setVisible(false);
-        diabetologoSelection.setManaged(false);
+        diabetologoSelection.setVisible(false);             //inizialmente i bottoni per scegliere il diabetologo sono
+        diabetologoSelection.setManaged(false);             //disattivati, appariranno eventualmente grazie al listener
         diabetologoSelectionText.setVisible(false);
         diabetologoSelection.setManaged(false);
         Text nomeText = new Text("Nome");
