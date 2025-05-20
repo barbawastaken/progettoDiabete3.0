@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController">
+   <children>
+      <ComboBox fx:id="pastoGlicemia" layoutX="72.0" layoutY="125.0" prefWidth="150.0"/>
+      <TextField layoutX="72.0" layoutY="62.0" prefHeight="26.0" prefWidth="64.0" fx:id="milligrammi"/>
+      <Text layoutX="68.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi"/>
+      <Text layoutX="68.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasto di misurazione" />
+      <ComboBox layoutX="256.0" layoutY="125.0" prefHeight="26.0" prefWidth="77.0" fx:id="prepost"/>
+      <Text layoutX="256.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" />
+      <DatePicker layoutX="72.0" layoutY="187.0" fx:id="dataRilevamento"/>
+      <Text layoutX="68.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" />
+      <Button layoutX="68.0" layoutY="273.0" mnemonicParsing="false" text="Reset" fx:id="reset"/>
+      <Button layoutX="188.0" layoutY="273.0" mnemonicParsing="false" text="Invia" fx:id="submit" onAction="#onSubmitPressed"/>
+   </children>
+</AnchorPane>

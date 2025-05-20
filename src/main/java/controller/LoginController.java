@@ -1,33 +1,49 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.LoginModel;
 import view.LoginView;
+
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
-    private final LoginModel model;
-    private final LoginView view;
 
-    public LoginController(LoginModel model, LoginView view, Stage stage) throws SQLException {
-        this.model = model;
-        this.view = view;
+    private final LoginModel loginModel = new LoginModel();
+    public String taxCode;
 
-        //model.printAllUsers();
-        view.initialize(stage);
+    @FXML
+    private TextField taxCodeField;
 
-        view.getResetButton().setOnAction(e -> {
-            view.getTaxCodeField().setText("");
-            view.getPasswordField().setText("");
-        });
+    @FXML
+    private TextField passwordField;
 
-        view.getAccessButton().setOnAction(e -> {
+    @FXML
+    private void onLoginPressed() throws IOException {
+        String taxCode = taxCodeField.getText();
+        String password = passwordField.getText();
+        System.out.println(taxCode);
+        System.out.println(password);
+        this.taxCode = taxCode;
+        loginModel.checkLogin(taxCode, password);
+        Stage stage = (Stage) taxCodeField.getScene().getWindow();
+        stage.close();
 
-            String taxCode = view.getTaxCodeField().getText();
-            String password = view.getPasswordField().getText();
+    }
 
-            model.checkLogin(taxCode, password, stage, view);
+    @FXML
+    private void onResetPressed(){
+        taxCodeField.clear();
+        passwordField.clear();
+    }
 
-        });
+    public LoginController(LoginModel model, LoginView view, Stage stage) throws SQLException, IOException {
+
+    }
+
+    public LoginController(){
+
     }
 }

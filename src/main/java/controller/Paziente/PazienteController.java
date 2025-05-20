@@ -2,6 +2,10 @@ package controller.Paziente;
 
 import controller.LoginController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.LoginModel;
 import model.Paziente.PazienteModel;
@@ -10,42 +14,51 @@ import view.LoginView;
 import view.Paziente.PazienteView;
 import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class PazienteController {
 
-    private final PazienteModel pazienteModel;
-    private final PazienteView pazienteView;
+    private String taxCode;
 
-    public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView, Stage loginStage) {
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
 
-        this.pazienteModel = pazienteModel;
-        this.pazienteView = pazienteView;
+    @FXML
+    private void onRilevazioneGlicemiaClicked() throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Rilevazione Glicemia");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/rilevazione_glicemia_view.fxml"));
+        Parent root = loader.load();
+        RilevazioneGlicemiaController controller = loader.getController();
+        controller.setTaxCode(taxCode);
+        stage.setScene(new Scene(root));
+        stage.show();
+
+
+    }
+
+
+    public PazienteController(){
+
+    }
+
+    public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView) {
+
+
 
         Stage pazienteStage = new Stage();
         pazienteStage.setTitle("Homepage paziente");
         pazienteStage.setScene(pazienteView.getScene());
-        pazienteStage.setHeight(loginStage.getHeight());
-        pazienteStage.setWidth(loginStage.getWidth());
+
         pazienteStage.setMinWidth(600);
         pazienteStage.setMinHeight(800);
-        pazienteStage.setX(loginStage.getX());
-        pazienteStage.setY(loginStage.getY());
         pazienteStage.alwaysOnTopProperty();
-        /*pazienteStage.setMinHeight(320);
-        pazienteStage.setMinWidth(240);*/
-        loginStage.close();
+
         pazienteStage.show();
 
-        pazienteView.getLogoutButton().setOnAction(e -> { pazienteStage.close();
-        LoginView loginView = new LoginView();
-        LoginModel loginModel = new LoginModel();
-            try {
-                new LoginController(loginModel, loginView, pazienteStage);
-            } catch (SQLException ex) {
-                System.out.println("Errore: " + ex.getMessage());
-            }
-        });
+
 
         pazienteView.getRilevazioniGlicemiaButton().setOnAction(e -> {
 

@@ -2,6 +2,7 @@ package controller.Amministratore;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import view.Amministratore.AggiungiUtenteView;
@@ -20,6 +21,12 @@ public class AggiungiUtenteController {
     private AggiungiUtenteModel model;
     private AggiungiUtenteView view;
 
+
+
+
+    public AggiungiUtenteController(){
+
+    }
     public AggiungiUtenteController(AggiungiUtenteModel model, AggiungiUtenteView view, Stage stage) {
         this.model = model;
         this.view = view;

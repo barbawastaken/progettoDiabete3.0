@@ -3,8 +3,11 @@ module org.example.demo {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
-
-
+    opens controller to javafx.fxml;
+    opens controller.Paziente to javafx.fxml;
+    opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;
+    opens controller.Amministratore to javafx.fxml;
     opens HomePages to javafx.fxml;
+
     exports HomePages;
 }

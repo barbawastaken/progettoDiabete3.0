@@ -3,6 +3,7 @@ package controller.Amministratore;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
@@ -16,14 +17,18 @@ import java.util.List;
 
 public class VisualizzaListaUtentiController {
     private VisualizzaListaUtentiModel model ;
-    private VisualizzaListaUtentiView view;
 
-    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
-        this.model = model;
-        this.view = view;
-        view.start(stage, this);
+    @FXML
+    private TableView<Utente> tabella;
+
+    @FXML
+    private void initialize(){
+        this.caricaUtenti(tabella);
 
     }
+
+    public VisualizzaListaUtentiController() {}
+
 
     public void caricaUtenti(TableView<Utente> tabella) {
         ObservableList<Utente> utenti = FXCollections.observableArrayList(model.getTuttiGliUtenti());

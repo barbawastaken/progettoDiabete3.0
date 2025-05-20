@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.VisualizzaListaUtentiController">
+   <children>
+      <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <TableView prefHeight="400.0" prefWidth="875.0" fx:id="tabella">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Codice Fiscale" />
+                <TableColumn prefWidth="75.0" text="Nome" />
+                  <TableColumn prefWidth="75" text="Cognome" />
+                  <TableColumn prefWidth="75" text="Sesso" />
+                  <TableColumn prefWidth="75" text="Data di Nascita" />
+                  <TableColumn prefWidth="75" text="Password" />
+                  <TableColumn prefWidth="75" text="Via" />
+                  <TableColumn prefWidth="75" text="Numero" />
+                  <TableColumn prefWidth="75" text="CAP" />
+                  <TableColumn prefWidth="75" text="Ruolo" />
+                  <TableColumn prefWidth="125" text="Medico Curante" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

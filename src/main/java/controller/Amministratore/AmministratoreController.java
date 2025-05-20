@@ -1,5 +1,9 @@
 package controller.Amministratore;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.AmministratoreModel;
@@ -8,14 +12,44 @@ import view.Amministratore.AggiungiUtenteView;
 import view.Amministratore.AmministratoreView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.io.IOException;
+
+
 public class AmministratoreController {
 
-    private final AmministratoreModel model;
-    private final AmministratoreView view;
+    @FXML
+    private void isInserisciUtenteClicked() throws IOException {
+        AggiungiUtenteController controller = new AggiungiUtenteController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiungi_utente_view.fxml"));
+        Parent root = loader.load();
+
+        controller = loader.getController();
+
+
+        Stage stage = new Stage();
+        stage.setTitle("Aggiungi Utente");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+    @FXML
+    private void isVisualizzaUtentiClicked() throws IOException {
+        VisualizzaListaUtentiController controller = new VisualizzaListaUtentiController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Visualizza Utente");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    public AmministratoreController(){
+
+    }
 
     public AmministratoreController(AmministratoreModel model, AmministratoreView view, Stage loginStage) {
-        this.model = model;
-        this.view = view;
+
 
         Stage amministratoreStage = new Stage();
 
@@ -27,12 +61,6 @@ public class AmministratoreController {
             new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView, amministratoreStage);
         });
 
-        // Bottone visualizza lista utenti
-        view.getViewUserListButton().setOnAction(e -> {
-            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
-            VisualizzaListaUtentiView visualizzaListaUtentiView= new VisualizzaListaUtentiView();
-            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, amministratoreStage);
-        });
 
 
         amministratoreStage.setScene(view.getScene());

@@ -2,22 +2,57 @@ package controller.Paziente.RilevazioneGlicemia;
 
 import controller.Paziente.PazienteController;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
 import view.Paziente.PazienteView;
 import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
 import java.time.LocalDate;
+import javafx.fxml.FXML;
 
 public class RilevazioneGlicemiaController {
 
-    private final RilevazioneGlicemiaModel model;
-    private final RilevazioneGlicemiaView view;
+    @FXML
+    private TextField milligrammi;
+
+    @FXML
+    private DatePicker dataRilevamento;
+
+    @FXML
+    private ComboBox<String> prepost;
+
+
+    @FXML
+    private ComboBox<String> pastoGlicemia;
+    private String taxCode;
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+
+   @FXML
+   private void initialize() {
+        prepost.getItems().addAll("pre", "post");
+        pastoGlicemia.getItems().addAll("Colazione<", "Pranzo", "Cena");
+   }
+
+    @FXML
+    private void onSubmitPressed(){
+        RilevazioneGlicemiaModel model = new RilevazioneGlicemiaModel();
+        model.inserimentoRilevazioneGlicemia(taxCode, Integer.parseInt(milligrammi.getText()), pastoGlicemia.getValue(), prepost.getValue(), dataRilevamento.getValue());
+    }
+
+    public RilevazioneGlicemiaController() {
+
+    }
 
     public RilevazioneGlicemiaController(String taxCode, RilevazioneGlicemiaModel model, RilevazioneGlicemiaView view, Stage pazienteStage) {
 
-        this.model = model;
-        this.view = view;
+
 
         Stage rilevazioneGlicemiaStage = new Stage();
         rilevazioneGlicemiaStage.setTitle("Inserimento nuova rilevazione glicemica");
@@ -38,7 +73,7 @@ public class RilevazioneGlicemiaController {
             PazienteView pazienteView = new PazienteView();
 
             try {
-                new PazienteController(taxCode, pazienteModel, pazienteView, rilevazioneGlicemiaStage);
+                new PazienteController(taxCode, pazienteModel, pazienteView);
             } catch (Exception ex) {
                 System.out.println("Errore: " + ex.getMessage());
             }
@@ -72,7 +107,7 @@ public class RilevazioneGlicemiaController {
                 PazienteModel pazienteModel = new PazienteModel();
                 PazienteView pazienteView = new PazienteView();
 
-                new PazienteController(taxCode, pazienteModel, pazienteView, rilevazioneGlicemiaStage);
+                new PazienteController(taxCode, pazienteModel, pazienteView);
 
             } else { checkOutput(risultatoInserimento); }
         });
@@ -82,10 +117,6 @@ public class RilevazioneGlicemiaController {
 
         System.out.println("Valori non inseriti");
 
-        view.getQuantitaRilevazioneTextField().clear();
-        view.getMomentoGiornataField().setValue("");
-        view.getPrePostField().setValue("");
-        view.getDataField().setValue(null);
 
         if(valoreOutput == 1) {
 
