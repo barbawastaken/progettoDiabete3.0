@@ -60,9 +60,28 @@ public class VisualizzaListaUtentiModel {
         }
     }
     public void aggiornaUtente(Utente utente) {
-        // Esegui update nel database, ad es. con JDBC
-        // Esempio placeholder:
-        System.out.println("Aggiornamento utente nel DB: " + utente.getTaxCode());
-        // TODO: Implementazione reale
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db")) {
+            String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=? WHERE taxCode=?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, utente.getTaxCode());
+                stmt.setString(2, utente.getPassword());
+                stmt.setString(3, utente.getNome());
+                stmt.setString(4, utente.getCognome());
+                stmt.setString(5, utente.getEmail());
+                stmt.setString(6, utente.getBirthDate().toString());
+                stmt.setString(7, utente.getAddress());
+                stmt.setInt(8, utente.getNumber());
+                stmt.setString(9, utente.getCity());
+                stmt.setInt(10, utente.getCap());
+                stmt.setString(11, utente.getGender());
+                stmt.setString(12, utente.getTelephoneNumber());
+                stmt.setString(13, utente.getUserType());
+                stmt.setString(14, utente.getDiabetologo());
+
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

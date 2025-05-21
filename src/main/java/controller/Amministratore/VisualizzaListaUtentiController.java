@@ -22,7 +22,7 @@ public class VisualizzaListaUtentiController {
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
         this.model = model;
         this.view = view;
-        view.start(stage, this);
+        view.start(stage, this); // chiama view.start e caricaUtenti
 
     }
 
@@ -68,5 +68,9 @@ public class VisualizzaListaUtentiController {
         modificaView.start(modificaStage, utente, modificaController);
         // Quando la finestra viene chiusa, ricarica la tabella
         modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
+    }
+
+    public void start(Stage stage) {
+        view.start(stage, this); // chiama la view, passandole anche il controller
     }
 }
