@@ -2,48 +2,84 @@ package controller.Amministratore;
 
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
-import java.util.Date;
-
 public class ModificaUtenteController {
-    private final ModificaUtenteView view;
+    private final ModificaUtenteView modificaUtenteView;
     private final Utente utente;
-    private final VisualizzaListaUtentiModel model;
+    private  VisualizzaListaUtentiModel model;
+    private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
 
-    public ModificaUtenteController(ModificaUtenteView view, Utente utente, VisualizzaListaUtentiModel model, Stage listaUtentiStage) {
-        this.view = view;
+    public ModificaUtenteController(ModificaUtenteView modificaUtenteView, Utente utente, VisualizzaListaUtentiModel model, Stage listaUtentiStage) {
+        this.modificaUtenteView = modificaUtenteView;
         this.utente = utente;
         this.model = model;
         this.listaUtentiStage = listaUtentiStage;
     }
+
+    public ModificaUtenteController(ModificaUtenteModel modificaUtenteModel, ModificaUtenteView modificaUtenteView, Utente selezionato, Stage visualizzaUtentiStage){
+
+        this.modificaUtenteView = modificaUtenteView;
+        this.modificaUtenteModel = modificaUtenteModel;
+        this.utente = selezionato;
+        this.listaUtentiStage = visualizzaUtentiStage;
+
+        //Utente utenteModificato = this.utenteModificato();
+        modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), modificaUtenteView, listaUtentiStage));
+
+    }
+
+    private Utente utenteModificato() {
+        return new Utente(
+                modificaUtenteView.getTaxCode(),
+                modificaUtenteView.getPassword(),
+                modificaUtenteView.getNome(),
+                modificaUtenteView.getCognome(),
+                modificaUtenteView.getEmail(),
+                java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                modificaUtenteView.getAddress(),
+                modificaUtenteView.getNumber(),
+                modificaUtenteView.getCity(),
+                modificaUtenteView.getCap(),
+                modificaUtenteView.getGender(),
+                modificaUtenteView.getTelephone(),
+                modificaUtenteView.getUserType(),
+                modificaUtenteView.getDiabetologo()
+        );
+
+    }
+
     public void salvaModifiche(Stage stage) {
         try {
             // Crea oggetto aggiornato
             Utente aggiornato = new Utente(
-                    view.getTaxCode(),
-                    view.getPassword(),
-                    view.getNome(),
-                    view.getCognome(),
-                    view.getEmail(),
-                    java.sql.Date.valueOf(view.getBirthDate()),
-                    view.getAddress(),
-                    view.getNumber(),
-                    view.getCity(),
-                    view.getCap(),
-                    view.getGender(),
-                    view.getTelephone(),
-                    view.getUserType(),
-                    view.getDiabetologo()
+                    modificaUtenteView.getTaxCode(),
+                    modificaUtenteView.getPassword(),
+                    modificaUtenteView.getNome(),
+                    modificaUtenteView.getCognome(),
+                    modificaUtenteView.getEmail(),
+                    java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                    modificaUtenteView.getAddress(),
+                    modificaUtenteView.getNumber(),
+                    modificaUtenteView.getCity(),
+                    modificaUtenteView.getCap(),
+                    modificaUtenteView.getGender(),
+                    modificaUtenteView.getTelephone(),
+                    modificaUtenteView.getUserType(),
+                    modificaUtenteView.getDiabetologo()
             );
 
+            //System.out.println(modificaUtenteView.getTaxCode());
+
             // Salva nel DB tramite il model
-            model.aggiornaUtente(aggiornato);
+            model.aggiornaUtente(aggiornato, modificaUtenteView.getTaxCode());
             System.out.println("Utente aggiornato con successo.");
+            modificaUtenteView.getStage().close();
 
             // Ritorna alla lista utenti, nello stesso stage
             this.listaUtentiStage.close();

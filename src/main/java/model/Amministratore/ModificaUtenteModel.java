@@ -1,5 +1,10 @@
 package model.Amministratore;
 
+import controller.Amministratore.VisualizzaListaUtentiController;
+import javafx.stage.Stage;
+import view.Amministratore.ModificaUtenteView;
+import view.Amministratore.VisualizzaListaUtentiView;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +13,12 @@ import java.sql.SQLException;
 public class ModificaUtenteModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
-    public void aggiornaUtente(Utente utente, String vecchioTaxCode) {
+    public ModificaUtenteModel() {}
+
+    public void aggiornaUtente(String vecchioTaxCode, ModificaUtenteView modificaUtenteView, Stage visualizzaUtentiStage) {
+
+        Utente utente = utenteModificato(modificaUtenteView);
+
         String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, " +
                 "telephoneNumber=?, userType=?, diabetologo=? WHERE taxCode=?";
         String updateUtenteLogin = "UPDATE loginTable SET taxCode=?, password=?, userType=? WHERE taxCode=?";
@@ -18,6 +28,7 @@ public class ModificaUtenteModel {
              PreparedStatement pstmt2 = conn.prepareStatement(updateUtenteLogin)) {
 
             // Query utenti
+            System.out.println(utente.getTaxCode() + " " + vecchioTaxCode);
             pstmt.setString(1, utente.getTaxCode());
             pstmt.setString(2, utente.getPassword());
             pstmt.setString(3, utente.getNome());
@@ -47,12 +58,41 @@ public class ModificaUtenteModel {
             pstmt2.setString(3, utente.getUserType());
             pstmt2.setString(4, vecchioTaxCode);
 
-            pstmt2.executeUpdate();
+            rows = pstmt2.executeUpdate();
+
+            if(rows != 0) { System.out.println("Login table aggiornata"); }
+
+
+            modificaUtenteView.getStage().close();
+            visualizzaUtentiStage.close();
+
+            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
+            VisualizzaListaUtentiView visualizzaListaUtentiView = new VisualizzaListaUtentiView();
+            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, new Stage());
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
+    private Utente utenteModificato(ModificaUtenteView modificaUtenteView) {
+        return new Utente(
+                modificaUtenteView.getTaxCode(),
+                modificaUtenteView.getPassword(),
+                modificaUtenteView.getNome(),
+                modificaUtenteView.getCognome(),
+                modificaUtenteView.getEmail(),
+                java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                modificaUtenteView.getAddress(),
+                modificaUtenteView.getNumber(),
+                modificaUtenteView.getCity(),
+                modificaUtenteView.getCap(),
+                modificaUtenteView.getGender(),
+                modificaUtenteView.getTelephone(),
+                modificaUtenteView.getUserType(),
+                modificaUtenteView.getDiabetologo()
+        );
+
+    }
 
 }

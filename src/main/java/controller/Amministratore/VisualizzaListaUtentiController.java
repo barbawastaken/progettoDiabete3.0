@@ -8,6 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.ModificaUtenteView;
@@ -40,7 +41,11 @@ public class VisualizzaListaUtentiController {
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
-                apriFinestraModifica(selected);
+                //apriFinestraModifica(selected);
+
+                ModificaUtenteModel modificaUtenteModel = new ModificaUtenteModel();
+                ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
+                new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
             });
             // impostiamo il delete :)
             MenuItem eliminaItem = new MenuItem("Elimina utente");
@@ -64,12 +69,14 @@ public class VisualizzaListaUtentiController {
     }
 
     private void apriFinestraModifica(Utente utente) {
-        ModificaUtenteView modificaView = new ModificaUtenteView();
+        ModificaUtenteView modificaView = new ModificaUtenteView(utente);
         ModificaUtenteController modificaController = new ModificaUtenteController(modificaView, utente, model, listaUtentiStage);
         Stage modificaStage = new Stage();
         modificaView.start(modificaStage, utente, modificaController);
         // Quando la finestra viene chiusa, ricarica la tabella
         //modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
+
+        modificaView.getSalvaButton().setOnAction(e -> modificaController.salvaModifiche(listaUtentiStage));
     }
 
     public void start(Stage stage) {

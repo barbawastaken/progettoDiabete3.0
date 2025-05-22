@@ -59,7 +59,7 @@ public class VisualizzaListaUtentiModel {
             e.printStackTrace();
         }
     }
-    public void aggiornaUtente(Utente utente) {
+    public void aggiornaUtente(Utente utente, String oldTaxCode) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db")) {
             String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=? WHERE taxCode=?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -77,8 +77,10 @@ public class VisualizzaListaUtentiModel {
                 stmt.setString(12, utente.getTelephoneNumber());
                 stmt.setString(13, utente.getUserType());
                 stmt.setString(14, utente.getDiabetologo());
+                stmt.setString(15, oldTaxCode);
 
                 stmt.executeUpdate();
+                System.out.println("Utente aggiornato: " + utente.getTaxCode());
             }
         } catch (SQLException e) {
             e.printStackTrace();
