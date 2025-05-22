@@ -18,10 +18,12 @@ import java.util.List;
 public class VisualizzaListaUtentiController {
     private VisualizzaListaUtentiModel model ;
     private VisualizzaListaUtentiView view;
+    private Stage listaUtentiStage;
 
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
         this.model = model;
         this.view = view;
+        this.listaUtentiStage = stage;
         view.start(stage, this); // chiama view.start e caricaUtenti
 
     }
@@ -63,11 +65,11 @@ public class VisualizzaListaUtentiController {
 
     private void apriFinestraModifica(Utente utente) {
         ModificaUtenteView modificaView = new ModificaUtenteView();
-        ModificaUtenteController modificaController = new ModificaUtenteController(modificaView, utente, model);
+        ModificaUtenteController modificaController = new ModificaUtenteController(modificaView, utente, model, listaUtentiStage);
         Stage modificaStage = new Stage();
         modificaView.start(modificaStage, utente, modificaController);
         // Quando la finestra viene chiusa, ricarica la tabella
-        modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
+        //modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
     }
 
     public void start(Stage stage) {

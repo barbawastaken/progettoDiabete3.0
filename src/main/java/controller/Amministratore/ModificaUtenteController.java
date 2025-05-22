@@ -13,11 +13,13 @@ public class ModificaUtenteController {
     private final ModificaUtenteView view;
     private final Utente utente;
     private final VisualizzaListaUtentiModel model;
+    private Stage listaUtentiStage;
 
-    public ModificaUtenteController(ModificaUtenteView view, Utente utente, VisualizzaListaUtentiModel model) {
+    public ModificaUtenteController(ModificaUtenteView view, Utente utente, VisualizzaListaUtentiModel model, Stage listaUtentiStage) {
         this.view = view;
         this.utente = utente;
         this.model = model;
+        this.listaUtentiStage = listaUtentiStage;
     }
     public void salvaModifiche(Stage stage) {
         try {
@@ -44,6 +46,7 @@ public class ModificaUtenteController {
             System.out.println("Utente aggiornato con successo.");
 
             // Ritorna alla lista utenti, nello stesso stage
+            this.listaUtentiStage.close();
             VisualizzaListaUtentiView nuovaView = new VisualizzaListaUtentiView();
             VisualizzaListaUtentiController nuovoController = new VisualizzaListaUtentiController(model, nuovaView, stage);
 
