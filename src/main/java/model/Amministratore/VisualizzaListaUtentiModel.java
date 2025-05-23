@@ -8,6 +8,8 @@ import java.util.List;
 public class VisualizzaListaUtentiModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
+    public VisualizzaListaUtentiModel() {}
+
     public List<Utente> getTuttiGliUtenti() {
         List<Utente> lista = new ArrayList<>();
 

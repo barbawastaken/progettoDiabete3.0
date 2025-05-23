@@ -15,11 +15,11 @@ public class Utente {
     private final int cap;
     private final String gender;
     private final String telephoneNumber;
-    private final String userType;
+    private final String ruolo;
     private final String diabetologo;
 
     public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address,
-                  int number, String city, int cap, String gender, String telephoneNumber, String userType, String diabetologo) {
+                  int number, String city, int cap, String gender, String telephoneNumber, String ruolo, String diabetologo) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -32,7 +32,7 @@ public class Utente {
         this.cap = cap;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
-        this.userType = userType;
+        this.ruolo = ruolo;
         this.diabetologo = diabetologo;
     }
 
@@ -41,14 +41,15 @@ public class Utente {
     public String getNome() { return nome; }
     public String getCognome() { return cognome; }
     public String getEmail() { return email; }
-    public Date getBirthDate() { return birthDate; }
+    public Date getBirthday() { return birthDate; }
     public String getAddress() { return address; }
     public int getNumber() { return number; }
     public String getCity() { return city; }
     public int getCap() { return cap; }
     public String getGender() { return gender; }
-    public String getTelephoneNumber() { return telephoneNumber; }
-    public String getUserType() { return userType; }
+    public String getTelephone() { return telephoneNumber; }
     public String getDiabetologo() { return diabetologo; }
+    public String getRole(){return ruolo; }
+
 
 }

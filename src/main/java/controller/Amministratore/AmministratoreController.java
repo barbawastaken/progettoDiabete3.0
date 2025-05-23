@@ -7,10 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.AmministratoreModel;
-import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.AggiungiUtenteView;
 import view.Amministratore.AmministratoreView;
-import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.io.IOException;
 

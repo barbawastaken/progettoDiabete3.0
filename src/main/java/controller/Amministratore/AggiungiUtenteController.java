@@ -3,11 +3,11 @@ package controller.Amministratore;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import view.Amministratore.AggiungiUtenteView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
+
 import java.util.regex.Pattern;
 
 import java.time.LocalDate;
@@ -21,8 +21,88 @@ public class AggiungiUtenteController {
     private AggiungiUtenteModel model;
     private AggiungiUtenteView view;
 
+    @FXML
+    private ComboBox<String> gender;
+
+    @FXML
+    private TextField nome;
+
+    @FXML
+    private TextField cognome;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private TextField address;
+
+    @FXML
+    private TextField city;
+    @FXML
+    private TextField number;
+
+    @FXML
+    private TextField taxCode;
+
+    @FXML
+    private RadioButton paziente;
+
+    @FXML
+    private RadioButton diabetologo;
+
+    @FXML
+    private RadioButton amministratore;
+
+    @FXML
+    private ComboBox<String> medicoCurante;
+
+    @FXML
+    private TextField cap;
+
+    @FXML
+    private ToggleGroup ruolo;
+
+    @FXML
+    private DatePicker birthday;
+
+    @FXML
+    private TextField telephone;
+
+    @FXML
+    private void initialize() {
+        gender.getItems().addAll("MASCHIO", "FEMMINA");
+        medicoCurante.getItems().addAll();
+    }
 
 
+
+    @FXML
+    private void resetButtonPressed(){
+        nome.setText("");
+        cognome.setText("");
+        email.setText("");
+        password.setText("");
+        address.setText("");
+        city.setText("");
+        taxCode.setText("");
+        address.setText("");
+        cap.setText("");
+
+    }
+
+    @FXML
+    private void sendButtonPressed(){
+        AggiungiUtenteModel model = new AggiungiUtenteModel();
+        /*
+        model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
+                cap.getText(), city.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
+                number, telephone, userType, diabetologoSelezionato);
+
+         */
+    }
 
     public AggiungiUtenteController(){
 

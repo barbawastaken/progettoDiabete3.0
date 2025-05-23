@@ -4,35 +4,91 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.util.List;
 
 public class VisualizzaListaUtentiController {
-    private VisualizzaListaUtentiModel model ;
+
 
     @FXML
     private TableView<Utente> tabella;
 
     @FXML
+    private TableColumn<Utente, String> nomeColumn;
+
+    @FXML
+    private TableColumn<Utente, String> cognomeColumn;
+
+    @FXML
+    private TableColumn<Utente, String> emailColumn;
+
+    @FXML
+    private TableColumn<Utente, String> telephoneColumn;
+
+    @FXML
+    private TableColumn<Utente, String> taxCodeColumn;
+    @FXML
+    private TableColumn<Utente, String> addressColumn;
+    @FXML
+    private TableColumn<Utente, String> cityColumn;
+
+    @FXML
+    private TableColumn<Utente, String> capColumn;
+
+    @FXML
+    private TableColumn<Utente, String> roleColumn;
+
+    @FXML
+    private TableColumn<Utente, String> numberColumn;
+
+    @FXML
+    private TableColumn<Utente, String> diabetologoColumn;
+
+    @FXML
+    private TableColumn<Utente, String> genderColumn;
+
+    @FXML
+    private TableColumn<Utente, String> passwordColumn;
+
+    @FXML
+    private TableColumn<Utente, String> birthdayColumn;
+
+    @FXML
     private void initialize(){
-        this.caricaUtenti(tabella);
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        taxCodeColumn.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        capColumn.setCellValueFactory(new PropertyValueFactory<>("cap"));
+        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        diabetologoColumn.setCellValueFactory(new PropertyValueFactory<>("diabetologo"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        birthdayColumn.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+
+
+        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
+        List<Utente> utenti = model.getTuttiGliUtenti();
+        this.caricaUtenti(utenti);
+        tabella.setItems(FXCollections.observableList(utenti));
 
     }
 
     public VisualizzaListaUtentiController() {}
 
 
-    public void caricaUtenti(TableView<Utente> tabella) {
-        ObservableList<Utente> utenti = FXCollections.observableArrayList(model.getTuttiGliUtenti());
-        tabella.setItems(utenti);
+    private void caricaUtenti(List<Utente> utenti) {
+        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
+        ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
+        tabella.setItems(listaOsservabile);
 
         //Aggiungo un Context Menu per ogni riga presente nella tabella
         tabella.setRowFactory(utenteTableView -> {
