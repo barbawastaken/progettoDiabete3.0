@@ -4,9 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -38,8 +36,6 @@ public class AggiungiUtenteView {
     public RadioButton primario = new RadioButton("PRIMARIO");
 
     private VBox layout = new VBox(10);
-    private HBox auxLayout = new HBox(10);
-    private StackPane stackPane = new StackPane();
 
     public void start(Stage stage) {
 
@@ -50,51 +46,34 @@ public class AggiungiUtenteView {
         Text nomeText = new Text("Nome");
         nomeText.setFont(Font.font(16));
 
-        Text cognomeText = new Text("Cognome");
-        cognomeText.setFont(Font.font(16));
-
-
-        Text dateText = new Text("Data di Nascita");
-        dateText.setFont(Font.font(16));
-
-        Text taxCodeText = new Text("Codice Fiscale");
-        taxCodeText.setFont(Font.font(16));
-
-        Text emailText = new Text("Email");
-        emailText.setFont(Font.font(16));
-
-        Text addressText = new Text("Indirizzo");
-        addressText.setFont(Font.font(16));
-
-        Text numberText = new Text("Numero");
-        numberText.setFont(Font.font(16));
-
-        Text cityText = new Text("Città");
-        cityText.setFont(Font.font(16));
-
-        Text capText = new Text("CAP");
-        capText.setFont(Font.font(16));
-
+        Text cognomeText = new Text("Cognome"); cognomeText.setFont(Font.font(16));
+        Text dateText = new Text("Data di Nascita"); dateText.setFont(Font.font(16));
+        Text taxCodeText = new Text("Codice Fiscale"); taxCodeText.setFont(Font.font(16));
+        Text emailText = new Text("Email"); emailText.setFont(Font.font(16));
+        Text addressText = new Text("Indirizzo"); addressText.setFont(Font.font(16));
+        Text numberText = new Text("Numero"); numberText.setFont(Font.font(16));
+        Text cityText = new Text("Città"); cityText.setFont(Font.font(16));
+        Text capText = new Text("CAP"); capText.setFont(Font.font(16));
         genderField.getItems().addAll("Maschio", "Femmina");
-        Text genderText = new Text("Sesso");
-        genderText.setFont(Font.font(16));
-
-
-        Text telephoneText = new Text("Telefono");
-        telephoneText.setFont(Font.font(16));
-
-        Text passwordText = new Text("Password");
-        passwordText.setFont(Font.font(16));
+        Text genderText = new Text("Sesso"); genderText.setFont(Font.font(16));
+        Text telephoneText = new Text("Telefono"); telephoneText.setFont(Font.font(16));
+        Text passwordText = new Text("Password"); passwordText.setFont(Font.font(16));
 
         admin.setToggleGroup(toggleGroup);
         diab.setToggleGroup(toggleGroup);
         utente.setToggleGroup(toggleGroup);
         primario.setToggleGroup(toggleGroup);
 
-        diab.setSelected(true);
+        // Inizialmente nascondi la scelta del diabetologo
+        diabetologoSelection.setVisible(false);
+        diabetologoSelection.setManaged(false);
+        diabetologoSelectionText.setVisible(false);
+        diabetologoSelectionText.setManaged(false);
 
+        // Imposta layout
         layout.setAlignment(Pos.CENTER_LEFT);
         layout.setPadding(new Insets(50, 80, 80, 80));
+        layout.setMaxWidth(300);
 
         layout.getChildren().addAll(
                 nomeText, nomeField,
@@ -110,16 +89,23 @@ public class AggiungiUtenteView {
                 telephoneText, telephoneField,
                 emailText, emailField,
                 admin, diab, utente, primario,
-                diabetologoSelectionText, diabetologoSelection,
-                resetButton, sendButton
+                diabetologoSelectionText, diabetologoSelection
         );
 
         layout.setMaxWidth(300);
 
         ScrollPane scroll = new ScrollPane(layout);
+        scroll.setFitToWidth(true);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-        stackPane.getChildren().add(scroll);
-        stackPane.setAlignment(Pos.CENTER);
+        BorderPane mainLayout = new BorderPane();
+        mainLayout.setCenter(scroll);
+
+        HBox buttonBox = new HBox(20, resetButton, sendButton);
+        buttonBox.setPadding(new Insets(20));
+        buttonBox.setAlignment(Pos.CENTER);
+        mainLayout.setBottom(buttonBox);
+
 
 
         /*
@@ -128,7 +114,7 @@ public class AggiungiUtenteView {
             tf.setMaxWidth(150);
         }
 */
-        Scene scene = new Scene(stackPane, 500, 700);
+        Scene scene = new Scene(mainLayout, 500, 800); // ho allargato a 800
         stage.setMinWidth(500);
         stage.setMinHeight(800);
         stage.setScene(scene);
