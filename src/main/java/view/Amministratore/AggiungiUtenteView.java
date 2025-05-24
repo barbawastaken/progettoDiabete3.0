@@ -74,7 +74,7 @@ public class AggiungiUtenteView {
         Text capText = new Text("CAP");
         capText.setFont(Font.font(16));
 
-        genderField.getItems().addAll("Maschio", "Femmina", "Altro");
+        genderField.getItems().addAll("Maschio", "Femmina");
         Text genderText = new Text("Sesso");
         genderText.setFont(Font.font(16));
 
