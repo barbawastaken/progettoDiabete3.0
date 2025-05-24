@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class AggiungiUtenteModel {
 
-    private static final String URL = "jdbc:sqlite:database/mydatabase.db?busy_timeout=5000";
+    private static final String URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
     public HashMap<String, String> getDiabetologi() throws SQLException {
         String findDiabetologi = "SELECT * FROM utenti WHERE userType='DIABETOLOGO'";
         HashMap<String, String> diabetologi = new HashMap<>();

@@ -1,5 +1,6 @@
 package view.Amministratore;
 
+import controller.Amministratore.AmministratoreController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class AmministratoreView {
 
@@ -61,4 +63,12 @@ public class AmministratoreView {
     }
 
     public Button getViewUserListButton() {return viewUserListButton;}
+
+    public void start(Stage stage, AmministratoreController controller) {
+        stage.setScene(this.getScene());
+        stage.setHeight(600); // imposta dimensioni desiderate
+        stage.setWidth(800);
+        stage.setTitle("Homepage amministratore");
+        stage.show();
+    }
 }

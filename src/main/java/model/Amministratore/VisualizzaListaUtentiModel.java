@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizzaListaUtentiModel {
-    private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
+    private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
     public List<Utente> getTuttiGliUtenti() {
         List<Utente> lista = new ArrayList<>();

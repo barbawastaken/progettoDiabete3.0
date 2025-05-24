@@ -8,17 +8,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import model.Amministratore.AmministratoreModel;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
+import view.Amministratore.AmministratoreView;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
-import java.util.List;
-
 public class VisualizzaListaUtentiController {
-    private VisualizzaListaUtentiModel model ;
-    private VisualizzaListaUtentiView view;
+    private final VisualizzaListaUtentiModel model ;
+    private final VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
@@ -37,6 +37,7 @@ public class VisualizzaListaUtentiController {
         tabella.setRowFactory(utenteTableView -> {
             TableRow<Utente> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
+
             //impostiamo un modifica utente
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
@@ -47,6 +48,7 @@ public class VisualizzaListaUtentiController {
                 ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
                 new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
             });
+
             // impostiamo il delete :)
             MenuItem eliminaItem = new MenuItem("Elimina utente");
             eliminaItem.setOnAction(event -> {
@@ -64,7 +66,25 @@ public class VisualizzaListaUtentiController {
                             .otherwise(contextMenu)
             );
 
+
             return row;
+        });
+
+        //imposto indietro button
+        view.getIndietroButton().setOnAction(e -> {
+            listaUtentiStage.close();
+
+            AmministratoreModel amministratoreModel = new AmministratoreModel();
+            AmministratoreView amministratoreView = new AmministratoreView();
+
+            try {
+                new AmministratoreController(amministratoreModel, amministratoreView, view.getStage());
+                // Nessun .start() qui, lo fa già il controller
+
+            } catch (Exception ex) {
+                System.out.println("Errore: " + ex.getMessage());
+                ex.printStackTrace(); // Aggiungo stack trace per debug
+            }
         });
     }
 
@@ -74,12 +94,14 @@ public class VisualizzaListaUtentiController {
         Stage modificaStage = new Stage();
         modificaView.start(modificaStage, utente, modificaController);
         // Quando la finestra viene chiusa, ricarica la tabella
-        //modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); // <-- ricarica la tabella
+        //modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); //ricarica la tabella
 
         modificaView.getSalvaButton().setOnAction(e -> modificaController.salvaModifiche(listaUtentiStage));
+
     }
 
     public void start(Stage stage) {
         view.start(stage, this); // chiama la view, passandole anche il controller
     }
+
 }

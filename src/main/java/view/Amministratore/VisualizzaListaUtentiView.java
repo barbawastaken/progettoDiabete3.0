@@ -4,6 +4,7 @@ import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,8 +14,13 @@ import model.Amministratore.Utente;
 
 public class VisualizzaListaUtentiView {
     private final TableView<Utente> tabellaUtenti = new TableView<>();
+    private final Button indietroButton = new Button("Indietro");
+
+    private Stage stage;
 
     public void start(Stage stage, VisualizzaListaUtentiController controller) {
+        this.stage=stage;
+
         // Imposta dimensioni minime per la TableView
         tabellaUtenti.setMinWidth(800);
         tabellaUtenti.setMinHeight(400);
@@ -75,12 +81,13 @@ public class VisualizzaListaUtentiView {
         // Carica gli utenti automaticamente
         controller.caricaUtenti(tabellaUtenti);
 
+
         // Rendi la tabella scrollabile orizzontalmente
         ScrollPane scrollPane = new ScrollPane(tabellaUtenti);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
-        VBox layout = new VBox(10, scrollPane);
+        VBox layout = new VBox(10, scrollPane, indietroButton);
         layout.setStyle("-fx-padding: 20");
 
         Scene scene = new Scene(layout, 1000, 600);
@@ -92,7 +99,9 @@ public class VisualizzaListaUtentiView {
         stage.setScene(scene);
         stage.show();
     }
-    public TableView<Utente> getTabellaUtenti() {
-        return tabellaUtenti;
-    }
+    public TableView<Utente> getTabellaUtenti() { return tabellaUtenti; }
+
+    public Button getIndietroButton() { return indietroButton;}
+
+    public Stage getStage(){ return stage;}
 }
