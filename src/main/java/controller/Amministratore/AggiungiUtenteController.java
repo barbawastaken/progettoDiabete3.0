@@ -40,7 +40,7 @@ public class AggiungiUtenteController {
     private TextField address;
 
     @FXML
-    private TextField city;
+    private TextField citta;
     @FXML
     private TextField number;
 
@@ -63,18 +63,33 @@ public class AggiungiUtenteController {
     private TextField cap;
 
     @FXML
-    private ToggleGroup ruolo;
-
-    @FXML
     private DatePicker birthday;
 
     @FXML
     private TextField telephone;
 
     @FXML
-    private void initialize() {
-        gender.getItems().addAll("MASCHIO", "FEMMINA");
+    private TextField phone;
+
+    private ToggleGroup ruolo;
+    private HashMap<String, String> diabetologi = new HashMap<>();
+
+    @FXML
+    private void initialize() throws SQLException {
+        AggiungiUtenteModel model = new AggiungiUtenteModel();
+
+        gender.getItems().addAll("Maschio", "Femmina");
         medicoCurante.getItems().addAll();
+        ruolo = new ToggleGroup();
+        paziente.setToggleGroup(ruolo);
+        diabetologo.setToggleGroup(ruolo);
+        amministratore.setToggleGroup(ruolo);
+
+        diabetologi = model.getDiabetologi();
+
+        for (String s : diabetologi.keySet()) {
+            medicoCurante.getItems().add(s);
+        }
     }
 
 
@@ -86,7 +101,7 @@ public class AggiungiUtenteController {
         email.setText("");
         password.setText("");
         address.setText("");
-        city.setText("");
+        citta.setText("");
         taxCode.setText("");
         address.setText("");
         cap.setText("");
@@ -94,14 +109,14 @@ public class AggiungiUtenteController {
     }
 
     @FXML
-    private void sendButtonPressed(){
+    private void sendButtonPressed() throws SQLException {
         AggiungiUtenteModel model = new AggiungiUtenteModel();
-        /*
+        RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
         model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
-                cap.getText(), city.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                number, telephone, userType, diabetologoSelezionato);
+                cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
+                number.getText(), telephone.getText(), selected.getText(), diabetologi.get(medicoCurante.getValue()));
 
-         */
+
     }
 
     public AggiungiUtenteController(){
