@@ -47,8 +47,8 @@ public class RilevazioneGlicemiaController {
         view.getResetButton().setOnAction(e -> {
 
             view.getQuantitaRilevazioneTextField().clear();
-            view.getMomentoGiornataField().cancelEdit();
-            view.getPrePostField().cancelEdit();
+            view.getMomentoGiornataField().setValue(null);
+            view.getPrePostField().setValue(null);
             view.getDataField().setValue(null);
 
         });
