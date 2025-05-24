@@ -35,6 +35,7 @@ public class AggiungiUtenteView {
     public RadioButton admin = new RadioButton("AMMINISTRATORE");
     public RadioButton diab = new RadioButton("DIABETOLOGO");
     public RadioButton utente = new RadioButton("PAZIENTE");
+    public RadioButton primario = new RadioButton("PRIMARIO");
 
     private VBox layout = new VBox(10);
     private HBox auxLayout = new HBox(10);
@@ -88,6 +89,7 @@ public class AggiungiUtenteView {
         admin.setToggleGroup(toggleGroup);
         diab.setToggleGroup(toggleGroup);
         utente.setToggleGroup(toggleGroup);
+        primario.setToggleGroup(toggleGroup);
 
         diab.setSelected(true);
 
@@ -107,7 +109,7 @@ public class AggiungiUtenteView {
                 capText, capField,
                 telephoneText, telephoneField,
                 emailText, emailField,
-                admin, diab, utente,
+                admin, diab, utente, primario,
                 diabetologoSelectionText, diabetologoSelection,
                 resetButton, sendButton
         );
