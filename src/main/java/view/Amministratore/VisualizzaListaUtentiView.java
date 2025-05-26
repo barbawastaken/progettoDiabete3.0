@@ -12,8 +12,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Amministratore.Utente;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VisualizzaListaUtentiView {
-    private final TableView<Utente> tabellaUtenti = new TableView<>();
+    private final List<Utente> tabellaUtenti = new ArrayList<>();
     private final Button indietroButton = new Button("Indietro");
 
     private Stage stage;
@@ -22,8 +25,7 @@ public class VisualizzaListaUtentiView {
         this.stage=stage;
 
         // Imposta dimensioni minime per la TableView
-        tabellaUtenti.setMinWidth(800);
-        tabellaUtenti.setMinHeight(400);
+
 
         // Creazione colonne della tabella
         TableColumn<Utente, String> colTaxCode = new TableColumn<>("Codice Fiscale");
@@ -42,7 +44,7 @@ public class VisualizzaListaUtentiView {
         colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
 
         TableColumn<Utente, String> colBirthDate = new TableColumn<>("Data di Nascita");
-        colBirthDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthDate().toString()));
+        colBirthDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthday().toString()));
 
         TableColumn<Utente, String> colAddress = new TableColumn<>("Indirizzo");
         colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
@@ -60,46 +62,19 @@ public class VisualizzaListaUtentiView {
         colGender.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGender()));
 
         TableColumn<Utente, String> colTelephone = new TableColumn<>("Telefono");
-        colTelephone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelephoneNumber()));
+        colTelephone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelephone()));
 
         TableColumn<Utente, String> colUserType = new TableColumn<>("Tipo Utente");
-        colUserType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUserType()));
+        colUserType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole()));
 
         TableColumn<Utente, String> colDiabetologo = new TableColumn<>("Diabetologo");
         colDiabetologo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDiabetologo()));
         
-        // Aggiunta delle colonne alla tabella
-        tabellaUtenti.getColumns().addAll(
-                colTaxCode, colPassword, colNome, colCognome, colEmail, colBirthDate,
-                colAddress, colNumber, colCity, colCap, colGender, colTelephone,
-                colUserType, colDiabetologo
-        );
-
-        // Imposta larghezza minima per ogni colonna
-        tabellaUtenti.getColumns().forEach(col -> col.setMinWidth(100));
 
         // Carica gli utenti automaticamente
         controller.caricaUtenti(tabellaUtenti);
 
-
-        // Rendi la tabella scrollabile orizzontalmente
-        ScrollPane scrollPane = new ScrollPane(tabellaUtenti);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-
-        VBox layout = new VBox(10, scrollPane, indietroButton);
-        layout.setStyle("-fx-padding: 20");
-
-        Scene scene = new Scene(layout, 1000, 600);
-
-        // Stage setup
-        stage.setMinWidth(1000);
-        stage.setMinHeight(600);
-        stage.setTitle("Visualizza Lista Utenti");
-        stage.setScene(scene);
-        stage.show();
     }
-    public TableView<Utente> getTabellaUtenti() { return tabellaUtenti; }
 
     public Button getIndietroButton() { return indietroButton;}
 

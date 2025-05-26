@@ -19,6 +19,8 @@ import view.Amministratore.AmministratoreView;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.util.List;
+
 public class VisualizzaListaUtentiController {
 
 
@@ -52,8 +54,9 @@ public class VisualizzaListaUtentiController {
 
     @FXML
     private TableColumn<Utente, String> numberColumn;
-    private final VisualizzaListaUtentiModel model ;
-    private final VisualizzaListaUtentiView view;
+
+    private  VisualizzaListaUtentiModel model;
+    private  VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 
     @FXML
@@ -90,18 +93,20 @@ public class VisualizzaListaUtentiController {
         List<Utente> utenti = model.getTuttiGliUtenti();
         this.caricaUtenti(utenti);
         tabella.setItems(FXCollections.observableList(utenti));
-    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage) {
-        this.model = model;
-        this.view = view;
-        this.listaUtentiStage = stage;
-        view.start(stage, this); // chiama view.start e caricaUtenti
+        }
 
+    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage)
+        {
+            this.model = model;
+            this.view = view;
+            this.listaUtentiStage = stage;
+            view.start(stage, this); // chiama view.start e caricaUtent
     }
 
     public VisualizzaListaUtentiController() {}
 
 
-    private void caricaUtenti(List<Utente> utenti) {
+    public void caricaUtenti(List<Utente> utenti) {
         VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
         ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
         tabella.setItems(listaOsservabile);
@@ -150,6 +155,7 @@ public class VisualizzaListaUtentiController {
             AmministratoreModel amministratoreModel = new AmministratoreModel();
             AmministratoreView amministratoreView = new AmministratoreView();
 
+            /*
             try {
                 new AmministratoreController(amministratoreModel, amministratoreView, view.getStage());
                 // Nessun .start() qui, lo fa già il controller
@@ -158,6 +164,9 @@ public class VisualizzaListaUtentiController {
                 System.out.println("Errore: " + ex.getMessage());
                 ex.printStackTrace(); // Aggiungo stack trace per debug
             }
+
+            */
+
         });
     }
 

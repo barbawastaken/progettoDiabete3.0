@@ -39,14 +39,14 @@ public class ModificaUtenteView {
         nomeField.setText(utente.getNome());
         cognomeField.setText(utente.getCognome());
         emailField.setText(utente.getEmail());
-        birthDatePicker.setValue(LocalDate.parse(utente.getBirthDate().toString()));
+        birthDatePicker.setValue(LocalDate.parse(utente.getBirthday().toString()));
         addressField.setText(utente.getAddress());
         numberField.setText(String.valueOf(utente.getNumber()));
         cityField.setText(utente.getCity());
         capField.setText(String.valueOf(utente.getCap()));
         genderField.setText(utente.getGender());
-        telephoneField.setText(utente.getTelephoneNumber());
-        userTypeField.setText(utente.getUserType());
+        telephoneField.setText(utente.getTelephone());
+        userTypeField.setText(utente.getRole());
         diabetologoField.setText(utente.getDiabetologo());
 
 
@@ -85,14 +85,14 @@ public class ModificaUtenteView {
         nomeField.setText(utente.getNome());
         cognomeField.setText(utente.getCognome());
         emailField.setText(utente.getEmail());
-        birthDatePicker.setValue(LocalDate.parse(utente.getBirthDate().toString()));
+        birthDatePicker.setValue(LocalDate.parse(utente.getBirthday().toString()));
         addressField.setText(utente.getAddress());
         numberField.setText(String.valueOf(utente.getNumber()));
         cityField.setText(utente.getCity());
         capField.setText(String.valueOf(utente.getCap()));
         genderField.setText(utente.getGender());
-        telephoneField.setText(utente.getTelephoneNumber());
-        userTypeField.setText(utente.getUserType());
+        telephoneField.setText(utente.getTelephone());
+        userTypeField.setText(utente.getRole());
         diabetologoField.setText(utente.getDiabetologo());
 
 
@@ -129,14 +129,14 @@ public class ModificaUtenteView {
     public String getNome() { return nomeField.getText(); }
     public String getCognome() { return cognomeField.getText(); }
     public String getEmail() { return emailField.getText(); }
-    public String getBirthDate() { return birthDatePicker.getValue().toString(); }
+    public String getBirthday() { return birthDatePicker.getValue().toString(); }
     public String getAddress() { return addressField.getText(); }
     public int getNumber() { return Integer.parseInt(numberField.getText()); }
     public String getCity() { return cityField.getText(); }
     public int getCap() { return Integer.parseInt(capField.getText()); }
     public String getGender() { return genderField.getText(); }
     public String getTelephone() { return telephoneField.getText(); }
-    public String getUserType() { return userTypeField.getText(); }
+    public String getRole() { return userTypeField.getText(); }
     public String getDiabetologo() { return diabetologoField.getText(); }
     public Button getSalvaButton() { return salvaButton; }
     public Stage getStage() { return stage; }

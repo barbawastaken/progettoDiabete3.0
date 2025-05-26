@@ -1,10 +1,16 @@
 package controller.Amministratore;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.AmministratoreModel;
+import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.AggiungiUtenteView;
 import view.Amministratore.AmministratoreView;
+import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.io.IOException;
 
@@ -41,7 +47,7 @@ public class AmministratoreController {
     public AmministratoreController(){
 
     }
-
+/*
     public AmministratoreController(AmministratoreModel model, AmministratoreView view, Stage loginStage) {
 
 
@@ -54,16 +60,17 @@ public class AmministratoreController {
         // Set up evento per il bottone
         view.getAddUserButton().setOnAction(e -> {
             // Crea la vista, il modello e il controller per Aggiungi Utente
+
+
             AggiungiUtenteModel aggiungiUtenteModel = new AggiungiUtenteModel();
             AggiungiUtenteView aggiungiUtenteView = new AggiungiUtenteView();
-            new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView, amministratoreStage);
-        });
+            new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView);
 
-        // Bottone visualizza lista utenti
-        view.getViewUserListButton().setOnAction(e -> {
-            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
-            VisualizzaListaUtentiView visualizzaListaUtentiView= new VisualizzaListaUtentiView();
-            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, amministratoreStage);
+
+
         });
+*/
+        // Bottone visualizza lista
+
     }
-}
+

@@ -34,14 +34,14 @@ public class ModificaUtenteModel {
             pstmt.setString(3, utente.getNome());
             pstmt.setString(4, utente.getCognome());
             pstmt.setString(5, utente.getEmail());
-            pstmt.setString(6, utente.getBirthDate().toString());
+            pstmt.setString(6, utente.getBirthday().toString());
             pstmt.setString(7, utente.getAddress());
             pstmt.setInt(8, utente.getNumber());
             pstmt.setString(9, utente.getCity());
             pstmt.setInt(10, utente.getCap());
             pstmt.setString(11, utente.getGender());
-            pstmt.setString(12, utente.getTelephoneNumber());
-            pstmt.setString(13, utente.getUserType());
+            pstmt.setString(12, utente.getTelephone());
+            pstmt.setString(13, utente.getRole());
             pstmt.setString(14, utente.getDiabetologo());
             pstmt.setString(15, vecchioTaxCode); // <-- importante!
 
@@ -55,7 +55,7 @@ public class ModificaUtenteModel {
             // Query loginTable
             pstmt2.setString(1, utente.getTaxCode());
             pstmt2.setString(2, utente.getPassword());
-            pstmt2.setString(3, utente.getUserType());
+            pstmt2.setString(3, utente.getRole());
             pstmt2.setString(4, vecchioTaxCode);
 
             rows = pstmt2.executeUpdate();
@@ -82,14 +82,14 @@ public class ModificaUtenteModel {
                 modificaUtenteView.getNome(),
                 modificaUtenteView.getCognome(),
                 modificaUtenteView.getEmail(),
-                java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
                 modificaUtenteView.getAddress(),
                 modificaUtenteView.getNumber(),
                 modificaUtenteView.getCity(),
                 modificaUtenteView.getCap(),
                 modificaUtenteView.getGender(),
                 modificaUtenteView.getTelephone(),
-                modificaUtenteView.getUserType(),
+                modificaUtenteView.getRole(),
                 modificaUtenteView.getDiabetologo()
         );
 

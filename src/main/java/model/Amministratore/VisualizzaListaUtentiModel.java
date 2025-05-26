@@ -70,14 +70,14 @@ public class VisualizzaListaUtentiModel {
                 stmt.setString(3, utente.getNome());
                 stmt.setString(4, utente.getCognome());
                 stmt.setString(5, utente.getEmail());
-                stmt.setString(6, utente.getBirthDate().toString());
+                stmt.setString(6, utente.getBirthday().toString());
                 stmt.setString(7, utente.getAddress());
                 stmt.setInt(8, utente.getNumber());
                 stmt.setString(9, utente.getCity());
                 stmt.setInt(10, utente.getCap());
                 stmt.setString(11, utente.getGender());
-                stmt.setString(12, utente.getTelephoneNumber());
-                stmt.setString(13, utente.getUserType());
+                stmt.setString(12, utente.getTelephone());
+                stmt.setString(13, utente.getRole());
                 stmt.setString(14, utente.getDiabetologo());
                 stmt.setString(15, oldTaxCode);
 

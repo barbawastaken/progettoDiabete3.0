@@ -36,7 +36,7 @@ public class AggiuntaSintomiController {
             PazienteView pazienteView = new PazienteView();
 
             try {
-                new PazienteController(taxCode, pazienteModel, pazienteView, aggiuntaSintomistage);
+                new PazienteController(taxCode, pazienteModel, pazienteView);
             } catch (Exception ex) {
                 System.out.println("Errore: " + ex.getMessage());
             }

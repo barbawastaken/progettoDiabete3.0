@@ -41,14 +41,14 @@ public class ModificaUtenteController {
                 modificaUtenteView.getNome(),
                 modificaUtenteView.getCognome(),
                 modificaUtenteView.getEmail(),
-                java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
                 modificaUtenteView.getAddress(),
                 modificaUtenteView.getNumber(),
                 modificaUtenteView.getCity(),
                 modificaUtenteView.getCap(),
                 modificaUtenteView.getGender(),
                 modificaUtenteView.getTelephone(),
-                modificaUtenteView.getUserType(),
+                modificaUtenteView.getRole(),
                 modificaUtenteView.getDiabetologo()
         );
 
@@ -63,14 +63,14 @@ public class ModificaUtenteController {
                     modificaUtenteView.getNome(),
                     modificaUtenteView.getCognome(),
                     modificaUtenteView.getEmail(),
-                    java.sql.Date.valueOf(modificaUtenteView.getBirthDate()),
+                    java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
                     modificaUtenteView.getAddress(),
                     modificaUtenteView.getNumber(),
                     modificaUtenteView.getCity(),
                     modificaUtenteView.getCap(),
                     modificaUtenteView.getGender(),
                     modificaUtenteView.getTelephone(),
-                    modificaUtenteView.getUserType(),
+                    modificaUtenteView.getRole(),
                     modificaUtenteView.getDiabetologo()
             );
 
