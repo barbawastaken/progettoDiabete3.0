@@ -57,9 +57,19 @@ public class LoginModel {
 
                         }
                         case "DIABETOLOGO" -> {
-                            DiabetologoModel model = new DiabetologoModel();
-                            DiabetologoView view = new DiabetologoView();
-                            //new DiabetologoController(model, view, loginStage);
+                            // Carica il file FXML associato all'interfaccia del diabetologo.
+                            // getClass().getResource(...) cerca il file nella cartella "resources/fxmlView".
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/diabetologo_view.fxml"));
+
+                            Parent root = loader.load(); // Carica il contenuto del file FXML e crea la struttura grafica
+                            // Recupera l'istanza del controller associato al file diabetologo_view.fxml.
+                            // Questo è il controller specificato con fx:controller nel file FXML.
+                            DiabetologoController diabetologoController = loader.getController();
+                            diabetologoController.setTaxCode(taxCode);
+                            Stage stage = new Stage();
+                            stage.setTitle("Diabetologo");
+                            stage.setScene(new Scene(root, 650, 500));
+                            stage.show();
                         }
                         case "AMMINISTRATORE" -> {
 

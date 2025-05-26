@@ -9,6 +9,16 @@ public class DiabetologoController {
     private DiabetologoModel diabetologoModel;
     private DiabetologoView diabetologoView;
 
+    private String taxCode;
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+    public DiabetologoController() {
+
+    }
+
     public DiabetologoController(DiabetologoModel diabetologoModel, DiabetologoView diabetologoView, Stage loginStage){
 
         this.diabetologoModel = diabetologoModel;
