@@ -1,8 +1,12 @@
 package controller.Amministratore;
 
+import controller.Paziente.PazienteController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
@@ -19,10 +23,12 @@ import view.Amministratore.AmministratoreView;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class VisualizzaListaUtentiController {
 
+    private Utente selectedUtente;
 
     @FXML
     private TableView<Utente> tabella;
@@ -72,7 +78,7 @@ public class VisualizzaListaUtentiController {
     private TableColumn<Utente, String> birthdayColumn;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -93,25 +99,7 @@ public class VisualizzaListaUtentiController {
         List<Utente> utenti = model.getTuttiGliUtenti();
         this.caricaUtenti(utenti);
         tabella.setItems(FXCollections.observableList(utenti));
-        }
 
-    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage)
-        {
-            this.model = model;
-            this.view = view;
-            this.listaUtentiStage = stage;
-            view.start(stage, this); // chiama view.start e caricaUtent
-    }
-
-    public VisualizzaListaUtentiController() {}
-
-
-    public void caricaUtenti(List<Utente> utenti) {
-        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
-        ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
-        tabella.setItems(listaOsservabile);
-
-        //Aggiungo un Context Menu per ogni riga presente nella tabella
         tabella.setRowFactory(utenteTableView -> {
             TableRow<Utente> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
@@ -126,6 +114,8 @@ public class VisualizzaListaUtentiController {
                 ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
                 new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
             });
+
+
 
             // impostiamo il delete :)
             MenuItem eliminaItem = new MenuItem("Elimina utente");
@@ -148,14 +138,86 @@ public class VisualizzaListaUtentiController {
             return row;
         });
 
+
+    }
+
+        @FXML
+        private void onEliminaClicked() {
+        model.rimuoviUtente(selectedUtente);
+        }
+
+        @FXML
+        private void onModificaClicked() {}
+
+    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage)
+        {
+            this.model = model;
+            this.view = view;
+            this.listaUtentiStage = stage;
+            view.start(stage, this); // chiama view.start e caricaUtent
+    }
+
+    public VisualizzaListaUtentiController() {}
+
+
+    public void caricaUtenti(List<Utente> utenti) {
+        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
+        ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
+        tabella.setItems(listaOsservabile);
+
+        //Aggiungo un Context Menu per ogni riga presente nella tabella
+        //COMMENTATO: non serve più dopo inserimento fxml
+
+        /*
+        tabella.setRowFactory(utenteTableView -> {
+            TableRow<Utente> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            //impostiamo un modifica utente
+            MenuItem modificaItem = new MenuItem("Modifica utente");
+            modificaItem.setOnAction(event -> {
+                Utente selected = row.getItem();
+                //apriFinestraModifica(selected);
+
+                ModificaUtenteModel modificaUtenteModel = new ModificaUtenteModel();
+                ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
+                new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
+            });
+
+
+
+            // impostiamo il delete :)
+            MenuItem eliminaItem = new MenuItem("Elimina utente");
+            eliminaItem.setOnAction(event -> {
+                Utente selected = row.getItem();
+                if (selected != null) {
+                    model.rimuoviUtente(selected); // Aggiorna anche il DB
+                    tabella.getItems().remove(selected); // Rimuovi dalla tabella
+                }
+            });
+            contextMenu.getItems().addAll(modificaItem, eliminaItem);
+
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu)
+            );
+
+
+            return row;
+        });
+
+         */
+
         //imposto indietro button
+        /*
         view.getIndietroButton().setOnAction(e -> {
             listaUtentiStage.close();
 
             AmministratoreModel amministratoreModel = new AmministratoreModel();
             AmministratoreView amministratoreView = new AmministratoreView();
 
-            /*
+
             try {
                 new AmministratoreController(amministratoreModel, amministratoreView, view.getStage());
                 // Nessun .start() qui, lo fa già il controller
@@ -165,10 +227,15 @@ public class VisualizzaListaUtentiController {
                 ex.printStackTrace(); // Aggiungo stack trace per debug
             }
 
-            */
+
+
 
         });
+
+
+         */
     }
+
 
     private void apriFinestraModifica(Utente utente) {
         ModificaUtenteView modificaView = new ModificaUtenteView(utente);
