@@ -1,8 +1,15 @@
 package controller.Diabetologo;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import model.Diabetologo.DiabetologoModel;
 import view.Diabetologo.DiabetologoView;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class DiabetologoController {
 
@@ -16,6 +23,38 @@ public class DiabetologoController {
     }
 
     public DiabetologoController() {
+
+    }
+
+    @FXML
+    public void handleLogout(javafx.event.ActionEvent event) {
+        try {
+            // Carica il file FXML del login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+
+            // Mi prendo la finestra corrente dal pulsante;
+            // event praticamente viene passato automaticamente da FXML come parametro quindi
+            // lo puoi usare per ottenere lo Stage e cambiare scena
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta la nuova scena con quella del login
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void isVisualizzaPazientiClicked() {
+
+    }
+
+    @FXML
+    public void isVisualizzaNotificheClicked() {
 
     }
 

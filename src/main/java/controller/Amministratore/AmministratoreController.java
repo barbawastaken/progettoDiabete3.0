@@ -2,6 +2,7 @@ package controller.Amministratore;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,10 +13,33 @@ import view.Amministratore.AggiungiUtenteView;
 import view.Amministratore.AmministratoreView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 
 public class AmministratoreController {
+
+    @FXML
+    public void handleLogout(javafx.event.ActionEvent event) { // only god knows how it works (apparte gli scherzi senza l'import lungo non funziona non so il perchè)
+        try {
+            // Carica il file FXML del login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+
+            // Mi prendo la finestra corrente dal pulsante;
+            // event praticamente viene passato automaticamente da FXML come parametro quindi
+            // lo puoi usare per ottenere lo Stage e cambiare scena
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta la nuova scena con quella del login
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void isInserisciUtenteClicked() throws IOException {
