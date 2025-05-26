@@ -36,8 +36,8 @@ public class RilevazioneGlicemiaController {
 
    @FXML
    private void initialize() {
-        prepost.getItems().addAll("pre", "post");
-        pastoGlicemia.getItems().addAll("Colazione<", "Pranzo", "Cena");
+        prepost.getItems().addAll("PRE", "POST");
+        pastoGlicemia.getItems().addAll("Colazione", "Pranzo", "Cena");
    }
 
     @FXML

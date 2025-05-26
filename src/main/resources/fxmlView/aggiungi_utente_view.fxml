@@ -53,6 +53,7 @@
                   <Text fx:id="capError" fill="#ff2200" layoutX="310.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il cap deve contenere 5 numeri" />
                   <Text fx:id="emailError" fill="#ff2200" layoutX="13.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'email deve essere di un formato corretto" />
                   <Text fx:id="telephoneError" fill="#ff2200" layoutX="282.0" layoutY="487.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il numero deve essere composto da 10 cifre" />
+                  <Text fx:id="userAddedText" fill="#4fbc14" layoutX="398.0" layoutY="768.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dati inseriti correttamente!" />
                </children>
             </AnchorPane>
         </content>

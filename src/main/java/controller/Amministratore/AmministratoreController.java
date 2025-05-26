@@ -51,14 +51,6 @@ public class AmministratoreController {
 
         Stage amministratoreStage = new Stage();
 
-        // Set up evento per il bottone
-        view.getAddUserButton().setOnAction(e -> {
-            // Crea la vista, il modello e il controller per Aggiungi Utente
-            AggiungiUtenteModel aggiungiUtenteModel = new AggiungiUtenteModel();
-            AggiungiUtenteView aggiungiUtenteView = new AggiungiUtenteView();
-            new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView, amministratoreStage);
-        });
-
 
 
         amministratoreStage.setScene(view.getScene());
