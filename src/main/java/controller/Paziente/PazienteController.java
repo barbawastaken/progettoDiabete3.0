@@ -1,6 +1,7 @@
 package controller.Paziente;
 
 import controller.LoginController;
+import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.LoginModel;
+import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
 import view.LoginView;
+import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
 import view.Paziente.PazienteView;
 import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
 
@@ -70,6 +73,19 @@ public class PazienteController {
             } catch (Exception ex) {
                 System.out.println("Errore: " + ex.getMessage());
             }
+        });
+
+        pazienteView.getInserimentoSintomiButton().setOnAction(e -> {
+
+            AggiuntaSintomiModel aggiuntaSintomiModel = new AggiuntaSintomiModel();
+            AggiuntaSintomiView aggiuntaSintomiView = new AggiuntaSintomiView();
+
+            try {
+                new AggiuntaSintomiController(taxCode, aggiuntaSintomiModel, aggiuntaSintomiView, pazienteStage);
+            } catch (Exception ex) {
+                System.out.println("Errore: " + ex.getMessage());
+            }
+
         });
     }
 }

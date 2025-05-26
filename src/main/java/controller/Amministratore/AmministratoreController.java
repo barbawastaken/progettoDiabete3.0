@@ -1,9 +1,5 @@
 package controller.Amministratore;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.AmministratoreModel;
@@ -51,19 +47,23 @@ public class AmministratoreController {
 
         Stage amministratoreStage = new Stage();
 
+        //Qui jack
+        loginStage.close(); // chiudi la finestra precedente
+        view.start(amministratoreStage, this);
 
+        // Set up evento per il bottone
+        view.getAddUserButton().setOnAction(e -> {
+            // Crea la vista, il modello e il controller per Aggiungi Utente
+            AggiungiUtenteModel aggiungiUtenteModel = new AggiungiUtenteModel();
+            AggiungiUtenteView aggiungiUtenteView = new AggiungiUtenteView();
+            new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView, amministratoreStage);
+        });
 
-        amministratoreStage.setScene(view.getScene());
-        amministratoreStage.setHeight(loginStage.getHeight());
-        amministratoreStage.setWidth(loginStage.getWidth());
-        amministratoreStage.setX(loginStage.getX());
-        amministratoreStage.setY(loginStage.getY());
-        amministratoreStage.alwaysOnTopProperty();
-        amministratoreStage.setMinHeight(320);
-        amministratoreStage.setMinWidth(240);
-        amministratoreStage.setTitle("Homepage amministratore");
-
-        loginStage.close();
-        amministratoreStage.show();
+        // Bottone visualizza lista utenti
+        view.getViewUserListButton().setOnAction(e -> {
+            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
+            VisualizzaListaUtentiView visualizzaListaUtentiView= new VisualizzaListaUtentiView();
+            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, amministratoreStage);
+        });
     }
 }
