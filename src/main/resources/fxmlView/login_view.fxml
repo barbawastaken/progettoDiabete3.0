@@ -2,13 +2,14 @@
 
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500" prefWidth="650" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane fx:id="mainPane" prefHeight="500" prefWidth="650" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController" id="mainPane">
     <children>
-           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff9c1f" height="463.0" layoutX="23.0" layoutY="19.0" stroke="BLACK" strokeType="INSIDE" width="293.0" />
+           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="463.0" layoutX="23.0" layoutY="19.0" stroke="BLACK" strokeType="INSIDE" width="293.0" />
            <Group layoutX="100.0" layoutY="100.0" />
            <TextField fx:id="taxCodeField" layoutX="88.0" layoutY="167.0" />
            <TextField fx:id="passwordField" layoutX="88.0" layoutY="237.0" />
@@ -24,5 +25,19 @@
            </Text>
            <Button layoutX="88.0" layoutY="309.0" mnemonicParsing="false" onAction="#onResetPressed" text="Reset" />
            <Button layoutX="190.0" layoutY="309.0" mnemonicParsing="false" onAction="#onLoginPressed" text="Accedi" />
+      <AnchorPane layoutX="316.0" layoutY="15.0" prefHeight="469.0" prefWidth="321.0">
+         <children>
+            <ImageView fitHeight="415.0" fitWidth="322.0" layoutX="1.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logoImage.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" ellipsisString="" layoutX="87.0" layoutY="73.0" prefHeight="52.0" prefWidth="150.0" text="Welcome Back" textAlignment="CENTER">
+         <font>
+            <Font name="Book Antiqua" size="19.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

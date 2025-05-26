@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class LoginView {
        stage.setScene(new Scene(root, 650, 500));
        stage.setTitle("Login");
        stage.show();
+
     }
 
 
