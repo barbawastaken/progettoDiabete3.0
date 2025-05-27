@@ -46,58 +46,58 @@ public class AggiungiUtenteModel {
 
 
         try {
-                Connection conn = DriverManager.getConnection(URL);
-                conn.setAutoCommit(false);
-                try(
-                        PreparedStatement pstmt = conn.prepareStatement(addUserQuery);
-                        PreparedStatement pstmt2 = conn.prepareStatement(addLoginQuery);) {
-                    HashMap<String, String> diabetologi = getDiabetologi();
-                    System.out.println("Connesso");
-                    pstmt.setString(1, taxCode);
-                    pstmt.setString(2, password);
-                    pstmt.setString(3, nome);
-                    pstmt.setString(4, cognome);
-                    pstmt.setString(5, email);
-                    pstmt.setString(6, birthday.toString());
-                    pstmt.setString(7, address);
-                    pstmt.setString(8, number);
-                    pstmt.setString(9, city);
-                    pstmt.setString(10, cap);
-                    pstmt.setString(11, gender);
-                    pstmt.setString(12, telephone);
-                    pstmt.setString(13, userType);
-                    if(diabetologoSelezionato != null) {
-                        pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
-                    } else{
-                        pstmt.setString(14, null);
-                    }
+            Connection conn = DriverManager.getConnection(URL);
+            conn.setAutoCommit(false);
+            try(
+                    PreparedStatement pstmt = conn.prepareStatement(addUserQuery);
+                    PreparedStatement pstmt2 = conn.prepareStatement(addLoginQuery);) {
+                HashMap<String, String> diabetologi = getDiabetologi();
+                System.out.println("Connesso");
+                pstmt.setString(1, taxCode);
+                pstmt.setString(2, password);
+                pstmt.setString(3, nome);
+                pstmt.setString(4, cognome);
+                pstmt.setString(5, email);
+                pstmt.setString(6, birthday.toString());
+                pstmt.setString(7, address);
+                pstmt.setString(8, number);
+                pstmt.setString(9, city);
+                pstmt.setString(10, cap);
+                pstmt.setString(11, gender);
+                pstmt.setString(12, telephone);
+                pstmt.setString(13, userType);
+                if(diabetologoSelezionato != null) {
+                    pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
+                } else{
+                    pstmt.setString(14, null);
+                }
 
-                    System.out.println("Siamo sull'execute update");
-                    pstmt.executeUpdate();
-                    System.out.println("Utente aggiunto!");
+                System.out.println("Siamo sull'execute update");
+                pstmt.executeUpdate();
+                System.out.println("Utente aggiunto!");
 
-                    pstmt2.setString(1, taxCode);
-                    pstmt2.setString(2, password);
-                    pstmt2.setString(3, userType);
-                    pstmt2.executeUpdate();
-                    conn.commit();
+                pstmt2.setString(1, taxCode);
+                pstmt2.setString(2, password);
+                pstmt2.setString(3, userType);
+                pstmt2.executeUpdate();
+                conn.commit();
 
-                    System.out.println("Login aggiunto!");
-                }catch (SQLException e) {
-                    try {
-                        conn.rollback();
-                        System.err.println("rollback eseguito");
-                    } catch (SQLException rollback) {
+                System.out.println("Login aggiunto!");
+            }catch (SQLException e) {
+                try {
+                    conn.rollback();
+                    System.err.println("rollback eseguito");
+                } catch (SQLException rollback) {
 
-                        rollback.printStackTrace();
-                    }
-                    System.err.println("Errore durante inserimento login:");
-                    e.printStackTrace();
+                    rollback.printStackTrace();
+                }
+                System.err.println("Errore durante inserimento login:");
+                e.printStackTrace();
             }
 
 
 
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

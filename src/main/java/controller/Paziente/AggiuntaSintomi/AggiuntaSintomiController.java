@@ -1,16 +1,46 @@
 package controller.Paziente.AggiuntaSintomi;
 
 import controller.Paziente.PazienteController;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 import model.Paziente.PazienteModel;
 import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
 import view.Paziente.PazienteView;
 
+
+
+
 public class AggiuntaSintomiController {
 
     AggiuntaSintomiModel model;
     AggiuntaSintomiView view;
+
+    @FXML
+    private TextField other;
+    @FXML
+    private Text otherText;
+    @FXML
+    private ComboBox<String> symptoms;
+    @FXML
+    private Text symptomsText;
+    @FXML
+    private TextArea otherSpecifications;
+    @FXML
+    private Text otherSpecificationsText;
+
+    @FXML
+    private void initialize() {
+        model = new AggiuntaSintomiModel();
+
+
+
+    }
+
 
     public AggiuntaSintomiController(String taxCode, AggiuntaSintomiModel model, AggiuntaSintomiView view, Stage pazienteStage) {
 

@@ -1,6 +1,8 @@
 package controller.Amministratore;
 
-import javafx.scene.control.Alert;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
@@ -8,12 +10,105 @@ import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.time.LocalDate;
+
 public class ModificaUtenteController {
-    private final ModificaUtenteView modificaUtenteView;
-    private final Utente utente;
+    private ModificaUtenteView modificaUtenteView;
+    private Utente utente;
     private  VisualizzaListaUtentiModel model;
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
+
+    @FXML
+    private ComboBox<String> gender;
+
+    @FXML
+    private TextField nome;
+
+    @FXML
+    private TextField cognome;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private TextField address;
+
+    @FXML
+    private TextField citta;
+    @FXML
+    private TextField number;
+
+    @FXML
+    private TextField taxCode;
+
+    @FXML
+    private RadioButton paziente;
+
+    @FXML
+    private RadioButton diabetologo;
+
+    @FXML
+    private RadioButton amministratore;
+
+    @FXML
+    private ComboBox<String> medicoCurante;
+
+    @FXML
+    private TextField cap;
+
+    @FXML
+    private DatePicker birthday;
+
+    @FXML
+    private TextField telephone;
+
+    @FXML
+    private Text taxCodeError;
+
+    @FXML
+    private Text numberError;
+
+    @FXML
+    private Text telephoneError;
+
+    @FXML
+    private Text emailError;
+
+    @FXML
+    private Text capError;
+
+    @FXML
+    private Text birthdayError;
+
+    @FXML
+    private Text genderError;
+
+    @FXML
+    private Text medicoCuranteText;
+
+    @FXML
+    private Text userAddedText;
+
+    @FXML
+    private void initialize(){
+        nome.setText(utente.getNome());
+        cognome.setText(utente.getCognome());
+        email.setText(utente.getEmail());
+        password.setText(utente.getPassword());
+        address.setText(utente.getAddress());
+        birthday.setValue(LocalDate.parse(utente.getBirthday().toString()));
+        gender.setValue(utente.getGender());
+        telephone.setText(utente.getTelephone());
+        taxCode.setText(utente.getTaxCode());
+        cap.setText(String.valueOf(utente.getCap()));
+
+
+    }
+
 
     public ModificaUtenteController(ModificaUtenteView modificaUtenteView, Utente utente, VisualizzaListaUtentiModel model, Stage listaUtentiStage) {
         this.modificaUtenteView = modificaUtenteView;
@@ -22,6 +117,9 @@ public class ModificaUtenteController {
         this.listaUtentiStage = listaUtentiStage;
     }
 
+    public ModificaUtenteController(){
+
+    }
     public ModificaUtenteController(ModificaUtenteModel modificaUtenteModel, ModificaUtenteView modificaUtenteView, Utente selezionato, Stage visualizzaUtentiStage){
 
         this.modificaUtenteView = modificaUtenteView;
@@ -92,5 +190,10 @@ public class ModificaUtenteController {
             alert.showAndWait();
         }
     }
+
+
+    public void setUtente(Utente utente){
+        this.utente = utente;
     }
+}
 

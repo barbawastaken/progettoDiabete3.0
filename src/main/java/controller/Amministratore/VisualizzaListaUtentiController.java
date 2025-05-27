@@ -105,6 +105,7 @@ public class VisualizzaListaUtentiController {
             ContextMenu contextMenu = new ContextMenu();
 
             //impostiamo un modifica utente
+
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
@@ -112,7 +113,15 @@ public class VisualizzaListaUtentiController {
 
                 ModificaUtenteModel modificaUtenteModel = new ModificaUtenteModel();
                 ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
+
                 new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
+
+
+
+
+
+
+
             });
 
 
