@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.VisualizzaPazientiController">
+
+    <children>
+        <ScrollPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+                <TableView fx:id="tabella">
+                    <columns>
+                        <TableColumn fx:id="taxCodeColumn" prefWidth="75.0" text="Codice Fiscale" />
+                        <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Nome" />
+                        <TableColumn fx:id="cognomeColumn" prefWidth="75" text="Cognome" />
+                        <TableColumn fx:id="genderColumn" prefWidth="75" text="Sesso" />
+                        <TableColumn fx:id="birthdayColumn" prefWidth="75" text="Data di Nascita" />
+                        <TableColumn fx:id="passwordColumn" prefWidth="75" text="Password" />
+                        <TableColumn fx:id="addressColumn" prefWidth="75" text="Via" />
+                        <TableColumn fx:id="numberColumn" prefWidth="150" text="Numero Civico" />
+                        <TableColumn fx:id="capColumn" prefWidth="75" text="CAP" />
+                        <TableColumn fx:id="cityColumn" prefWidth="75" text="Città" />
+                        <TableColumn fx:id="emailColumn" prefWidth="75" text="email" />
+                        <TableColumn fx:id="telephoneColumn" prefWidth="75" text="Cellulare" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

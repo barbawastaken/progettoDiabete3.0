@@ -49,7 +49,18 @@ public class DiabetologoController {
     }
 
     @FXML
-    public void isVisualizzaPazientiClicked() {
+    public void isVisualizzaPazientiClicked() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_pazienti_view.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Visualizza Pazienti");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

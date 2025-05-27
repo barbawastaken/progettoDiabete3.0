@@ -19,7 +19,7 @@
                     <TextField fx:id="taxCodeField" prefHeight="26.0" prefWidth="24.0" />
 
                     <Label text="Password" />
-                    <TextField fx:id="passwordField" />
+                    <PasswordField fx:id="passwordField" />
 
                     <HBox alignment="CENTER" spacing="10">
                         <Button onAction="#onResetPressed" text="Reset" />
