@@ -42,6 +42,17 @@ public class PazienteController {
 
     }
 
+    @FXML
+    private void onAddSymptomsClicked() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiunta_sintomi_view.fxml"));
+        Parent root = loader.load();
+        AggiuntaSintomiController controller = loader.getController();
+        controller.setTaxCode(taxCode);
+        Stage stage = new Stage();
+        stage.setTitle("Aggiunta sintomi");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     public PazienteController(){
 

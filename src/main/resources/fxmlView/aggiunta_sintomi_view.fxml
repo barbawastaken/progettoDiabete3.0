@@ -4,14 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController">
    <children>
-      <ComboBox fx:id="symptoms" layoutX="86.0" layoutY="187.0" prefWidth="150.0" />
-      <Text fx:id="symptomsText" layoutX="86.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomi Principali:" />
-      <TextField fx:id="other" layoutX="86.0" layoutY="257.0" />
-      <Text fx:id="otherText" layoutX="86.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altro:" />
+      <ComboBox fx:id="symptoms" layoutX="61.0" layoutY="123.0" prefWidth="150.0" />
+      <Text fx:id="symptomsText" layoutX="61.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomi Principali:" />
+      <TextField fx:id="other" layoutX="61.0" layoutY="167.0" />
+      <Text fx:id="otherText" layoutX="61.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altro:" />
       <TextArea fx:id="otherSpecifications" layoutX="321.0" layoutY="167.0" prefHeight="144.0" prefWidth="205.0" />
       <Text fx:id="otherSpecificationsText" layoutX="321.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altre informazioni:" />
+      <Button layoutX="404.0" layoutY="350.0" mnemonicParsing="false" onAction="#onResetClicked" text="Reset" />
+      <Button layoutX="496.0" layoutY="350.0" mnemonicParsing="false" onAction="#onSendClicked" text="Invia" />
+      <DatePicker fx:id="relevationDate" layoutX="61.0" layoutY="257.0" />
+      <Text layoutX="64.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Rilevazione" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package model.Paziente.AggiuntaSintomi;
 
+import model.Amministratore.Utente;
 import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
 
 import java.sql.*;
@@ -10,13 +11,15 @@ public class AggiuntaSintomiModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
-    public int aggiungiSintomi(AggiuntaSintomiView view, String taxcode){       //String taxCode, String sintomoPrincipale, String altriSintomiSpecificati, LocalDate dataAggiuntaSintomo
+    public int aggiungiSintomi(String symptom, String otherSpecifications, LocalDate relevationDate, String taxcode){       //String taxCode, String sintomoPrincipale, String altriSintomiSpecificati, LocalDate dataAggiuntaSintomo
 
-        String sintomoPrincipale = view.getSintomiPrincipaliComboBox().getValue();
+        //String sintomoPrincipale = view.getSintomiPrincipaliComboBox().getValue();
+        String sintomoPrincipale = symptom;
+
         if(sintomoPrincipale==null){ sintomoPrincipale = "";}
 
-        String altriSintomiSpecificati = view.getSpecificaAltroField().getText();
-        LocalDate dataAggiuntaSintomo = view.getDataRilevazioneSintomoPicker().getValue();
+        String altriSintomiSpecificati = otherSpecifications; //--> appena si ha tempo bisogna togliere queste variabili e usare i parametri
+        LocalDate dataAggiuntaSintomo = relevationDate;        //-->
         if(sintomoPrincipale.isEmpty() && altriSintomiSpecificati.isEmpty()){ return 1; }
 
         if(dataAggiuntaSintomo == null || dataAggiuntaSintomo.isAfter(LocalDate.now())){ return 2; }

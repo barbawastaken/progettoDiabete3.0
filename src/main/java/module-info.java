@@ -11,6 +11,7 @@ module org.example.demo {
     opens model.Amministratore to javafx.base;
     exports controller.Diabetologo to javafx.fxml;
     opens controller.Diabetologo to javafx.fxml;
+    opens controller.Paziente.AggiuntaSintomi to javafx.fxml;
 
 
     exports HomePages;

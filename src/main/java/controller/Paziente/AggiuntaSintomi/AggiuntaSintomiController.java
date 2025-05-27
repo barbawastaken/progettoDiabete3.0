@@ -2,12 +2,10 @@ package controller.Paziente.AggiuntaSintomi;
 
 import controller.Paziente.PazienteController;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import model.Amministratore.Utente;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 import model.Paziente.PazienteModel;
 import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
@@ -17,6 +15,7 @@ public class AggiuntaSintomiController {
 
     AggiuntaSintomiModel model;
     AggiuntaSintomiView view;
+    String taxCode;
 
     @FXML
     private TextField other;
@@ -34,11 +33,51 @@ public class AggiuntaSintomiController {
     @FXML
     private void initialize() {
         model = new AggiuntaSintomiModel();
+        symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
+        other.setVisible(false);
+        otherText.setVisible(false);
+        other.setManaged(false);
+        otherText.setManaged(false);
 
 
+        //model.aggiungiSintomi()
 
     }
 
+    @FXML
+    private DatePicker relevationDate;
+
+    @FXML
+    private void onSendClicked(){
+        int aggiuntaSintomi;
+        if(symptoms.getValue().isEmpty()){
+            aggiuntaSintomi = model.aggiungiSintomi(other.getText(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
+        }else{
+            aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
+        }
+
+
+        if(aggiuntaSintomi == 0) {
+
+            System.out.println("Valori inseriti correttamente");
+
+            //PazienteModel pazienteModel = new PazienteModel();
+            //PazienteView pazienteView = new PazienteView();
+            //new PazienteController(taxCode, pazienteModel, pazienteView);
+
+        } else { checkOutput(aggiuntaSintomi); }
+
+    }
+    @FXML
+    private void onResetClicked(){
+
+        symptoms.setValue(null);
+        other.setText("");
+        otherSpecifications.setText("");
+        relevationDate.setValue(null);
+    }
+
+    public AggiuntaSintomiController() {}
 
     public AggiuntaSintomiController(String taxCode, AggiuntaSintomiModel model, AggiuntaSintomiView view, Stage pazienteStage) {
 
@@ -72,25 +111,11 @@ public class AggiuntaSintomiController {
 
         view.getResetButton().setOnAction(e -> {
 
-            view.getSintomiPrincipaliComboBox().setValue(null);
-            view.getSpecificaAltroField().setText("");
-            view.getDataRilevazioneSintomoPicker().setValue(null);
 
         });
 
         view.getConfermaButton().setOnAction(e -> {
 
-            int aggiuntaSintomi = model.aggiungiSintomi(view, taxCode);
-
-            if(aggiuntaSintomi == 0) {
-
-                System.out.println("Valori inseriti correttamente");
-
-                PazienteModel pazienteModel = new PazienteModel();
-                PazienteView pazienteView = new PazienteView();
-                new PazienteController(taxCode, pazienteModel, pazienteView, aggiuntaSintomistage);
-
-            } else { checkOutput(aggiuntaSintomi); }
 
         });
 
@@ -128,5 +153,9 @@ public class AggiuntaSintomiController {
         alert.setHeaderText(null); // oppure "Attenzione!"
         alert.setContentText(messaggio);
         alert.showAndWait();
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
     }
 }
