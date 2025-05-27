@@ -1,6 +1,7 @@
 package controller.Paziente.AggiuntaSintomi;
 
 import controller.Paziente.PazienteController;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 import model.Paziente.PazienteModel;
@@ -50,5 +51,55 @@ public class AggiuntaSintomiController {
 
         });
 
+        view.getConfermaButton().setOnAction(e -> {
+
+            int aggiuntaSintomi = model.aggiungiSintomi(view, taxCode);
+
+            if(aggiuntaSintomi == 0) {
+
+                System.out.println("Valori inseriti correttamente");
+
+                PazienteModel pazienteModel = new PazienteModel();
+                PazienteView pazienteView = new PazienteView();
+                new PazienteController(taxCode, pazienteModel, pazienteView, aggiuntaSintomistage);
+
+            } else { checkOutput(aggiuntaSintomi); }
+
+        });
+
+    }
+
+    private void checkOutput(int aggiuntaSintomi) {
+
+        view.getSintomiPrincipaliComboBox().setValue("");
+        view.getSpecificaAltroField().setText("");
+        view.getDataRilevazioneSintomoPicker().setValue(null);
+
+        if(aggiuntaSintomi == 1) {
+
+            messaggioErrore("Deve essere specificato un sintomo!");
+
+        } else if(aggiuntaSintomi == 2) {
+
+            messaggioErrore("La data deve essere valida!");
+
+        } else if(aggiuntaSintomi == 3) {
+
+            messaggioErrore("e' gia' presente una aggiunta identica dello stesso utente!");
+
+        } else if(aggiuntaSintomi == 4) {
+
+            messaggioErrore("Errore di memorizzazione dei dati! Riprovare.");
+
+        }
+
+    }
+
+    public void messaggioErrore(String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore!!!");
+        alert.setHeaderText(null); // oppure "Attenzione!"
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
 }

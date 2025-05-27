@@ -31,7 +31,7 @@ public class RilevazioneGlicemiaModel {
 
                 if(momentoGiornata.isEmpty() || prePost.isEmpty() || data.toString().isEmpty()) { return 4; }
 
-                System.out.println(rs.getString("data") + " " + LocalDate.now().toString());
+                //System.out.println(rs.getString("data") + " " + LocalDate.now().toString());
 
             }
 
