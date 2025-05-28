@@ -18,12 +18,12 @@ public class Utente {
     private final String telephoneNumber;
     private final String ruolo;
     private final String diabetologo;
-    private final float weight;
-    private final float height;
+    private final double weight;
+    private final double height;
 
     public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address,
                   int number, String city, int cap, String countryOfResidence, String gender, String telephoneNumber, String ruolo,
-                  String diabetologo, float weight, float height) {
+                  String diabetologo, double weight, double height) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -58,8 +58,8 @@ public class Utente {
     public String getTelephone() { return telephoneNumber; }
     public String getDiabetologo() { return diabetologo; }
     public String getRole(){return ruolo; }
-    public float getWeight(){return weight; }
-    public float getHeight(){return height; }
+    public double getWeight(){return weight; }
+    public double getHeight(){return height; }
 
 
 }

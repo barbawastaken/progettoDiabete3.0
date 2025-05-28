@@ -19,8 +19,8 @@ public class ModificaUtenteModel {
 
         Utente utente = utenteModificato(modificaUtenteView);
 
-        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, " +
-                "telephoneNumber=?, userType=?, diabetologo=? WHERE taxCode=?";
+        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, firstName=?, lastName=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, countryOfResidence=?, gender=?, " +
+                "telephoneNumber=?, userType=?, diabetologo=?, weight=?, height=? WHERE taxCode=?";
         String updateUtenteLogin = "UPDATE loginTable SET taxCode=?, password=?, userType=? WHERE taxCode=?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -39,11 +39,14 @@ public class ModificaUtenteModel {
             pstmt.setInt(8, utente.getNumber());
             pstmt.setString(9, utente.getCity());
             pstmt.setInt(10, utente.getCap());
-            pstmt.setString(11, utente.getGender());
-            pstmt.setString(12, utente.getTelephone());
-            pstmt.setString(13, utente.getRole());
-            pstmt.setString(14, utente.getDiabetologo());
-            pstmt.setString(15, vecchioTaxCode); // <-- importante!
+            pstmt.setString(11, utente.getCountryOfResidence());
+            pstmt.setString(12, utente.getGender());
+            pstmt.setString(13, utente.getTelephone());
+            pstmt.setString(14, utente.getRole());
+            pstmt.setString(15, utente.getDiabetologo());
+            pstmt.setDouble(16,utente.getWeight());
+            pstmt.setDouble(17,utente.getHeight());
+            pstmt.setString(18, vecchioTaxCode); // <-- importante!
 
             int rows = pstmt.executeUpdate();
             if (rows == 0) {
@@ -87,10 +90,13 @@ public class ModificaUtenteModel {
                 modificaUtenteView.getNumber(),
                 modificaUtenteView.getCity(),
                 modificaUtenteView.getCap(),
+                modificaUtenteView.getCountryOfResidence(),
                 modificaUtenteView.getGender(),
                 modificaUtenteView.getTelephone(),
                 modificaUtenteView.getRole(),
-                modificaUtenteView.getDiabetologo()
+                modificaUtenteView.getDiabetologo(),
+                modificaUtenteView.getWeight(),
+                modificaUtenteView.getHeight()
         );
 
     }

@@ -107,6 +107,7 @@ public class ModificaUtenteController {
         cap.setText(String.valueOf(utente.getCap()));
 
 
+
     }
 
 
@@ -144,10 +145,13 @@ public class ModificaUtenteController {
                 modificaUtenteView.getNumber(),
                 modificaUtenteView.getCity(),
                 modificaUtenteView.getCap(),
+                modificaUtenteView.getCountryOfResidence(),
                 modificaUtenteView.getGender(),
                 modificaUtenteView.getTelephone(),
                 modificaUtenteView.getRole(),
-                modificaUtenteView.getDiabetologo()
+                modificaUtenteView.getDiabetologo(),
+                modificaUtenteView.getWeight(),
+                modificaUtenteView.getHeight()
         );
 
     }
@@ -166,10 +170,13 @@ public class ModificaUtenteController {
                     modificaUtenteView.getNumber(),
                     modificaUtenteView.getCity(),
                     modificaUtenteView.getCap(),
+                    modificaUtenteView.getCountryOfResidence(),
                     modificaUtenteView.getGender(),
                     modificaUtenteView.getTelephone(),
                     modificaUtenteView.getRole(),
-                    modificaUtenteView.getDiabetologo()
+                    modificaUtenteView.getDiabetologo(),
+                    modificaUtenteView.getWeight(),
+                    modificaUtenteView.getHeight()
             );
 
             //System.out.println(modificaUtenteView.getTaxCode());

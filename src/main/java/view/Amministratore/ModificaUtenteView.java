@@ -23,10 +23,13 @@ public class ModificaUtenteView {
     private final TextField numberField = new TextField();
     private final TextField cityField = new TextField();
     private final TextField capField = new TextField();
+    private final TextField countryOfResidenceField = new TextField();
     private final TextField genderField = new TextField();
     private final TextField telephoneField = new TextField();
     private final TextField userTypeField = new TextField();
     private final TextField diabetologoField = new TextField();
+    private final TextField weightField = new TextField();
+    private final TextField heightField = new TextField();
 
     private final Button salvaButton = new Button("Salva");
     private final Stage stage = new Stage();
@@ -44,10 +47,13 @@ public class ModificaUtenteView {
         numberField.setText(String.valueOf(utente.getNumber()));
         cityField.setText(utente.getCity());
         capField.setText(String.valueOf(utente.getCap()));
+        countryOfResidenceField.setText(utente.getCountryOfResidence());
         genderField.setText(utente.getGender());
         telephoneField.setText(utente.getTelephone());
         userTypeField.setText(utente.getRole());
         diabetologoField.setText(utente.getDiabetologo());
+        weightField.setText(String.valueOf(utente.getWeight()));
+        heightField.setText(String.valueOf(utente.getHeight()));
 
 
         // salvaButton.setOnAction(e -> controller.salvaModifiche(stage));
@@ -67,10 +73,14 @@ public class ModificaUtenteView {
         grid.addRow(7, new Label("Numero civico:"), numberField);
         grid.addRow(8, new Label("Città:"), cityField);
         grid.addRow(9, new Label("CAP:"), capField);
-        grid.addRow(10, new Label("Genere:"), genderField);
-        grid.addRow(11, new Label("Telefono:"), telephoneField);
-        grid.addRow(12, new Label("Tipo utente:"), userTypeField);
-        grid.addRow(13, new Label("Diabetologo:"), diabetologoField);
+        grid.addRow(10, new Label("Paese di residenza:"), countryOfResidenceField);
+        grid.addRow(11, new Label("Genere:"), genderField);
+        grid.addRow(12, new Label("Telefono:"), telephoneField);
+        grid.addRow(13, new Label("Tipo utente:"), userTypeField);
+        grid.addRow(14, new Label("Diabetologo:"), diabetologoField);
+        grid.addRow(15, new Label("Peso:"), weightField);
+        grid.addRow(16, new Label("Altezza:"), heightField);
+
         grid.add(salvaButton, 1, 14);
 
         stage.setScene(new Scene(grid));
@@ -90,10 +100,13 @@ public class ModificaUtenteView {
         numberField.setText(String.valueOf(utente.getNumber()));
         cityField.setText(utente.getCity());
         capField.setText(String.valueOf(utente.getCap()));
+        countryOfResidenceField.setText(utente.getCountryOfResidence());
         genderField.setText(utente.getGender());
         telephoneField.setText(utente.getTelephone());
         userTypeField.setText(utente.getRole());
         diabetologoField.setText(utente.getDiabetologo());
+        weightField.setText(String.valueOf(utente.getWeight()));
+        heightField.setText(String.valueOf(utente.getHeight()));
 
 
        // salvaButton.setOnAction(e -> controller.salvaModifiche(stage));
@@ -113,10 +126,14 @@ public class ModificaUtenteView {
         grid.addRow(7, new Label("Numero civico:"), numberField);
         grid.addRow(8, new Label("Città:"), cityField);
         grid.addRow(9, new Label("CAP:"), capField);
-        grid.addRow(10, new Label("Genere:"), genderField);
-        grid.addRow(11, new Label("Telefono:"), telephoneField);
-        grid.addRow(12, new Label("Tipo utente:"), userTypeField);
-        grid.addRow(13, new Label("Diabetologo:"), diabetologoField);
+        grid.addRow(10, new Label("Paese di residenza:"), countryOfResidenceField);
+        grid.addRow(11, new Label("Genere:"), genderField);
+        grid.addRow(12, new Label("Telefono:"), telephoneField);
+        grid.addRow(13, new Label("Tipo utente:"), userTypeField);
+        grid.addRow(14, new Label("Diabetologo:"), diabetologoField);
+        grid.addRow(15, new Label("Peso:"), weightField);
+        grid.addRow(16, new Label("Altezza:"), heightField);
+
         grid.add(salvaButton, 1, 14);
 
         stage.setScene(new Scene(grid));
@@ -134,10 +151,13 @@ public class ModificaUtenteView {
     public int getNumber() { return Integer.parseInt(numberField.getText()); }
     public String getCity() { return cityField.getText(); }
     public int getCap() { return Integer.parseInt(capField.getText()); }
+    public String getCountryOfResidence() { return countryOfResidenceField.getText(); }
     public String getGender() { return genderField.getText(); }
     public String getTelephone() { return telephoneField.getText(); }
     public String getRole() { return userTypeField.getText(); }
     public String getDiabetologo() { return diabetologoField.getText(); }
     public Button getSalvaButton() { return salvaButton; }
     public Stage getStage() { return stage; }
+    public double getWeight() { return Double.parseDouble(weightField.getText()); }
+    public double getHeight() { return Double.parseDouble(heightField.getText()); }
 }
