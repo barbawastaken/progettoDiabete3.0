@@ -26,10 +26,13 @@ public class VisualizzaPazientiController implements Initializable {
     @FXML private TableColumn<Paziente, String> addressColumn;
     @FXML private TableColumn<Paziente, String> numberColumn;
     @FXML private TableColumn<Paziente, String> capColumn;
+    @FXML private TableColumn<Paziente, String> countryOfResidenceColumn;
     @FXML private TableColumn<Paziente, String> cityColumn;
     @FXML private TableColumn<Paziente, String> emailColumn;
     @FXML private TableColumn<Paziente, String> telephoneColumn;
     @FXML private TableColumn<Paziente, String> roleColumn;
+    @FXML private TableColumn<Paziente, String> weightColumn;
+    @FXML private TableColumn<Paziente, String> heightColumn;
 
     private ObservableList<Paziente> pazienti = FXCollections.observableArrayList();
 
@@ -45,10 +48,13 @@ public class VisualizzaPazientiController implements Initializable {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         capColumn.setCellValueFactory(new PropertyValueFactory<>("cap"));
+        countryOfResidenceColumn.setCellValueFactory(new PropertyValueFactory<>("countryOfResidence"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
 
         loadFromDatabase();
         tabella.setItems(pazienti);
@@ -72,10 +78,13 @@ public class VisualizzaPazientiController implements Initializable {
                         rs.getString("via"),
                         rs.getString("numeroCivico"),
                         rs.getString("cap"),
+                        rs.getString("Paese di residenza"),
                         rs.getString("citta"),
                         rs.getString("email"),
                         rs.getString("cellulare"),
-                        rs.getString("ruolo")
+                        rs.getString("ruolo"),
+                        rs.getDouble("Peso"),
+                        rs.getDouble("Altezza")
                 );
                 pazienti.add(p);
             }
