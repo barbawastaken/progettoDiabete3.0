@@ -1,5 +1,6 @@
 package controller.Diabetologo;
 
+import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -53,7 +54,7 @@ public class DiabetologoController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_pazienti_view.fxml"));
             Parent root = loader.load();
-
+            //VisualizzaListaUtentiController
             Stage stage = new Stage();
             stage.setTitle("Visualizza Pazienti");
             stage.setScene(new Scene(root));

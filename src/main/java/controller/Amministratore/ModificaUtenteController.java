@@ -129,7 +129,7 @@ public class ModificaUtenteController {
         this.listaUtentiStage = visualizzaUtentiStage;
 
         //Utente utenteModificato = this.utenteModificato();
-        modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), modificaUtenteView, listaUtentiStage));
+        modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), modificaUtenteView, listaUtentiStage, utente));
 
     }
 
