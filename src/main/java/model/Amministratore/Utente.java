@@ -13,13 +13,17 @@ public class Utente {
     private final int number;
     private final String city;
     private final int cap;
+    private final String countryOfResidence;
     private final String gender;
     private final String telephoneNumber;
     private final String ruolo;
     private final String diabetologo;
+    private final float weight;
+    private final float height;
 
     public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address,
-                  int number, String city, int cap, String gender, String telephoneNumber, String ruolo, String diabetologo) {
+                  int number, String city, int cap, String countryOfResidence, String gender, String telephoneNumber, String ruolo,
+                  String diabetologo, float weight, float height) {
         this.taxCode = taxCode;
         this.password = password;
         this.nome = nome;
@@ -30,10 +34,13 @@ public class Utente {
         this.number = number;
         this.city = city;
         this.cap = cap;
+        this.countryOfResidence = countryOfResidence;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
         this.ruolo = ruolo;
         this.diabetologo = diabetologo;
+        this.weight = weight;
+        this.height = height;
     }
 
     public String getTaxCode() { return taxCode; }
@@ -46,10 +53,13 @@ public class Utente {
     public int getNumber() { return number; }
     public String getCity() { return city; }
     public int getCap() { return cap; }
+    public String getCountryOfResidence() { return countryOfResidence; }
     public String getGender() { return gender; }
     public String getTelephone() { return telephoneNumber; }
     public String getDiabetologo() { return diabetologo; }
     public String getRole(){return ruolo; }
+    public float getWeight(){return weight; }
+    public float getHeight(){return height; }
 
 
 }
