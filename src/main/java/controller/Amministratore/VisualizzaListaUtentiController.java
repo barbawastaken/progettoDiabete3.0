@@ -98,7 +98,7 @@ public class VisualizzaListaUtentiController {
 
         VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
         List<Utente> utenti = model.getTuttiGliUtenti();
-        this.caricaUtenti(utenti);
+        //this.caricaUtenti(utenti);
         tabella.setItems(FXCollections.observableList(utenti));
 
         tabella.setRowFactory(utenteTableView -> {
@@ -182,7 +182,7 @@ public class VisualizzaListaUtentiController {
 
     public VisualizzaListaUtentiController() {}
 
-
+/*
     public void caricaUtenti(List<Utente> utenti) {
         VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
         ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
@@ -190,7 +190,7 @@ public class VisualizzaListaUtentiController {
 
         //Aggiungo un Context Menu per ogni riga presente nella tabella
         //COMMENTATO: non serve più dopo inserimento fxml
-
+*/
         /*
         tabella.setRowFactory(utenteTableView -> {
             TableRow<Utente> row = new TableRow<>();
@@ -256,7 +256,7 @@ public class VisualizzaListaUtentiController {
         });
 
 
-         */
+
     }
 
 
@@ -275,5 +275,5 @@ public class VisualizzaListaUtentiController {
     public void start(Stage stage) {
         view.start(stage, this); // chiama la view, passandole anche il controller
     }
-
+*/
 }

@@ -17,10 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AggiungiUtenteController {
-
-    private AggiungiUtenteModel model;
-    private AggiungiUtenteView view;
+public class AggiungiUtenteController extends GestioneUtenti {
 
     @FXML
     private ComboBox<String> gender;
@@ -187,84 +184,7 @@ public class AggiungiUtenteController {
 
     @FXML
     private void sendButtonPressed() throws SQLException {
-        boolean flag = false;
-        if(taxCode.getText().length() != 3){
-            taxCodeError.setVisible(true);
-            taxCodeError.setManaged(true);
-            flag = true;
-        } else{
-            taxCodeError.setVisible(false);
-            taxCodeError.setManaged(false);
-
-        }
-
-        if(cap.getText().length() != 5){
-            capError.setVisible(true);
-            capError.setManaged(true);
-            flag = true;
-        } else {
-            capError.setVisible(false);
-            capError.setManaged(false);
-
-        }
-
-        if(!isEmailValid()){
-            emailError.setVisible(true);
-            emailError.setManaged(true);
-            flag = true;
-        }  else{
-            emailError.setVisible(false);
-            emailError.setManaged(false);
-
-        }
-
-        if(!isTelephoneValid()){
-            telephoneError.setVisible(true);
-            telephoneError.setManaged(true);
-            flag = true;
-        } else{
-            telephoneError.setVisible(false);
-            telephoneError.setManaged(false);
-
-        }
-
-        if(!isCapValid()){
-            capError.setVisible(true);
-            capError.setManaged(true);
-            flag = true;
-        } else{
-            capError.setVisible(false);
-            capError.setManaged(false);
-        }
-
-        if(!isNumberValid()){
-            numberError.setVisible(true);
-            numberError.setManaged(true);
-            flag = true;
-        } else{
-            numberError.setVisible(false);
-            numberError.setManaged(false);
-        }
-
-        if(gender.getValue() == null){
-            genderError.setVisible(true);
-            genderError.setManaged(true);
-            flag = true;
-        } else{
-            genderError.setVisible(false);
-            genderError.setManaged(false);
-        }
-
-        if(birthday.getValue() == null){
-            birthdayError.setVisible(true);
-            birthdayError.setManaged(true);
-            flag = true;
-        } else{
-            birthdayError.setVisible(false);
-            birthdayError.setManaged(false);
-
-        }
-        if(flag){
+        if(super.check()){
             return;
         }
 

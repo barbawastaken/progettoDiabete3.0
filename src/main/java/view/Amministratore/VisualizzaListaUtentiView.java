@@ -72,7 +72,7 @@ public class VisualizzaListaUtentiView {
         
 
         // Carica gli utenti automaticamente
-        controller.caricaUtenti(tabellaUtenti);
+        //controller.caricaUtenti(tabellaUtenti);
 
     }
 

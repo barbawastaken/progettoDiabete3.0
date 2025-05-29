@@ -15,17 +15,37 @@ public class ModificaUtenteModel {
 
     public ModificaUtenteModel() {}
 
-    public void aggiornaUtente(String vecchioTaxCode, ModificaUtenteView modificaUtenteView, Stage visualizzaUtentiStage, Utente utente) {
+    public void aggiornaUtente(String vecchioTaxCode, Utente utente) {
 
 
 
-        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, " +
-                "telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?";
+        String updateUtenteUtenti = "UPDATE utenti " +
+                "SET " +
+                "taxCode=?, " +
+                "password=?, " +
+                "nome=?, " +
+                "cognome=?, " +
+                "email=?, " +
+                "birthday=?, " +
+                "address=?, " +
+                "number=?, " +
+                "city=?, " +
+                "cap=?, " +
+                "gender=?, " +
+                "telephoneNumber=?, " +
+                "userType=?, " +
+                "diabetologo=?, " +
+                "CountryOfResidence=?, " +
+                "Altezza=?, " +
+                "Peso=? " +
+                "WHERE taxCode=?";
         String updateUtenteLogin = "UPDATE loginTable SET taxCode=?, password=?, userType=? WHERE taxCode=?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(updateUtenteUtenti);
              PreparedStatement pstmt2 = conn.prepareStatement(updateUtenteLogin)) {
+
+            conn.setAutoCommit(false);
 
             // Query utenti
             System.out.println(utente.getTaxCode() + " " + vecchioTaxCode);
@@ -39,13 +59,13 @@ public class ModificaUtenteModel {
             pstmt.setInt(8, utente.getNumber());
             pstmt.setString(9, utente.getCity());
             pstmt.setInt(10, utente.getCap());
-            pstmt.setString(11, utente.getCountryOfResidence());
-            pstmt.setString(12, utente.getGender());
-            pstmt.setString(13, utente.getTelephone());
-            pstmt.setString(14, utente.getRole());
-            pstmt.setString(15, utente.getDiabetologo());
-            pstmt.setDouble(16,utente.getWeight());
-            pstmt.setDouble(17,utente.getHeight());
+            pstmt.setString(11, utente.getGender());
+            pstmt.setString(12, utente.getTelephone());
+            pstmt.setString(13, utente.getRole());
+            pstmt.setString(14, utente.getDiabetologo());
+            pstmt.setString(15, utente.getCountryOfResidence());
+            pstmt.setDouble(16,utente.getHeight());
+            pstmt.setDouble(17,utente.getWeight());
             pstmt.setString(18, vecchioTaxCode); // <-- importante!
 
             int rows = pstmt.executeUpdate();
@@ -66,8 +86,7 @@ public class ModificaUtenteModel {
             if(rows != 0) { System.out.println("Login table aggiornata"); }
 
 
-            modificaUtenteView.getStage().close();
-            visualizzaUtentiStage.close();
+            conn.commit();
 
             VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
             VisualizzaListaUtentiView visualizzaListaUtentiView = new VisualizzaListaUtentiView();

@@ -10,91 +10,100 @@ import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
-public class ModificaUtenteController {
+public class ModificaUtenteController extends GestioneUtenti{
     private ModificaUtenteView modificaUtenteView;
     private Utente utente;
     private  VisualizzaListaUtentiModel model;
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
+    private ToggleGroup ruolo;
 
     @FXML
     private ComboBox<String> gender;
-
     @FXML
     private TextField nome;
-
     @FXML
     private TextField cognome;
-
     @FXML
     private TextField email;
-
     @FXML
     private PasswordField password;
-
     @FXML
     private TextField address;
-
     @FXML
     private TextField citta;
     @FXML
     private TextField number;
-
     @FXML
     private TextField taxCode;
-
     @FXML
     private RadioButton paziente;
-
     @FXML
     private RadioButton diabetologo;
-
     @FXML
     private RadioButton amministratore;
-
     @FXML
     private ComboBox<String> medicoCurante;
-
     @FXML
     private TextField cap;
-
     @FXML
     private DatePicker birthday;
-
     @FXML
     private TextField telephone;
-
     @FXML
     private Text taxCodeError;
-
     @FXML
     private Text numberError;
-
     @FXML
     private Text telephoneError;
-
     @FXML
     private Text emailError;
-
     @FXML
     private Text capError;
-
     @FXML
     private Text birthdayError;
-
     @FXML
     private Text genderError;
-
     @FXML
     private Text medicoCuranteText;
-
     @FXML
     private Text userAddedText;
+    @FXML
+    private TextField nation;
+    @FXML
+    private TextField weight;
+    @FXML
+    private TextField height;
+
 
     @FXML
     private void initialize(){
+
+        taxCodeError.setVisible(false);
+        taxCodeError.setManaged(false);
+        numberError.setVisible(false);
+        numberError.setManaged(false);
+        telephoneError.setVisible(false);
+        telephoneError.setManaged(false);
+        emailError.setVisible(false);
+        emailError.setManaged(false);
+        capError.setVisible(false);
+        capError.setManaged(false);
+        birthdayError.setVisible(false);
+        birthdayError.setManaged(false);
+        genderError.setVisible(false);
+        genderError.setManaged(false);
+        medicoCurante.setVisible(false);
+        medicoCurante.setManaged(false);
+        medicoCuranteText.setVisible(false);
+        medicoCuranteText.setManaged(false);
+        userAddedText.setVisible(false);
+        userAddedText.setManaged(false);
+
         nome.setText(utente.getNome());
         cognome.setText(utente.getCognome());
         email.setText(utente.getEmail());
@@ -105,9 +114,94 @@ public class ModificaUtenteController {
         telephone.setText(utente.getTelephone());
         taxCode.setText(utente.getTaxCode());
         cap.setText(String.valueOf(utente.getCap()));
+        height.setText(String.valueOf(utente.getHeight()));
+        weight.setText(String.valueOf(utente.getWeight()));
+        number.setText(String.valueOf(utente.getNumber()));
+        citta.setText(utente.getCity());
+        if(utente.getRole().equals("DIABETOLOGO")){
+            diabetologo.setSelected(true);
+        } else if(utente.getRole().equals("AMMINISTRATORE")){
+            amministratore.setSelected(true);
+
+        }else{
+            paziente.setSelected(true);
+            medicoCurante.setVisible(true);
+            medicoCurante.setManaged(true);
+            medicoCuranteText.setVisible(true);
+            medicoCuranteText.setManaged(true);
+            medicoCurante.setValue(utente.getDiabetologo());
+
+        }
+        nation.setText(utente.getCountryOfResidence());
+        gender.getItems().addAll("Maschio", "Femmina");
+        ruolo = new ToggleGroup();
+        paziente.setToggleGroup(ruolo);
+        diabetologo.setToggleGroup(ruolo);
+        amministratore.setToggleGroup(ruolo);
 
 
 
+    }
+
+    @FXML
+    private void onResetButtonPressed(){
+        nome.setText("");
+        cognome.setText("");
+        email.setText("");
+        password.setText("");
+        address.setText("");
+        birthday.setValue(LocalDate.now());
+        gender.setValue(utente.getGender());
+        telephone.setText("");
+        taxCode.setText("");
+        cap.setText("");
+        height.setText("");
+        weight.setText("");
+        nation.setText("");
+        number.setText("");
+
+    }
+
+    private boolean isEmailValid(){
+        Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
+        //[\\w.-] -> campo "libero", con lettere, punti e trattini
+        //@ -> simbolo obbligatorio
+        //\\.\\w{2,}$ ->almeno due caratteri preceduti da un punto
+
+        return validEmail.matcher(email.getText()).matches();
+    }
+
+    private boolean isTelephoneValid(){
+        Pattern validTelephone = Pattern.compile("^\\d{10}$");
+
+        return validTelephone.matcher(telephone.getText()).matches();
+    }
+
+    private boolean isCapValid(){
+        Pattern validCap = Pattern.compile("^\\d{5}$");
+
+        return validCap.matcher(cap.getText()).matches();
+    }
+
+    private boolean isNumberValid(){
+        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
+        return validNumber.matcher(number.getText()).matches();
+    }
+
+
+    @FXML
+    private void onSendButtonPressed(){
+
+        RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
+        Utente nuovo = new Utente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), email.getText(),
+                Date.valueOf(birthday.getValue()), address.getText(), Integer.parseInt(number.getText()),
+                citta.getText(), Integer.parseInt(cap.getText()), nation.getText(), gender.getValue(), telephone.getText(),
+                selected.getText(), medicoCurante.getValue(), Double.parseDouble(weight.getText()),
+                Double.parseDouble(height.getText())
+                );
+        System.out.println(gender.getValue());
+        ModificaUtenteModel model = new ModificaUtenteModel();
+        model.aggiornaUtente(utente.getTaxCode(), nuovo);
     }
 
 
@@ -129,7 +223,7 @@ public class ModificaUtenteController {
         this.listaUtentiStage = visualizzaUtentiStage;
 
         //Utente utenteModificato = this.utenteModificato();
-        modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), modificaUtenteView, listaUtentiStage, utente));
+        //modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), utente));
 
     }
 
