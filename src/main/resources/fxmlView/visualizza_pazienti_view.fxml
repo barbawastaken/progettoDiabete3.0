@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.VisualizzaPazientiController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.VisualizzaPazientiController">
 
     <children>
-        <ScrollPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <!-- Intestazione fissa in alto -->
+        <HBox alignment="CENTER_LEFT" layoutX="0" layoutY="0" prefHeight="85.0" spacing="10" style="-fx-background-color: dodgerblue;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                <image>
+                    <Image url="@../images/userImage.png" />
+                </image>
+            </ImageView>
+            <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button prefHeight="30.0" prefWidth="80.0" text="HomePage" />
+        </HBox>
+
+        <!-- ScrollPane con tabella adattiva -->
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
             <content>
-                <TableView fx:id="tabella">
+                <TableView fx:id="tabella" prefHeight="200.0" prefWidth="600.0">
                     <columns>
-                        <TableColumn fx:id="taxCodeColumn" prefWidth="75.0" text="Codice Fiscale" />
-                        <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Nome" />
-                        <TableColumn fx:id="cognomeColumn" prefWidth="75" text="Cognome" />
-                        <TableColumn fx:id="genderColumn" prefWidth="75" text="Sesso" />
-                        <TableColumn fx:id="birthdayColumn" prefWidth="75" text="Data di Nascita" />
-                        <TableColumn fx:id="passwordColumn" prefWidth="75" text="Password" />
-                        <TableColumn fx:id="addressColumn" prefWidth="75" text="Via" />
-                        <TableColumn fx:id="numberColumn" prefWidth="150" text="Numero Civico" />
-                        <TableColumn fx:id="capColumn" prefWidth="75" text="CAP" />
-                        <TableColumn fx:id="cityColumn" prefWidth="75" text="Città" />
-                        <TableColumn fx:id="emailColumn" prefWidth="75" text="email" />
-                        <TableColumn fx:id="telephoneColumn" prefWidth="75" text="Cellulare" />
+                        <TableColumn fx:id="taxCodeColumn" text="Codice Fiscale" />
+                        <TableColumn fx:id="nomeColumn" text="Nome" />
+                        <TableColumn fx:id="cognomeColumn" text="Cognome" />
+                        <TableColumn fx:id="genderColumn" text="Sesso" />
+                        <TableColumn fx:id="birthdayColumn" text="Data di Nascita" />
+                        <TableColumn fx:id="passwordColumn" text="Password" />
+                        <TableColumn fx:id="addressColumn" text="Via" />
+                        <TableColumn fx:id="numberColumn" text="Numero Civico" />
+                        <TableColumn fx:id="capColumn" text="CAP" />
+                        <TableColumn fx:id="cityColumn" text="Città" />
+                        <TableColumn fx:id="emailColumn" text="email" />
+                        <TableColumn fx:id="telephoneColumn" text="Cellulare" />
                     </columns>
                 </TableView>
             </content>
