@@ -19,8 +19,8 @@ public class ModificaUtenteModel {
 
 
 
-        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, firstName=?, lastName=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, countryOfResidence=?, gender=?, " +
-                "telephoneNumber=?, userType=?, diabetologo=?, weight=?, height=? WHERE taxCode=?";
+        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, " +
+                "telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?";
         String updateUtenteLogin = "UPDATE loginTable SET taxCode=?, password=?, userType=? WHERE taxCode=?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);

@@ -29,13 +29,13 @@ public class VisualizzaListaUtentiModel {
                 int number = rs.getInt("number");
                 String city = rs.getString("city");
                 int cap = rs.getInt("cap");
-                String countryOfResidence = rs.getString("Paese di residenza");
+                String countryOfResidence = rs.getString("CountryOfResidence");
                 String gender = rs.getString("gender");
                 String telephoneNumber = rs.getString("telephoneNumber");
                 String userType = rs.getString("userType");
                 String diabetologo = rs.getString("diabetologo");
-                Double weight = rs.getDouble("peso");
-                Double height = rs.getDouble("altezza");
+                Double weight = rs.getDouble("Peso");
+                Double height = rs.getDouble("Altezza");
 
                 Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, countryOfResidence, gender, telephoneNumber, userType, diabetologo, weight, height);
                 lista.add(utente);
@@ -66,7 +66,7 @@ public class VisualizzaListaUtentiModel {
     }
     public void aggiornaUtente(Utente utente, String oldTaxCode) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db")) {
-            String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, countryOfResidence=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, weight=?, height=? WHERE taxCode=?";
+            String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, utente.getTaxCode());
                 stmt.setString(2, utente.getPassword());
@@ -78,11 +78,11 @@ public class VisualizzaListaUtentiModel {
                 stmt.setInt(8, utente.getNumber());
                 stmt.setString(9, utente.getCity());
                 stmt.setInt(10, utente.getCap());
-                stmt.setString(11, utente.getCountryOfResidence());
-                stmt.setString(12, utente.getGender());
-                stmt.setString(13, utente.getTelephone());
-                stmt.setString(14, utente.getRole());
-                stmt.setString(15, utente.getDiabetologo());
+                stmt.setString(11, utente.getGender());
+                stmt.setString(12, utente.getTelephone());
+                stmt.setString(13, utente.getRole());
+                stmt.setString(14, utente.getDiabetologo());
+                stmt.setString(15, utente.getCountryOfResidence());
                 stmt.setDouble(16, utente.getWeight());
                 stmt.setDouble(17, utente.getHeight());
                 stmt.setString(18, oldTaxCode);
