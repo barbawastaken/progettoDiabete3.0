@@ -1,5 +1,6 @@
 package controller.Amministratore;
 
+import controller.Diabetologo.DiabetologoController;
 import controller.Paziente.PazienteController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -108,15 +109,25 @@ public class VisualizzaListaUtentiController {
 
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
+
                 Utente selected = row.getItem();
-                //apriFinestraModifica(selected);
+                ModificaUtenteController controller = new ModificaUtenteController();
+                controller.setUtente(selected);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+                loader.setController(controller);
 
-                ModificaUtenteModel modificaUtenteModel = new ModificaUtenteModel();
-                ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
-                new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
 
-
+                Stage stage = new Stage();
+                stage.setTitle("Modifica Utente");
+                stage.setScene(new Scene(root, 650, 500));
+                stage.show();
 
 
 
@@ -156,7 +167,10 @@ public class VisualizzaListaUtentiController {
         }
 
         @FXML
-        private void onModificaClicked() {}
+        private void onModificaClicked() {
+
+
+        }
 
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage)
         {

@@ -15,9 +15,9 @@ public class ModificaUtenteModel {
 
     public ModificaUtenteModel() {}
 
-    public void aggiornaUtente(String vecchioTaxCode, ModificaUtenteView modificaUtenteView, Stage visualizzaUtentiStage) {
+    public void aggiornaUtente(String vecchioTaxCode, ModificaUtenteView modificaUtenteView, Stage visualizzaUtentiStage, Utente utente) {
 
-        Utente utente = utenteModificato(modificaUtenteView);
+
 
         String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, firstName=?, lastName=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, countryOfResidence=?, gender=?, " +
                 "telephoneNumber=?, userType=?, diabetologo=?, weight=?, height=? WHERE taxCode=?";
