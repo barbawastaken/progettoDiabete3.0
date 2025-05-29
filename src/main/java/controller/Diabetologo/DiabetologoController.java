@@ -55,6 +55,9 @@ public class DiabetologoController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_pazienti_view.fxml"));
             Parent root = loader.load();
             //VisualizzaListaUtentiController
+
+            VisualizzaPazientiController controller = loader.getController();
+            controller.setTaxCode(taxCode);
             Stage stage = new Stage();
             stage.setTitle("Visualizza Pazienti");
             stage.setScene(new Scene(root));

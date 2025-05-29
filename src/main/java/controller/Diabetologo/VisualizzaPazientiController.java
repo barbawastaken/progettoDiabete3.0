@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class VisualizzaPazientiController implements Initializable {
 
+    private String taxCode;
+
     @FXML private TableView<Paziente> tabella;
     @FXML private TableColumn<Paziente, String> taxCodeColumn;
     @FXML private TableColumn<Paziente, String> nomeColumn;
@@ -61,11 +63,13 @@ public class VisualizzaPazientiController implements Initializable {
     }
 
     private void loadFromDatabase() {
-        String query = "SELECT * FROM pazienti";
+        String query = "SELECT * FROM utenti WHERE diabetologo=?";
 
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db?busy_timeout=5000");
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query);
+             //stmt.setString();
+             ResultSet rs = stmt.executeQuery(query))
+        {
 
             while (rs.next()) {
                 Paziente p = new Paziente(
@@ -92,5 +96,9 @@ public class VisualizzaPazientiController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
     }
 }
