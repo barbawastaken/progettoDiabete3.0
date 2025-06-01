@@ -14,7 +14,7 @@
       <Text layoutX="256.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" />
       <DatePicker layoutX="72.0" layoutY="187.0" fx:id="dataRilevamento"/>
       <Text layoutX="68.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" />
-      <Button layoutX="68.0" layoutY="273.0" mnemonicParsing="false" text="Reset" fx:id="reset"/>
+      <Button layoutX="68.0" layoutY="273.0" mnemonicParsing="false" text="Reset" fx:id="reset" onAction="#onResetPressed"/>
       <Button layoutX="188.0" layoutY="273.0" mnemonicParsing="false" text="Invia" fx:id="submit" onAction="#onSubmitPressed"/>
    </children>
 </AnchorPane>

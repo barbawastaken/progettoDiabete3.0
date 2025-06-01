@@ -7,7 +7,7 @@ public class RilevazioneGlicemiaModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
-    public int inserimentoRilevazioneGlicemia(String taxCode, int quantita, String momentoGiornata, String prePost,
+    public int inserimentoRilevazioneGlicemia(String taxCode, String quantita, String momentoGiornata, String prePost,
                                                   LocalDate data){
 
         String sql = "INSERT INTO rilevazioniGlicemiche (taxCode, quantita, momentoGiornata, prePost, data) VALUES (?, ?, ?, ?, ?)";
@@ -17,7 +17,12 @@ public class RilevazioneGlicemiaModel {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM rilevazioniGlicemiche ORDER BY taxCode")) {
 
+            if(quantita.isEmpty()) { return 4;}
+            int quantitaInt = Integer.parseInt(quantita);
+
             while (rs.next()) {
+
+                if(momentoGiornata == null || prePost == null || data.toString().isEmpty()) { return 4; }
 
                 if (rs.getString("taxCode").equals(taxCode) && rs.getString("momentoGiornata").equals(momentoGiornata) &&
                         rs.getString("prePost").equals(prePost) && rs.getString("data").equals(data.toString())) {
@@ -25,18 +30,16 @@ public class RilevazioneGlicemiaModel {
                     return 1;
                 }
 
-                if (quantita < 40 || quantita > 200) { return 2; }
+                if (quantitaInt < 40 || quantitaInt > 200) { return 2; }
 
                 if (data.isAfter(LocalDate.now())) { return 3; }
-
-                if(momentoGiornata.isEmpty() || prePost.isEmpty() || data.toString().isEmpty()) { return 4; }
 
                 //System.out.println(rs.getString("data") + " " + LocalDate.now().toString());
 
             }
 
             pstmt.setString(1, taxCode);
-            pstmt.setInt(2, quantita);
+            pstmt.setInt(2, quantitaInt);
             pstmt.setString(3, momentoGiornata);
             pstmt.setString(4, prePost);
             pstmt.setString(5, data.toString());

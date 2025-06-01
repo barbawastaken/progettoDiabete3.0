@@ -10,7 +10,6 @@ import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
 import view.Paziente.PazienteView;
 import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
-import java.time.LocalDate;
 import javafx.fxml.FXML;
 
 public class RilevazioneGlicemiaController {
@@ -24,9 +23,9 @@ public class RilevazioneGlicemiaController {
     @FXML
     private ComboBox<String> prepost;
 
-
     @FXML
     private ComboBox<String> pastoGlicemia;
+
     private String taxCode;
 
     public void setTaxCode(String taxCode) {
@@ -43,80 +42,41 @@ public class RilevazioneGlicemiaController {
     @FXML
     private void onSubmitPressed(){
         RilevazioneGlicemiaModel model = new RilevazioneGlicemiaModel();
-        model.inserimentoRilevazioneGlicemia(taxCode, Integer.parseInt(milligrammi.getText()), pastoGlicemia.getValue(), prepost.getValue(), dataRilevamento.getValue());
-    }
+        int risultatoInserimento = model.inserimentoRilevazioneGlicemia(taxCode, milligrammi.getText(), pastoGlicemia.getValue(), prepost.getValue(), dataRilevamento.getValue());
 
-    public RilevazioneGlicemiaController() {
+        if(risultatoInserimento == 0){
 
-    }
-
-    public RilevazioneGlicemiaController(String taxCode, RilevazioneGlicemiaModel model, RilevazioneGlicemiaView view, Stage pazienteStage) {
-
-
-
-        Stage rilevazioneGlicemiaStage = new Stage();
-        rilevazioneGlicemiaStage.setTitle("Inserimento nuova rilevazione glicemica");
-        rilevazioneGlicemiaStage.setScene(view.getScene());
-        rilevazioneGlicemiaStage.setHeight(pazienteStage.getHeight());
-        rilevazioneGlicemiaStage.setWidth(pazienteStage.getWidth());
-        rilevazioneGlicemiaStage.setMinWidth(600);
-        rilevazioneGlicemiaStage.setMinHeight(800);
-        rilevazioneGlicemiaStage.setX(pazienteStage.getX());
-        rilevazioneGlicemiaStage.setY(pazienteStage.getY());
-        rilevazioneGlicemiaStage.alwaysOnTopProperty();
-        pazienteStage.close();
-        rilevazioneGlicemiaStage.show();
-
-        view.getIndietroButton().setOnAction(e -> {
+            System.out.println("Valori inseriti correttamente");
 
             PazienteModel pazienteModel = new PazienteModel();
             PazienteView pazienteView = new PazienteView();
 
-            try {
-                new PazienteController(taxCode, pazienteModel, pazienteView);
-            } catch (Exception ex) {
-                System.out.println("Errore: " + ex.getMessage());
-            }
-        });
+            new PazienteController(taxCode, pazienteModel, pazienteView);
 
-        view.getResetButton().setOnAction(e -> {
+        } else { checkOutput(risultatoInserimento); }
+    }
 
-            view.getQuantitaRilevazioneTextField().clear();
-            view.getMomentoGiornataField().setValue(null);
-            view.getPrePostField().setValue(null);
-            view.getDataField().setValue(null);
+    @FXML
+    private void onResetPressed(){
 
-        });
+        milligrammi.setText("");
+        pastoGlicemia.setValue(null);
+        prepost.setValue(null);
+        dataRilevamento.setValue(null);
 
-        view.getConfermaButton().setOnAction(e -> {
+    }
 
-            int quantitaInserita = 0;
-            if(!view.getQuantitaRilevazioneTextField().getText().isEmpty()) {
-                quantitaInserita = Integer.parseInt(view.getQuantitaRilevazioneTextField().getText());
-            }
-            String momentoGiornata = view.getMomentoGiornataField().getValue();
-            String prePost = view.getPrePostField().getValue();
-            LocalDate dataInserita = view.getDataField().getValue();
-
-            int risultatoInserimento = model.inserimentoRilevazioneGlicemia(taxCode, quantitaInserita, momentoGiornata, prePost, dataInserita);
-
-            if(risultatoInserimento == 0){
-
-                System.out.println("Valori inseriti correttamente");
-
-                PazienteModel pazienteModel = new PazienteModel();
-                PazienteView pazienteView = new PazienteView();
-
-                new PazienteController(taxCode, pazienteModel, pazienteView);
-
-            } else { checkOutput(risultatoInserimento); }
-        });
+    public RilevazioneGlicemiaController() {
     }
 
     public void checkOutput(int valoreOutput) {
 
         System.out.println("Valori non inseriti");
 
+        milligrammi.setText("");
+        pastoGlicemia.setValue(null);
+        prepost.setValue(null);
+        dataRilevamento.setValue(null);
 
         if(valoreOutput == 1) {
 

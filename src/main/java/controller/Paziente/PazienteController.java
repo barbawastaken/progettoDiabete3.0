@@ -74,7 +74,7 @@ public class PazienteController {
 
 
 
-        pazienteView.getRilevazioniGlicemiaButton().setOnAction(e -> {
+        /*pazienteView.getRilevazioniGlicemiaButton().setOnAction(e -> {
 
             RilevazioneGlicemiaModel rilevazioneGlicemiaModel = new RilevazioneGlicemiaModel();
             RilevazioneGlicemiaView rilevazioneGlicemiaView = new RilevazioneGlicemiaView();
@@ -84,7 +84,7 @@ public class PazienteController {
             } catch (Exception ex) {
                 System.out.println("Errore: " + ex.getMessage());
             }
-        });
+        });*/
 
         pazienteView.getInserimentoSintomiButton().setOnAction(e -> {
 
