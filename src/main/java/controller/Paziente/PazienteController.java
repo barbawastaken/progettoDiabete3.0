@@ -2,6 +2,7 @@ package controller.Paziente;
 
 import controller.LoginController;
 import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
+import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +51,20 @@ public class PazienteController {
         controller.setTaxCode(taxCode);
         Stage stage = new Stage();
         stage.setTitle("Aggiunta sintomi");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    private void onAddAssunzioneFarmacoClicked() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/assunzione_farmaco_view.fxml"));
+        Parent root = loader.load();
+        AssunzioneFarmacoController controller = loader.getController();
+        controller.setTaxCode(taxCode);
+
+        Stage stage = new Stage();
+        stage.setTitle("Assunzione farmaco");
         stage.setScene(new Scene(root));
         stage.show();
     }

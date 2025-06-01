@@ -6,6 +6,7 @@ module org.example.demo {
     opens controller to javafx.fxml;
     opens controller.Paziente to javafx.fxml;
     opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;
+    opens controller.Paziente.AssunzioneFarmaco to javafx.fxml;
     opens controller.Amministratore to javafx.fxml;
     opens HomePages to javafx.fxml;
     opens model.Amministratore to javafx.base;

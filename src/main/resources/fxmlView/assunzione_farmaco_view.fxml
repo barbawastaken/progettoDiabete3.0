@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController">
+   <children>
+
+      <Button fx:id="indietroButton" layoutX="517.0" layoutY="27.0" mnemonicParsing="false" onAction="#onIndietroPressed" text="Indietro" />
+
+       <Text layoutX="250.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Farmaco assunto" />
+       <TextField fx:id="farmacoAssunto" layoutX="241.0" layoutY="68.0" prefHeight="26.0" prefWidth="118.0" />
+
+       <Text layoutX="256.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantità assunta" />
+       <TextField fx:id="quantitaAssunta" layoutX="235.0" layoutY="152.0" prefHeight="25.0" prefWidth="131.0" />
+
+       <Text layoutX="179.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data assunzione" />
+       <DatePicker fx:id="dataAssunzione" layoutX="157.0" layoutY="232.0" prefHeight="25.0" prefWidth="131.0" />
+
+       <Text layoutX="345.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orario assunzione" />
+       <Spinner fx:id="orarioAssunzione" editable="true" layoutX="345.0" layoutY="232.0" prefHeight="25.0" prefWidth="95.0" />
+
+       <Button fx:id="resetButton" layoutX="222.0" layoutY="294.0" mnemonicParsing="false" onAction="#onResetPressed" prefHeight="25.0" prefWidth="68.0" text="Reset" />
+       <Button fx:id="submitButton" layoutX="332.0" layoutY="294.0" mnemonicParsing="false" onAction="#onSubmitPressed" prefHeight="25.0" prefWidth="68.0" text="Invia" />
+
+   </children>
+</AnchorPane>

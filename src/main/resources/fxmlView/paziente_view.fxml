@@ -8,7 +8,7 @@
    <children>
       <Button fx:id="rilevaGlicemia" layoutX="77.0" layoutY="65.0" mnemonicParsing="false" onAction="#onRilevazioneGlicemiaClicked" text="Rileva Glicemia" />
       <Button layoutX="77.0" layoutY="137.0" mnemonicParsing="false" onAction="#onAddSymptomsClicked" text="Aggiungi un sintomo" />
-      <Button layoutX="77.0" layoutY="218.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="77.0" layoutY="218.0" mnemonicParsing="false" onAction="#onAddAssunzioneFarmacoClicked" text="Assunzione farmaco" />
       <Button layoutX="77.0" layoutY="304.0" mnemonicParsing="false" text="Button" />
       <AreaChart layoutX="240.0" layoutY="92.0" prefHeight="217.0" prefWidth="330.0">
         <xAxis>
