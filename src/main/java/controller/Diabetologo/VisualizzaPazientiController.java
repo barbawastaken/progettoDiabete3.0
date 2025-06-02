@@ -1,22 +1,29 @@
 package controller.Diabetologo;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 import model.Amministratore.Paziente;
-import java.sql.DriverManager;
+import model.Diabetologo.VisualizzaPazientiModel;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
 
 public class VisualizzaPazientiController implements Initializable {
 
     private String taxCode;
+    private final VisualizzaPazientiModel visualizzaPazientiModel = new VisualizzaPazientiModel();
 
     @FXML private TableView<Paziente> tabella;
     @FXML private TableColumn<Paziente, String> taxCodeColumn;
@@ -32,15 +39,13 @@ public class VisualizzaPazientiController implements Initializable {
     @FXML private TableColumn<Paziente, String> cityColumn;
     @FXML private TableColumn<Paziente, String> emailColumn;
     @FXML private TableColumn<Paziente, String> telephoneColumn;
-    @FXML private TableColumn<Paziente, String> roleColumn;
     @FXML private TableColumn<Paziente, String> weightColumn;
     @FXML private TableColumn<Paziente, String> heightColumn;
 
-    private ObservableList<Paziente> pazienti = FXCollections.observableArrayList();
+    private final ObservableList<Paziente> pazienti = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         taxCodeColumn.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
@@ -54,51 +59,25 @@ public class VisualizzaPazientiController implements Initializable {
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
         heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
-
-        loadFromDatabase();
-        tabella.setItems(pazienti);
-    }
-
-    private void loadFromDatabase() {
-        String query = "SELECT * FROM utenti WHERE diabetologo=?";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db?busy_timeout=5000");
-             PreparedStatement stmt = conn.prepareStatement(query);
-             //stmt.setString();
-             ResultSet rs = stmt.executeQuery(query))
-        {
-
-            while (rs.next()) {
-                Paziente p = new Paziente(
-                        rs.getString("codiceFiscale"),
-                        rs.getString("nome"),
-                        rs.getString("cognome"),
-                        rs.getString("sesso"),
-                        rs.getString("dataNascita"),
-                        rs.getString("password"),
-                        rs.getString("via"),
-                        rs.getString("numeroCivico"),
-                        rs.getString("cap"),
-                        rs.getString("Paese di residenza"),
-                        rs.getString("citta"),
-                        rs.getString("email"),
-                        rs.getString("cellulare"),
-                        rs.getString("ruolo"),
-                        rs.getDouble("Peso"),
-                        rs.getDouble("Altezza")
-                );
-                pazienti.add(p);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
+        loadPazienti();
+    }
+
+    private void loadPazienti() {
+        pazienti.setAll(visualizzaPazientiModel.getPazientiByDiabetologo(taxCode));
+        tabella.setItems(pazienti);
+    }
+
+    @FXML
+    public void handleHomepageButton(javafx.event.ActionEvent event) {
+        // Prendi la finestra (stage) corrente dal bottone stesso:
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+
     }
 }

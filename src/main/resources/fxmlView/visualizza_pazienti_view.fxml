@@ -20,7 +20,7 @@
             </ImageView>
             <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
             <Pane HBox.hgrow="ALWAYS" />
-            <Button prefHeight="30.0" prefWidth="80.0" text="HomePage" />
+            <Button prefHeight="30.0" prefWidth="80.0" text="Homepage" onAction="#handleHomepageButton" />
         </HBox>
 
         <!-- ScrollPane con tabella adattiva -->
@@ -37,9 +37,12 @@
                         <TableColumn fx:id="addressColumn" text="Via" />
                         <TableColumn fx:id="numberColumn" text="Numero Civico" />
                         <TableColumn fx:id="capColumn" text="CAP" />
+                        <TableColumn fx:id="countryOfResidenceColumn" text="Paese di Residenza"/>
                         <TableColumn fx:id="cityColumn" text="Città" />
                         <TableColumn fx:id="emailColumn" text="email" />
                         <TableColumn fx:id="telephoneColumn" text="Cellulare" />
+                        <TableColumn fx:id="weightColumn" text="Peso"/>
+                        <TableColumn fx:id="heightColumn" text="Altezza"/>
                     </columns>
                 </TableView>
             </content>
