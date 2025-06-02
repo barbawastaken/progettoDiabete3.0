@@ -1,25 +1,17 @@
 package controller.Paziente;
 
-import controller.LoginController;
 import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
+import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.LoginModel;
-import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 import model.Paziente.PazienteModel;
-import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
-import view.LoginView;
-import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
 import view.Paziente.PazienteView;
-import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
-
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class PazienteController {
 
@@ -69,6 +61,21 @@ public class PazienteController {
         stage.show();
     }
 
+    @FXML
+    public void onConcomitantiClicked() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/patologie_concomitanti_view.fxml"));
+        Parent root = loader.load();
+        PatologieConcomitantiController controller = loader.getController();
+        controller.setTaxCode(taxCode);
+
+        Stage stage = new Stage();
+        stage.setTitle("Specifica patologie concomitanti");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
     public PazienteController(){
 
     }
@@ -101,7 +108,7 @@ public class PazienteController {
             }
         });*/
 
-        pazienteView.getInserimentoSintomiButton().setOnAction(e -> {
+        /*pazienteView.getInserimentoSintomiButton().setOnAction(e -> {
 
             AggiuntaSintomiModel aggiuntaSintomiModel = new AggiuntaSintomiModel();
             AggiuntaSintomiView aggiuntaSintomiView = new AggiuntaSintomiView();
@@ -112,6 +119,6 @@ public class PazienteController {
                 System.out.println("Errore: " + ex.getMessage());
             }
 
-        });
+        });*/
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController">
+   <children>
+       <Button layoutX="497.0" layoutY="32.0" mnemonicParsing="false" onAction="#onIndietroPressed" text="INDIETRO" />
+
+       <Text layoutX="186.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomo / Patologia /Terapia concomitante" />
+       <TextArea fx:id="patologiaSpecificata" layoutX="198.0" layoutY="87.0" prefHeight="84.0" prefWidth="205.0" />
+
+       <Text layoutX="137.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento iniziale" wrappingWidth="151.13671875" />
+       <DatePicker fx:id="dataInizio" layoutX="127.0" layoutY="231.0" prefHeight="25.0" prefWidth="151.0" />
+
+       <Text layoutX="328.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento finale" />
+       <DatePicker fx:id="dataFine" layoutX="322.0" layoutY="231.0" prefHeight="25.0" prefWidth="151.0" />
+
+       <Button layoutX="213.0" layoutY="298.0" mnemonicParsing="false" onAction="#onResetPressed" text="RESET" />
+       <Button layoutX="342.0" layoutY="298.0" mnemonicParsing="false" onAction="#onSubmitPressed" text="INVIA" />
+
+   </children>
+</AnchorPane>
