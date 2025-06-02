@@ -291,8 +291,6 @@ public class ModificaUtenteController extends GestioneUtenti{
             alert.showAndWait();
         }
     }
-
-
     public void setUtente(Utente utente){
         this.utente = utente;
     }
