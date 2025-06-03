@@ -46,4 +46,6 @@ public class LoginController {
     public LoginController(){
 
     }
+
+    public void setTaxCode(String taxCode){ this.taxCode = taxCode; }
 }

@@ -22,5 +22,6 @@
             <Insets />
          </opaqueInsets>
       </AreaChart>
+      <Button layoutX="512.0" layoutY="25.0" mnemonicParsing="false" text="LOGOUT" onAction="#onLogoutPressed" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package controller.Paziente;
 
+import controller.LoginController;
 import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
 import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import view.Paziente.PazienteView;
@@ -17,8 +19,30 @@ public class PazienteController {
 
     private String taxCode;
 
+    @FXML private Button rilevaGlicemia;
+
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
+    }
+
+    @FXML
+    private void onLogoutPressed(){
+
+        try {
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+            LoginController loginController = loader.getController();
+            loginController.setTaxCode(taxCode);
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
+
+        Stage pazienteStage = (Stage)rilevaGlicemia.getScene().getWindow();
+        pazienteStage.close();
+
     }
 
     @FXML
@@ -31,7 +55,6 @@ public class PazienteController {
         controller.setTaxCode(taxCode);
         stage.setScene(new Scene(root));
         stage.show();
-
 
     }
 
