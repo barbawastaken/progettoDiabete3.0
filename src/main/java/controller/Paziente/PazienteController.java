@@ -7,22 +7,37 @@ import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import view.Paziente.PazienteView;
 import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PazienteController {
 
     private String taxCode;
+    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
 
     @FXML private Button rilevaGlicemia;
+    @FXML private ComboBox<String> filtroPeriodoComboBox;
+    @FXML private LineChart<String, Number> lineChartGlicemia;
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
+        caricaDatiGlicemia(LocalDate.of(2025, 1, 1));
     }
 
     @FXML
@@ -101,6 +116,70 @@ public class PazienteController {
 
     public PazienteController(){
 
+    }
+
+    @FXML
+    private void aggiornaGrafico() {
+        String filtro = filtroPeriodoComboBox.getValue();
+        LocalDate dataInizio = switch (filtro) {
+            case "Ultima settimana" -> LocalDate.now().minusDays(7);
+            case "Ultimo mese" -> LocalDate.now().minusMonths(1);
+            default -> LocalDate.MIN; // nel dubbio, nessun filtro
+        };
+        caricaDatiGlicemia(dataInizio);
+    }
+
+    private void caricaDatiGlicemia(LocalDate dataInizio) {
+        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+        serie.setName("Valori glicemici");
+
+        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ? AND data >= ? ORDER BY data DESC";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, taxCode);
+            stmt.setDate(2, java.sql.Date.valueOf(dataInizio));
+            ResultSet rs = stmt.executeQuery();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+            List<XYChart.Data<String, Number>> dati = new ArrayList<>();
+            int count = 0;
+
+            while (rs.next() && count < 5) {
+
+                String dataStr = rs.getString("data");
+                LocalDate data = LocalDate.parse(dataStr);
+                int valore = rs.getInt("quantita");
+                String momento = rs.getString("momentoGiornata");
+                String prePost = rs.getString("prePost");
+
+                String labelX = data.format(formatter);
+                String labelCompleta = momento + " - " + prePost;
+
+                XYChart.Data<String, Number> punto = new XYChart.Data<>(labelX, valore);
+                punto.setNode(new Label(labelCompleta));
+
+                dati.add(punto);
+                count++;
+            }
+
+            Collections.reverse(dati);
+            serie.getData().addAll(dati);
+            lineChartGlicemia.getData().clear();
+            lineChartGlicemia.getData().add(serie);
+
+            for (XYChart.Data<String, Number> data : dati) {
+                Node node = data.getNode();
+                if (node instanceof Label label) {
+                    label.setStyle("-fx-font-size: 10px; -fx-background-color: white; -fx-padding: 2;");
+                    label.setTranslateY(-20);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Errore caricamento grafico: " + e);
+        }
     }
 
     public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView) {

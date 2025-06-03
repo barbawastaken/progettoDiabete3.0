@@ -48,10 +48,8 @@ public class RilevazioneGlicemiaController {
 
             System.out.println("Valori inseriti correttamente");
 
-            PazienteModel pazienteModel = new PazienteModel();
-            PazienteView pazienteView = new PazienteView();
-
-            new PazienteController(taxCode, pazienteModel, pazienteView);
+            Stage stage = (Stage) milligrammi.getScene().getWindow();
+            stage.close();
 
         } else { checkOutput(risultatoInserimento); }
     }
