@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
@@ -61,6 +62,17 @@ public class VisualizzaPazientiController implements Initializable {
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
         heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
+
+        tabella.setRowFactory(tv -> {
+            TableRow<Paziente> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) { // doppio clic
+                    Paziente pazienteSelezionato = row.getItem();
+                    mostraDettagliPaziente(pazienteSelezionato);
+                }
+            });
+            return row;
+        });
     }
 
     public void setTaxCode(String taxCode) {
@@ -80,4 +92,22 @@ public class VisualizzaPazientiController implements Initializable {
         stage.close();
 
     }
+
+    private void mostraDettagliPaziente(Paziente paziente) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
+            Parent root = loader.load();
+
+            DettaglioPazienteController controller = loader.getController();
+            controller.setPaziente(paziente);
+
+            Stage stage = new Stage();
+            stage.setTitle("Dettagli Paziente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
