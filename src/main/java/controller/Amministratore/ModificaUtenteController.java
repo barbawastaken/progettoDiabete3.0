@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-public class ModificaUtenteController extends GestioneUtenti{
+public class ModificaUtenteController{
     private ModificaUtenteView modificaUtenteView;
     private Utente utente;
     private  VisualizzaListaUtentiModel model;

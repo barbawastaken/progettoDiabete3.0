@@ -1,5 +1,7 @@
 package model.Amministratore;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -54,7 +56,7 @@ public class AggiungiUtenteModel {
                 HashMap<String, String> diabetologi = getDiabetologi();
                 System.out.println("Connesso");
                 pstmt.setString(1, taxCode);
-                pstmt.setString(2, password);
+                pstmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
                 pstmt.setString(3, nome);
                 pstmt.setString(4, cognome);
                 pstmt.setString(5, email);
@@ -77,7 +79,7 @@ public class AggiungiUtenteModel {
                 System.out.println("Utente aggiunto!");
 
                 pstmt2.setString(1, taxCode);
-                pstmt2.setString(2, password);
+                pstmt2.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
                 pstmt2.setString(3, userType);
                 pstmt2.executeUpdate();
                 conn.commit();

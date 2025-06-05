@@ -3,6 +3,7 @@ module org.example.demo {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires jbcrypt;
     opens controller to javafx.fxml;
     opens controller.Paziente to javafx.fxml;
     opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;

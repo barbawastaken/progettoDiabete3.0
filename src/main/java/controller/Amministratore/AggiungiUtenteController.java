@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AggiungiUtenteController extends GestioneUtenti {
+public class AggiungiUtenteController {
 
     @FXML
     private ComboBox<String> gender;
@@ -184,9 +184,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
     @FXML
     private void sendButtonPressed() throws SQLException {
-        if(super.check()){
-            return;
-        }
+
 
         AggiungiUtenteModel model = new AggiungiUtenteModel();
         RadioButton selected = (RadioButton) ruolo.getSelectedToggle();

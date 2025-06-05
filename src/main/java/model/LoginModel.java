@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Amministratore.AmministratoreModel;
 import model.Diabetologo.DiabetologoModel;
 import model.Paziente.PazienteModel;
+import org.mindrot.jbcrypt.BCrypt;
 import view.Amministratore.AmministratoreView;
 import view.Diabetologo.DiabetologoView;
 import view.LoginView;
@@ -36,7 +37,8 @@ public class LoginModel {
 
             while (rs.next()) {
                 if (rs.getString("taxCode").equals(taxCode)
-                        && rs.getString("password").equals(password)) {
+                        && BCrypt.checkpw(password, rs.getString("password")))
+                /*rs.getString("password").equals(password))*/ {
 
                     //String taxCode = rs.getString("taxCode");
                     String userType = rs.getString("userType");
