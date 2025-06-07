@@ -109,31 +109,25 @@ public class VisualizzaListaUtentiController {
 
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
-
                 Utente selected = row.getItem();
-                ModificaUtenteController controller = new ModificaUtenteController();
-                controller.setUtente(selected);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
-                loader.setController(controller);
-
-                Parent root = null;
                 try {
-                    root = loader.load();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+                    Parent root = loader.load();
+
+                    ModificaUtenteController controller = loader.getController();
+                    controller.initializeData(VisualizzaListaUtentiController.this, selected, model, new ModificaUtenteModel(), (Stage)tabella.getScene().getWindow());
+
+
+                    Stage modificaStage = new Stage();
+                    modificaStage.setTitle("Modifica Utente");
+                    modificaStage.setScene(new Scene(root, 650, 500));
+                    modificaStage.show();
+
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    new Alert(Alert.AlertType.ERROR, "Errore nell'apertura della finestra di modifica.").showAndWait();
                 }
-
-
-                Stage stage = new Stage();
-                stage.setTitle("Modifica Utente");
-                stage.setScene(new Scene(root, 650, 500));
-                stage.show();
-
-
-
-
-
-            });
+        });
 
 
 

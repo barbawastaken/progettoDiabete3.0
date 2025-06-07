@@ -21,63 +21,39 @@ public class ModificaUtenteController{
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
     private ToggleGroup ruolo;
+    private VisualizzaListaUtentiController listaUtentiController;
 
-    @FXML
-    private ComboBox<String> gender;
-    @FXML
-    private TextField nome;
-    @FXML
-    private TextField cognome;
-    @FXML
-    private TextField email;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private TextField address;
-    @FXML
-    private TextField citta;
-    @FXML
-    private TextField number;
-    @FXML
-    private TextField taxCode;
-    @FXML
-    private RadioButton paziente;
-    @FXML
-    private RadioButton diabetologo;
-    @FXML
-    private RadioButton amministratore;
-    @FXML
-    private ComboBox<String> medicoCurante;
-    @FXML
-    private TextField cap;
-    @FXML
-    private DatePicker birthday;
-    @FXML
-    private TextField telephone;
-    @FXML
-    private Text taxCodeError;
-    @FXML
-    private Text numberError;
-    @FXML
-    private Text telephoneError;
-    @FXML
-    private Text emailError;
-    @FXML
-    private Text capError;
-    @FXML
-    private Text birthdayError;
-    @FXML
-    private Text genderError;
-    @FXML
-    private Text medicoCuranteText;
-    @FXML
-    private Text userAddedText;
-    @FXML
-    private TextField nation;
-    @FXML
-    private TextField weight;
-    @FXML
-    private TextField height;
+
+    @FXML  private ComboBox<String> gender;
+    @FXML private TextField nome;
+    @FXML private TextField cognome;
+    @FXML private TextField email;
+    @FXML private PasswordField password;
+    @FXML private TextField address;
+    @FXML private TextField citta;
+    @FXML private TextField number;
+    @FXML private TextField taxCode;
+    @FXML private RadioButton paziente;
+    @FXML private RadioButton diabetologo;
+    @FXML private RadioButton amministratore;
+    @FXML private ComboBox<String> medicoCurante;
+    @FXML private TextField cap;
+    @FXML private DatePicker birthday;
+    @FXML private TextField telephone;
+    @FXML private Text taxCodeError;
+    @FXML private Text numberError;
+    @FXML private Text telephoneError;
+    @FXML private Text emailError;
+    @FXML private Text capError;
+    @FXML private Text birthdayError;
+    @FXML private Text genderError;
+    @FXML private Text medicoCuranteText;
+    @FXML private Text userAddedText;
+    @FXML private TextField nation;
+    @FXML private TextField weight;
+    @FXML private TextField height;
+
+    public ModificaUtenteController(){ }
 
 
     @FXML
@@ -104,12 +80,26 @@ public class ModificaUtenteController{
         userAddedText.setVisible(false);
         userAddedText.setManaged(false);
 
+        gender.getItems().addAll("Maschio", "Femmina");
+        ruolo=new ToggleGroup();
+        paziente.setToggleGroup(ruolo);
+        diabetologo.setToggleGroup(ruolo);
+        amministratore.setToggleGroup(ruolo);
+    }
+    public void initializeData(VisualizzaListaUtentiController listaUtentiController, Utente utente, VisualizzaListaUtentiModel model, ModificaUtenteModel modificaUtenteModel,
+                               Stage listaUtentiStage) {
+
+        this.listaUtentiController = listaUtentiController;
+        this.utente = utente;
+        this.model = model;
+        this.modificaUtenteModel = modificaUtenteModel;
+        this.listaUtentiStage = listaUtentiStage;
+
         nome.setText(utente.getNome());
         cognome.setText(utente.getCognome());
         email.setText(utente.getEmail());
         password.setText(utente.getPassword());
         address.setText(utente.getAddress());
-        birthday.setValue(LocalDate.parse(utente.getBirthday().toString()));
         gender.setValue(utente.getGender());
         telephone.setText(utente.getTelephone());
         taxCode.setText(utente.getTaxCode());
@@ -118,6 +108,11 @@ public class ModificaUtenteController{
         weight.setText(String.valueOf(utente.getWeight()));
         number.setText(String.valueOf(utente.getNumber()));
         citta.setText(utente.getCity());
+        nation.setText(utente.getCountryOfResidence());
+        birthday.setValue(LocalDate.now());
+
+
+
         if(utente.getRole().equals("DIABETOLOGO")){
             diabetologo.setSelected(true);
         } else if(utente.getRole().equals("AMMINISTRATORE")){
@@ -132,34 +127,6 @@ public class ModificaUtenteController{
             medicoCurante.setValue(utente.getDiabetologo());
 
         }
-        nation.setText(utente.getCountryOfResidence());
-        gender.getItems().addAll("Maschio", "Femmina");
-        ruolo = new ToggleGroup();
-        paziente.setToggleGroup(ruolo);
-        diabetologo.setToggleGroup(ruolo);
-        amministratore.setToggleGroup(ruolo);
-
-
-
-    }
-
-    @FXML
-    private void onResetButtonPressed(){
-        nome.setText("");
-        cognome.setText("");
-        email.setText("");
-        password.setText("");
-        address.setText("");
-        birthday.setValue(LocalDate.now());
-        gender.setValue(utente.getGender());
-        telephone.setText("");
-        taxCode.setText("");
-        cap.setText("");
-        height.setText("");
-        weight.setText("");
-        nation.setText("");
-        number.setText("");
-
     }
 
     private boolean isEmailValid(){
@@ -188,20 +155,49 @@ public class ModificaUtenteController{
         return validNumber.matcher(number.getText()).matches();
     }
 
+    @FXML
+    private void onIndietroButtonPressed(){
+        ((Stage) nome.getScene().getWindow()).close();
+    }
 
     @FXML
     private void onSendButtonPressed(){
+        try{
+            RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
+            Utente aggiornato = new Utente(
+                    taxCode.getText(),
+                    password.getText(),
+                    nome.getText(),
+                    cognome.getText(),
+                    email.getText(),
+                    java.sql.Date.valueOf(birthday.getValue()),
+                    address.getText(),
+                    Integer.parseInt(number.getText()),
+                    citta.getText(),
+                    Integer.parseInt(cap.getText()),
+                    nation.getText(),
+                    gender.getValue(),
+                    telephone.getText(),
+                    selected.getText(),
+                    medicoCurante.getValue(),
+                    Double.parseDouble(weight.getText()),
+                    Double.parseDouble(height.getText())
+            );
 
-        RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
-        Utente nuovo = new Utente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), email.getText(),
-                Date.valueOf(birthday.getValue()), address.getText(), Integer.parseInt(number.getText()),
-                citta.getText(), Integer.parseInt(cap.getText()), nation.getText(), gender.getValue(), telephone.getText(),
-                selected.getText(), medicoCurante.getValue(), Double.parseDouble(weight.getText()),
-                Double.parseDouble(height.getText())
-                );
-        System.out.println(gender.getValue());
-        ModificaUtenteModel model = new ModificaUtenteModel();
-        model.aggiornaUtente(utente.getTaxCode(), nuovo);
+            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
+
+            Stage currentStage = (Stage) nome.getScene().getWindow();
+            currentStage.close();
+
+            listaUtentiStage.close();
+            VisualizzaListaUtentiView nuovaView = new VisualizzaListaUtentiView();
+            new VisualizzaListaUtentiController(model,nuovaView,currentStage);
+        }catch (Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Errore durante il salvataggio. Controlla i dati.");
+            alert.showAndWait();
+        }
+
     }
 
 
@@ -212,9 +208,7 @@ public class ModificaUtenteController{
         this.listaUtentiStage = listaUtentiStage;
     }
 
-    public ModificaUtenteController(){
 
-    }
     public ModificaUtenteController(ModificaUtenteModel modificaUtenteModel, ModificaUtenteView modificaUtenteView, Utente selezionato, Stage visualizzaUtentiStage){
 
         this.modificaUtenteView = modificaUtenteView;
