@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoginModel;
 import view.LoginView;
@@ -21,15 +22,22 @@ public class LoginController {
     private TextField passwordField;
 
     @FXML
+    private Text error;
+
+    @FXML
     private void onLoginPressed() throws IOException {
         String taxCode = taxCodeField.getText();
         String password = passwordField.getText();
         System.out.println(taxCode);
         System.out.println(password);
         this.taxCode = taxCode;
-        loginModel.checkLogin(taxCode, password);
-        Stage stage = (Stage) taxCodeField.getScene().getWindow();
-        stage.close();
+        if(loginModel.checkLogin(taxCode, password)){
+            Stage stage = (Stage) taxCodeField.getScene().getWindow();
+            stage.close();
+        } else{error.setVisible(true);}
+
+
+
 
     }
 
@@ -37,6 +45,12 @@ public class LoginController {
     private void onResetPressed(){
         taxCodeField.clear();
         passwordField.clear();
+    }
+
+    @FXML
+    private void initialize() {
+        error.setVisible(false);
+
     }
 
     public LoginController(LoginModel model, LoginView view, Stage stage) throws SQLException, IOException {

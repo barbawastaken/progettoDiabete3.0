@@ -19,6 +19,8 @@ import model.Diabetologo.VisualizzaPazientiModel;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class VisualizzaPazientiController implements Initializable {
@@ -62,9 +64,28 @@ public class VisualizzaPazientiController implements Initializable {
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
         heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
+        ArrayList<String> pazientiInRitardo;
+        try {
+            pazientiInRitardo = new ArrayList<>(visualizzaPazientiModel.getPazientiInRitardo());
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         tabella.setRowFactory(tv -> {
-            TableRow<Paziente> row = new TableRow<>();
+
+           TableRow<Paziente> row = new TableRow<>(){
+               @Override
+               protected void updateItem(Paziente item, boolean empty) {
+                   super.updateItem(item, empty);
+
+                   if(item == null || empty) {
+                       setStyle("");
+                   } else if(pazientiInRitardo.contains(item.getTaxCode())) {
+                       setStyle("-fx-background-color: #ff0000");
+                   }
+               }
+           };
+
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 2) { // doppio clic
                     Paziente pazienteSelezionato = row.getItem();

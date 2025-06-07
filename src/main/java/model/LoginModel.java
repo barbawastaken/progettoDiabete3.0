@@ -26,7 +26,7 @@ public class LoginModel {
 
 
 
-    public void checkLogin(String taxCode, String password){
+    public boolean checkLogin(String taxCode, String password){
 
         String DB_URL = "jdbc:sqlite:mydatabase.db";
 
@@ -55,6 +55,7 @@ public class LoginModel {
                             stage.setTitle("Paziente");
                             stage.setScene(new Scene(root, 650, 500));
                             stage.show();
+                            return true;
 
 
                         }
@@ -72,6 +73,7 @@ public class LoginModel {
                             stage.setTitle("Diabetologo");
                             stage.setScene(new Scene(root, 650, 500));
                             stage.show();
+                            return true;
                         }
                         case "AMMINISTRATORE" -> {
 
@@ -84,25 +86,20 @@ public class LoginModel {
                             stage.show();
                             AmministratoreModel model = new AmministratoreModel();
                             AmministratoreView view = new AmministratoreView();
+                            return true;
                             //new AmministratoreController(model, view, loginStage);
                         }
+
 
                     }
                 }
             }
 
-            Text errorText = new Text("Username e/o password invalidi");
-            errorText.setFont(Font.font(14));
-            errorText.setX(50);
-            errorText.setY(40);
-            errorText.setFill(Color.RED);
-            //loginView.getGroup().getChildren().add(errorText);
-
-            //loginView.getTaxCodeField().setText("");
-            //loginView.getPasswordField().setText("");
+            return false;
 
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());
+            return false;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

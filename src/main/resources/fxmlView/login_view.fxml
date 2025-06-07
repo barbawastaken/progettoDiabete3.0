@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="mainPane" prefHeight="500" prefWidth="900" stylesheets="/css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
@@ -11,7 +12,7 @@
 
             <!-- FORM Login -->
             <StackPane styleClass="form-container" HBox.hgrow="ALWAYS">
-                <VBox fx:id="formPane" alignment="CENTER" spacing="15" styleClass="form-box" maxWidth="300">
+                <VBox fx:id="formPane" alignment="CENTER" maxWidth="300" spacing="15" styleClass="form-box">
                     <Label styleClass="title" text="Welcome Back">
                     </Label>
 
@@ -25,6 +26,7 @@
                         <Button onAction="#onResetPressed" text="Reset" />
                         <Button onAction="#onLoginPressed" text="Accedi" />
                     </HBox>
+               <Text fx:id="error" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Username e/o password errati" />
                 </VBox>
             </StackPane>
 

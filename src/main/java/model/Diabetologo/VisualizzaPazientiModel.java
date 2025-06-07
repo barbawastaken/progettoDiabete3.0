@@ -15,6 +15,8 @@ public class VisualizzaPazientiModel {
 
         String query = "SELECT * FROM utenti WHERE diabetologo=?";
 
+
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -44,10 +46,31 @@ public class VisualizzaPazientiModel {
                 }
             }
 
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return pazienti;
+    }
+
+    public List<String> getPazientiInRitardo() throws SQLException {
+        String not = "SELECT taxCode FROM rilevazioniGlicemiche\n" +
+                "GROUP BY taxCode\n" +
+                "HAVING MAX(data) < DATE('now', '-3 day');";
+
+        try(Connection conn = DriverManager.getConnection(DB_URL)){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(not);
+            List<String>pazientiInRitardo = new ArrayList<>();
+            while (rs.next()) {
+                pazientiInRitardo.add(rs.getString("taxCode"));
+                System.out.println(rs.getString("taxCode"));
+            }
+            return pazientiInRitardo;
+
+        }
     }
 }
