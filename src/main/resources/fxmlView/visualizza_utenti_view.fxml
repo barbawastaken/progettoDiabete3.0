@@ -13,12 +13,15 @@
                 <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Nome" />
                   <TableColumn fx:id="cognomeColumn" prefWidth="75" text="Cognome" />
                   <TableColumn fx:id="genderColumn" prefWidth="75" text="Sesso" />
+                  <TableColumn fx:id="altezzaColumn" prefWidth="75" text="Altezza" />
+                  <TableColumn fx:id="pesoColumn" prefWidth="75" text="Peso" />
                   <TableColumn fx:id="birthdayColumn" prefWidth="75" text="Data di Nascita" />
                   <TableColumn fx:id="passwordColumn" prefWidth="75" text="Password" />
                   <TableColumn fx:id="addressColumn" prefWidth="75" text="Via" />
                   <TableColumn fx:id="numberColumn" prefWidth="150" text="Numero Civico" />
                   <TableColumn fx:id="capColumn" prefWidth="75" text="CAP" />
                   <TableColumn fx:id="cityColumn" prefWidth="75" text="Città" />
+                  <TableColumn fx:id="countryOfResidenceColumn" prefWidth="75" text="Nazione" />
                   <TableColumn fx:id="emailColumn" prefWidth="75" text="email" />
                   <TableColumn fx:id="telephoneColumn" prefWidth="75" text="Cellulare" />
                   <TableColumn fx:id="roleColumn" prefWidth="75" text="Ruolo" />

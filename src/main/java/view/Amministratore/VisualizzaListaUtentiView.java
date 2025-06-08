@@ -1,6 +1,7 @@
 package view.Amministratore;
 
 import controller.Amministratore.VisualizzaListaUtentiController;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Scene;
@@ -70,6 +71,14 @@ public class VisualizzaListaUtentiView {
         TableColumn<Utente, String> colDiabetologo = new TableColumn<>("Diabetologo");
         colDiabetologo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDiabetologo()));
         
+        TableColumn<Utente, String> colCountryOfResidence = new TableColumn<>("Nazione");
+        colCountryOfResidence.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountryOfResidence()));
+
+        TableColumn<Utente, Double> colWeight = new TableColumn<>("Peso");
+        colWeight.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getWeight()).asObject());
+
+        TableColumn<Utente, Double> colHeight = new TableColumn<>("Altezza");
+        colHeight.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getHeight()).asObject());
 
         // Carica gli utenti automaticamente
         //controller.caricaUtenti(tabellaUtenti);

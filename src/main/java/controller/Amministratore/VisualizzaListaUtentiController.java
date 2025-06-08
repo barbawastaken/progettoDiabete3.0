@@ -32,52 +32,31 @@ public class VisualizzaListaUtentiController {
 
     private Utente selectedUtente;
 
-    @FXML
-    private TableView<Utente> tabella;
-
-    @FXML
-    private TableColumn<Utente, String> nomeColumn;
-
-    @FXML
-    private TableColumn<Utente, String> cognomeColumn;
-
-    @FXML
-    private TableColumn<Utente, String> emailColumn;
-
-    @FXML
-    private TableColumn<Utente, String> telephoneColumn;
-
-    @FXML
-    private TableColumn<Utente, String> taxCodeColumn;
-    @FXML
-    private TableColumn<Utente, String> addressColumn;
-    @FXML
-    private TableColumn<Utente, String> cityColumn;
-
-    @FXML
-    private TableColumn<Utente, String> capColumn;
-
-    @FXML
-    private TableColumn<Utente, String> roleColumn;
-
-    @FXML
-    private TableColumn<Utente, String> numberColumn;
+    @FXML private TableView<Utente> tabella;
+    @FXML private TableColumn<Utente, String> nomeColumn;
+    @FXML private TableColumn<Utente, String> cognomeColumn;
+    @FXML private TableColumn<Utente, String> emailColumn;
+    @FXML private TableColumn<Utente, String> telephoneColumn;
+    @FXML private TableColumn<Utente, String> taxCodeColumn;
+    @FXML private TableColumn<Utente, String> addressColumn;
+    @FXML private TableColumn<Utente, String> cityColumn;
+    @FXML private TableColumn<Utente, String> capColumn;
+    @FXML private TableColumn<Utente, String> roleColumn;
+    @FXML private TableColumn<Utente, String> numberColumn;
+    @FXML private TableColumn<Utente, String> diabetologoColumn;
+    @FXML private TableColumn<Utente, String> genderColumn;
+    @FXML private TableColumn<Utente, String> passwordColumn;
+    @FXML private TableColumn<Utente, String> birthdayColumn;
+    @FXML private TableColumn<Utente, String> countryOfResidenceColumn;
+    @FXML private TableColumn<Utente, String> altezzaColumn;
+    @FXML private TableColumn<Utente, String> pesoColumn;
 
     private  VisualizzaListaUtentiModel model;
     private  VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 
-    @FXML
-    private TableColumn<Utente, String> diabetologoColumn;
 
-    @FXML
-    private TableColumn<Utente, String> genderColumn;
 
-    @FXML
-    private TableColumn<Utente, String> passwordColumn;
-
-    @FXML
-    private TableColumn<Utente, String> birthdayColumn;
 
     @FXML
     private void initialize() {
@@ -95,6 +74,9 @@ public class VisualizzaListaUtentiController {
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         birthdayColumn.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        countryOfResidenceColumn.setCellValueFactory(new PropertyValueFactory<>("countryOfResidence"));
+        altezzaColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
+        pesoColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
 
         VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
@@ -115,9 +97,8 @@ public class VisualizzaListaUtentiController {
                 controller = new ModificaUtenteController();
                 controller.setUtente(selected);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
-                loader.setController(controller);
-
                 Parent root = null;
+
                 try {
                     root = loader.load();
 
@@ -183,98 +164,4 @@ public class VisualizzaListaUtentiController {
 
     public VisualizzaListaUtentiController() {}
 
-/*
-    public void caricaUtenti(List<Utente> utenti) {
-        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
-        ObservableList<Utente> listaOsservabile = FXCollections.observableArrayList(model.getTuttiGliUtenti());
-        tabella.setItems(listaOsservabile);
-
-        //Aggiungo un Context Menu per ogni riga presente nella tabella
-        //COMMENTATO: non serve più dopo inserimento fxml
-*/
-        /*
-        tabella.setRowFactory(utenteTableView -> {
-            TableRow<Utente> row = new TableRow<>();
-            ContextMenu contextMenu = new ContextMenu();
-
-            //impostiamo un modifica utente
-            MenuItem modificaItem = new MenuItem("Modifica utente");
-            modificaItem.setOnAction(event -> {
-                Utente selected = row.getItem();
-                //apriFinestraModifica(selected);
-
-                ModificaUtenteModel modificaUtenteModel = new ModificaUtenteModel();
-                ModificaUtenteView modificaUtenteView = new ModificaUtenteView(selected);
-                new ModificaUtenteController(modificaUtenteModel, modificaUtenteView, selected, listaUtentiStage);
-            });
-
-
-
-            // impostiamo il delete :)
-            MenuItem eliminaItem = new MenuItem("Elimina utente");
-            eliminaItem.setOnAction(event -> {
-                Utente selected = row.getItem();
-                if (selected != null) {
-                    model.rimuoviUtente(selected); // Aggiorna anche il DB
-                    tabella.getItems().remove(selected); // Rimuovi dalla tabella
-                }
-            });
-            contextMenu.getItems().addAll(modificaItem, eliminaItem);
-
-            row.contextMenuProperty().bind(
-                    Bindings.when(row.emptyProperty())
-                            .then((ContextMenu) null)
-                            .otherwise(contextMenu)
-            );
-
-
-            return row;
-        });
-
-         */
-
-        //imposto indietro button
-        /*
-        view.getIndietroButton().setOnAction(e -> {
-            listaUtentiStage.close();
-
-            AmministratoreModel amministratoreModel = new AmministratoreModel();
-            AmministratoreView amministratoreView = new AmministratoreView();
-
-
-            try {
-                new AmministratoreController(amministratoreModel, amministratoreView, view.getStage());
-                // Nessun .start() qui, lo fa già il controller
-
-            } catch (Exception ex) {
-                System.out.println("Errore: " + ex.getMessage());
-                ex.printStackTrace(); // Aggiungo stack trace per debug
-            }
-
-
-
-
-        });
-
-
-
-    }
-
-
-    private void apriFinestraModifica(Utente utente) {
-        ModificaUtenteView modificaView = new ModificaUtenteView(utente);
-        ModificaUtenteController modificaController = new ModificaUtenteController(modificaView, utente, model, listaUtentiStage);
-        Stage modificaStage = new Stage();
-        modificaView.start(modificaStage, utente, modificaController);
-        // Quando la finestra viene chiusa, ricarica la tabella
-        //modificaStage.setOnHiding(e -> caricaUtenti(view.getTabellaUtenti())); //ricarica la tabella
-
-        modificaView.getSalvaButton().setOnAction(e -> modificaController.salvaModifiche(listaUtentiStage));
-
-    }
-
-    public void start(Stage stage) {
-        view.start(stage, this); // chiama la view, passandole anche il controller
-    }
-*/
 }
