@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.Diabetologo.DiabetologoController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
    <children>
-      <VBox prefWidth="600.0" prefHeight="400.0" spacing="20"
-            AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-            AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+      <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
          <!-- Barra superiore -->
-         <HBox style="-fx-background-color: dodgerblue;" alignment="CENTER_LEFT" spacing="10" prefHeight="80.0">
+         <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
             <padding>
-               <Insets top="10" right="10" bottom="10" left="10"/>
+               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
                <image>
                   <Image url="@../images/userImage.png" />
                </image>
             </ImageView>
-            <Label text="Area Diabetologo" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
             <Pane HBox.hgrow="ALWAYS" />
-            <Button text="Logout" prefHeight="30.0" prefWidth="80.0" onAction="#handleLogout" />
+
+            <Button onAction="#handleLogout" prefHeight="30.0" prefWidth="80.0" text="Logout" />
          </HBox>
 
          <!-- Spazio per distanziare verticalmente -->
-         <Pane VBox.vgrow="ALWAYS"/>
+         <Pane VBox.vgrow="ALWAYS" />
 
          <!-- Sezione pulsanti -->
          <HBox alignment="CENTER" spacing="30">
             <padding>
-               <Insets top="0" right="20" bottom="0" left="20"/>
+               <Insets bottom="0" left="20" right="20" top="0" />
             </padding>
-            <Button text="Visualizza pazienti" prefWidth="200.0" prefHeight="40.0" onAction="#isVisualizzaPazientiClicked"/>
-            <Button text="Visualizza notifiche" prefWidth="200.0" prefHeight="40.0" onAction="#isVisualizzaNotificheClicked"/>
+            <Button onAction="#isVisualizzaPazientiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Pazienti" />
+            <Button onAction="#isVisualizzaNotificheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza notifiche" />
+
          </HBox>
 
-         <Pane VBox.vgrow="ALWAYS"/>
+         <Pane VBox.vgrow="ALWAYS" />
       </VBox>
    </children>
 </AnchorPane>

@@ -39,11 +39,11 @@ public class AggiungiUtenteModel {
 
     public void inserisciUtente(String taxCode, String password, String nome, String cognome, String address,
                                 String cap, String city, String email, String gender, java.sql.Date birthday,
-                                String number, String telephone, String userType, String diabetologoSelezionato)
+                                String number, String telephone, String userType, String diabetologoSelezionato, String altezza, String peso)
             throws SQLException {
 
         String addUserQuery = "INSERT INTO utenti (taxCode, password, nome, cognome, email, birthday, address," +
-                "number, city, cap, gender, telephoneNumber, userType, diabetologo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "number, city, cap, gender, telephoneNumber, userType, diabetologo, altezza, peso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         String addLoginQuery  = "INSERT INTO loginTable (taxCode, password, userType) VALUES (?, ?, ?);";
 
 
@@ -70,8 +70,13 @@ public class AggiungiUtenteModel {
                 pstmt.setString(13, userType);
                 if(diabetologoSelezionato != null) {
                     pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
+                    System.out.println(diabetologi.get(diabetologoSelezionato));//!!! FACENDO COSÌ UN PAZIENTE NON PUÒ NON AVERE UN MEDICO
+                    pstmt.setString(15, altezza);
+                    pstmt.setString(16, peso);
                 } else{
                     pstmt.setString(14, null);
+                    pstmt.setString(15, null);
+                    pstmt.setString(16, null);
                 }
 
                 System.out.println("Siamo sull'execute update");

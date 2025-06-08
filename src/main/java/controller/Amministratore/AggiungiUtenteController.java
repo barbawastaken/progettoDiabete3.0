@@ -26,6 +26,12 @@ public class AggiungiUtenteController {
     private TextField nome;
 
     @FXML
+    private TextField height;
+
+    @FXML
+    private TextField weight;
+
+    @FXML
     private TextField cognome;
 
     @FXML
@@ -67,9 +73,6 @@ public class AggiungiUtenteController {
     private TextField telephone;
 
     @FXML
-    private TextField phone;
-
-    @FXML
     private Text taxCodeError;
 
     @FXML
@@ -95,6 +98,12 @@ public class AggiungiUtenteController {
 
     @FXML
     private Text userAddedText;
+
+    @FXML
+    private Text heightText;
+
+    @FXML
+    private Text weightText;
 
     private ToggleGroup ruolo;
     private HashMap<String, String> diabetologi = new HashMap<>();
@@ -130,6 +139,15 @@ public class AggiungiUtenteController {
         medicoCuranteText.setManaged(false);
         userAddedText.setVisible(false);
         userAddedText.setManaged(false);
+        weight.setVisible(false);
+        weight.setManaged(false);
+        height.setVisible(false);
+        height.setManaged(false);
+        heightText.setVisible(false);
+        heightText.setManaged(false);
+        weightText.setVisible(false);
+        weightText.setManaged(false);
+
 
         ruolo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -151,6 +169,15 @@ public class AggiungiUtenteController {
                     medicoCuranteText.setManaged(true);
                     medicoCurante.setVisible(true);
                     medicoCurante.setManaged(true);
+                    weight.setVisible(true);
+                    weight.setManaged(true);
+                    height.setVisible(true);
+                    height.setManaged(true);
+                    weightText.setVisible(true);
+                    weightText.setManaged(true);
+                    heightText.setVisible(true);
+                    heightText.setManaged(true);
+
 
                 } else {
                     medicoCuranteText.setVisible(false);
@@ -158,6 +185,17 @@ public class AggiungiUtenteController {
                     medicoCurante.setVisible(false);
                     medicoCurante.setManaged(false);
                     medicoCurante.getItems().clear();
+                    weight.setVisible(false);
+                    weight.setManaged(false);
+                    height.setVisible(false);
+                    height.setManaged(false);
+                    weightText.setVisible(false);
+                    weightText.setManaged(false);
+                    heightText.setVisible(false);
+                    heightText.setManaged(false);
+                    medicoCurante.setValue(null);
+                    height.setText(null);
+                    weight.setText(null);
                 }
             }
         });
@@ -192,7 +230,7 @@ public class AggiungiUtenteController {
         try {
             model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
                     cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                    number.getText(), telephone.getText(), selected.getText(), diabetologi.get(medicoCurante.getValue()));
+                    number.getText(), telephone.getText(), selected.getText(), diabetologi.get(medicoCurante.getValue()), height.getText(), weight.getText());
 
             userAddedText.setVisible(true);
             userAddedText.setManaged(true);

@@ -63,12 +63,15 @@ public class LoginModel {
                             // Carica il file FXML associato all'interfaccia del diabetologo.
                             // getClass().getResource(...) cerca il file nella cartella "resources/fxmlView".
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/diabetologo_view.fxml"));
-
+                            DiabetologoController diabetologoController = new DiabetologoController();
+                            diabetologoController.setTaxCode(taxCode);
+                            loader.setController(diabetologoController);
                             Parent root = loader.load(); // Carica il contenuto del file FXML e crea la struttura grafica
                             // Recupera l'istanza del controller associato al file diabetologo_view.fxml.
                             // Questo è il controller specificato con fx:controller nel file FXML.
-                            DiabetologoController diabetologoController = loader.getController();
-                            diabetologoController.setTaxCode(taxCode);
+
+
+                            System.out.println("taxCode in LoginModel: " + taxCode);
                             Stage stage = new Stage();
                             stage.setTitle("Diabetologo");
                             stage.setScene(new Scene(root, 650, 500));

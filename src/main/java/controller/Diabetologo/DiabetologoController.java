@@ -7,15 +7,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import model.Diabetologo.DiabetologoModel;
+import model.NotificationModel;
 import view.Diabetologo.DiabetologoView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DiabetologoController {
 
     private DiabetologoModel diabetologoModel;
     private DiabetologoView diabetologoView;
+
 
     private String taxCode;
 
@@ -25,6 +29,10 @@ public class DiabetologoController {
 
     public DiabetologoController() {
 
+    }
+
+    public void initializeData(String taxCode) {
+        this.taxCode = taxCode;
     }
 
     @FXML
@@ -73,6 +81,13 @@ public class DiabetologoController {
 
     }
 
+    @FXML
+    public void initialize() throws SQLException {
+        NotificationModel notificationModel = new NotificationModel(taxCode);
+        ArrayList<String> results = notificationModel.notifyRitardo();
+        System.out.println(results.toString());
+    }
+
     public DiabetologoController(DiabetologoModel diabetologoModel, DiabetologoView diabetologoView, Stage loginStage){
 
         this.diabetologoModel = diabetologoModel;
@@ -90,6 +105,10 @@ public class DiabetologoController {
         diabetologoStage.setTitle("Homepage diabetologo");
         loginStage.close();
         diabetologoStage.show();
+    }
+
+    public void setTaxCode(){
+        this.taxCode = taxCode;
     }
 
 }
