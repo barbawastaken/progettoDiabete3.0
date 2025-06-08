@@ -25,6 +25,7 @@ import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class VisualizzaListaUtentiController {
@@ -110,11 +111,17 @@ public class VisualizzaListaUtentiController {
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
-                    Parent root = loader.load();
+                ModificaUtenteController controller = null;
+                controller = new ModificaUtenteController();
+                controller.setUtente(selected);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+                loader.setController(controller);
 
-                    ModificaUtenteController controller = loader.getController();
+                Parent root = null;
+                try {
+                    root = loader.load();
+
+                    controller = loader.getController();
                     controller.initializeData(VisualizzaListaUtentiController.this, selected, model, new ModificaUtenteModel(), (Stage)tabella.getScene().getWindow());
 
 
