@@ -1,8 +1,17 @@
 package controller.Diabetologo;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import javafx.scene.control.Button;
+
 import javafx.scene.control.Label;
 
 public class DettaglioPazienteController {
@@ -22,6 +31,10 @@ public class DettaglioPazienteController {
     @FXML private Label cellulareLabel;
     @FXML private Label pesoLabel;
     @FXML private Label altezzaLabel;
+
+    @FXML private Button aggiungiTerapia;
+    @FXML private Button modificaTerapia;
+    @FXML private Button aggiornaInfo;
 
     private Paziente paziente;
 
@@ -47,6 +60,23 @@ public class DettaglioPazienteController {
 
 
     @FXML private void handleAggiungiTerapia() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiungi_terapia_view.fxml"));
+            Parent root = loader.load();
+
+            AggiungiTerapiaController controller = loader.getController();
+            controller.setTaxCode(paziente.getTaxCode());
+
+            Stage currentStage = (Stage) aggiungiTerapia.getScene().getWindow();
+
+            currentStage.setTitle("Aggiungi terapia");
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

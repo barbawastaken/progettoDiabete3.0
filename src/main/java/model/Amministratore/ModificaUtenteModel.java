@@ -49,6 +49,7 @@ public class ModificaUtenteModel {
             conn.setAutoCommit(false);
 
             // Query utenti
+
             System.out.println(utente.getTaxCode() + " " + vecchioTaxCode);
             pstmt.setString(1, utente.getTaxCode());
             pstmt.setString(2, BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
@@ -63,7 +64,9 @@ public class ModificaUtenteModel {
             pstmt.setString(11, utente.getGender());
             pstmt.setString(12, utente.getTelephone());
             pstmt.setString(13, utente.getRole());
+            System.out.println(utente.getRole());
             pstmt.setString(14, utente.getDiabetologo());
+
             pstmt.setString(15, utente.getCountryOfResidence());
             pstmt.setDouble(16,utente.getHeight());
             pstmt.setDouble(17,utente.getWeight());
