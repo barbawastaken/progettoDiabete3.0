@@ -5,6 +5,7 @@ module org.example.demo {
     requires java.desktop;
     requires jbcrypt;
     opens controller to javafx.fxml;
+    opens model.Paziente to javafx.base;
     opens controller.Paziente to javafx.fxml;
     opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;
     opens controller.Paziente.AssunzioneFarmaco to javafx.fxml;

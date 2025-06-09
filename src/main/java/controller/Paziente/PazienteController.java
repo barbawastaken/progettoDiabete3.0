@@ -5,6 +5,7 @@ import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
 import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
+import model.Paziente.TerapiaModel;
 import view.Paziente.PazienteView;
 import java.io.IOException;
 import java.sql.*;
@@ -34,11 +37,41 @@ public class PazienteController {
     @FXML private Button rilevaGlicemia;
     @FXML private ComboBox<String> filtroPeriodoComboBox;
     @FXML private LineChart<String, Number> lineChartGlicemia;
+    @FXML private HBox topBar;
+    @FXML private ImageView immagineProfilo;
+
+    @FXML private TableView<TerapiaModel> contenutoScrollPane;
+    @FXML private TableColumn<TerapiaModel, String> terapia;
+    @FXML private TableColumn<TerapiaModel, String> farmaco_prescritto;
+    @FXML private TableColumn<TerapiaModel, String> quantita;
+    @FXML private TableColumn<TerapiaModel, String> numero_assunzioni_giornaliere;
+
+    @FXML
+    public void initialize() {
+        topBar.heightProperty().addListener((obs, oldVal, newVal) -> {
+            immagineProfilo.setFitHeight(newVal.doubleValue());
+        });
+    }
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
         caricaDatiGlicemia(LocalDate.of(2025, 1, 1));
+
+        terapia.setCellValueFactory(new PropertyValueFactory<>("terapia"));
+        farmaco_prescritto.setCellValueFactory(new PropertyValueFactory<>("farmacoPrescritto"));
+        quantita.setCellValueFactory(new PropertyValueFactory<>("quantita"));
+        numero_assunzioni_giornaliere.setCellValueFactory(new PropertyValueFactory<>("numeroAssunzioniGiornaliere"));
+
+        PazienteModel model = new PazienteModel();
+        List<TerapiaModel> lista = model.getTerapie(taxCode);
+        contenutoScrollPane.setItems(FXCollections.observableArrayList(lista));
     }
+
+    @FXML
+    private void onProfiloClicked(){}
+
+    @FXML
+    private void onHomepageClicked(){}
 
     @FXML
     private void onLogoutPressed(){
@@ -55,7 +88,7 @@ public class PazienteController {
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
 
-        Stage pazienteStage = (Stage)rilevaGlicemia.getScene().getWindow();
+        Stage pazienteStage = (Stage)topBar.getScene().getWindow();
         pazienteStage.close();
 
     }
@@ -181,6 +214,7 @@ public class PazienteController {
             System.out.println("Errore caricamento grafico: " + e);
         }
     }
+
 
     public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView) {
 
