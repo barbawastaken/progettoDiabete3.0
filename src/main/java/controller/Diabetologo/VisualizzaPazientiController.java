@@ -34,7 +34,6 @@ public class VisualizzaPazientiController implements Initializable {
     @FXML private TableColumn<Paziente, String> cognomeColumn;
     @FXML private TableColumn<Paziente, String> genderColumn;
     @FXML private TableColumn<Paziente, String> birthdayColumn;
-    @FXML private TableColumn<Paziente, String> passwordColumn;
     @FXML private TableColumn<Paziente, String> addressColumn;
     @FXML private TableColumn<Paziente, String> numberColumn;
     @FXML private TableColumn<Paziente, String> capColumn;
@@ -54,7 +53,6 @@ public class VisualizzaPazientiController implements Initializable {
         cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         birthdayColumn.setCellValueFactory(new PropertyValueFactory<>("birthday"));
-        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         capColumn.setCellValueFactory(new PropertyValueFactory<>("cap"));
@@ -81,7 +79,7 @@ public class VisualizzaPazientiController implements Initializable {
                    if(item == null || empty) {
                        setStyle("");
                    } else if(pazientiInRitardo.contains(item.getTaxCode())) {
-                       setStyle("-fx-background-color: #ff0000");
+                       setStyle("-fx-background-color: #f08080");
                    }
                }
            };

@@ -33,7 +33,6 @@
                         <TableColumn fx:id="cognomeColumn" text="Cognome" />
                         <TableColumn fx:id="genderColumn" text="Sesso" />
                         <TableColumn fx:id="birthdayColumn" text="Data di Nascita" />
-                        <TableColumn fx:id="passwordColumn" text="Password" />
                         <TableColumn fx:id="addressColumn" text="Via" />
                         <TableColumn fx:id="numberColumn" text="Numero Civico" />
                         <TableColumn fx:id="capColumn" text="CAP" />

@@ -59,7 +59,7 @@ public class VisualizzaPazientiModel {
     public List<String> getPazientiInRitardo() throws SQLException {
         String not = "SELECT taxCode FROM rilevazioniGlicemiche\n" +
                 "GROUP BY taxCode\n" +
-                "HAVING MAX(data) < DATE('now', '-3 day');";
+                "HAVING data > DATE('now', '-3 day');";
 
         try(Connection conn = DriverManager.getConnection(DB_URL)){
             Statement stmt = conn.createStatement();

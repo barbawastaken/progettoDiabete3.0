@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.AggiungiTerapiaController">
+
+    <children>
+        <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+            <!-- Barra superiore -->
+            <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/userImage.png" />
+                    </image>
+                </ImageView>
+                <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleHomepage" prefHeight="30.0" prefWidth="80.0" text="Homepage" />
+            </HBox>
+
+            <!-- Spazio verticale flessibile -->
+            <Pane VBox.vgrow="ALWAYS" />
+
+            <!-- Form inserimento dati -->
+            <VBox alignment="CENTER_LEFT" spacing="10">
+                <padding>
+                    <Insets top="10" right="20" bottom="10" left="20"/>
+                </padding>
+
+                <Label text="Terapia" />
+                <TextField fx:id="terapiaField" promptText="Inserisci il nome della terapia" />
+
+                <Label text="Farmaco" />
+                <TextField fx:id="farmacoField" promptText="Inserisci il nome del farmaco" />
+
+                <Label text="Quantità Assunta" />
+                <TextField fx:id="quantitaField" promptText="Inserisci la quantità assunta" />
+
+                <Label text="Numero di Assunzioni Giornaliere" />
+                <TextField fx:id="frequenzaField" promptText="Es. 2 volte al giorno" />
+
+                <Label text="Indicazioni Facoltative" />
+                <TextField fx:id="indicazioniField" promptText="Eventuali note o raccomandazioni" />
+            </VBox>
+
+            <!-- Pulsanti finali -->
+            <HBox alignment="CENTER" spacing="20">
+                <padding>
+                    <Insets top="10" right="20" bottom="10" left="20"/>
+                </padding>
+                <Button fx:id="resetButton" text="Reset" onAction="#handleReset" prefWidth="100" />
+                <Button fx:id="confermaButton" text="Conferma" onAction="#handleConferma" prefWidth="100" />
+            </HBox>
+
+            <!-- Spazio finale per centrare tutto -->
+            <Pane VBox.vgrow="ALWAYS" />
+
+        </VBox>
+    </children>
+</AnchorPane>
