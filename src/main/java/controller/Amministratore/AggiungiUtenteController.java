@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AggiungiUtenteController {
+public class AggiungiUtenteController extends GestioneUtenti {
 
     @FXML
     private ComboBox<String> gender;
@@ -193,9 +193,9 @@ public class AggiungiUtenteController {
                     weightText.setManaged(false);
                     heightText.setVisible(false);
                     heightText.setManaged(false);
-                    medicoCurante.setValue(null);
-                    height.setText(null);
-                    weight.setText(null);
+                    //medicoCurante.setValue(null);
+                    //height.setText(null);
+                    //weight.setText(null);
                 }
             }
         });
@@ -223,14 +223,14 @@ public class AggiungiUtenteController {
     @FXML
     private void sendButtonPressed() throws SQLException {
 
-
+        super.check();
         AggiungiUtenteModel model = new AggiungiUtenteModel();
         RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
 
         try {
             model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
                     cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                    number.getText(), telephone.getText(), selected.getText(), diabetologi.get(medicoCurante.getValue()), height.getText(), weight.getText());
+                    number.getText(), telephone.getText(), selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
 
             userAddedText.setVisible(true);
             userAddedText.setManaged(true);

@@ -163,6 +163,41 @@ public class ModificaUtenteController{
     @FXML
     private void onSendButtonPressed(){
         try{
+
+            if(!isEmailValid()){
+                emailError.setVisible(true);
+                emailError.setManaged(true);
+                return;
+            } else{
+                emailError.setVisible(false);
+                emailError.setManaged(false);
+            }
+            if(!isTelephoneValid()){
+                telephoneError.setVisible(true);
+                telephoneError.setManaged(true);
+                return;
+            }else{
+                telephoneError.setVisible(false);
+                telephoneError.setManaged(false);
+            }
+            if(!isCapValid()){
+                capError.setVisible(true);
+                capError.setManaged(true);
+                return;
+            } else{
+                capError.setVisible(false);
+                capError.setManaged(false);
+            }
+            if(!isNumberValid()){
+                numberError.setVisible(true);
+                numberError.setManaged(true);
+                return;
+            } else{
+                numberError.setVisible(false);
+                numberError.setManaged(false);
+
+            }
+
             RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
             Utente aggiornato = new Utente(
                     taxCode.getText(),

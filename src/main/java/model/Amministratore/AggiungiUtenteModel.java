@@ -20,9 +20,16 @@ public class AggiungiUtenteModel {
                     ) {
                 ResultSet rs = stmt.executeQuery(findDiabetologi);
 
+
                 while (rs.next()) {
+                    System.out.println("Zio pera " + rs.getString("taxCode"));
                     diabetologi.put(((rs.getString("cognome")) + " (" + rs.getString("taxCode") + ")"),
                             rs.getString("taxCode"));
+                }
+
+                for (String key : diabetologi.keySet()) {
+                    System.out.println("Keysets: " + key);
+                    System.out.println("Diabetologi: " + diabetologi.get(key));
                 }
             }
         catch (SQLException e) {
@@ -69,7 +76,9 @@ public class AggiungiUtenteModel {
                 pstmt.setString(12, telephone);
                 pstmt.setString(13, userType);
                 if(diabetologoSelezionato != null) {
+                    System.out.println(diabetologoSelezionato);
                     pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
+
                     System.out.println(diabetologi.get(diabetologoSelezionato));//!!! FACENDO COSÌ UN PAZIENTE NON PUÒ NON AVERE UN MEDICO
                     pstmt.setString(15, altezza);
                     pstmt.setString(16, peso);
