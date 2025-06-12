@@ -3,6 +3,7 @@ package model.Paziente.AssunzioneFarmaco;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AssunzioneFarmacoModel {
@@ -78,4 +79,25 @@ public class AssunzioneFarmacoModel {
 
     }
 
+    public ArrayList<String> getFarmaciTerapie(String taxCode) {
+
+        ArrayList<String> farmaci = new ArrayList<>();
+        String sql = "SELECT farmaco_prescritto FROM terapiePrescritte WHERE taxCode = ?";
+
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);){
+                pstmt.setString(1, taxCode);
+                ResultSet rs = pstmt.executeQuery();
+
+                while(rs.next()){
+                    farmaci.add(rs.getString("farmaco_prescritto"));
+
+                }
+
+        } catch(Exception ex){
+                System.out.println("Errore: " + ex.getMessage());
+        }
+
+        return farmaci;
+    }
 }

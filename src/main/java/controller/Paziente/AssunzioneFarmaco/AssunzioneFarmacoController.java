@@ -11,19 +11,22 @@ import java.time.format.DateTimeFormatter;
 
 public class AssunzioneFarmacoController {
 
-    @FXML private TextField farmacoAssunto;
+    @FXML private ComboBox<String> farmacoAssunto;
     @FXML private TextField quantitaAssunta;
     @FXML private DatePicker dataAssunzione;
     @FXML private Spinner<LocalTime> orarioAssunzione;
+
+    private final AssunzioneFarmacoModel model = new AssunzioneFarmacoModel();
 
     private String taxCode;
 
     public AssunzioneFarmacoController() {}
 
-    public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
+    public void setTaxCode(String taxCode) { this.taxCode = taxCode; this.farmacoAssunto.getItems().setAll(model.getFarmaciTerapie(taxCode));}
 
     @FXML
     public void initialize() {
+
         // Imposta un valore iniziale e un range, ad esempio ogni 15 minuti
         SpinnerValueFactory<LocalTime> valueFactory = new SpinnerValueFactory<LocalTime>() {
             {
@@ -43,7 +46,7 @@ public class AssunzioneFarmacoController {
         };
 
         orarioAssunzione.setValueFactory(valueFactory);
-        orarioAssunzione.setEditable(true); // opzionale: permette scrittura manuale
+        orarioAssunzione.setEditable(false); // opzionale: non permette scrittura manuale
 
         TextField editor = orarioAssunzione.getEditor();
         editor.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -74,7 +77,7 @@ public class AssunzioneFarmacoController {
     @FXML
     public void onResetPressed(){
 
-        farmacoAssunto.setText("");
+        farmacoAssunto.cancelEdit();
         quantitaAssunta.setText("");
         dataAssunzione.setValue(null);
         orarioAssunzione.cancelEdit();
@@ -84,8 +87,7 @@ public class AssunzioneFarmacoController {
     @FXML
     public void onSubmitPressed(){
 
-        AssunzioneFarmacoModel model = new AssunzioneFarmacoModel();
-        int risultatoInserimento = model.inserimentoFarmacoAssunto(taxCode, farmacoAssunto.getText(), quantitaAssunta.getText(),
+        int risultatoInserimento = model.inserimentoFarmacoAssunto(taxCode, farmacoAssunto.getValue(), quantitaAssunta.getText(),
                                                                     dataAssunzione.getValue(), orarioAssunzione.getValue());
 
         if(risultatoInserimento == 0){
@@ -103,7 +105,7 @@ public class AssunzioneFarmacoController {
 
         System.out.println("Valori non inseriti");
 
-        farmacoAssunto.setText("");
+        farmacoAssunto.cancelEdit();
         quantitaAssunta.setText("");
         dataAssunzione.setValue(null);
         orarioAssunzione.cancelEdit();

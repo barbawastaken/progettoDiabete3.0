@@ -10,7 +10,7 @@
       <Button fx:id="indietroButton" layoutX="517.0" layoutY="27.0" mnemonicParsing="false" onAction="#onIndietroPressed" text="Indietro" />
 
        <Text layoutX="250.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Farmaco assunto" />
-       <TextField fx:id="farmacoAssunto" layoutX="241.0" layoutY="68.0" prefHeight="26.0" prefWidth="118.0" />
+       <ComboBox fx:id="farmacoAssunto" layoutX="225.0" layoutY="78.0" prefWidth="150.0" />
 
        <Text layoutX="256.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantità assunta" />
        <TextField fx:id="quantitaAssunta" layoutX="235.0" layoutY="152.0" prefHeight="25.0" prefWidth="131.0" />
