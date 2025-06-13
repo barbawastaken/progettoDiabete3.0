@@ -1,7 +1,9 @@
 package model.Paziente;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PazienteModel {
@@ -59,5 +61,72 @@ public class PazienteModel {
         }
 
         return terapie;
+    }
+
+    public ArrayList<String> getFarmaciNotifiche(String taxCode){
+
+        ArrayList<String> farmaciDaControllare = new ArrayList<>();
+
+        String query = "SELECT farmaco_prescritto FROM terapiePrescritte WHERE taxCode = ?";
+
+        // Esecuzione query per ottenere tutte i farmaci da assumere specificati dalle terapie relative al taxCode
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)){
+
+            stmt.setString(1, taxCode);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                //Aggiunga di ogni farmaco prescritto alla lista di quelli da controllare
+                farmaciDaControllare.add(rs.getString("farmaco_prescritto"));
+                System.out.println(rs.getString("farmaco_prescritto") + " aggiunto alla lista di quelli da controllare");
+
+            }
+
+            // Esecuzione query per ottenere le assunzioni di farmaci relativa al taxCode
+
+            String query2 = "SELECT farmacoAssunto, dataAssunzione FROM assunzioneFarmaci WHERE taxCode = ? ORDER BY dataAssunzione DESC";
+
+            try (Connection conn2 = DriverManager.getConnection(DB_URL);
+                 PreparedStatement stmt2 = conn2.prepareStatement(query2)){
+
+                stmt2.setString(1, taxCode);
+                ResultSet rs2 = stmt2.executeQuery();
+
+                //Per ogni farmaco assunto dal taxCode controlla se fa parte o no di quelli prescritti (farmaciDaControllare)
+
+                while (rs2.next()) {
+
+                    LocalDate dataAssunzione = LocalDate.parse(rs2.getString("dataAssunzione"));
+                    String farmacoAssunto = rs2.getString("farmacoAssunto");
+
+                    Iterator<String> iterator = farmaciDaControllare.iterator();
+                    while (iterator.hasNext()) {
+                        String farmacoDaControllare = iterator.next();
+                        System.out.println(farmacoDaControllare + " : " + farmacoAssunto);
+
+                        if (farmacoAssunto.equals(farmacoDaControllare) &&
+                                !dataAssunzione.isBefore(LocalDate.now().minusDays(3))) {
+                            System.out.println(farmacoDaControllare + " rimosso dalla lista");
+                            iterator.remove();
+                            break;
+                        }
+                    }
+
+                }
+
+            } catch(Exception e){
+                throw new RuntimeException("Errore nel caricamento assunzione: " + e);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        //Per i farmaci rimasti dev'essere generata la notifica
+
+        return farmaciDaControllare;
     }
 }

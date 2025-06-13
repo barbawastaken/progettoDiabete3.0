@@ -65,6 +65,10 @@ public class PazienteController {
         PazienteModel model = new PazienteModel();
         List<TerapiaModel> lista = model.getTerapie(taxCode);
         contenutoScrollPane.setItems(FXCollections.observableArrayList(lista));
+
+        ArrayList<String> farmaciNotifiche = new ArrayList<>();
+        farmaciNotifiche = model.getFarmaciNotifiche(taxCode);
+        mostraNotifiche(farmaciNotifiche);
     }
 
     @FXML
@@ -213,6 +217,22 @@ public class PazienteController {
         } catch (Exception e) {
             System.out.println("Errore caricamento grafico: " + e);
         }
+    }
+
+    private void mostraNotifiche(ArrayList<String> farmaciNotifiche) {
+
+        for(String f : farmaciNotifiche) {
+            messaggioErrore(f);
+        }
+
+    }
+
+    public void messaggioErrore(String farmaco) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Notifica!!!");
+        alert.setHeaderText(null); // oppure "Attenzione!"
+        alert.setContentText("Non e' stata rilevata alcuna assunzione di " + farmaco + " negli ultimi 3 giorni");
+        alert.showAndWait();
     }
 
 
