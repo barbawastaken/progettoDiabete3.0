@@ -81,7 +81,7 @@ public class PazienteModel {
 
                 //Aggiunga di ogni farmaco prescritto alla lista di quelli da controllare
                 farmaciDaControllare.add(rs.getString("farmaco_prescritto"));
-                System.out.println(rs.getString("farmaco_prescritto") + " aggiunto alla lista di quelli da controllare");
+                //System.out.println(rs.getString("farmaco_prescritto") + " aggiunto alla lista di quelli da controllare");
 
             }
 
@@ -105,11 +105,11 @@ public class PazienteModel {
                     Iterator<String> iterator = farmaciDaControllare.iterator();
                     while (iterator.hasNext()) {
                         String farmacoDaControllare = iterator.next();
-                        System.out.println(farmacoDaControllare + " : " + farmacoAssunto);
+                        //System.out.println(farmacoDaControllare + " : " + farmacoAssunto);
 
                         if (farmacoAssunto.equals(farmacoDaControllare) &&
                                 !dataAssunzione.isBefore(LocalDate.now().minusDays(3))) {
-                            System.out.println(farmacoDaControllare + " rimosso dalla lista");
+                            //System.out.println(farmacoDaControllare + " rimosso dalla lista");
                             iterator.remove();
                             break;
                         }

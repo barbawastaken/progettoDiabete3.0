@@ -5,6 +5,7 @@ import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
 import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,13 @@ public class PazienteController {
 
     @FXML
     public void initialize() {
+
+        Platform.runLater(() -> {
+            Stage stage = (Stage) lineChartGlicemia.getScene().getWindow();
+            stage.setMinWidth(800);
+            stage.setMinHeight(500);
+        });
+
         topBar.heightProperty().addListener((obs, oldVal, newVal) -> {
             immagineProfilo.setFitHeight(newVal.doubleValue());
         });
@@ -72,10 +80,29 @@ public class PazienteController {
     }
 
     @FXML
-    private void onProfiloClicked(){}
+    private void onProfiloClicked(){
 
-    @FXML
-    private void onHomepageClicked(){}
+        try{
+
+            Stage profiloPaziente = new Stage();
+            profiloPaziente.setTitle("Profilo Paziente");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/profiloPaziente.fxml"));
+            Parent root = loader.load();
+
+            ModificaPazienteController modificaPazienteController = loader.getController();
+            modificaPazienteController.setTaxCode(taxCode);
+            profiloPaziente.setScene(new Scene(root));
+            profiloPaziente.show();
+
+        } catch (IOException e){
+            System.out.println("Errore caricamento pagina profilo!" + e.getMessage());
+        }
+
+        Stage homePagePaziente = (Stage) topBar.getScene().getWindow();
+        homePagePaziente.close();
+
+    }
 
     @FXML
     private void onLogoutPressed(){
