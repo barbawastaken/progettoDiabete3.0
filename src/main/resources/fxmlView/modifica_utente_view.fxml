@@ -34,17 +34,14 @@
                         <Text layoutX="63.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città" />
                         <Text layoutX="66.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero" />
                         <Text layoutX="320.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAP" />
-                        <Line endX="100.0" layoutX="301.0" layoutY="712.0" startX="-100.0" />
-                        <Text layoutX="66.0" layoutY="606.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-                        <Text layoutX="320.0" layoutY="606.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero di Telefono." />
-                        <TextField fx:id="email" layoutX="63.0" layoutY="612.0" />
-                        <TextField fx:id="telephone" layoutX="324.0" layoutY="612.0" />
-                        <ComboBox fx:id="medicoCurante" layoutX="349.0" layoutY="804.0" prefWidth="150.0" />
-                        <Text fx:id="medicoCuranteText" layoutX="348.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medico Curante" />
-                        <Button layoutX="459.0" layoutY="890.0" mnemonicParsing="false" onAction="#onSendButtonPressed" text="Invia" />
-                        <Text fx:id="heightText" fill="#ff2200" layoutX="316.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'altezza deve essere un numero valido" visible="false" />
-                        <Text fx:id="weightText" fill="#ff2200" layoutX="60.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peso deve essere un numero valido" visible="false" />
-                        <Text fx:id="medicoCuranteError" fill="#ff2200" layoutX="349.0" layoutY="850.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un medico curante" visible="false" />
+                        <Line endX="100.0" layoutX="302.0" layoutY="749.0" startX="-100.0" />
+                        <Text layoutX="69.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+                        <Text layoutX="323.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero di Telefono." />
+                        <TextField fx:id="email" layoutX="66.0" layoutY="506.0" />
+                        <TextField fx:id="telephone" layoutX="327.0" layoutY="506.0" />
+                        <ComboBox fx:id="medicoCurante" layoutX="416.0" layoutY="623.0" prefWidth="150.0" />
+                        <Text fx:id="medicoCuranteText" layoutX="412.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medico Curante" />
+                        <Button layoutX="509.0" layoutY="681.0" mnemonicParsing="false" onAction="#onSendButtonPressed" text="Invia" />
 
                         <!--NON CANCELLARE GLI ONACTION ANCHE SE SONO ROSSI-->
                         <Line endX="100.0" layoutX="301.0" layoutY="237.0" startX="-100.0" />
@@ -56,11 +53,12 @@
                         <Text fx:id="emailError" fill="#ff2200" layoutX="14.0" layoutY="665.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'email deve essere di un formato corretto" />
                         <Text fx:id="telephoneError" fill="#ff2200" layoutX="282.0" layoutY="665.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il numero deve essere composto da 10 cifre" />
                         <Text fx:id="userAddedText" fill="#4fbc14" layoutX="389.0" layoutY="939.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dati inseriti correttamente!" />
-                        <TextField fx:id="weight" layoutX="60.0" layoutY="515.0" />
-                        <TextField fx:id="height" layoutX="316.0" layoutY="515.0" />
-                        <Text layoutX="63.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peso (in KG)" />
-                        <Text layoutX="321.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altezza (in CM)" />
+                        <TextField fx:id="weight" layoutX="235.0" layoutY="681.0" />
+                        <TextField fx:id="height" layoutX="236.0" layoutY="623.0" />
+                        <Text fx:id="weightText" layoutX="240.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peso (in KG)" />
+                        <Text fx:id="heightText" layoutX="241.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altezza (in CM)" />
                         <TextField fx:id="nation" layoutX="315.0" layoutY="356.0" />
+                        <Text fx:id="medicoCuranteError" fill="#ff2200" layoutX="349.0" layoutY="850.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un medico curante" visible="false" />
                         <Text layoutX="311.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazione" />
                         <Line endX="100.0" layoutX="291.0" layoutY="573.0" startX="-100.0" />
                     </children>
