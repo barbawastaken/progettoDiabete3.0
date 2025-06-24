@@ -33,9 +33,6 @@ public class ModificaUtenteController{
     @FXML private TextField citta;
     @FXML private TextField number;
     @FXML private TextField taxCode;
-    @FXML private RadioButton paziente;
-    @FXML private RadioButton diabetologo;
-    @FXML private RadioButton amministratore;
     @FXML private ComboBox<String> medicoCurante;
     @FXML private TextField cap;
     @FXML private DatePicker birthday;
@@ -52,6 +49,8 @@ public class ModificaUtenteController{
     @FXML private TextField nation;
     @FXML private TextField weight;
     @FXML private TextField height;
+    @FXML private Text heightText;
+    @FXML private Text weightText;
 
     public ModificaUtenteController(){ }
 
@@ -77,14 +76,15 @@ public class ModificaUtenteController{
         medicoCurante.setManaged(false);
         medicoCuranteText.setVisible(false);
         medicoCuranteText.setManaged(false);
+        heightText.setVisible(false);
+        heightText.setManaged(false);
+        weightText.setVisible(false);
+        weightText.setManaged(false);
         userAddedText.setVisible(false);
         userAddedText.setManaged(false);
 
         gender.getItems().addAll("Maschio", "Femmina");
         ruolo=new ToggleGroup();
-        paziente.setToggleGroup(ruolo);
-        diabetologo.setToggleGroup(ruolo);
-        amministratore.setToggleGroup(ruolo);
     }
     public void initializeData(VisualizzaListaUtentiController listaUtentiController, Utente utente, VisualizzaListaUtentiModel model, ModificaUtenteModel modificaUtenteModel,
                                Stage listaUtentiStage) {
@@ -104,8 +104,6 @@ public class ModificaUtenteController{
         telephone.setText(utente.getTelephone());
         taxCode.setText(utente.getTaxCode());
         cap.setText(String.valueOf(utente.getCap()));
-        height.setText(String.valueOf(utente.getHeight()));
-        weight.setText(String.valueOf(utente.getWeight()));
         number.setText(String.valueOf(utente.getNumber()));
         citta.setText(utente.getCity());
         nation.setText(utente.getCountryOfResidence());
@@ -113,18 +111,23 @@ public class ModificaUtenteController{
 
 
 
-        if(utente.getRole().equals("DIABETOLOGO")){
-            diabetologo.setSelected(true);
-        } else if(utente.getRole().equals("AMMINISTRATORE")){
-            amministratore.setSelected(true);
-
-        }else{
-            paziente.setSelected(true);
+        if(utente.getRole().equals("PAZIENTE")){
             medicoCurante.setVisible(true);
             medicoCurante.setManaged(true);
             medicoCuranteText.setVisible(true);
             medicoCuranteText.setManaged(true);
             medicoCurante.setValue(utente.getDiabetologo());
+            height.setVisible(true);
+            height.setManaged(true);
+            heightText.setVisible(true);
+            heightText.setManaged(true);
+            height.setText(String.valueOf(utente.getHeight()));
+            weight.setVisible(true);
+            weight.setManaged(true);
+            weightText.setVisible(true);
+            weightText.setManaged(true);
+            weight.setText(String.valueOf(utente.getWeight()));
+
 
         }
     }
@@ -161,44 +164,71 @@ public class ModificaUtenteController{
     }
 
     @FXML
-    private void onSendButtonPressed(){
-        try{
-
-            if(!isEmailValid()){
+    private void onSendButtonPressed() {
+        try {
+            if(birthday.getValue() == null){
+                birthdayError.setVisible(true);
+                birthdayError.setManaged(true);
+                return;
+            } else{
+                birthdayError.setVisible(false);
+                birthdayError.setManaged(false);
+            }
+            if (!isEmailValid()) {
                 emailError.setVisible(true);
                 emailError.setManaged(true);
                 return;
-            } else{
+            } else {
                 emailError.setVisible(false);
                 emailError.setManaged(false);
             }
-            if(!isTelephoneValid()){
+            if (!isTelephoneValid()) {
                 telephoneError.setVisible(true);
                 telephoneError.setManaged(true);
                 return;
-            }else{
+            } else {
                 telephoneError.setVisible(false);
                 telephoneError.setManaged(false);
             }
-            if(!isCapValid()){
+            if (!isCapValid()) {
                 capError.setVisible(true);
                 capError.setManaged(true);
                 return;
-            } else{
+            } else {
                 capError.setVisible(false);
                 capError.setManaged(false);
             }
-            if(!isNumberValid()){
+            if (!isNumberValid()) {
                 numberError.setVisible(true);
                 numberError.setManaged(true);
                 return;
-            } else{
+            } else {
                 numberError.setVisible(false);
                 numberError.setManaged(false);
 
             }
 
-            RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
+            String ruoloSelezionato = utente.getRole();
+            String diabetologo = null;
+            double peso = 0.0;
+            double altezza = 0.0;
+            if (ruoloSelezionato.equals("PAZIENTE")) {
+                diabetologo = medicoCurante.getValue();
+                try {
+                    peso = Double.parseDouble(weight.getText());
+                    altezza = Double.parseDouble(height.getText());
+                } catch (NumberFormatException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Peso e altezza devono essere validi.");
+                    alert.showAndWait();
+                    return;
+                }
+                if (diabetologo == null || diabetologo.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Selezionare un medico curante.");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+
             Utente aggiornato = new Utente(
                     taxCode.getText(),
                     password.getText(),
@@ -213,10 +243,10 @@ public class ModificaUtenteController{
                     nation.getText(),
                     gender.getValue(),
                     telephone.getText(),
-                    selected.getText(),
-                    medicoCurante.getValue(),
-                    Double.parseDouble(weight.getText()),
-                    Double.parseDouble(height.getText())
+                    ruoloSelezionato,
+                    diabetologo,
+                    peso,
+                    altezza
             );
 
             modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
@@ -226,8 +256,8 @@ public class ModificaUtenteController{
 
             listaUtentiStage.close();
             VisualizzaListaUtentiView nuovaView = new VisualizzaListaUtentiView();
-            new VisualizzaListaUtentiController(model,nuovaView,currentStage);
-        }catch (Exception e){
+            new VisualizzaListaUtentiController(model, nuovaView, currentStage);
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Errore durante il salvataggio. Controlla i dati.");
             alert.showAndWait();

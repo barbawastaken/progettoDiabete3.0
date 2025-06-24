@@ -66,7 +66,6 @@ public class ModificaUtenteModel {
             pstmt.setString(13, utente.getRole());
             System.out.println(utente.getRole());
             pstmt.setString(14, utente.getDiabetologo());
-
             pstmt.setString(15, utente.getCountryOfResidence());
             pstmt.setDouble(16,utente.getHeight());
             pstmt.setDouble(17,utente.getWeight());

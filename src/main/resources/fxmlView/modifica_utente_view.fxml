@@ -39,13 +39,13 @@
                         <Text layoutX="320.0" layoutY="606.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero di Telefono." />
                         <TextField fx:id="email" layoutX="63.0" layoutY="612.0" />
                         <TextField fx:id="telephone" layoutX="324.0" layoutY="612.0" />
-
-                        <RadioButton fx:id="paziente" layoutX="93.0" layoutY="766.0" mnemonicParsing="false" text="PAZIENTE" />
-                        <RadioButton fx:id="diabetologo" layoutX="93.0" layoutY="796.0" mnemonicParsing="false" text="DIABETOLOGO" />
-                        <RadioButton fx:id="amministratore" layoutX="93.0" layoutY="824.0" mnemonicParsing="false" text="AMMINISTRATORE" />
                         <ComboBox fx:id="medicoCurante" layoutX="349.0" layoutY="804.0" prefWidth="150.0" />
                         <Text fx:id="medicoCuranteText" layoutX="348.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medico Curante" />
                         <Button layoutX="459.0" layoutY="890.0" mnemonicParsing="false" onAction="#onSendButtonPressed" text="Invia" />
+                        <Text fx:id="heightText" fill="#ff2200" layoutX="316.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'altezza deve essere un numero valido" visible="false" />
+                        <Text fx:id="weightText" fill="#ff2200" layoutX="60.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peso deve essere un numero valido" visible="false" />
+                        <Text fx:id="medicoCuranteError" fill="#ff2200" layoutX="349.0" layoutY="850.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un medico curante" visible="false" />
+
                         <!--NON CANCELLARE GLI ONACTION ANCHE SE SONO ROSSI-->
                         <Line endX="100.0" layoutX="301.0" layoutY="237.0" startX="-100.0" />
                         <Text fx:id="taxCodeError" fill="#ff2200" layoutX="277.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il codice fiscale deve contenere 3 caratteri" />
