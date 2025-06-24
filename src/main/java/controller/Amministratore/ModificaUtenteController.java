@@ -11,7 +11,9 @@ import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class ModificaUtenteController{
@@ -22,6 +24,8 @@ public class ModificaUtenteController{
     private Stage listaUtentiStage;
     private ToggleGroup ruolo;
     private VisualizzaListaUtentiController listaUtentiController;
+    private HashMap<String, String> diabetologi = new HashMap<>();
+
 
 
     @FXML  private ComboBox<String> gender;
@@ -54,7 +58,6 @@ public class ModificaUtenteController{
 
     public ModificaUtenteController(){ }
 
-
     @FXML
     private void initialize(){
 
@@ -82,6 +85,10 @@ public class ModificaUtenteController{
         weightText.setManaged(false);
         userAddedText.setVisible(false);
         userAddedText.setManaged(false);
+        weight.setVisible(false);
+        weight.setManaged(false);
+        height.setVisible(false);
+        height.setManaged(false);
 
         gender.getItems().addAll("Maschio", "Femmina");
         ruolo=new ToggleGroup();
@@ -128,7 +135,14 @@ public class ModificaUtenteController{
             weightText.setManaged(true);
             weight.setText(String.valueOf(utente.getWeight()));
 
-
+            try {
+                HashMap<String, String> map = modificaUtenteModel.getDiabetologi();
+                for(String s : map.keySet()){
+                    medicoCurante.getItems().add(s);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -164,7 +178,7 @@ public class ModificaUtenteController{
     }
 
     @FXML
-    private void onSendButtonPressed() {
+    private void onSendButtonPressed() throws SQLException {
         try {
             if(birthday.getValue() == null){
                 birthdayError.setVisible(true);
@@ -209,21 +223,14 @@ public class ModificaUtenteController{
             }
 
             String ruoloSelezionato = utente.getRole();
-            String diabetologo = null;
             double peso = 0.0;
             double altezza = 0.0;
             if (ruoloSelezionato.equals("PAZIENTE")) {
-                diabetologo = medicoCurante.getValue();
                 try {
                     peso = Double.parseDouble(weight.getText());
                     altezza = Double.parseDouble(height.getText());
                 } catch (NumberFormatException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Peso e altezza devono essere validi.");
-                    alert.showAndWait();
-                    return;
-                }
-                if (diabetologo == null || diabetologo.isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Selezionare un medico curante.");
                     alert.showAndWait();
                     return;
                 }
@@ -244,7 +251,7 @@ public class ModificaUtenteController{
                     gender.getValue(),
                     telephone.getText(),
                     ruoloSelezionato,
-                    diabetologo,
+                    medicoCurante.getValue(),
                     peso,
                     altezza
             );
@@ -262,7 +269,6 @@ public class ModificaUtenteController{
             Alert alert = new Alert(Alert.AlertType.ERROR, "Errore durante il salvataggio. Controlla i dati.");
             alert.showAndWait();
         }
-
     }
 
 

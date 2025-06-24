@@ -50,8 +50,8 @@
                         <Text fx:id="genderError" fill="#ff2200" layoutX="92.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il sesso" />
                         <Text fx:id="numberError" fill="#ff2200" layoutX="39.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numero richiesto" />
                         <Text fx:id="capError" fill="#ff2200" layoutX="302.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il cap deve contenere 5 numeri" />
-                        <Text fx:id="emailError" fill="#ff2200" layoutX="14.0" layoutY="665.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'email deve essere di un formato corretto" />
-                        <Text fx:id="telephoneError" fill="#ff2200" layoutX="282.0" layoutY="665.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il numero deve essere composto da 10 cifre" />
+                        <Text fx:id="emailError" fill="#ff2200" layoutX="17.0" layoutY="546.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'email deve essere di un formato corretto" />
+                        <Text fx:id="telephoneError" fill="#ff2200" layoutX="303.0" layoutY="546.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il numero deve essere composto da 10 cifre" />
                         <Text fx:id="userAddedText" fill="#4fbc14" layoutX="389.0" layoutY="939.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dati inseriti correttamente!" />
                         <TextField fx:id="weight" layoutX="235.0" layoutY="681.0" />
                         <TextField fx:id="height" layoutX="236.0" layoutY="623.0" />

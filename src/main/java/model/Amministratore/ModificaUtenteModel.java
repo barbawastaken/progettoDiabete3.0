@@ -6,10 +6,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashMap;
 
 public class ModificaUtenteModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
@@ -121,6 +119,40 @@ public class ModificaUtenteModel {
                 modificaUtenteView.getHeight()
         );
 
+    }
+    public HashMap<String, String> getDiabetologi() throws SQLException {
+        String findDiabetologi = "SELECT * FROM utenti WHERE userType='DIABETOLOGO'";
+        HashMap<String, String> diabetologi = new HashMap<>();
+
+
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                Statement stmt = conn.createStatement();
+        ) {
+            ResultSet rs = stmt.executeQuery(findDiabetologi);
+
+
+            while (rs.next()) {
+                System.out.println("Zio pera " + rs.getString("taxCode"));
+                diabetologi.put(((rs.getString("cognome")) + " (" + rs.getString("taxCode") + ")"),
+                        rs.getString("taxCode"));
+            }
+
+            for (String key : diabetologi.keySet()) {
+                System.out.println("Keysets: " + key);
+                System.out.println("Diabetologi: " + diabetologi.get(key));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return diabetologi;
+            /*
+                Creiamo in questo modo una hashmap che ha come key la combo cognome + codice fiscale (quest'ultima sarebbe la key del database)
+                su View ci sarà una comboBox che ci farà scegliere proprio la key. Una volta scelta basterà trovare con la key il codice fiscale
+                corrispondente e avremo il CF del diabetologo
+            */
     }
 
 }
