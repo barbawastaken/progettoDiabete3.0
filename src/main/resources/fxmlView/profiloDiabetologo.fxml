@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.ModificaDiabetologoController">
+
+    <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
+    <top>
+        <HBox fx:id="topBar" alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
+            <ImageView fx:id="immagineProfilo" fitHeight="60" fitWidth="60" preserveRatio="true">
+                <image>
+                    <Image url="@../images/userImage.png" />
+                </image>
+            </ImageView>
+            <Label prefHeight="27.0" prefWidth="143.0" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Area Diabetologo" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#onHomePagePressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="HOMEPAGE" />
+            <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
+            <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text text="Nome" />
+                        <TextField fx:id="nome" promptText="nome" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text text="Cognome" />
+                        <TextField fx:id="cognome" promptText="cognome" />
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text text="Password" />
+                        <PasswordField fx:id="password" promptText="password" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text text="Codice Fiscale" />
+                        <TextField fx:id="taxCodeFXML" promptText="taxCode" />
+                    </VBox>
+                </HBox>
+
+                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
+
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text text="Email" />
+                        <TextField fx:id="email" promptText="email" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text text="Telefono" />
+                        <TextField fx:id="telefono" promptText="telefono" />
+                    </VBox>
+                </HBox>
+
+                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
+
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text text="Data di nascita" />
+                        <DatePicker fx:id="dataNascita" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text text="Sesso" />
+                        <ChoiceBox fx:id="sesso">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="M" />
+                                    <String fx:value="F" />
+                                    <String fx:value="Altro" />
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                    </VBox>
+                </HBox>
+
+                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
+
+                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
+
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text layoutX="66.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indirizzo" />
+                        <TextField fx:id="indirizzo" layoutX="66.0" layoutY="283.0" promptText="indirizzo" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text layoutX="66.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero" />
+                        <TextField fx:id="numero" layoutX="66.0" layoutY="343.0" prefHeight="26.0" prefWidth="53.0" promptText="numero" />
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="5">
+                        <Text layoutX="63.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città" />
+                        <TextField fx:id="citta" layoutX="63.0" layoutY="415.0" promptText="citta" />
+                    </VBox>
+                    <VBox spacing="5">
+                        <Text layoutX="320.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAP" />
+                        <TextField fx:id="cap" layoutX="316.0" layoutY="283.0" promptText="cap" />
+                    </VBox>
+                </HBox>
+
+                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
+
+                <VBox spacing="15" alignment="CENTER">
+                    <Button text="Invia" onAction="#onSendButtonPressed" />
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
+

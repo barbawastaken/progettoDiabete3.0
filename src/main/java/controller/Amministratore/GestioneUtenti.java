@@ -11,59 +11,32 @@ import java.util.regex.Pattern;
 public class GestioneUtenti {
     @FXML  protected ComboBox<String> gender;
     @FXML protected TextField nome;
-
     @FXML protected TextField cognome;
-
     @FXML protected TextField email;
-
     @FXML protected PasswordField password;
-
     @FXML protected TextField address;
-
     @FXML protected TextField citta;
-
     @FXML protected TextField number;
-
     @FXML protected TextField taxCode;
-
     @FXML protected RadioButton paziente;
-
     @FXML protected RadioButton diabetologo;
-
     @FXML protected RadioButton amministratore;
-
     @FXML protected ComboBox<String> medicoCurante;
-
     @FXML protected TextField cap;
-
     @FXML protected DatePicker birthday;
-
     @FXML protected TextField telephone;
-
     @FXML protected Text taxCodeError;
-
     @FXML protected Text numberError;
-
     @FXML protected Text telephoneError;
-
     @FXML protected Text emailError;
-
     @FXML protected Text capError;
-
     @FXML protected Text birthdayError;
-
     @FXML protected Text genderError;
-
     @FXML protected Text medicoCuranteText;
-
     @FXML protected Text userAddedText;
-
     @FXML protected TextField nation;
-
     @FXML protected TextField weight;
-
     @FXML protected TextField height;
-
     @FXML protected HashMap<String, String> diabetologi;
 
     public GestioneUtenti() {}
