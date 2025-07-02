@@ -19,92 +19,35 @@ import java.util.List;
 
 public class AggiungiUtenteController extends GestioneUtenti {
 
-    @FXML
-    private ComboBox<String> gender;
-
-    @FXML
-    private TextField nome;
-
-    @FXML
-    private TextField height;
-
-    @FXML
-    private TextField weight;
-
-    @FXML
-    private TextField cognome;
-
-    @FXML
-    private TextField email;
-
-    @FXML
-    private PasswordField password;
-
-    @FXML
-    private TextField address;
-
-    @FXML
-    private TextField citta;
-    @FXML
-    private TextField number;
-
-    @FXML
-    private TextField taxCode;
-
-    @FXML
-    private RadioButton paziente;
-
-    @FXML
-    private RadioButton diabetologo;
-
-    @FXML
-    private RadioButton amministratore;
-
-    @FXML
-    private ComboBox<String> medicoCurante;
-
-    @FXML
-    private TextField cap;
-
-    @FXML
-    private DatePicker birthday;
-
-    @FXML
-    private TextField telephone;
-
-    @FXML
-    private Text taxCodeError;
-
-    @FXML
-    private Text numberError;
-
-    @FXML
-    private Text telephoneError;
-
-    @FXML
-    private Text emailError;
-
-    @FXML
-    private Text capError;
-
-    @FXML
-    private Text birthdayError;
-
-    @FXML
-    private Text genderError;
-
-    @FXML
-    private Text medicoCuranteText;
-
-    @FXML
-    private Text userAddedText;
-
-    @FXML
-    private Text heightText;
-
-    @FXML
-    private Text weightText;
-
+    @FXML private ComboBox<String> gender;
+    @FXML private TextField nome;
+    @FXML private TextField height;
+    @FXML private TextField weight;
+    @FXML private TextField cognome;
+    @FXML private TextField email;
+    @FXML private PasswordField password;
+    @FXML private TextField address;
+    @FXML private TextField citta;
+    @FXML private TextField number;
+    @FXML private TextField taxCode;
+    @FXML private RadioButton paziente;
+    @FXML private RadioButton diabetologo;
+    @FXML private RadioButton amministratore;
+    @FXML private ComboBox<String> medicoCurante;
+    @FXML private TextField cap;
+    @FXML private DatePicker birthday;
+    @FXML private TextField telephone;
+    @FXML private Text taxCodeError;
+    @FXML private Text numberError;
+    @FXML private Text telephoneError;
+    @FXML private Text emailError;
+    @FXML private Text capError;
+    @FXML private Text birthdayError;
+    @FXML private Text genderError;
+    @FXML private Text medicoCuranteText;
+    @FXML private Text userAddedText;
+    @FXML private Text heightText;
+    @FXML private Text weightText;
     private ToggleGroup ruolo;
     private HashMap<String, String> diabetologi = new HashMap<>();
 
