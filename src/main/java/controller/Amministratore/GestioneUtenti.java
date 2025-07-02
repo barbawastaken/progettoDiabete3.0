@@ -9,66 +9,62 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class GestioneUtenti {
+    @FXML  protected ComboBox<String> gender;
+    @FXML protected TextField nome;
 
+    @FXML protected TextField cognome;
 
-    
-    protected ComboBox<String> gender;
-    
-    protected TextField nome;
-    
-    protected TextField cognome;
-    
-    protected TextField email;
-    
-    protected PasswordField password;
-    
-    protected TextField address;
-    
-    protected TextField citta;
-    
-    protected TextField number;
-    
-    protected TextField taxCode;
-    
-    protected RadioButton paziente;
-    
-    protected RadioButton diabetologo;
-    
-    protected RadioButton amministratore;
-    
-    protected ComboBox<String> medicoCurante;
-    
-    protected TextField cap;
-    
-    protected DatePicker birthday;
-    
-    protected TextField telephone;
-    
-    protected Text taxCodeError;
-    
-    protected Text numberError;
-    
-    protected Text telephoneError;
-    
-    protected Text emailError;
-    
-    protected Text capError;
-    
-    protected Text birthdayError;
-    
-    protected Text genderError;
-    
-    protected Text medicoCuranteText;
-    
-    protected Text userAddedText;
-    
-    protected TextField nation;
-    
-    protected TextField weight;
-    
-    protected TextField height;
+    @FXML protected TextField email;
 
-    protected HashMap<String, String> diabetologi;
+    @FXML protected PasswordField password;
+
+    @FXML protected TextField address;
+
+    @FXML protected TextField citta;
+
+    @FXML protected TextField number;
+
+    @FXML protected TextField taxCode;
+
+    @FXML protected RadioButton paziente;
+
+    @FXML protected RadioButton diabetologo;
+
+    @FXML protected RadioButton amministratore;
+
+    @FXML protected ComboBox<String> medicoCurante;
+
+    @FXML protected TextField cap;
+
+    @FXML protected DatePicker birthday;
+
+    @FXML protected TextField telephone;
+
+    @FXML protected Text taxCodeError;
+
+    @FXML protected Text numberError;
+
+    @FXML protected Text telephoneError;
+
+    @FXML protected Text emailError;
+
+    @FXML protected Text capError;
+
+    @FXML protected Text birthdayError;
+
+    @FXML protected Text genderError;
+
+    @FXML protected Text medicoCuranteText;
+
+    @FXML protected Text userAddedText;
+
+    @FXML protected TextField nation;
+
+    @FXML protected TextField weight;
+
+    @FXML protected TextField height;
+
+    @FXML protected HashMap<String, String> diabetologi;
 
     public GestioneUtenti() {}
 
