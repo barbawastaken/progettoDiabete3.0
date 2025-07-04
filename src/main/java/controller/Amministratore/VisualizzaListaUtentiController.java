@@ -1,10 +1,7 @@
 package controller.Amministratore;
 
-import controller.Diabetologo.DiabetologoController;
-import controller.Paziente.PazienteController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,25 +10,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import model.Amministratore.AmministratoreModel;
 import model.Amministratore.ModificaUtenteModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import view.Amministratore.AmministratoreView;
-import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
-
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class VisualizzaListaUtentiController {
-
-    private Utente selectedUtente;
-
     @FXML private TableView<Utente> tabella;
     @FXML private TableColumn<Utente, String> nomeColumn;
     @FXML private TableColumn<Utente, String> cognomeColumn;
@@ -55,8 +44,13 @@ public class VisualizzaListaUtentiController {
     private  VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 
-
-
+    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage){
+        this.model = model;
+        this.view = view;
+        this.listaUtentiStage = stage;
+        view.start(stage, this);
+    }
+    public VisualizzaListaUtentiController(){}
 
     @FXML
     private void initialize() {
@@ -78,90 +72,61 @@ public class VisualizzaListaUtentiController {
         altezzaColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
         pesoColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
+        if(this.model == null) { this.model = new VisualizzaListaUtentiModel(); }
 
-        VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
-        List<Utente> utenti = model.getTuttiGliUtenti();
-        //this.caricaUtenti(utenti);
+        List<Utente> utenti = this.model.getTuttiGliUtenti();
         tabella.setItems(FXCollections.observableList(utenti));
 
         tabella.setRowFactory(utenteTableView -> {
             TableRow<Utente> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
 
-            //impostiamo un modifica utente
-
             MenuItem modificaItem = new MenuItem("Modifica utente");
             modificaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
-                ModificaUtenteController controller = null;
-                controller = new ModificaUtenteController();
-                controller.setUtente(selected);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
-                Parent root = null;
+                if (selected != null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+                        Parent root = loader.load();
 
-                try {
-                    root = loader.load();
+                        ModificaUtenteController controller = loader.getController();
+                        controller.initializeData(
+                                this,
+                                selected,
+                                this.model,
+                                new ModificaUtenteModel(),
+                                (Stage) tabella.getScene().getWindow()
+                        );
 
-                    controller = loader.getController();
-                    controller.initializeData(VisualizzaListaUtentiController.this, selected, model, new ModificaUtenteModel(), (Stage)tabella.getScene().getWindow());
-
-
-                    Stage modificaStage = new Stage();
-                    modificaStage.setTitle("Modifica Utente");
-                    modificaStage.setScene(new Scene(root, 650, 500));
-                    modificaStage.show();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    new Alert(Alert.AlertType.ERROR, "Errore nell'apertura della finestra di modifica.").showAndWait();
+                        Stage modificaStage = new Stage();
+                        modificaStage.setTitle("Modifica Utente");
+                        modificaStage.setScene(new Scene(root, 650, 500));
+                        modificaStage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        new Alert(Alert.AlertType.ERROR, "Errore nell'apertura della finestra di modifica.").showAndWait();
+                    }
                 }
-        });
+            });
 
-
-
-            // impostiamo il delete :)
             MenuItem eliminaItem = new MenuItem("Elimina utente");
             eliminaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
                 if (selected != null) {
-                    model.rimuoviUtente(selected); // Aggiorna anche il DB
-                    tabella.getItems().remove(selected); // Rimuovi dalla tabella
+                    this.model.rimuoviUtente(selected); // Aggiorna DB
+                    tabella.getItems().remove(selected); // Aggiorna vista
                 }
             });
+
             contextMenu.getItems().addAll(modificaItem, eliminaItem);
-
             row.contextMenuProperty().bind(
-                    Bindings.when(row.emptyProperty())
-                            .then((ContextMenu) null)
-                            .otherwise(contextMenu)
+                    Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(contextMenu)
             );
-
-
             return row;
         });
-
-
     }
-
-        @FXML
-        private void onEliminaClicked() {
-        model.rimuoviUtente(selectedUtente);
-        }
-
-        @FXML
-        private void onModificaClicked() {
-
-
-        }
-
-    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage)
-        {
-            this.model = model;
-            this.view = view;
-            this.listaUtentiStage = stage;
-            view.start(stage, this); // chiama view.start e caricaUtent
+    public void aggiornaTabellaUtenti() {
+        List<Utente> utentiAggiornati = model.getTuttiGliUtenti();
+        tabella.setItems(FXCollections.observableList(utentiAggiornati));
     }
-
-    public VisualizzaListaUtentiController() {}
-
 }

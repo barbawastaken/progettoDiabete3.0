@@ -8,15 +8,11 @@ import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.ModificaUtenteView;
-import view.Amministratore.VisualizzaListaUtentiView;
-
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
-public class ModificaUtenteController{
+public class ModificaUtenteController extends GestioneUtenti{
     private ModificaUtenteView modificaUtenteView;
     private Utente utente;
     private  VisualizzaListaUtentiModel model;
@@ -24,9 +20,6 @@ public class ModificaUtenteController{
     private Stage listaUtentiStage;
     private ToggleGroup ruolo;
     private VisualizzaListaUtentiController listaUtentiController;
-    private HashMap<String, String> diabetologi = new HashMap<>();
-
-
 
     @FXML  private ComboBox<String> gender;
     @FXML private TextField nome;
@@ -89,7 +82,6 @@ public class ModificaUtenteController{
         weight.setManaged(false);
         height.setVisible(false);
         height.setManaged(false);
-
         gender.getItems().addAll("Maschio", "Femmina");
         ruolo=new ToggleGroup();
     }
@@ -115,8 +107,6 @@ public class ModificaUtenteController{
         citta.setText(utente.getCity());
         nation.setText(utente.getCountryOfResidence());
         birthday.setValue(LocalDate.now());
-
-
 
         if(utente.getRole().equals("PAZIENTE")){
             medicoCurante.setVisible(true);
@@ -146,218 +136,51 @@ public class ModificaUtenteController{
         }
     }
 
-    private boolean isEmailValid(){
-        Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
-        //[\\w.-] -> campo "libero", con lettere, punti e trattini
-        //@ -> simbolo obbligatorio
-        //\\.\\w{2,}$ ->almeno due caratteri preceduti da un punto
-
-        return validEmail.matcher(email.getText()).matches();
-    }
-
-    private boolean isTelephoneValid(){
-        Pattern validTelephone = Pattern.compile("^\\d{10}$");
-
-        return validTelephone.matcher(telephone.getText()).matches();
-    }
-
-    private boolean isCapValid(){
-        Pattern validCap = Pattern.compile("^\\d{5}$");
-
-        return validCap.matcher(cap.getText()).matches();
-    }
-
-    private boolean isNumberValid(){
-        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        return validNumber.matcher(number.getText()).matches();
-    }
-
     @FXML
-    private void onIndietroButtonPressed(){
-        ((Stage) nome.getScene().getWindow()).close();
-    }
+    private void onIndietroButtonPressed(){ ((Stage) nome.getScene().getWindow()).close(); }
 
     @FXML
     private void onSendButtonPressed() throws SQLException {
-        try {
-            if(birthday.getValue() == null){
-                birthdayError.setVisible(true);
-                birthdayError.setManaged(true);
+        super.check();
+        String ruoloSelezionato = utente.getRole();
+        double peso = 0.0;
+        double altezza = 0.0;
+        if (ruoloSelezionato.equals("PAZIENTE")) {
+            try {
+                peso = Double.parseDouble(weight.getText());
+                altezza = Double.parseDouble(height.getText());
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Peso e altezza devono essere validi.");
+                alert.showAndWait();
                 return;
-            } else{
-                birthdayError.setVisible(false);
-                birthdayError.setManaged(false);
             }
-            if (!isEmailValid()) {
-                emailError.setVisible(true);
-                emailError.setManaged(true);
-                return;
-            } else {
-                emailError.setVisible(false);
-                emailError.setManaged(false);
-            }
-            if (!isTelephoneValid()) {
-                telephoneError.setVisible(true);
-                telephoneError.setManaged(true);
-                return;
-            } else {
-                telephoneError.setVisible(false);
-                telephoneError.setManaged(false);
-            }
-            if (!isCapValid()) {
-                capError.setVisible(true);
-                capError.setManaged(true);
-                return;
-            } else {
-                capError.setVisible(false);
-                capError.setManaged(false);
-            }
-            if (!isNumberValid()) {
-                numberError.setVisible(true);
-                numberError.setManaged(true);
-                return;
-            } else {
-                numberError.setVisible(false);
-                numberError.setManaged(false);
-
-            }
-
-            String ruoloSelezionato = utente.getRole();
-            double peso = 0.0;
-            double altezza = 0.0;
-            if (ruoloSelezionato.equals("PAZIENTE")) {
-                try {
-                    peso = Double.parseDouble(weight.getText());
-                    altezza = Double.parseDouble(height.getText());
-                } catch (NumberFormatException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Peso e altezza devono essere validi.");
-                    alert.showAndWait();
-                    return;
-                }
-            }
-
-            Utente aggiornato = new Utente(
-                    taxCode.getText(),
-                    password.getText(),
-                    nome.getText(),
-                    cognome.getText(),
-                    email.getText(),
-                    java.sql.Date.valueOf(birthday.getValue()),
-                    address.getText(),
-                    Integer.parseInt(number.getText()),
-                    citta.getText(),
-                    Integer.parseInt(cap.getText()),
-                    nation.getText(),
-                    gender.getValue(),
-                    telephone.getText(),
-                    ruoloSelezionato,
-                    medicoCurante.getValue(),
-                    peso,
-                    altezza
-            );
-
-            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
-
-            Stage currentStage = (Stage) nome.getScene().getWindow();
-            currentStage.close();
-
-            listaUtentiStage.close();
-            VisualizzaListaUtentiView nuovaView = new VisualizzaListaUtentiView();
-            new VisualizzaListaUtentiController(model, nuovaView, currentStage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Errore durante il salvataggio. Controlla i dati.");
-            alert.showAndWait();
         }
-    }
-
-
-    public ModificaUtenteController(ModificaUtenteView modificaUtenteView, Utente utente, VisualizzaListaUtentiModel model, Stage listaUtentiStage) {
-        this.modificaUtenteView = modificaUtenteView;
-        this.utente = utente;
-        this.model = model;
-        this.listaUtentiStage = listaUtentiStage;
-    }
-
-
-    public ModificaUtenteController(ModificaUtenteModel modificaUtenteModel, ModificaUtenteView modificaUtenteView, Utente selezionato, Stage visualizzaUtentiStage){
-
-        this.modificaUtenteView = modificaUtenteView;
-        this.modificaUtenteModel = modificaUtenteModel;
-        this.utente = selezionato;
-        this.listaUtentiStage = visualizzaUtentiStage;
-
-        //Utente utenteModificato = this.utenteModificato();
-        //modificaUtenteView.getSalvaButton().setOnAction(e -> modificaUtenteModel.aggiornaUtente(selezionato.getTaxCode(), utente));
-
-    }
-
-    private Utente utenteModificato() {
-        return new Utente(
-                modificaUtenteView.getTaxCode(),
-                modificaUtenteView.getPassword(),
-                modificaUtenteView.getNome(),
-                modificaUtenteView.getCognome(),
-                modificaUtenteView.getEmail(),
-                java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
-                modificaUtenteView.getAddress(),
-                modificaUtenteView.getNumber(),
-                modificaUtenteView.getCity(),
-                modificaUtenteView.getCap(),
-                modificaUtenteView.getCountryOfResidence(),
-                modificaUtenteView.getGender(),
-                modificaUtenteView.getTelephone(),
-                modificaUtenteView.getRole(),
-                modificaUtenteView.getDiabetologo(),
-                modificaUtenteView.getWeight(),
-                modificaUtenteView.getHeight()
+        Utente aggiornato = new Utente(
+                taxCode.getText(),
+                password.getText(),
+                nome.getText(),
+                cognome.getText(),
+                email.getText(),
+                java.sql.Date.valueOf(birthday.getValue()),
+                address.getText(),
+                Integer.parseInt(number.getText()),
+                citta.getText(),
+                Integer.parseInt(cap.getText()),
+                nation.getText(),
+                gender.getValue(),
+                telephone.getText(),
+                ruoloSelezionato,
+                medicoCurante.getValue(),
+           -     peso,
+                altezza
         );
+        modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
 
+        if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+        Stage currentStage = (Stage) nome.getScene().getWindow();
+        currentStage.close();
     }
-
-    public void salvaModifiche(Stage stage) {
-        try {
-            // Crea oggetto aggiornato
-            Utente aggiornato = new Utente(
-                    modificaUtenteView.getTaxCode(),
-                    modificaUtenteView.getPassword(),
-                    modificaUtenteView.getNome(),
-                    modificaUtenteView.getCognome(),
-                    modificaUtenteView.getEmail(),
-                    java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
-                    modificaUtenteView.getAddress(),
-                    modificaUtenteView.getNumber(),
-                    modificaUtenteView.getCity(),
-                    modificaUtenteView.getCap(),
-                    modificaUtenteView.getCountryOfResidence(),
-                    modificaUtenteView.getGender(),
-                    modificaUtenteView.getTelephone(),
-                    modificaUtenteView.getRole(),
-                    modificaUtenteView.getDiabetologo(),
-                    modificaUtenteView.getWeight(),
-                    modificaUtenteView.getHeight()
-            );
-
-            //System.out.println(modificaUtenteView.getTaxCode());
-
-            // Salva nel DB tramite il model
-            model.aggiornaUtente(aggiornato, modificaUtenteView.getTaxCode());
-            System.out.println("Utente aggiornato con successo.");
-            modificaUtenteView.getStage().close();
-
-            // Ritorna alla lista utenti, nello stesso stage
-            this.listaUtentiStage.close();
-            VisualizzaListaUtentiView nuovaView = new VisualizzaListaUtentiView();
-            VisualizzaListaUtentiController nuovoController = new VisualizzaListaUtentiController(model, nuovaView, stage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Errore durante il salvataggio");
-            alert.showAndWait();
-        }
-    }
-    public void setUtente(Utente utente){
-        this.utente = utente;
-    }
+    public void setUtente(Utente utente){ this.utente = utente; }
+    public void setListaUtentiController(VisualizzaListaUtentiController controller){ this.listaUtentiController = controller; }
 }
 
