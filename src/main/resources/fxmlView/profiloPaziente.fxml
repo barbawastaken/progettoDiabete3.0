@@ -30,22 +30,22 @@
                 <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Nome" />
-                        <TextField fx:id="nome" promptText="nome" />
+                        <TextField fx:id="nome" promptText="nome" disable="true"/>
                     </VBox>
                     <VBox spacing="5">
                         <Text text="Cognome" />
-                        <TextField fx:id="cognome" promptText="cognome" />
+                        <TextField fx:id="cognome" promptText="cognome" disable="true"/>
                     </VBox>
                 </HBox>
 
                 <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Password" />
-                        <PasswordField fx:id="password" promptText="password" />
+                        <PasswordField fx:id="password" promptText="password" disable="true"/>
                     </VBox>
                     <VBox spacing="5">
                         <Text text="Codice Fiscale" />
-                        <TextField fx:id="taxCodeFXML" promptText="taxCode" />
+                        <TextField fx:id="taxCodeFXML" promptText="taxCode" disable="true"/>
                     </VBox>
                 </HBox>
 
@@ -67,11 +67,11 @@
                 <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Data di nascita" />
-                        <TextField fx:id="dataNascita" />
+                        <TextField fx:id="dataNascita" disable="true"/>
                     </VBox>
                     <VBox spacing="5" alignment="CENTER">
                         <Text text="Sesso" />
-                        <TextField fx:id="sesso" />
+                        <TextField fx:id="sesso" disable="true"/>
                     </VBox>
                 </HBox>
 

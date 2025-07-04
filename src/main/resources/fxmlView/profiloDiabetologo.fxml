@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.ModificaDiabetologoController">
 
     <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
@@ -27,9 +27,9 @@
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" fitToHeight="true">
+        <ScrollPane fitToHeight="true" fitToWidth="true">
             <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" prefHeight="49.0" prefWidth="732.0" spacing="20">
                     <VBox spacing="5">
                         <Text text="Nome" />
                         <TextField fx:id="nome" promptText="nome" />
@@ -40,7 +40,7 @@
                     </VBox>
                 </HBox>
 
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
                     <VBox spacing="5">
                         <Text text="Password" />
                         <PasswordField fx:id="password" promptText="password" />
@@ -53,7 +53,7 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
                     <VBox spacing="5">
                         <Text text="Email" />
                         <TextField fx:id="email" promptText="email" />
@@ -66,7 +66,7 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
                     <VBox spacing="5">
                         <Text text="Data di nascita" />
                         <DatePicker fx:id="dataNascita" />
@@ -89,7 +89,7 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
                     <VBox spacing="5">
                         <Text layoutX="66.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indirizzo" />
                         <TextField fx:id="indirizzo" layoutX="66.0" layoutY="283.0" promptText="indirizzo" />
@@ -100,7 +100,7 @@
                     </VBox>
                 </HBox>
 
-                <HBox spacing="20" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
                     <VBox spacing="5">
                         <Text layoutX="63.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città" />
                         <TextField fx:id="citta" layoutX="63.0" layoutY="415.0" promptText="citta" />
@@ -113,12 +113,11 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <VBox spacing="15" alignment="CENTER">
-                    <Button text="Invia" onAction="#onSendButtonPressed" />
+                <VBox alignment="CENTER" spacing="15">
+                    <Button onAction="#onSendButtonPressed" text="Invia" />
                 </VBox>
             </VBox>
         </ScrollPane>
     </center>
 
 </BorderPane>
-
