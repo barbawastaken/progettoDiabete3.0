@@ -6,8 +6,6 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.ModificaPazienteController">
 
     <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
@@ -69,19 +67,11 @@
                 <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Data di nascita" />
-                        <DatePicker fx:id="dataNascita" />
+                        <TextField fx:id="dataNascita" />
                     </VBox>
-                    <VBox spacing="5">
+                    <VBox spacing="5" alignment="CENTER">
                         <Text text="Sesso" />
-                        <ChoiceBox fx:id="sesso">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="M" />
-                                    <String fx:value="F" />
-                                    <String fx:value="Altro" />
-                                </FXCollections>
-                            </items>
-                        </ChoiceBox>
+                        <TextField fx:id="sesso" />
                     </VBox>
                 </HBox>
 
@@ -125,7 +115,7 @@
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
                 <VBox spacing="15" alignment="CENTER">
-                    <Button text="Invia" onAction="#onSendButtonPressed" />
+                    <Button text="Salva" onAction="#onSendButtonPressed" />
                 </VBox>
             </VBox>
         </ScrollPane>
