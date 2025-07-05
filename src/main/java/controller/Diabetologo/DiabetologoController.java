@@ -1,11 +1,13 @@
 package controller.Diabetologo;
 
 import controller.Amministratore.VisualizzaListaUtentiController;
+import controller.Paziente.ModificaPazienteController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import model.Diabetologo.DiabetologoModel;
 import model.NotificationModel;
 import view.Diabetologo.DiabetologoView;
@@ -19,17 +21,12 @@ public class DiabetologoController {
 
     private DiabetologoModel diabetologoModel;
     private DiabetologoView diabetologoView;
-
-
     private String taxCode;
-
+    @FXML private HBox topBar;
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
     }
-
-    public DiabetologoController() {
-
-    }
+    public DiabetologoController() { }
 
     public void initializeData(String taxCode) {
         this.taxCode = taxCode;
@@ -111,4 +108,22 @@ public class DiabetologoController {
         this.taxCode = taxCode;
     }
 
+    @FXML
+    private void onProfiloClicked(){
+        try{
+            Stage profiloDiabetologo = new Stage();
+            profiloDiabetologo.setTitle("Profilo Diabetologo");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/profiloDiabetologo.fxml"));
+            Parent root = loader.load();
+            ModificaDiabetologoController modificaDiabetologoController = loader.getController();
+            modificaDiabetologoController.setTaxCode(taxCode);
+            profiloDiabetologo.setScene(new Scene(root));
+            profiloDiabetologo.show();
+        } catch (IOException e){
+            System.out.println("Errore caricamento pagina profilo!" + e.getMessage());
+        }
+        Stage homePageDiabetologo = (Stage) topBar.getScene().getWindow();
+        homePageDiabetologo.close();
+
+    }
 }

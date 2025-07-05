@@ -41,7 +41,7 @@
                 <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Password" />
-                        <PasswordField fx:id="password" promptText="password" disable="true"/>
+                        <PasswordField fx:id="password" promptText="password"/>
                     </VBox>
                     <VBox spacing="5">
                         <Text text="Codice Fiscale" />

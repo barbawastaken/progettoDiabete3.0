@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -27,33 +25,33 @@
     </top>
 
     <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true">
+        <ScrollPane fitToWidth="true" fitToHeight="true">
             <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
-                <HBox alignment="CENTER" prefHeight="49.0" prefWidth="732.0" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Nome" />
-                        <TextField fx:id="nome" promptText="nome" />
+                        <TextField fx:id="nome" promptText="nome" disable="true"/>
                     </VBox>
                     <VBox spacing="5">
                         <Text text="Cognome" />
-                        <TextField fx:id="cognome" promptText="cognome" />
+                        <TextField fx:id="cognome" promptText="cognome" disable="true"/>
                     </VBox>
                 </HBox>
 
-                <HBox alignment="CENTER" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Password" />
-                        <PasswordField fx:id="password" promptText="password" />
+                        <PasswordField fx:id="password" promptText="password"/>
                     </VBox>
                     <VBox spacing="5">
                         <Text text="Codice Fiscale" />
-                        <TextField fx:id="taxCodeFXML" promptText="taxCode" />
+                        <TextField fx:id="taxCodeFXML" promptText="taxCode" disable="true"/>
                     </VBox>
                 </HBox>
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <HBox alignment="CENTER" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Email" />
                         <TextField fx:id="email" promptText="email" />
@@ -66,30 +64,20 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <HBox alignment="CENTER" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text text="Data di nascita" />
-                        <DatePicker fx:id="dataNascita" />
+                        <TextField fx:id="dataNascita" disable="true"/>
                     </VBox>
-                    <VBox spacing="5">
+                    <VBox spacing="5" alignment="CENTER">
                         <Text text="Sesso" />
-                        <ChoiceBox fx:id="sesso">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="M" />
-                                    <String fx:value="F" />
-                                    <String fx:value="Altro" />
-                                </FXCollections>
-                            </items>
-                        </ChoiceBox>
+                        <TextField fx:id="sesso" disable="true"/>
                     </VBox>
                 </HBox>
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
-
-                <HBox alignment="CENTER" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text layoutX="66.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indirizzo" />
                         <TextField fx:id="indirizzo" layoutX="66.0" layoutY="283.0" promptText="indirizzo" />
@@ -100,7 +88,7 @@
                     </VBox>
                 </HBox>
 
-                <HBox alignment="CENTER" spacing="20">
+                <HBox spacing="20" alignment="CENTER">
                     <VBox spacing="5">
                         <Text layoutX="63.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città" />
                         <TextField fx:id="citta" layoutX="63.0" layoutY="415.0" promptText="citta" />
@@ -113,11 +101,12 @@
 
                 <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
 
-                <VBox alignment="CENTER" spacing="15">
-                    <Button onAction="#onSendButtonPressed" text="Invia" />
+                <VBox spacing="15" alignment="CENTER">
+                    <Button text="Salva" onAction="#onSendButtonPressed" />
                 </VBox>
             </VBox>
         </ScrollPane>
     </center>
 
 </BorderPane>
+

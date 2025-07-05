@@ -11,7 +11,7 @@
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
          <!-- Barra superiore -->
-         <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
+         <HBox fx:id="topBar" alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
             <padding>
                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
@@ -24,6 +24,8 @@
             <Pane HBox.hgrow="ALWAYS" />
 
             <Button onAction="#handleLogout" prefHeight="30.0" prefWidth="80.0" text="Logout" />
+            <Button onAction="#onProfiloClicked" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="PROFILO" />
+
          </HBox>
 
          <!-- Spazio per distanziare verticalmente -->
