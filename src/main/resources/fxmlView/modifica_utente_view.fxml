@@ -61,6 +61,14 @@
                         <Text fx:id="medicoCuranteError" fill="#ff2200" layoutX="349.0" layoutY="850.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un medico curante" visible="false" />
                         <Text layoutX="311.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazione" />
                         <Line endX="100.0" layoutX="291.0" layoutY="573.0" startX="-100.0" />
+                  <Text fx:id="heightError" fill="RED" layoutX="82.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'altezza non è valida" />
+                  <Text fx:id="weightError" fill="RED" layoutX="88.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peso non è valido" />
+                  <Text fx:id="nomeError" fill="#eb0000" layoutX="57.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il nome non può essere nullo" />
+                  <Text fx:id="passwordError" fill="RED" layoutX="43.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La password non può essere nulla" />
+                  <Text fx:id="cognomeError" fill="RED" layoutX="315.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il cognome non può essere nullo" />
+                  <Text fx:id="nationError" fill="RED" layoutX="298.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La nazione non può essere nulla" />
+                  <Text fx:id="cityError" fill="RED" layoutX="60.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La città non può essere nulla" />
+                  <Text fx:id="addressError" fill="RED" layoutX="48.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'indirizzo non può essere vuoto" />
                     </children>
                 </AnchorPane>
             </content>

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class GestioneUtenti {
-    @FXML  protected ComboBox<String> gender;
+    @FXML protected ComboBox<String> gender;
     @FXML protected TextField nome;
     @FXML protected TextField cognome;
     @FXML protected TextField email;
@@ -18,13 +18,13 @@ public class GestioneUtenti {
     @FXML protected TextField citta;
     @FXML protected TextField number;
     @FXML protected TextField taxCode;
-    @FXML protected RadioButton paziente;
-    @FXML protected RadioButton diabetologo;
-    @FXML protected RadioButton amministratore;
     @FXML protected ComboBox<String> medicoCurante;
     @FXML protected TextField cap;
     @FXML protected DatePicker birthday;
     @FXML protected TextField telephone;
+    @FXML protected RadioButton paziente;
+    @FXML protected RadioButton diabetologo;
+    @FXML protected RadioButton amministratore;
     @FXML protected Text taxCodeError;
     @FXML protected Text numberError;
     @FXML protected Text telephoneError;
@@ -37,9 +37,23 @@ public class GestioneUtenti {
     @FXML protected TextField nation;
     @FXML protected TextField weight;
     @FXML protected TextField height;
-    @FXML protected HashMap<String, String> diabetologi;
+    @FXML protected Text weightError;
+    @FXML protected Text heightError;
+    @FXML protected Text nomeError;
+    @FXML protected Text cognomeError;
+    @FXML protected Text passwordError;
+    @FXML protected Text heightText;
+    @FXML protected Text weightText;
+    @FXML protected Text cityError;
+    @FXML protected Text addressError;
+    @FXML protected Text nationError;
+
 
     public GestioneUtenti() {}
+
+    /*
+    qui si potrebbe implementare initialize in modo da non avere il aggiungi/modifica utente due classi praticamente uguali
+     */
 
     private boolean isEmailValid(){
         Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
@@ -66,6 +80,13 @@ public class GestioneUtenti {
         Pattern validNumber = Pattern.compile("^\\d{1,3}$");
         return validNumber.matcher(number.getText()).matches();
     }
+    private boolean isWeightValid(){
+        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 999.9 && !(weight.getText().isEmpty()));
+    }
+
+    private boolean isHeightValid(){
+        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 10.0 && !(height.getText().isEmpty()));
+    }
 
     protected boolean check(){
         boolean flag = false;
@@ -89,6 +110,56 @@ public class GestioneUtenti {
 
         }
 
+        if(nome.getText().isEmpty()){
+            nomeError.setVisible(true);
+            nomeError.setManaged(true);
+            flag = true;
+        } else{
+            nomeError.setVisible(false);
+            nomeError.setManaged(false);
+        }
+        if(cognome.getText().isEmpty()){
+            cognomeError.setVisible(true);
+            cognomeError.setManaged(true);
+            flag = true;
+        } else{
+            cognomeError.setVisible(false);
+            cognomeError.setManaged(false);
+        }
+
+        if(password.getText().isEmpty()){
+            passwordError.setVisible(true);
+            passwordError.setManaged(true);
+            flag = true;
+        } else{
+            passwordError.setVisible(false);
+            passwordError.setManaged(false);
+        }
+        if(citta.getText().isEmpty()){
+            cityError.setVisible(true);
+            cityError.setManaged(true);
+            flag = true;
+        } else {
+            cityError.setVisible(false);
+            cityError.setManaged(false);
+        }
+        if(nation.getText().isEmpty()){
+            nationError.setVisible(true);
+            nationError.setManaged(true);
+            flag = true;
+        } else {
+            nationError.setVisible(false);
+            nationError.setManaged(false);
+        }
+        if(address.getText().isEmpty()){
+            addressError.setVisible(true);
+            addressError.setManaged(true);
+            flag = true;
+        } else {
+            addressError.setVisible(false);
+            addressError.setManaged(false);
+        }
+
         if(!isEmailValid()){
             emailError.setVisible(true);
             emailError.setManaged(true);
@@ -107,6 +178,21 @@ public class GestioneUtenti {
             telephoneError.setVisible(false);
             telephoneError.setManaged(false);
 
+        }
+        if(!isWeightValid()){
+            weightError.setVisible(true);
+            weightError.setManaged(true);
+        } else{
+            weightError.setVisible(false);
+            weightError.setManaged(false);
+        }
+
+        if(!isHeightValid()){
+            heightError.setVisible(true);
+            heightError.setManaged(true);
+        } else{
+            heightError.setVisible(false);
+            heightError.setManaged(false);
         }
 
         if(!isCapValid()){
@@ -146,7 +232,7 @@ public class GestioneUtenti {
 
         }
 
-        if(flag==true){
+        if(flag){
             System.out.println("Problema trovato!!");
             return flag;
         }else{

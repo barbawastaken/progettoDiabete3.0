@@ -19,35 +19,7 @@ import java.util.List;
 
 public class AggiungiUtenteController extends GestioneUtenti {
 
-    @FXML private ComboBox<String> gender;
-    @FXML private TextField nome;
-    @FXML private TextField height;
-    @FXML private TextField weight;
-    @FXML private TextField cognome;
-    @FXML private TextField email;
-    @FXML private PasswordField password;
-    @FXML private TextField address;
-    @FXML private TextField citta;
-    @FXML private TextField number;
-    @FXML private TextField taxCode;
-    @FXML private RadioButton paziente;
-    @FXML private RadioButton diabetologo;
-    @FXML private RadioButton amministratore;
-    @FXML private ComboBox<String> medicoCurante;
-    @FXML private TextField cap;
-    @FXML private DatePicker birthday;
-    @FXML private TextField telephone;
-    @FXML private Text taxCodeError;
-    @FXML private Text numberError;
-    @FXML private Text telephoneError;
-    @FXML private Text emailError;
-    @FXML private Text capError;
-    @FXML private Text birthdayError;
-    @FXML private Text genderError;
-    @FXML private Text medicoCuranteText;
-    @FXML private Text userAddedText;
-    @FXML private Text heightText;
-    @FXML private Text weightText;
+
     private ToggleGroup ruolo;
     private HashMap<String, String> diabetologi = new HashMap<>();
 
@@ -90,6 +62,22 @@ public class AggiungiUtenteController extends GestioneUtenti {
         heightText.setManaged(false);
         weightText.setVisible(false);
         weightText.setManaged(false);
+        heightError.setVisible(false);
+        heightError.setManaged(false);
+        weightError.setVisible(false);
+        weightError.setManaged(false);
+        nomeError.setVisible(false);
+        nomeError.setManaged(false);
+        cognomeError.setVisible(false);
+        cognomeError.setManaged(false);
+        passwordError.setVisible(false);
+        passwordError.setManaged(false);
+        nationError.setVisible(false);
+        nationError.setManaged(false);
+        cityError.setVisible(false);
+        cityError.setManaged(false);
+        addressError.setVisible(false);
+        addressError.setManaged(false);
 
 
         ruolo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -187,31 +175,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
 
 
-    private boolean isEmailValid(){
-        Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
-        //[\\w.-] -> campo "libero", con lettere, punti e trattini
-        //@ -> simbolo obbligatorio
-        //\\.\\w{2,}$ ->almeno due caratteri preceduti da un punto
 
-        return validEmail.matcher(email.getText()).matches();
-    }
-
-    private boolean isTelephoneValid(){
-        Pattern validTelephone = Pattern.compile("^\\d{10}$");
-
-        return validTelephone.matcher(telephone.getText()).matches();
-    }
-
-    private boolean isCapValid(){
-        Pattern validCap = Pattern.compile("^\\d{5}$");
-
-        return validCap.matcher(cap.getText()).matches();
-    }
-
-    private boolean isNumberValid(){
-        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        return validNumber.matcher(number.getText()).matches();
-    }
 
     public AggiungiUtenteController(){
 

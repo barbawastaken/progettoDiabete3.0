@@ -21,35 +21,8 @@ public class ModificaUtenteController extends GestioneUtenti{
     private ToggleGroup ruolo;
     private VisualizzaListaUtentiController listaUtentiController;
 
-    @FXML  private ComboBox<String> gender;
-    @FXML private TextField nome;
-    @FXML private TextField cognome;
-    @FXML private TextField email;
-    @FXML private PasswordField password;
-    @FXML private TextField address;
-    @FXML private TextField citta;
-    @FXML private TextField number;
-    @FXML private TextField taxCode;
-    @FXML private ComboBox<String> medicoCurante;
-    @FXML private TextField cap;
-    @FXML private DatePicker birthday;
-    @FXML private TextField telephone;
-    @FXML private Text taxCodeError;
-    @FXML private Text numberError;
-    @FXML private Text telephoneError;
-    @FXML private Text emailError;
-    @FXML private Text capError;
-    @FXML private Text birthdayError;
-    @FXML private Text genderError;
-    @FXML private Text medicoCuranteText;
-    @FXML private Text userAddedText;
-    @FXML private TextField nation;
-    @FXML private TextField weight;
-    @FXML private TextField height;
-    @FXML private Text heightText;
-    @FXML private Text weightText;
 
-    public ModificaUtenteController(){ }
+    public ModificaUtenteController() { }
 
     @FXML
     private void initialize(){
@@ -72,6 +45,10 @@ public class ModificaUtenteController extends GestioneUtenti{
         medicoCurante.setManaged(false);
         medicoCuranteText.setVisible(false);
         medicoCuranteText.setManaged(false);
+        weightError.setVisible(false);
+        weightError.setManaged(false);
+        heightError.setVisible(false);
+        heightError.setManaged(false);
         heightText.setVisible(false);
         heightText.setManaged(false);
         weightText.setVisible(false);
@@ -82,6 +59,19 @@ public class ModificaUtenteController extends GestioneUtenti{
         weight.setManaged(false);
         height.setVisible(false);
         height.setManaged(false);
+        nomeError.setVisible(false);
+        nomeError.setManaged(false);
+        cognomeError.setVisible(false);
+        cognomeError.setManaged(false);
+        passwordError.setVisible(false);
+        passwordError.setManaged(false);
+        nationError.setVisible(false);
+        nationError.setManaged(false);
+        cityError.setVisible(false);
+        cityError.setManaged(false);
+        addressError.setVisible(false);
+        addressError.setManaged(false);
+
         gender.getItems().addAll("Maschio", "Femmina");
         ruolo=new ToggleGroup();
     }
@@ -141,7 +131,7 @@ public class ModificaUtenteController extends GestioneUtenti{
 
     @FXML
     private void onSendButtonPressed() throws SQLException {
-        super.check();
+        //super.check();
         String ruoloSelezionato = utente.getRole();
         double peso = 0.0;
         double altezza = 0.0;
@@ -174,11 +164,14 @@ public class ModificaUtenteController extends GestioneUtenti{
            -     peso,
                 altezza
         );
+        System.out.println("!!!!!!!!!" + taxCode.getText() + "!!!!!!!!!!!!");
         modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
 
         if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
-        Stage currentStage = (Stage) nome.getScene().getWindow();
-        currentStage.close();
+        if(!check()) {
+            Stage currentStage = (Stage) nome.getScene().getWindow();
+            currentStage.close();
+        }
     }
     public void setUtente(Utente utente){ this.utente = utente; }
     public void setListaUtentiController(VisualizzaListaUtentiController controller){ this.listaUtentiController = controller; }
