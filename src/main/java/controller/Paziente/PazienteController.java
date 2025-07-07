@@ -59,6 +59,11 @@ public class PazienteController {
         topBar.heightProperty().addListener((obs, oldVal, newVal) -> {
             immagineProfilo.setFitHeight(newVal.doubleValue());
         });
+
+        filtroPeriodoComboBox.setItems(FXCollections.observableArrayList("Ultima settimana", "Ultimo mese", "Tutto"));
+        filtroPeriodoComboBox.setValue("Tutto");
+
+        filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico());
     }
 
     public void setTaxCode(String taxCode) {
@@ -185,11 +190,19 @@ public class PazienteController {
     @FXML
     private void aggiornaGrafico() {
         String filtro = filtroPeriodoComboBox.getValue();
-        LocalDate dataInizio = switch (filtro) {
-            case "Ultima settimana" -> LocalDate.now().minusDays(7);
-            case "Ultimo mese" -> LocalDate.now().minusMonths(1);
-            default -> LocalDate.MIN; // nel dubbio, nessun filtro
-        };
+        LocalDate dataInizio;
+
+        switch (filtro) {
+            case "Ultima settimana":
+                dataInizio = LocalDate.now().minusDays(7);
+                break;
+            case "Ultimo mese":
+                dataInizio = LocalDate.now().minusMonths(1);
+                break;
+            default:
+                dataInizio = LocalDate.of(2025, 1, 1); // Data molto indietro per ottenere tutti i dati
+                break;
+        }
         caricaDatiGlicemia(dataInizio);
     }
 
@@ -197,21 +210,23 @@ public class PazienteController {
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         serie.setName("Valori glicemici");
 
-        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ? AND data >= ? ORDER BY data DESC";
+        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche " +
+                "WHERE taxCode = ? AND date(data) >= date(?) " +
+                "ORDER BY data ASC"; // Ordinamento crescente per una corretta visualizzazione
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, taxCode);
-            stmt.setDate(2, java.sql.Date.valueOf(dataInizio));
+            stmt.setString(2, dataInizio.toString());
+
+            //System.out.println("Query parameters: " + taxCode + ", " + dataInizio.toString());
             ResultSet rs = stmt.executeQuery();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
             List<XYChart.Data<String, Number>> dati = new ArrayList<>();
-            int count = 0;
 
-            while (rs.next() && count < 5) {
-
+            while (rs.next()) {
                 String dataStr = rs.getString("data");
                 LocalDate data = LocalDate.parse(dataStr);
                 int valore = rs.getInt("quantita");
@@ -225,15 +240,15 @@ public class PazienteController {
                 punto.setNode(new Label(labelCompleta));
 
                 dati.add(punto);
-                count++;
             }
 
-            Collections.reverse(dati);
-            serie.getData().addAll(dati);
+            // Pulisci il grafico prima di aggiungere nuovi dati
             lineChartGlicemia.getData().clear();
+            serie.getData().addAll(dati);
             lineChartGlicemia.getData().add(serie);
 
-            for (XYChart.Data<String, Number> data : dati) {
+            // Stile per le etichette
+            for (XYChart.Data<String, Number> data : serie.getData()) {
                 Node node = data.getNode();
                 if (node instanceof Label label) {
                     label.setStyle("-fx-font-size: 10px; -fx-background-color: white; -fx-padding: 2;");
@@ -243,9 +258,9 @@ public class PazienteController {
 
         } catch (Exception e) {
             System.out.println("Errore caricamento grafico: " + e);
+            e.printStackTrace();
         }
     }
-
     private void mostraNotifiche(ArrayList<String> farmaciNotifiche) {
 
         for(String f : farmaciNotifiche) {
