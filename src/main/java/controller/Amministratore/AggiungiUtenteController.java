@@ -154,22 +154,49 @@ public class AggiungiUtenteController extends GestioneUtenti {
     @FXML
     private void sendButtonPressed() throws SQLException {
 
-        super.check();
+
         AggiungiUtenteModel model = new AggiungiUtenteModel();
         RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
-
-        try {
-            model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
-                    cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                    number.getText(), telephone.getText(), selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
-
-            userAddedText.setVisible(true);
-            userAddedText.setManaged(true);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-
+        boolean isPaziente;
+        if(!(selected == null) && selected.getText().equals("PAZIENTE")){
+            isPaziente = true;
+            super.checkForPazienti();
+        } else{
+            isPaziente = false;
+            super.check();
         }
+
+
+
+            if(isPaziente && !checkForPazienti()) {
+                try {
+                    model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
+                            cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
+                            number.getText(), telephone.getText(), selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
+
+                    userAddedText.setVisible(true);
+                    userAddedText.setManaged(true);
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+
+                }
+            } else if(!isPaziente && !check()) {
+                try {
+                    model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
+                            cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
+                            number.getText(), telephone.getText(), selected.getText(), "", "", "");
+
+                    userAddedText.setVisible(true);
+                    userAddedText.setManaged(true);
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+
+                }
+            }
+
+
 
     }
 

@@ -62,5 +62,11 @@ public class Utente {
     public double getHeight(){return height; }
 
 
+    public String getPeso() {
+        return String.format("%.2f", weight);
+    }
 
+    public String getNation() {
+        return countryOfResidence;
+    }
 }
