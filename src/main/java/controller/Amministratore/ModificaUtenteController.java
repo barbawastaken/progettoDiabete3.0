@@ -18,63 +18,13 @@ public class ModificaUtenteController extends GestioneUtenti{
     private  VisualizzaListaUtentiModel model;
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
-    private ToggleGroup ruolo;
+    private ToggleGroup ruolo=new ToggleGroup();
     private VisualizzaListaUtentiController listaUtentiController;
 
 
     public ModificaUtenteController() { }
 
-    @FXML
-    private void initialize(){
 
-        taxCodeError.setVisible(false);
-        taxCodeError.setManaged(false);
-        numberError.setVisible(false);
-        numberError.setManaged(false);
-        telephoneError.setVisible(false);
-        telephoneError.setManaged(false);
-        emailError.setVisible(false);
-        emailError.setManaged(false);
-        capError.setVisible(false);
-        capError.setManaged(false);
-        birthdayError.setVisible(false);
-        birthdayError.setManaged(false);
-        genderError.setVisible(false);
-        genderError.setManaged(false);
-        medicoCurante.setVisible(false);
-        medicoCurante.setManaged(false);
-        medicoCuranteText.setVisible(false);
-        medicoCuranteText.setManaged(false);
-        weightError.setVisible(false);
-        weightError.setManaged(false);
-        heightError.setVisible(false);
-        heightError.setManaged(false);
-        heightText.setVisible(false);
-        heightText.setManaged(false);
-        weightText.setVisible(false);
-        weightText.setManaged(false);
-        userAddedText.setVisible(false);
-        userAddedText.setManaged(false);
-        weight.setVisible(false);
-        weight.setManaged(false);
-        height.setVisible(false);
-        height.setManaged(false);
-        nomeError.setVisible(false);
-        nomeError.setManaged(false);
-        cognomeError.setVisible(false);
-        cognomeError.setManaged(false);
-        passwordError.setVisible(false);
-        passwordError.setManaged(false);
-        nationError.setVisible(false);
-        nationError.setManaged(false);
-        cityError.setVisible(false);
-        cityError.setManaged(false);
-        addressError.setVisible(false);
-        addressError.setManaged(false);
-
-        gender.getItems().addAll("Maschio", "Femmina");
-        ruolo=new ToggleGroup();
-    }
     public void initializeData(VisualizzaListaUtentiController listaUtentiController, Utente utente, VisualizzaListaUtentiModel model, ModificaUtenteModel modificaUtenteModel,
                                Stage listaUtentiStage) {
 
@@ -131,8 +81,17 @@ public class ModificaUtenteController extends GestioneUtenti{
 
     @FXML
     private void onSendButtonPressed() throws SQLException {
-        //super.check();
         String ruoloSelezionato = utente.getRole();
+        boolean isPaziente;
+        if(ruoloSelezionato.equals("PAZIENTE")) {
+            isPaziente = true;
+            super.checkForPazienti();
+        } else{
+            isPaziente = false;
+            super.check();
+        }
+            
+
         double peso = 0.0;
         double altezza = 0.0;
         if (ruoloSelezionato.equals("PAZIENTE")) {
@@ -146,35 +105,85 @@ public class ModificaUtenteController extends GestioneUtenti{
                 return;
             }
         }
-        Utente aggiornato = new Utente(
-                taxCode.getText(),
-                password.getText(),
-                nome.getText(),
-                cognome.getText(),
-                email.getText(),
-                java.sql.Date.valueOf(birthday.getValue()),
-                address.getText(),
-                Integer.parseInt(number.getText()),
-                citta.getText(),
-                Integer.parseInt(cap.getText()),
-                nation.getText(),
-                gender.getValue(),
-                telephone.getText(),
-                ruoloSelezionato,
-                medicoCurante.getValue(),
-           -     peso,
-                altezza
-        );
 
-        System.out.println("Peso in 'AGGIORNATO': " + peso);
-        System.out.println("Altezza in 'AGGIORNATO': " + altezza);
+
+        //System.out.println("Nazione in AGGIORNATO: " + aggiornato.getNation());
+        /*
+        ho perso mezza giornata di lavoro perché davanti a 'peso' a una tab di distanza c'era un meno che mi faceva fallire
+        il check di sql. Questo commento rimarrà qui per gli annali
+         */
         //System.out.println("!!!!!!!!!" + taxCode.getText() + "!!!!!!!!!!!!");
+
+        /*
         modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
 
         if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+
+
         if(!check()) {
+            System.out.println("un casino");
+
             Stage currentStage = (Stage) nome.getScene().getWindow();
             currentStage.close();
+        } else{
+            System.out.println("casino");
+        }
+        */
+
+
+        if(isPaziente && !checkForPazienti()){
+            Utente aggiornato = new Utente(
+                    taxCode.getText(),
+                    password.getText(),
+                    nome.getText(),
+                    cognome.getText(),
+                    email.getText(),
+                    java.sql.Date.valueOf(birthday.getValue()),
+                    address.getText(),
+                    Integer.parseInt(number.getText()),
+                    citta.getText(),
+                    Integer.parseInt(cap.getText()),
+                    nation.getText(),
+                    gender.getValue(),
+                    telephone.getText(),
+                    ruoloSelezionato,
+                    medicoCurante.getValue(),
+                    peso,
+                    altezza
+            );
+            System.out.println("birthday: " + aggiornato.getBirthday());
+            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
+            if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+            Stage currentStage = (Stage) nome.getScene().getWindow();
+            currentStage.close();
+        } else if (!isPaziente && !check()) {
+            Utente aggiornato = new Utente(
+                    taxCode.getText(),
+                    password.getText(),
+                    nome.getText(),
+                    cognome.getText(),
+                    email.getText(),
+                    java.sql.Date.valueOf(birthday.getValue()),
+                    address.getText(),
+                    Integer.parseInt(number.getText()),
+                    citta.getText(),
+                    Integer.parseInt(cap.getText()),
+                    nation.getText(),
+                    gender.getValue(),
+                    telephone.getText(),
+                    ruoloSelezionato,
+                    null,
+                    0,
+                    0
+            );
+
+            System.out.println("Valore nazione: " + aggiornato.getNation());
+            System.out.println("birthday: " + aggiornato.getBirthday());
+            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
+            if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+            Stage currentStage = (Stage) nome.getScene().getWindow();
+            currentStage.close();
+
         }
     }
     public void setUtente(Utente utente){ this.utente = utente; }

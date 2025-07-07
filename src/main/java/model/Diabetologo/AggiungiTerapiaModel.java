@@ -11,7 +11,7 @@ public class AggiungiTerapiaModel {
         return DriverManager.getConnection(DB_URL);
     }
     public void insertData(String taxCode, String terapia, String farmacoPrescritto, int quantita, int numeroAssunzioniGiornaliere, String indicazioni) {
-        String sql = "INSERT INTO terapie_prescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              var pstmt = conn.prepareStatement(sql)) {
