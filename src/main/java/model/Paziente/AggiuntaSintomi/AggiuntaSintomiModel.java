@@ -10,12 +10,9 @@ public class AggiuntaSintomiModel {
 
     public int aggiungiSintomi(String symptom, String otherSpecifications, LocalDate relevationDate, String taxcode){       //String taxCode, String sintomoPrincipale, String altriSintomiSpecificati, LocalDate dataAggiuntaSintomo
 
-        //String sintomoPrincipale = view.getSintomiPrincipaliComboBox().getValue();
+        if(symptom == null) symptom = "Altro";
 
-        System.out.println("sono qui");
-
-        if(symptom.equals("ALtro") && (otherSpecifications == null || otherSpecifications.isEmpty())){
-            System.out.println("Sono qui dentro"); return 1; }
+        if(symptom.equals("Altro") && (otherSpecifications == null || otherSpecifications.isEmpty())){ return 1; }
 
         if(relevationDate == null || relevationDate.isAfter(LocalDate.now())){ return 2; }
 

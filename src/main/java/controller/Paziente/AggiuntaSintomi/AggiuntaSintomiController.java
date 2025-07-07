@@ -1,61 +1,44 @@
 package controller.Paziente.AggiuntaSintomi;
 
-import controller.Paziente.PazienteController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Amministratore.Utente;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
-import model.Paziente.PazienteModel;
-import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
-import view.Paziente.PazienteView;
 
 public class AggiuntaSintomiController {
 
     AggiuntaSintomiModel model;
-    AggiuntaSintomiView view;
     String taxCode;
 
     @FXML
     private ComboBox<String> symptoms;
     @FXML
-    private Text symptomsText;
-    @FXML
     private TextArea otherSpecifications;
     @FXML
     private Text otherSpecificationsText;
+    @FXML
+    private DatePicker relevationDate;
 
     @FXML
     private void initialize() {
         model = new AggiuntaSintomiModel();
         symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
 
-        //model.aggiungiSintomi()
-
     }
-
-    @FXML
-    private DatePicker relevationDate;
 
     @FXML
     private void onSendClicked(){
         int aggiuntaSintomi;
-        if(symptoms.getValue() == null){
-            symptoms.setValue("Altro");
-            aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
-        }else{
-            aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
-        }
 
+        aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
 
         if(aggiuntaSintomi == 0) {
 
             System.out.println("Valori inseriti correttamente");
 
-            //PazienteModel pazienteModel = new PazienteModel();
-            //PazienteView pazienteView = new PazienteView();
-            //new PazienteController(taxCode, pazienteModel, pazienteView);
+            Stage stage = (Stage) relevationDate.getScene().getWindow();
+            stage.close();
 
         } else { checkOutput(aggiuntaSintomi); }
 
@@ -66,50 +49,6 @@ public class AggiuntaSintomiController {
         symptoms.setValue(null);
         otherSpecifications.setText("");
         relevationDate.setValue(null);
-    }
-
-    public AggiuntaSintomiController() {}
-
-    public AggiuntaSintomiController(String taxCode, AggiuntaSintomiModel model, AggiuntaSintomiView view, Stage pazienteStage) {
-
-        this.model = model;
-        this.view = view;
-
-        Stage aggiuntaSintomistage = new Stage();
-        aggiuntaSintomistage.setTitle("Aggiunta Sintomi");
-        aggiuntaSintomistage.setScene(view.getScene());
-        aggiuntaSintomistage.setHeight(pazienteStage.getHeight());
-        aggiuntaSintomistage.setWidth(pazienteStage.getWidth());
-        aggiuntaSintomistage.setMinWidth(600);
-        aggiuntaSintomistage.setMinHeight(800);
-        aggiuntaSintomistage.setX(pazienteStage.getX());
-        aggiuntaSintomistage.setY(pazienteStage.getY());
-        aggiuntaSintomistage.alwaysOnTopProperty();
-        pazienteStage.close();
-        aggiuntaSintomistage.show();
-
-        view.getIndietroButton().setOnAction(e -> {
-
-            PazienteModel pazienteModel = new PazienteModel();
-            PazienteView pazienteView = new PazienteView();
-
-            try {
-                new PazienteController(taxCode, pazienteModel, pazienteView);
-            } catch (Exception ex) {
-                System.out.println("Errore: " + ex.getMessage());
-            }
-        });
-
-        view.getResetButton().setOnAction(e -> {
-
-
-        });
-
-        view.getConfermaButton().setOnAction(e -> {
-
-
-        });
-
     }
 
     private void checkOutput(int aggiuntaSintomi) {
@@ -144,6 +83,8 @@ public class AggiuntaSintomiController {
         alert.setHeaderText(null); // oppure "Attenzione!"
         alert.setContentText(messaggio);
         alert.showAndWait();
+
+        onResetClicked();
     }
 
     public void setTaxCode(String taxCode) {
