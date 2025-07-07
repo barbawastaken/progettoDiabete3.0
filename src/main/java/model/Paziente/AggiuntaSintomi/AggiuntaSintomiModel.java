@@ -1,8 +1,5 @@
 package model.Paziente.AggiuntaSintomi;
 
-import model.Amministratore.Utente;
-import view.Paziente.AggiuntaSintomi.AggiuntaSintomiView;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,15 +11,13 @@ public class AggiuntaSintomiModel {
     public int aggiungiSintomi(String symptom, String otherSpecifications, LocalDate relevationDate, String taxcode){       //String taxCode, String sintomoPrincipale, String altriSintomiSpecificati, LocalDate dataAggiuntaSintomo
 
         //String sintomoPrincipale = view.getSintomiPrincipaliComboBox().getValue();
-        String sintomoPrincipale = symptom;
 
-        if(sintomoPrincipale==null){ sintomoPrincipale = "";}
+        System.out.println("sono qui");
 
-        String altriSintomiSpecificati = otherSpecifications; //--> appena si ha tempo bisogna togliere queste variabili e usare i parametri
-        LocalDate dataAggiuntaSintomo = relevationDate;        //-->
-        if(sintomoPrincipale.isEmpty() && altriSintomiSpecificati.isEmpty()){ return 1; }
+        if(symptom.equals("ALtro") && (otherSpecifications == null || otherSpecifications.isEmpty())){
+            System.out.println("Sono qui dentro"); return 1; }
 
-        if(dataAggiuntaSintomo == null || dataAggiuntaSintomo.isAfter(LocalDate.now())){ return 2; }
+        if(relevationDate == null || relevationDate.isAfter(LocalDate.now())){ return 2; }
 
         String sql = "INSERT INTO aggiuntaSintomi (taxCode, sintomoPrincipale, sintomiSpecificati, dataInserimento) VALUES (?, ?, ?, ?)";
 
@@ -33,17 +28,17 @@ public class AggiuntaSintomiModel {
 
             while (rs.next()) {
 
-                if(rs.getString("taxCode").equals(taxcode) && rs.getString("sintomoPrincipale").equals(sintomoPrincipale) &&
-                checkStringa(rs.getString("sintomiSpecificati"), altriSintomiSpecificati) && rs.getString("dataInserimento").equals(dataAggiuntaSintomo.toString())){
+                if(rs.getString("taxCode").equals(taxcode) && rs.getString("sintomoPrincipale").equals(symptom) &&
+                checkStringa(rs.getString("sintomiSpecificati"), otherSpecifications) && rs.getString("dataInserimento").equals(relevationDate.toString())){
                     return 3;
                 }
 
             }
 
             pstmt.setString(1, taxcode);
-            pstmt.setString(2, sintomoPrincipale);
-            pstmt.setString(3, altriSintomiSpecificati);
-            pstmt.setString(4, dataAggiuntaSintomo.toString());
+            pstmt.setString(2, symptom);
+            pstmt.setString(3, otherSpecifications);
+            pstmt.setString(4, relevationDate.toString());
 
             pstmt.executeUpdate();
             return 0;

@@ -18,10 +18,6 @@ public class AggiuntaSintomiController {
     String taxCode;
 
     @FXML
-    private TextField other;
-    @FXML
-    private Text otherText;
-    @FXML
     private ComboBox<String> symptoms;
     @FXML
     private Text symptomsText;
@@ -34,11 +30,6 @@ public class AggiuntaSintomiController {
     private void initialize() {
         model = new AggiuntaSintomiModel();
         symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
-        other.setVisible(false);
-        otherText.setVisible(false);
-        other.setManaged(false);
-        otherText.setManaged(false);
-
 
         //model.aggiungiSintomi()
 
@@ -50,8 +41,9 @@ public class AggiuntaSintomiController {
     @FXML
     private void onSendClicked(){
         int aggiuntaSintomi;
-        if(symptoms.getValue().isEmpty()){
-            aggiuntaSintomi = model.aggiungiSintomi(other.getText(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
+        if(symptoms.getValue() == null){
+            symptoms.setValue("Altro");
+            aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
         }else{
             aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
         }
@@ -72,7 +64,6 @@ public class AggiuntaSintomiController {
     private void onResetClicked(){
 
         symptoms.setValue(null);
-        other.setText("");
         otherSpecifications.setText("");
         relevationDate.setValue(null);
     }
@@ -123,9 +114,9 @@ public class AggiuntaSintomiController {
 
     private void checkOutput(int aggiuntaSintomi) {
 
-        view.getSintomiPrincipaliComboBox().setValue("");
-        view.getSpecificaAltroField().setText("");
-        view.getDataRilevazioneSintomoPicker().setValue(null);
+        this.symptoms.setValue("");
+        this.otherSpecificationsText.setText("");
+        this.relevationDate.setValue(null);
 
         if(aggiuntaSintomi == 1) {
 
