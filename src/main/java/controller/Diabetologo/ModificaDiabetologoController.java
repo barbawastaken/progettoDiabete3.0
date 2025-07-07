@@ -129,9 +129,13 @@ public class ModificaDiabetologoController {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/diabetologo_view.fxml"));
 
-            Parent root = loader.load();
-            DiabetologoController diabetologoController = loader.getController();
+            DiabetologoController diabetologoController = new DiabetologoController();
             diabetologoController.setTaxCode(taxCode);
+            loader.setController(diabetologoController);
+
+            Parent root = loader.load();
+            //DiabetologoController diabetologoController = loader.getController();
+            //diabetologoController.setTaxCode(taxCode);
             Stage stage = new Stage();
             stage.setTitle("Diabetolgo");
             stage.setScene(new Scene(root, 650, 500));
@@ -148,7 +152,7 @@ public class ModificaDiabetologoController {
 
         if(!checkDati()) return;
 
-        String query = "UPDATE utenti SET email = ?, telephoneNumber = ?, Altezza = ?, Peso = ?, address = ?, number = ?, city = ?, cap = ? WHERE taxCode = ?";
+        String query = "UPDATE utenti SET email = ?, telephoneNumber = ?, address = ?, number = ?, city = ?, cap = ? WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
