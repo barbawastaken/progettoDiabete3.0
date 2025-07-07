@@ -137,6 +137,7 @@ public class ModificaUtenteController extends GestioneUtenti{
         double altezza = 0.0;
         if (ruoloSelezionato.equals("PAZIENTE")) {
             try {
+                System.out.println("paziente selezionato");
                 peso = Double.parseDouble(weight.getText());
                 altezza = Double.parseDouble(height.getText());
             } catch (NumberFormatException e) {
@@ -164,7 +165,10 @@ public class ModificaUtenteController extends GestioneUtenti{
            -     peso,
                 altezza
         );
-        System.out.println("!!!!!!!!!" + taxCode.getText() + "!!!!!!!!!!!!");
+
+        System.out.println("Peso in 'AGGIORNATO': " + peso);
+        System.out.println("Altezza in 'AGGIORNATO': " + altezza);
+        //System.out.println("!!!!!!!!!" + taxCode.getText() + "!!!!!!!!!!!!");
         modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
 
         if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}

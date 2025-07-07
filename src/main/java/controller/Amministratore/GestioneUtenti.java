@@ -81,11 +81,13 @@ public class GestioneUtenti {
         return validNumber.matcher(number.getText()).matches();
     }
     private boolean isWeightValid(){
-        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 999.9 && !(weight.getText().isEmpty()));
+        System.out.println("Peso: " + Double.parseDouble(weight.getText()));
+        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 999.9 && !(weight.getText() == null));
     }
 
     private boolean isHeightValid(){
-        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 10.0 && !(height.getText().isEmpty()));
+        System.out.println("Altezza: " + Double.parseDouble(height.getText()));
+        return (Double.parseDouble(height.getText()) > 0.00 && Double.parseDouble(height.getText()) < 10.0 && !(height.getText() == null));
     }
 
     protected boolean check(){
@@ -110,7 +112,7 @@ public class GestioneUtenti {
 
         }
 
-        if(nome.getText().isEmpty()){
+        if(nome.getText() ==null){
             nomeError.setVisible(true);
             nomeError.setManaged(true);
             flag = true;
@@ -118,7 +120,7 @@ public class GestioneUtenti {
             nomeError.setVisible(false);
             nomeError.setManaged(false);
         }
-        if(cognome.getText().isEmpty()){
+        if(cognome.getText()== null){
             cognomeError.setVisible(true);
             cognomeError.setManaged(true);
             flag = true;
@@ -127,7 +129,7 @@ public class GestioneUtenti {
             cognomeError.setManaged(false);
         }
 
-        if(password.getText().isEmpty()){
+        if(password.getText()== null){
             passwordError.setVisible(true);
             passwordError.setManaged(true);
             flag = true;
@@ -135,7 +137,7 @@ public class GestioneUtenti {
             passwordError.setVisible(false);
             passwordError.setManaged(false);
         }
-        if(citta.getText().isEmpty()){
+        if(citta.getText()== null){
             cityError.setVisible(true);
             cityError.setManaged(true);
             flag = true;
@@ -143,7 +145,7 @@ public class GestioneUtenti {
             cityError.setVisible(false);
             cityError.setManaged(false);
         }
-        if(nation.getText().isEmpty()){
+        if(nation.getText()==null){
             nationError.setVisible(true);
             nationError.setManaged(true);
             flag = true;
