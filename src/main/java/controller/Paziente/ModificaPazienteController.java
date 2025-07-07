@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,6 +39,15 @@ public class ModificaPazienteController {
     @FXML private TextField numero;
     @FXML private TextField citta;
     @FXML private TextField cap;
+
+    @FXML private Text erroreEmail;
+    @FXML private Text erroreTelefono;
+    @FXML private Text erroreAltezza;
+    @FXML private Text errorePeso;
+    @FXML private Text erroreIndirizzo;
+    @FXML private Text erroreNumero;
+    @FXML private Text erroreCitta;
+    @FXML private Text erroreCap;
 
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
@@ -198,21 +208,37 @@ public class ModificaPazienteController {
         if(email.getText().isEmpty() || telefono.getText().isEmpty() || altezza.getText().isEmpty() || peso.getText().isEmpty() ||
         indirizzo.getText().isEmpty() || numero.getText().isEmpty() || citta.getText().isEmpty()|| cap.getText().isEmpty()) {
             messaggioErrore("Uno o più campi sono vuoti!");
-            return false;
         }
 
+        if(email.getText().isEmpty()) { erroreEmail.setVisible(true); return false; }
+
+        if(telefono.getText().isEmpty()) { erroreTelefono.setVisible(true); return false; }
+
+        if(altezza.getText().isEmpty()) { erroreAltezza.setVisible(true); return false; }
+
+        if(peso.getText().isEmpty()) { errorePeso.setVisible(true); return false; }
+
+        if(indirizzo.getText().isEmpty()) { erroreIndirizzo.setVisible(true); return false; }
+
+        if(numero.getText().isEmpty()) { erroreNumero.setVisible(true); return false; }
+
+        if(citta.getText().isEmpty()) { erroreCitta.setVisible(true); return false; }
+
+        if(cap.getText().isEmpty()) { erroreCap.setVisible(true); return false; }
+
         Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
-        if(!validEmail.matcher(email.getText()).matches()) { messaggioErrore("L'indirizzo email specificato non è valido!"); return false;}
+        if(!validEmail.matcher(email.getText()).matches()) { erroreEmail.setVisible(true); return false;}
 
         Pattern validTelephone = Pattern.compile("^\\d{10}$");
-        if(!validTelephone.matcher(telefono.getText()).matches()) { messaggioErrore("Il numero di telefono specificato non è valido!"); return false;}
+        if(!validTelephone.matcher(telefono.getText()).matches()) { erroreTelefono.setVisible(true); return false;}
 
         Pattern validCap = Pattern.compile("^\\d{5}$");
-        if(!validCap.matcher(cap.getText()).matches()) { messaggioErrore("Il cap specificato non è valido!");return false;}
+        int capInt = Integer.parseInt(cap.getText());
+        if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { erroreCap.setVisible(true); return false;}
 
         Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        if(!validNumber.matcher(numero.getText()).matches()) { messaggioErrore("Il numero civico specificato non è valido!"); return false;}
-
+        int numeroInt = Integer.parseInt(numero.getText());
+        if(!validNumber.matcher(numero.getText()).matches() && numeroInt > 0) { erroreNumero.setVisible(true); return false;}
 
         return true;
     }
