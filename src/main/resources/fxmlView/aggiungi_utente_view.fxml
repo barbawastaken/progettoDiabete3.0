@@ -5,11 +5,8 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AggiungiUtenteController">
-   <children>
-      <ScrollPane layoutX="-1.0" prefHeight="1000.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="973.0" prefWidth="602.0">
+<ScrollPane layoutX="-1.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AggiungiUtenteController" prefWidth="600">
+          <AnchorPane minHeight="0.0" minWidth="600" >
                <children>
                   <TextField fx:id="nome" layoutX="66.0" layoutY="44.0" promptText="nome" />
                   <TextField fx:id="cognome" layoutX="324.0" layoutY="44.0" promptText="cognome" />
@@ -71,7 +68,4 @@
                   <Text fx:id="cityError" fill="RED" layoutX="56.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La città non può essere vuota" />
                </children>
             </AnchorPane>
-        </content>
-      </ScrollPane>
-   </children>
-</AnchorPane>
+</ScrollPane>

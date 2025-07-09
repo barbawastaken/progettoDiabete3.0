@@ -222,7 +222,7 @@ public class GestioneUtenti {
             cityError.setVisible(false);
             cityError.setManaged(false);
         }
-        if(nation == null || nation.getText() == null || nation.getText().isEmpty()){ //nation.getText() == null potrà essere rimosso quando
+        /*if(nation == null || nation.getText() == null || nation.getText().isEmpty()){ //nation.getText() == null potrà essere rimosso quando
             //cancelleremo gli utenti dal database e generandone di nuovi non ci sarà questa situazione
             nationError.setVisible(true);
             nationError.setManaged(true);
@@ -230,7 +230,7 @@ public class GestioneUtenti {
         } else {
             nationError.setVisible(false);
             nationError.setManaged(false);
-        }
+        }*/
 
         if(address.getText().isEmpty()){
             addressError.setVisible(true);
