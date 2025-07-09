@@ -39,7 +39,6 @@ public class LoginModel {
                 if (rs.getString("taxCode").equals(taxCode)
                         && BCrypt.checkpw(password, rs.getString("password")))
                 /*rs.getString("password").equals(password))*/ {
-
                     //String taxCode = rs.getString("taxCode");
                     String userType = rs.getString("userType");
 

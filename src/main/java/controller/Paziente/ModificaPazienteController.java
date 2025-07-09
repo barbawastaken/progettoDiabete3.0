@@ -267,7 +267,7 @@ public class ModificaPazienteController {
     @FXML
     public void onCambiaPasswordPressed(){
 
-        if(!nuovaPasswordField.getText().equals(confermaPasswordText.getText())){
+        if(!nuovaPasswordField.getText().equals(confermaPasswordField.getText())){
             messaggioErrore("La conferma della password non è corretta");
             return;
         }
