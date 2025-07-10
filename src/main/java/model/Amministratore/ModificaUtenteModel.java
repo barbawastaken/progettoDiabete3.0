@@ -15,9 +15,6 @@ public class ModificaUtenteModel {
     public ModificaUtenteModel() {}
 
     public void aggiornaUtente(String vecchioTaxCode, Utente utente) {
-
-
-
         String updateUtenteUtenti = "UPDATE utenti " +
                 "SET " +
                 "taxCode=?, " +

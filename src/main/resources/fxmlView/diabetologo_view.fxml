@@ -23,7 +23,7 @@
             <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
             <Pane HBox.hgrow="ALWAYS" />
 
-            <Button onAction="#handleLogout" prefHeight="30.0" prefWidth="80.0" text="Logout" />
+            <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
             <Button onAction="#onProfiloClicked" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="PROFILO" />
 
          </HBox>

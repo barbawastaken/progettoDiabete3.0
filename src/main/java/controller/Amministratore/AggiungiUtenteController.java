@@ -153,58 +153,41 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
     @FXML
     private void sendButtonPressed() throws SQLException {
-
-
         AggiungiUtenteModel model = new AggiungiUtenteModel();
         RadioButton selected = (RadioButton) ruolo.getSelectedToggle();
-        boolean isPaziente;
-        if(!(selected == null) && selected.getText().equals("PAZIENTE")){
-            isPaziente = true;
-            super.checkForPazienti();
-        } else{
-            isPaziente = false;
-            super.check();
+        boolean isPaziente = selected != null && selected.getText().equals("PAZIENTE");
+
+        boolean hasErrors;
+        if (isPaziente) {
+            hasErrors = checkForPazienti();
+        } else {
+            hasErrors = check();
         }
 
-
-
-            if(isPaziente && !checkForPazienti()) {
-                try {
-                    model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
-                            cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                            number.getText(), telephone.getText(), selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
-
-                    userAddedText.setVisible(true);
-                    userAddedText.setManaged(true);
-
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-
+        if (!hasErrors) {
+            try {
+                if (isPaziente) {
+                    model.inserisciUtente(
+                            taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
+                            cap.getText(), citta.getText(), email.getText(), gender.getValue(),
+                            java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
+                            selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
+                } else {
+                    model.inserisciUtente(
+                            taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
+                            cap.getText(), citta.getText(), email.getText(), gender.getValue(),
+                            java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
+                            selected.getText(), null, null, null); // valori nulli per non pazienti
                 }
-            } else if(!isPaziente && !check()) {
-                try {
-                    model.inserisciUtente(taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
-                            cap.getText(), citta.getText(), email.getText(), gender.getValue(), java.sql.Date.valueOf(birthday.getValue()),
-                            number.getText(), telephone.getText(), selected.getText(), "", "", "");
 
-                    userAddedText.setVisible(true);
-                    userAddedText.setManaged(true);
+                userAddedText.setVisible(true);
+                userAddedText.setManaged(true);
 
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-
-                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-
-
-
+        }
     }
-
-
-
-
-
     public AggiungiUtenteController(){
-
     }
 }

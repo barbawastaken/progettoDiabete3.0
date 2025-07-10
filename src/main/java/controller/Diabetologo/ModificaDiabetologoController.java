@@ -7,7 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -23,7 +25,6 @@ public class ModificaDiabetologoController {
     private String taxCode;
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
     @FXML private HBox topBar;
-
     @FXML private TextField nome;
     @FXML private TextField cognome;
     @FXML private TextField password;
@@ -37,6 +38,11 @@ public class ModificaDiabetologoController {
     @FXML private TextField citta;
     @FXML private TextField cap;
 
+    @FXML private Text nuovaPasswordText;
+    @FXML private TextField nuovaPasswordField;
+    @FXML private Text confermaPasswordText;
+    @FXML private TextField confermaPasswordField;
+    @FXML private Button confermaPasswordButton;
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
 
@@ -134,8 +140,6 @@ public class ModificaDiabetologoController {
             loader.setController(diabetologoController);
 
             Parent root = loader.load();
-            //DiabetologoController diabetologoController = loader.getController();
-            //diabetologoController.setTaxCode(taxCode);
             Stage stage = new Stage();
             stage.setTitle("Diabetolgo");
             stage.setScene(new Scene(root, 650, 500));
@@ -210,6 +214,62 @@ public class ModificaDiabetologoController {
         alert.setHeaderText(null); // oppure "Attenzione!"
         alert.setContentText(messaggio);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void onPasswordPressed(){
+
+        nuovaPasswordText.setVisible(true);
+        nuovaPasswordField.setVisible(true);
+        confermaPasswordText.setVisible(true);
+        confermaPasswordField.setVisible(true);
+        confermaPasswordButton.setVisible(true);
+
+    }
+
+    @FXML
+    public void onCambiaPasswordPressed(){
+
+        if(!nuovaPasswordField.getText().equals(confermaPasswordField.getText())){
+            messaggioErrore("La conferma della password non è corretta");
+            return;
+        }
+
+        String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
+
+        String query = "UPDATE utenti SET password=? WHERE taxCode = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, passwordCriptata);
+            stmt.setString(2, taxCode);
+
+            stmt.executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println("Errore nel salvataggio della password: " + e.getMessage());
+            messaggioErrore("Password non salvata correttamente!");
+        }
+
+        query = "UPDATE loginTable SET password=? WHERE taxCode = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)){
+
+            stmt.setString(1, passwordCriptata);
+            stmt.setString(2, taxCode);
+
+            stmt.executeUpdate();
+
+            System.out.println("Modifiche salvate correttamente!");
+            onHomePagePressed();
+
+        } catch (Exception e) {
+            System.out.println("Errore nel salvataggio della password (loginTable): " + e.getMessage());
+            messaggioErrore("Password non salvata correttamente!");
+        }
+
     }
 }
 
