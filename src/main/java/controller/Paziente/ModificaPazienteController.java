@@ -255,23 +255,19 @@ public class ModificaPazienteController {
 
     @FXML
     public void onPasswordPressed(){
-
         nuovaPasswordText.setVisible(true);
         nuovaPasswordField.setVisible(true);
         confermaPasswordText.setVisible(true);
         confermaPasswordField.setVisible(true);
         confermaPasswordButton.setVisible(true);
-
     }
 
     @FXML
     public void onCambiaPasswordPressed(){
-
         if(!nuovaPasswordField.getText().equals(confermaPasswordField.getText())){
             messaggioErrore("La conferma della password non è corretta");
             return;
         }
-
         String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
 
         String query = "UPDATE utenti SET password=? WHERE taxCode = ?";

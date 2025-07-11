@@ -246,7 +246,6 @@ public class ModificaDiabetologoController {
             stmt.setString(2, taxCode);
 
             stmt.executeUpdate();
-
         } catch(Exception e) {
             System.out.println("Errore nel salvataggio della password: " + e.getMessage());
             messaggioErrore("Password non salvata correttamente!");

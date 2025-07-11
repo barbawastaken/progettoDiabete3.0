@@ -1,28 +1,43 @@
 package controller.Amministratore;
 
+import controller.LoginController;
+import controller.Paziente.PazienteController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import view.Amministratore.ModificaUtenteView;
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 
 public class ModificaUtenteController extends GestioneUtenti{
-    private ModificaUtenteView modificaUtenteView;
     private Utente utente;
     private  VisualizzaListaUtentiModel model;
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
-    private ToggleGroup ruolo=new ToggleGroup();
     private VisualizzaListaUtentiController listaUtentiController;
-
-
-    public ModificaUtenteController() { }
-
+    @FXML private Text nuovaPasswordText;
+    @FXML private TextField nuovaPasswordField;
+    @FXML private Text confermaPasswordText;
+    @FXML private TextField confermaPasswordField;
+    @FXML private Button confermaPasswordButton;
+    @FXML private HBox topBar;
+    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+    
+    
 
     public void initializeData(VisualizzaListaUtentiController listaUtentiController, Utente utente, VisualizzaListaUtentiModel model, ModificaUtenteModel modificaUtenteModel,
                                Stage listaUtentiStage) {
@@ -32,6 +47,7 @@ public class ModificaUtenteController extends GestioneUtenti{
         this.model = model;
         this.modificaUtenteModel = modificaUtenteModel;
         this.listaUtentiStage = listaUtentiStage;
+
 
         nome.setText(utente.getNome());
         cognome.setText(utente.getCognome());
@@ -89,7 +105,7 @@ public class ModificaUtenteController extends GestioneUtenti{
             isPaziente = false;
             super.check();
         }
-            
+
 
         double peso = 0.0;
         double altezza = 0.0;
@@ -104,32 +120,6 @@ public class ModificaUtenteController extends GestioneUtenti{
                 return;
             }
         }
-
-
-        //System.out.println("Nazione in AGGIORNATO: " + aggiornato.getNation());
-        /*
-        ho perso mezza giornata di lavoro perché davanti a 'peso' a una tab di distanza c'era un meno che mi faceva fallire
-        il check di sql. Questo commento rimarrà qui per gli annali
-         */
-        //System.out.println("!!!!!!!!!" + taxCode.getText() + "!!!!!!!!!!!!");
-
-        /*
-        modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
-
-        if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
-
-
-        if(!check()) {
-            System.out.println("un casino");
-
-            Stage currentStage = (Stage) nome.getScene().getWindow();
-            currentStage.close();
-        } else{
-            System.out.println("casino");
-        }
-        */
-
-
         if(isPaziente && !checkForPazienti()){
             Utente aggiornato = new Utente(
                     taxCode.getText(),
@@ -186,6 +176,111 @@ public class ModificaUtenteController extends GestioneUtenti{
         }
     }
     public void setUtente(Utente utente){ this.utente = utente; }
-    public void setListaUtentiController(VisualizzaListaUtentiController controller){ this.listaUtentiController = controller; }
+
+    public void messaggioErrore(String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore!!!");
+        alert.setHeaderText(null); // oppure "Attenzione!"
+        alert.setContentText(messaggio);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void onPasswordPressed(){
+        nuovaPasswordText.setVisible(true);
+        nuovaPasswordField.setVisible(true);
+        confermaPasswordText.setVisible(true);
+        confermaPasswordField.setVisible(true);
+        confermaPasswordButton.setVisible(true);
+    }
+
+    @FXML
+    public void onCambiaPasswordPressed() {
+        String nuovaPassword = nuovaPasswordField.getText();
+        String confermaPassword = confermaPasswordField.getText();
+
+        if (!nuovaPassword.equals(confermaPassword)) {
+            messaggioErrore("La conferma della password non è corretta");
+            return;
+        }
+
+        String passwordCriptata = BCrypt.hashpw(nuovaPassword, BCrypt.gensalt());
+
+        String query1 = "UPDATE utenti SET password = ? WHERE taxCode = ?";
+        String query2 = "UPDATE loginTable SET password = ? WHERE taxCode = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt1 = conn.prepareStatement(query1);
+             PreparedStatement stmt2 = conn.prepareStatement(query2)) {
+
+            stmt1.setString(1, passwordCriptata);
+            stmt1.setString(2, taxCode.getText());
+            stmt1.executeUpdate();
+
+            stmt2.setString(1, passwordCriptata);
+            stmt2.setString(2, taxCode.getText());
+            stmt2.executeUpdate();
+
+            // Aggiorna il campo password nel form
+            password.setText(nuovaPassword);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successo");
+            alert.setHeaderText(null);
+            alert.setContentText("Password aggiornata con successo!");
+            alert.showAndWait();
+
+            nuovaPasswordText.setVisible(false);
+            nuovaPasswordField.setVisible(false);
+            confermaPasswordText.setVisible(false);
+            confermaPasswordField.setVisible(false);
+            confermaPasswordButton.setVisible(false);
+        } catch (Exception e) {
+            System.out.println("Errore nel salvataggio della password: " + e.getMessage());
+            messaggioErrore("Password non salvata correttamente!");
+        }
+    }
+    @FXML
+    private void onLogoutPressed(){
+
+        try {
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+            LoginController loginController = loader.getController();
+            loginController.setTaxCode(taxCode.getText());
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
+
+        Stage modificaUtenteControllerStage = (Stage)topBar.getScene().getWindow();
+        modificaUtenteControllerStage.close();
+
+    }
+    public void setTaxCode(String taxCode) {
+        this.taxCode.setText(taxCode);
+    }
+
+    @FXML void onHomePagePressed(){
+
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+
+            Parent root = loader.load();
+            ModificaUtenteController modificaUtenteController = loader.getController();
+            modificaUtenteController.setTaxCode(taxCode.getText());
+            Stage stage = new Stage();
+            stage.setTitle("Amministratore");
+            stage.setScene(new Scene(root, 650, 500));
+            stage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
+
+        Stage ModificaUtenteController = (Stage)topBar.getScene().getWindow();
+        ModificaUtenteController.close();
+
+    }
 }
 
