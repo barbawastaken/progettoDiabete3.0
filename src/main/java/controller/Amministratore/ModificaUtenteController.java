@@ -270,7 +270,7 @@ public class ModificaUtenteController extends GestioneUtenti{
     @FXML void onHomePagePressed(){
 
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml.fxml"));
 
             Parent root = loader.load();
             ModificaUtenteController modificaUtenteController = loader.getController();
