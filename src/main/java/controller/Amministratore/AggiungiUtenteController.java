@@ -1,14 +1,21 @@
 package controller.Amministratore;
 
+import controller.LoginController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
+import org.mindrot.jbcrypt.BCrypt;
 import view.Amministratore.AggiungiUtenteView;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import java.time.LocalDate;
@@ -22,6 +29,8 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
     private ToggleGroup ruolo;
     private HashMap<String, String> diabetologi = new HashMap<>();
+    //TOP BAR IN COMUNE CIN MODIFICA UTENTE
+    @FXML private HBox topBar;
 
     @FXML
     private void initialize() throws SQLException {
@@ -188,6 +197,48 @@ public class AggiungiUtenteController extends GestioneUtenti {
             }
         }
     }
-    public AggiungiUtenteController(){
+    // PARTE AGGIUNTA DA ME (ANDREA) 11 LUGLIO PER BARRA BLU CON LOGOUT E HOME
+
+    @FXML
+    private void onLogoutPressed(){
+
+        try {
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+            LoginController loginController = loader.getController();
+            loginController.setTaxCode(taxCode.getText());
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
+
+        Stage modificaUtenteControllerStage = (Stage)topBar.getScene().getWindow();
+        modificaUtenteControllerStage.close();
+
     }
+    public void setTaxCode(String taxCode) {
+        this.taxCode.setText(taxCode);
+    }
+
+    @FXML void onHomePagePressed(){
+
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml.fxml"));
+
+            Parent root = loader.load();
+            AggiungiUtenteController aggiungiUtenteController = loader.getController();
+            aggiungiUtenteController.setTaxCode(taxCode.getText());
+            Stage stage = new Stage();
+            stage.setTitle("Amministratore");
+            stage.setScene(new Scene(root, 650, 500));
+            stage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
+
+        Stage AggiungiUtenteController = (Stage)topBar.getScene().getWindow();
+        AggiungiUtenteController.close();
+    }
+    public AggiungiUtenteController(){ }
 }

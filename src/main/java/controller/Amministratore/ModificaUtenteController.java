@@ -29,12 +29,15 @@ public class ModificaUtenteController extends GestioneUtenti{
     private  ModificaUtenteModel modificaUtenteModel;
     private Stage listaUtentiStage;
     private VisualizzaListaUtentiController listaUtentiController;
+    //QUESTI FXML SONO SOLO PER MODIFICA NON ANCHE PER AGGIUNGI
     @FXML private Text nuovaPasswordText;
     @FXML private TextField nuovaPasswordField;
     @FXML private Text confermaPasswordText;
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
+    //TOP BAR IN COMUNE CON AGGIUNGI UTENTE
     @FXML private HBox topBar;
+
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
     
     
@@ -177,6 +180,7 @@ public class ModificaUtenteController extends GestioneUtenti{
     }
     public void setUtente(Utente utente){ this.utente = utente; }
 
+    // PARTE AGGIUNTA DA ME (ANDREA) 11 LUGLIO PER BARRA BLU CON LOGOUT E HOME + PASSWORD + NUOVA PASSWORD
     public void messaggioErrore(String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore!!!");
