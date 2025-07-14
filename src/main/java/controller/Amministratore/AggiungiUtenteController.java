@@ -188,15 +188,27 @@ public class AggiungiUtenteController extends GestioneUtenti {
                             java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
                             selected.getText(), null, null, null); // valori nulli per non pazienti
                 }
+                //Chiudo finestra attuale gg
+                Stage currentStage = (Stage) topBar.getScene().getWindow();
+                currentStage.close();
+                //Apro lista utenti(si spera aggiornata)
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
+                Parent root = loader.load();
+                //Parte nome utente evidenziato
+                VisualizzaListaUtentiController controller = loader.getController();
+                controller.evidenziaUtente(taxCode.getText());
 
-                userAddedText.setVisible(true);
-                userAddedText.setManaged(true);
+                Stage newStage = new Stage();
+                newStage.setTitle("Lista Utenti");
+                newStage.setScene(new Scene(root));
+                newStage.show();
 
-            } catch (SQLException e) {
+            } catch (SQLException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
     // PARTE AGGIUNTA DA ME (ANDREA) 11 LUGLIO PER BARRA BLU CON LOGOUT E HOME
 
     @FXML

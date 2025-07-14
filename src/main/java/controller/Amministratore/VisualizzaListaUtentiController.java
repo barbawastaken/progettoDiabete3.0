@@ -39,6 +39,7 @@ public class VisualizzaListaUtentiController {
     @FXML private TableColumn<Utente, String> countryOfResidenceColumn;
     @FXML private TableColumn<Utente, String> altezzaColumn;
     @FXML private TableColumn<Utente, String> pesoColumn;
+    @FXML private TableView<VisualizzaListaUtentiController> tableViewUtenti;
 
     private  VisualizzaListaUtentiModel model;
     private  VisualizzaListaUtentiView view;
@@ -129,4 +130,16 @@ public class VisualizzaListaUtentiController {
         List<Utente> utentiAggiornati = model.getTuttiGliUtenti();
         tabella.setItems(FXCollections.observableList(utentiAggiornati));
     }
+
+    //Nome evidenziato
+    public void evidenziaUtente(String taxCode) {
+        for (Utente u : tabella.getItems()) {
+            if (u.getTaxCode().equalsIgnoreCase(taxCode)) {
+                tabella.getSelectionModel().select(u);
+                tabella.scrollTo(u);
+                break;
+            }
+        }
+    }
+
 }

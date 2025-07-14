@@ -8,6 +8,9 @@
 <ScrollPane layoutX="-1.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AggiungiUtenteController" prefWidth="600">
           <AnchorPane minHeight="0.0" minWidth="600" >
                <children>
+                  <HBox fx:id="topBar" layoutX="0.0" layoutY="0.0" prefWidth="600" prefHeight="40" style="-fx-background-color: #dddddd;">
+                  </HBox>
+
                   <TextField fx:id="nome" layoutX="66.0" layoutY="44.0" promptText="nome" />
                   <TextField fx:id="cognome" layoutX="324.0" layoutY="44.0" promptText="cognome" />
                   <PasswordField fx:id="password" layoutX="66.0" layoutY="108.0" promptText="password" />
