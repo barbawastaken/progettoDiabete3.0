@@ -1,64 +1,41 @@
 package controller.Amministratore;
 
+import controller.Diabetologo.DiabetologoController;
+import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import model.Amministratore.AggiungiUtenteModel;
-import model.Amministratore.AmministratoreModel;
-import model.Amministratore.VisualizzaListaUtentiModel;
-import view.Amministratore.AggiungiUtenteView;
-import view.Amministratore.AmministratoreView;
-import view.Amministratore.VisualizzaListaUtentiView;
-
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
 
 public class AmministratoreController {
+    @FXML private HBox topBar;
+    private String taxCode;
 
+    public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
     @FXML
-    public void handleLogout(javafx.event.ActionEvent event) { // only god knows how it works (apparte gli scherzi senza l'import lungo non funziona non so il perchè)
-        try {
-            // Carica il file FXML del login
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
-            Parent root = loader.load();
-
-            // Mi prendo la finestra corrente dal pulsante;
-            // event praticamente viene passato automaticamente da FXML come parametro quindi
-            // lo puoi usare per ottenere lo Stage e cambiare scena
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Imposta la nuova scena con quella del login
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.show();
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void isInserisciUtenteClicked() throws IOException {
+    private void isInserisciUtenteClicked(ActionEvent event) throws IOException {
         AggiungiUtenteController controller = new AggiungiUtenteController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiungi_utente_view.fxml"));
         Parent root = loader.load();
-
         controller = loader.getController();
-
-
         Stage stage = new Stage();
         stage.setTitle("Aggiungi Utente");
         stage.setScene(new Scene(root));
         stage.show();
 
+        //Chiudete le finestre
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
-    private void isVisualizzaUtentiClicked() throws IOException {
+    private void isVisualizzaUtentiClicked(ActionEvent event) throws IOException {
         VisualizzaListaUtentiController controller = new VisualizzaListaUtentiController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
         Parent root = loader.load();
@@ -67,34 +44,55 @@ public class AmministratoreController {
         stage.setTitle("Visualizza Utente");
         stage.setScene(new Scene(root));
         stage.show();
+
+        //Chiudete le finestre
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
-    public AmministratoreController(){
+
+    @FXML
+    private void onLogoutPressed(){
+        try {
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
+            Parent root = loader.load();
+            LoginController loginController = loader.getController();
+            loginController.setTaxCode(taxCode);
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+
+        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
+
+        Stage pazienteStage = (Stage)topBar.getScene().getWindow();
+        pazienteStage.close();
 
     }
-/*
-    public AmministratoreController(AmministratoreModel model, AmministratoreView view, Stage loginStage) {
 
+    @FXML void onHomePagePressed(ActionEvent event){
 
-        Stage amministratoreStage = new Stage();
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml"));
+            Parent root = loader.load();
 
-        //Qui jack
-        loginStage.close(); // chiudi la finestra precedente
-        view.start(amministratoreStage, this);
+            AmministratoreController amministratoreController = loader.getController();
+            amministratoreController.setTaxCode(taxCode);
 
-        // Set up evento per il bottone
-        view.getAddUserButton().setOnAction(e -> {
-            // Crea la vista, il modello e il controller per Aggiungi Utente
+            Stage stage = new Stage();
+            stage.setTitle("Amministratore");
+            stage.setScene(new Scene(root, 650, 500));
+            stage.show();
 
+            // Chiudi la finestra corrente
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
 
-            AggiungiUtenteModel aggiungiUtenteModel = new AggiungiUtenteModel();
-            AggiungiUtenteView aggiungiUtenteView = new AggiungiUtenteView();
-            new AggiungiUtenteController(aggiungiUtenteModel, aggiungiUtenteView);
+        } catch (IOException e) { System.out.println("Errore caricamento homepage amministratore!" + e.getMessage()); }
 
+        Stage amministratore = (Stage)topBar.getScene().getWindow();
+        amministratore.close();
 
-
-        });
-*/
-        // Bottone visualizza lista
+    }
 
     }
 
