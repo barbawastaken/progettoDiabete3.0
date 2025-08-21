@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -117,6 +118,11 @@ public class ModificaPazienteController {
             this.indirizzo.setText(rs.getString("address"));
 
             this.numero.setText(rs.getString("number"));
+            numero.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+                if (!event.getCharacter().matches("\\d")) {
+                    event.consume(); // blocca l'inserimento
+                }
+            });
 
             this.citta.setText(rs.getString("city"));
 
