@@ -36,10 +36,9 @@ public class LoginModel {
             ResultSet rs = pstmt.executeQuery("SELECT * FROM loginTable");
 
             while (rs.next()) {
-                if (rs.getString("taxCode").equals(taxCode)
-                        && BCrypt.checkpw(password, rs.getString("password")))
-                /*rs.getString("password").equals(password))*/ {
-                    //String taxCode = rs.getString("taxCode");
+
+                if (rs.getString("taxCode").equals(taxCode) && rs.getString("password").equals(password)) {
+
                     String userType = rs.getString("userType");
 
                     switch (userType) {

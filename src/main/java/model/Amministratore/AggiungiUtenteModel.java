@@ -93,7 +93,7 @@ public class AggiungiUtenteModel {
                 System.out.println("Utente aggiunto!");
 
                 pstmt2.setString(1, taxCode);
-                pstmt2.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
+                pstmt2.setString(2, password);
                 pstmt2.setString(3, userType);
                 pstmt2.executeUpdate();
                 conn.commit();
