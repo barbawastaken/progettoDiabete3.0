@@ -74,6 +74,7 @@
             </ImageView>
             <Label prefHeight="27.0" prefWidth="143.0" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Area Paziente" />
             <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#onEmailClicked" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="EMAIL" />
             <Button onAction="#onProfiloClicked" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="PROFILO" />
             <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
             <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />

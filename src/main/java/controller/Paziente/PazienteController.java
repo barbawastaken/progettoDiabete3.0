@@ -27,7 +27,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PazienteController {
@@ -82,6 +81,26 @@ public class PazienteController {
         ArrayList<String> farmaciNotifiche = new ArrayList<>();
         farmaciNotifiche = model.getFarmaciNotifiche(taxCode);
         mostraNotifiche(farmaciNotifiche);
+    }
+
+    @FXML
+    private void onEmailClicked(){
+        try{
+
+            Stage emailPaziente = new Stage();
+            emailPaziente.setTitle("Email a diabetologo");
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/email_paziente_view.fxml"));
+            Parent root = loader.load();
+
+            EmailPazienteController emailPazienteController = loader.getController();
+            emailPazienteController.setTaxCode(taxCode);
+            emailPaziente.setScene(new Scene(root));
+            emailPaziente.show();
+
+        } catch (IOException e){
+            System.out.println("Errore caricamento pagina email!" + e.getMessage());
+        }
     }
 
     @FXML
