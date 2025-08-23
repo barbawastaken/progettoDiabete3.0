@@ -1,5 +1,6 @@
 package controller.Diabetologo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,8 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Amministratore.Paziente;
 import model.Diabetologo.AggiungiTerapiaModel;
 
 import java.io.IOException;
@@ -17,6 +20,7 @@ import java.sql.SQLException;
 public class AggiungiTerapiaController {
 
     private String taxCode;
+    private Paziente paziente;
 
     @FXML
     private TextField terapiaField;
@@ -38,6 +42,7 @@ public class AggiungiTerapiaController {
 
     @FXML
     private Button confermaButton;
+    private ActionEvent DettaglioPazienteController;
 
     @FXML
     private void handleHomepage(javafx.event.ActionEvent event) {
@@ -45,7 +50,8 @@ public class AggiungiTerapiaController {
             // Carica la nuova view da FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
             Parent root = loader.load();
-
+            DettaglioPazienteController controller = loader.getController();
+            controller.setPaziente(paziente);
             // Prendi lo stage corrente dal bottone cliccato
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -76,7 +82,7 @@ public class AggiungiTerapiaController {
     }
 
     @FXML
-    private void handleConferma() {
+    private void handleConferma(ActionEvent event) {
         String terapia = terapiaField.getText();
         String farmaco = farmacoField.getText();
         int quantita = Integer.parseInt(quantitaField.getText());
@@ -95,8 +101,19 @@ public class AggiungiTerapiaController {
         alert.setTitle("Successo");
         alert.setHeaderText(null);
         alert.setContentText("La terapia è stata inserita correttamente nel database.");
-        alert.showAndWait();
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                // Torno indietro alla scena precedente
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
+                    stage.setScene(new Scene(root));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void mostraErrore(String messaggio) {
@@ -109,5 +126,9 @@ public class AggiungiTerapiaController {
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
+    }
+
+    public void setPaziente(Paziente paziente) {
+        this.paziente = paziente;
     }
 }
