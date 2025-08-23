@@ -8,9 +8,6 @@ import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import javafx.scene.control.Button;
 
@@ -39,9 +36,11 @@ public class DettaglioPazienteController {
     @FXML private Button aggiornaInfo;
 
     private Paziente paziente;
+    private String taxCodeDiabetologo;
 
-    public void setPaziente(Paziente p) {
+    public void setPaziente(Paziente p, String taxCodeDiabetologo) {
         this.paziente = p;
+        this.taxCodeDiabetologo = taxCodeDiabetologo;
 
         nomeLabel.setText("Nome: " + p.getNome());
         cognomeLabel.setText("Cognome: " + p.getCognome());
@@ -67,7 +66,7 @@ public class DettaglioPazienteController {
             Parent root = loader.load();
 
             AggiungiTerapiaController controller = loader.getController();
-            controller.setTaxCode(paziente.getTaxCode());
+            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
             controller.setPaziente(paziente);
             Stage currentStage = (Stage) aggiungiTerapia.getScene().getWindow();
 

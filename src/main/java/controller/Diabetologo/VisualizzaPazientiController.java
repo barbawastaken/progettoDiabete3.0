@@ -118,7 +118,7 @@ public class VisualizzaPazientiController implements Initializable {
             Parent root = loader.load();
 
             DettaglioPazienteController controller = loader.getController();
-            controller.setPaziente(paziente);
+            controller.setPaziente(paziente, taxCode);
 
             Stage stage = new Stage();
             stage.setTitle("Dettagli Paziente");

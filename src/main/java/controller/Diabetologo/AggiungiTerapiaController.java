@@ -15,12 +15,12 @@ import model.Amministratore.Paziente;
 import model.Diabetologo.AggiungiTerapiaModel;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class AggiungiTerapiaController {
 
     private String taxCode;
     private Paziente paziente;
+    private String taxCodeDiabetologo;
 
     @FXML
     private TextField terapiaField;
@@ -51,7 +51,7 @@ public class AggiungiTerapiaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
             Parent root = loader.load();
             DettaglioPazienteController controller = loader.getController();
-            controller.setPaziente(paziente);
+            controller.setPaziente(paziente, taxCodeDiabetologo);
             // Prendi lo stage corrente dal bottone cliccato
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -95,7 +95,7 @@ public class AggiungiTerapiaController {
         }
 
         AggiungiTerapiaModel model = new AggiungiTerapiaModel();
-        model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
+        model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Successo");
@@ -124,8 +124,9 @@ public class AggiungiTerapiaController {
         alert.showAndWait();
     }
 
-    public void setTaxCode(String taxCode) {
+    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
         this.taxCode = taxCode;
+        this.taxCodeDiabetologo = taxCodeDiabetologo;
     }
 
     public void setPaziente(Paziente paziente) {
