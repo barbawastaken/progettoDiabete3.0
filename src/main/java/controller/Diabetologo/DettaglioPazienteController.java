@@ -83,10 +83,47 @@ public class DettaglioPazienteController {
 
     @FXML private void handleModificaTerapia() {
 
+        /*
+        *
+        * Per Riccardo: quando implementerai questo metodo arriverai ad avere un "ModificaTerapiaModel" con
+        * un accesso al database per effettuare la modifica di una terapia. Una volta completato il metodo,
+        * se l'operazione va a buon fine devi incollare la seguente riga
+        *
+        * LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Terapia modificata: " + nomeTerapiaOriginale, taxCodePaziente, LocalDate.now());
+        *
+        * Questa riga serve per effettuare il log quindi per mantenere traccia dell'operazione di modifica
+        * terapia in una tabella del database. Guarda il metodo "insertData" della classe "AggiungiTerapiaModel" che
+        * trovi proprio questa riga qua che capisci un po' come ho fatto io, oppure chiedimi. Quando hai fatto tutto
+        * dimmelo che faccio un po' di test.
+        *
+        * ocio che il log deve essere eseguito solo quando l'operazione è andata a buon fine. Ad esempio se
+        * non compilo un campo e quando clicco su "Salva" questo non viene effettivamente salvato per via dei
+        * controlli il log non deve essere scritto.
+        *
+        * */
+
     }
 
     @FXML private void handleAggiornaInfo() {
 
+        /*
+        *
+        * Per Riccardo: quando implementerai questo metodo arriverai ad avere un "AggiornaInfoPazienteModel" con
+         * un accesso al database per effettuare la modifica delle informazioni di un paziente. Una volta completato
+         *  il metodo, se l'operazione va a buon fine devi incollare la seguente riga
+         *
+         * LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Aggiornate informazioni paziente", taxCodePaziente, LocalDate.now());
+         *
+         * Questa riga serve per effettuare il log quindi per mantenere traccia dell'operazione di aggiornamento
+         * informazioni di un paziente in una tabella del database. Se hai dubbi guarda il metodo "insertData"
+         * della classe "AggiungiTerapiaModel" che trovi proprio questa riga qua che capisci un po' come ho fatto io,
+         * oppure chiedimi. Quando hai fatto tutto dimmelo che faccio un po' di test.
+         *
+         * ocio che il log deve essere eseguito solo quando l'operazione è andata a buon fine. Ad esempio se
+         * non compilo un campo correttaente e quando clicco su "Salva" questo non viene effettivamente salvato
+         * per via dei controlli il log non deve essere scritto.
+         *
+        * */
 
     }
 }

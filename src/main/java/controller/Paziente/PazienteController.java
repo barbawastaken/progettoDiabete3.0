@@ -49,11 +49,11 @@ public class PazienteController {
     @FXML
     public void initialize() {
 
-        Platform.runLater(() -> {
+        /*Platform.runLater(() -> {
             Stage stage = (Stage) lineChartGlicemia.getScene().getWindow();
             stage.setMinWidth(800);
             stage.setMinHeight(500);
-        });
+        });*/
 
         topBar.heightProperty().addListener((obs, oldVal, newVal) -> {
             immagineProfilo.setFitHeight(newVal.doubleValue());

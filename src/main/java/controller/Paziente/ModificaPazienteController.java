@@ -274,14 +274,15 @@ public class ModificaPazienteController {
             messaggioErrore("La conferma della password non è corretta");
             return;
         }
-        String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
+        //String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
+        String nuovaPassword = confermaPasswordField.getText();
 
         String query = "UPDATE utenti SET password=? WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, passwordCriptata);
+            stmt.setString(1, nuovaPassword);
             stmt.setString(2, taxCode);
 
             stmt.executeUpdate();
@@ -296,7 +297,7 @@ public class ModificaPazienteController {
         try (Connection conn = DriverManager.getConnection(DB_URL);
         PreparedStatement stmt = conn.prepareStatement(query)){
 
-            stmt.setString(1, passwordCriptata);
+            stmt.setString(1, nuovaPassword);
             stmt.setString(2, taxCode);
 
             stmt.executeUpdate();

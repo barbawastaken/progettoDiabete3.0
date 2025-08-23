@@ -29,10 +29,11 @@ public class AggiungiTerapiaModel {
 
             System.out.println("Terapia salvata correttamente!");
 
+            LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
+
         } catch (SQLException e) {
             System.out.println("Errore salvataggio terapia: " + e.getMessage());
         }
 
-        LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
     }
 }
