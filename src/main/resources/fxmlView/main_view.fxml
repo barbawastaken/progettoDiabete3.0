@@ -1,44 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import controller.NavBar?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.layout.HBox?>
+<BorderPane fx:id="mainContainer"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.MainController"
-            fx:id="mainContainer"
-            prefHeight="400.0" prefWidth="600.0">
 
-    <children>
-<VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-    <HBox fx:id="navBarContainer" alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
-        <padding>
-            <Insets bottom="10" left="10" right="10" top="10" />
-        </padding>
-        <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-            <image>
-                <Image url="@../images/userImage.png" />
-            </image>
-        </ImageView>
-        <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Benvenuto!" />
-        <Pane HBox.hgrow="ALWAYS" />
+            fx:controller="controller.MainController">
 
-        <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
-        <Button onAction="#onProfiloClicked" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="PROFILO" />
+    <!-- Barra di navigazione in alto -->
+    <top>
+        <HBox fx:id="navBarContainer">
 
-    </HBox>
+        </HBox>
+    </top>
 
-    <!-- Spazio per distanziare verticalmente -->
-    <Pane VBox.vgrow="ALWAYS" />
-
-    <!-- Sezione pulsanti -->
-</VBox>
-    </children>
+    <!-- Area centrale che verrà gestita dal controller -->
+    <center>
+        <!-- vuoto: verrà riempito da setContent(...) -->
+    </center>
 
 </BorderPane>

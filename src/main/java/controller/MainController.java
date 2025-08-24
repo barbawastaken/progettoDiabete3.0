@@ -18,6 +18,7 @@ public class MainController {
     @FXML
     private void onProfiloClicked(){}
 
+    @FXML
     private NavBar navBar;
 
     @FXML
