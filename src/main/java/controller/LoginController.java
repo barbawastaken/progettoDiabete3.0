@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ public class LoginController {
     private TextField taxCodeField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     private Text error;
@@ -32,6 +33,11 @@ public class LoginController {
         System.out.println(password);
         this.taxCode = taxCode;
         if(loginModel.checkLogin(taxCode, password)){
+
+            /*
+            qua ci dovrebbe essere una istanza di viewnavigator che chiamerebbe la funzione
+            to
+             */
             Stage stage = (Stage) taxCodeField.getScene().getWindow();
             stage.close();
         } else{error.setVisible(true);}
