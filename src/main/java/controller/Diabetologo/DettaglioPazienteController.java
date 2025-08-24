@@ -12,6 +12,7 @@ import java.io.IOException;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.Label;
+import model.Diabetologo.ModificaTerapiaModel;
 
 public class DettaglioPazienteController {
 
@@ -82,6 +83,24 @@ public class DettaglioPazienteController {
     }
 
     @FXML private void handleModificaTerapia() {
+
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_terapia_view.fxml"));
+            Parent root = loader.load();
+
+            ModificaTerapiaController controller = loader.getController();
+            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
+            controller.setPaziente(paziente);
+            Stage currentStage = (Stage) modificaTerapia.getScene().getWindow();
+
+            currentStage.setTitle("Modifica terapia");
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         /*
         *
