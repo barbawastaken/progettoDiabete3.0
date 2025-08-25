@@ -61,7 +61,7 @@ public class AmministratoreController {
             VisualizzaStatisticheController visualizzaStatisticheController = loader.getController();
 
             Parent root = loader.load();
-            stage.setScene(new Scene(root, 650, 500));
+            stage.setScene(new Scene(root, 1000, 650));
             stage.show();
 
             // Chiudi la finestra corrente
