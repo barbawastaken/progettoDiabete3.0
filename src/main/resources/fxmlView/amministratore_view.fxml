@@ -30,13 +30,14 @@
          <Pane VBox.vgrow="ALWAYS" />
 
          <!-- Sezione pulsanti centrata -->
-         <HBox alignment="CENTER" spacing="30">
+         <VBox alignment="CENTER" spacing="30">
             <padding>
                <Insets bottom="0" left="20" right="20" top="0" />
             </padding>
             <Button onAction="#isInserisciUtenteClicked" prefHeight="40.0" prefWidth="200.0" text="Inserisci Utente" />
             <Button onAction="#isVisualizzaUtentiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Lista Utenti" />
-         </HBox>
+            <Button onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" />
+         </VBox>
 
          <Pane VBox.vgrow="ALWAYS" />
       </VBox>

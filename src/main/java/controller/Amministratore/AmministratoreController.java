@@ -1,6 +1,5 @@
 package controller.Amministratore;
 
-import controller.Diabetologo.DiabetologoController;
 import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +47,29 @@ public class AmministratoreController {
         //Chiudete le finestre
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+    }
+
+    @FXML
+    private void isVisualizzaStatisticheClicked() {
+
+        try {
+
+            Stage stage = new Stage();
+            stage.setTitle("Statistiche");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizzaStatistiche.fxml"));
+
+            VisualizzaStatisticheController visualizzaStatisticheController = loader.getController();
+
+            Parent root = loader.load();
+            stage.setScene(new Scene(root, 650, 500));
+            stage.show();
+
+            // Chiudi la finestra corrente
+            Stage currentStage = (Stage)topBar.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) { System.out.println("Errore caricamento pagina statistiche!" + e.getMessage()); }
+
     }
 
     @FXML

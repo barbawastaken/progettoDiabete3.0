@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<BorderPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.VisualizzaStatisticheController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
+            <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
+                <Image url="@../images/userImage.png" />
+            </ImageView>
+            <Label prefHeight="27.0" prefWidth="143.0" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Area Paziente" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#onHomePagePressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="HOMEPAGE" fx:id="homePageButton"/>
+            <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
+            <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane>
+            <HBox>
+                <ComboBox fx:id="pazienteCombo" layoutX="20" layoutY="20" prefWidth="150"/>
+                <LineChart fx:id="lineChart" layoutX="20" layoutY="60" prefWidth="400" prefHeight="300">
+                    <xAxis>
+                        <CategoryAxis label="Data"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Valore glicemico"/>
+                    </yAxis>
+                </LineChart>
+            </HBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
