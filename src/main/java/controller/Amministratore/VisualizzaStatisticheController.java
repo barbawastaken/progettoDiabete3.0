@@ -1,13 +1,17 @@
 package controller.Amministratore;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,23 +21,48 @@ import java.util.*;
 
 public class VisualizzaStatisticheController {
 
+    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+
+    /*
+    *
+    *   SEZIONE GRAFICI !!!
+    *
+     */
+
+    //Grafici + ComboBox
     @FXML private LineChart<String, Number> lineChart;
     @FXML private LineChart<String, Number> lineChartLastMonth;
     @FXML private LineChart<String, Number> lineChartLastWeek;
     @FXML private ComboBox<String> pazienteCombo;
-    @FXML private Button homePageButton;
 
     // Mappa che contiene TUTTI i dati: taxCode -> lista di rilevazioni
     private final Map<String, List<Rilevazione>> tuttiIDati = new HashMap<>();
     private final Map<String, List<Rilevazione>> tuttiIDatiDiLastMonth = new HashMap<>();
     private final Map<String, List<Rilevazione>> tuttiIDatiDiLastWeek = new HashMap<>();
 
+    //Mappa taxCode --> nome paziente
     private Map<String, String> taxCodeToNameMap = new HashMap<>();
+
+    /*
+    *
+    *   SEZIONE TABELLA TERAPIE !!!
+    *
+     */
+
+    @FXML private TableView<Terapia> tabellaTerapie;
+    @FXML private TableColumn<Terapia, String> nomePazienteTerapia;
+    @FXML private TableColumn<Terapia, String> nomeTerapia;
+    @FXML private TableColumn<Terapia, String> farmacoTerapia;
+    @FXML private TableColumn<Terapia, String> quantitaTerapia;
+    @FXML private TableColumn<Terapia, String> assunzioniGiornaliereTerapia;
+    @FXML private TableColumn<Terapia, String> indicazioniTerapia;
 
     @FXML
     public void initialize() {
 
         setupGrafico();
+
+        /* SETUP GRAFICO COMPLETO */
 
         String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, " +
                 "u.nome, u.cognome " +
@@ -43,8 +72,10 @@ public class VisualizzaStatisticheController {
 
 
         caricaTuttiIDatiDalDatabase(tuttiIDati, query);
-        popolaComboBox(tuttiIDati, lineChart);
+        popolaComboBox(tuttiIDati);
         mostraTuttiNelGrafico(tuttiIDati, lineChart);
+
+        /* SETUP GRAFICO ULTIMO MESEE */
 
         query = """
                 SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
@@ -55,8 +86,10 @@ public class VisualizzaStatisticheController {
                 ORDER BY r.data DESC, r.taxCode""";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastMonth, query);
-        popolaComboBox(tuttiIDatiDiLastMonth, lineChartLastMonth);
+        popolaComboBox(tuttiIDatiDiLastMonth);
         mostraTuttiNelGrafico(tuttiIDatiDiLastMonth, lineChartLastMonth);
+
+        /* SETUP GRAFICO ULTIMA SETTIMANA */
 
         query = """
                 SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
@@ -67,10 +100,24 @@ public class VisualizzaStatisticheController {
                 ORDER BY r.data DESC, r.taxCode""";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastWeek, query);
-        popolaComboBox(tuttiIDatiDiLastWeek, lineChartLastWeek);
+        popolaComboBox(tuttiIDatiDiLastWeek);
         mostraTuttiNelGrafico(tuttiIDatiDiLastWeek, lineChartLastWeek);
 
-        // Quando cambia la selezione, aggiorna il grafico
+        /* SETUP TABELLA TERAPIE */
+
+        nomePazienteTerapia.setCellValueFactory(cellData -> cellData.getValue().nomePazienteProperty());
+        nomeTerapia.setCellValueFactory(cellData -> cellData.getValue().terapiaProperty());
+        farmacoTerapia.setCellValueFactory(cellData -> cellData.getValue().farmacoProperty());
+        quantitaTerapia.setCellValueFactory(cellData -> cellData.getValue().quantitaProperty());
+        assunzioniGiornaliereTerapia.setCellValueFactory(cellData -> cellData.getValue().assunzioniGiornaliereProperty());
+        indicazioniTerapia.setCellValueFactory(cellData -> cellData.getValue().indicazioniProperty());
+
+
+        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte ORDER BY taxCode";
+
+        caricaTerapie(query);
+
+        // LISTENER SU COMBOBOX: quando cambia la selezione, aggiorna il grafico
         pazienteCombo.setOnAction(event -> {
             String selected = pazienteCombo.getValue();
             aggiornaGrafico(selected, tuttiIDati, lineChart);
@@ -100,7 +147,7 @@ public class VisualizzaStatisticheController {
         taxCodeToNameMap.clear();
         Map<String, String> taxCodeToName = new HashMap<>(); // Mappa taxCode -> nome
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db");
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
@@ -134,7 +181,7 @@ public class VisualizzaStatisticheController {
     }
 
     // Popola la ComboBox con i taxCode
-    private void popolaComboBox(Map<String, List<Rilevazione>> mappaDati, LineChart<String, Number> grafico) {
+    private void popolaComboBox(Map<String, List<Rilevazione>> mappaDati) {
         pazienteCombo.getItems().clear();
         pazienteCombo.getItems().add("Tutti");
 
@@ -218,7 +265,6 @@ public class VisualizzaStatisticheController {
     }
 
     // CLASSE INTERNA per rappresentare una rilevazione
-    // (Tutto in un unico file, niente complicazioni!)
     private static class Rilevazione {
         String taxCode;
         double quantita;
@@ -226,8 +272,7 @@ public class VisualizzaStatisticheController {
         String momentoGiornata;
         String prePost;
 
-        public Rilevazione(String taxCode, double quantita, LocalDate data,
-                           String momentoGiornata, String prePost) {
+        public Rilevazione(String taxCode, double quantita, LocalDate data, String momentoGiornata, String prePost) {
             this.taxCode = taxCode;
             this.quantita = quantita;
             this.data = data;
@@ -235,6 +280,79 @@ public class VisualizzaStatisticheController {
             this.prePost = prePost;
         }
     }
+
+    private void caricaTerapie(String query){
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query)) {
+
+            ObservableList<Terapia> terapie = FXCollections.observableArrayList();
+
+            while (rs.next()) {
+
+                String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
+
+                Terapia terapia = new Terapia(
+                        nomePaziente,
+                        rs.getString("terapia"),
+                        rs.getString("farmaco_prescritto"),
+                        rs.getString("quantita"),
+                        rs.getString("numero_assunzioni_giornaliere"),
+                        rs.getString("indicazioni")
+                );
+                terapie.add(terapia);
+            }
+
+            tabellaTerapie.setItems(terapie);
+
+        } catch (SQLException e) {
+            System.out.println("Errore caricamento terapie: " + e.getMessage());
+        }
+
+    }
+
+    public static class Terapia {
+
+        private final SimpleStringProperty nomePaziente;
+        private final SimpleStringProperty terapia;
+        private final SimpleStringProperty farmaco;
+        private final SimpleStringProperty quantita;
+        private final SimpleStringProperty assunzioniGiornaliere;
+        private final SimpleStringProperty indicazioni;
+
+        public Terapia(String nomePaziente, String terapia, String farmaco, String quantita,
+                       String assunzioniGiornaliere, String indicazioni) {
+            this.nomePaziente = new SimpleStringProperty(nomePaziente);
+            this.terapia = new SimpleStringProperty(terapia);
+            this.farmaco = new SimpleStringProperty(farmaco);
+            this.quantita = new SimpleStringProperty(quantita);
+            this.assunzioniGiornaliere = new SimpleStringProperty(assunzioniGiornaliere);
+            this.indicazioni = new SimpleStringProperty(indicazioni);
+        }
+
+        // Getter classici
+        public String getNomePaziente() { return nomePaziente.get(); }
+        public String getTerapia() { return terapia.get(); }
+        public String getFarmaco() { return farmaco.get(); }
+        public String getQuantita() { return quantita.get(); }
+        public String getAssunzioniGiornaliere() { return assunzioniGiornaliere.get(); }
+        public String getIndicazioni() { return indicazioni.get(); }
+
+        // Metodi Property (per TableView lambda)
+        public SimpleStringProperty nomePazienteProperty() { return nomePaziente; }
+        public SimpleStringProperty terapiaProperty() { return terapia; }
+        public SimpleStringProperty farmacoProperty() { return farmaco; }
+        public SimpleStringProperty quantitaProperty() { return quantita; }
+        public SimpleStringProperty assunzioniGiornaliereProperty() { return assunzioniGiornaliere; }
+        public SimpleStringProperty indicazioniProperty() { return indicazioni; }
+
+        @Override
+        public String toString() {
+            return nomePaziente.get() + " " + terapia.get() + " " + farmaco.get();
+        }
+    }
+
 
     @FXML
     public void onHomePagePressed(){
@@ -250,7 +368,7 @@ public class VisualizzaStatisticheController {
             stage.show();
 
             // Chiudi la finestra corrente
-            Stage currentStage = (Stage)homePageButton.getScene().getWindow();
+            Stage currentStage = (Stage)lineChart.getScene().getWindow();
             currentStage.close();
 
         } catch (IOException e) { System.out.println("Errore caricamento homepage amministratore!" + e.getMessage()); }
@@ -270,7 +388,7 @@ public class VisualizzaStatisticheController {
             loginStage.setScene(new Scene(root));
             loginStage.show();
 
-            Stage pazienteStage = (Stage)homePageButton.getScene().getWindow();
+            Stage pazienteStage = (Stage)lineChart.getScene().getWindow();
             pazienteStage.close();
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
