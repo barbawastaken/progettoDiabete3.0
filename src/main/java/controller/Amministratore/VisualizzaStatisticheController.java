@@ -18,19 +18,67 @@ import java.util.*;
 public class VisualizzaStatisticheController {
 
     @FXML private LineChart<String, Number> lineChart;
+    @FXML private LineChart<String, Number> lineChartLastMonth;
+    @FXML private LineChart<String, Number> lineChartLastWeek;
     @FXML private ComboBox<String> pazienteCombo;
     @FXML private Button homePageButton;
 
     // Mappa che contiene TUTTI i dati: taxCode -> lista di rilevazioni
     private final Map<String, List<Rilevazione>> tuttiIDati = new HashMap<>();
+    private final Map<String, List<Rilevazione>> tuttiIDatiDiLastMonth = new HashMap<>();
+    private final Map<String, List<Rilevazione>> tuttiIDatiDiLastWeek = new HashMap<>();
+
     private Map<String, String> taxCodeToNameMap = new HashMap<>();
 
     @FXML
     public void initialize() {
+
         setupGrafico();
-        caricaTuttiIDatiDalDatabase();
-        popolaComboBox();
-        mostraTuttiNelGrafico();
+
+        String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, " +
+                "u.nome, u.cognome " +
+                "FROM rilevazioniGlicemiche r " +
+                "JOIN utenti u ON r.taxCode = u.taxCode " +
+                "ORDER BY r.data, r.taxCode";
+
+
+        caricaTuttiIDatiDalDatabase(tuttiIDati, query);
+        popolaComboBox(tuttiIDati, lineChart);
+        mostraTuttiNelGrafico(tuttiIDati, lineChart);
+
+        query = """
+                SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
+                       u.nome, u.cognome
+                FROM rilevazioniGlicemiche r
+                         JOIN utenti u ON r.taxCode = u.taxCode
+                WHERE date(r.data) >= date('now', '-30 days')
+                ORDER BY r.data DESC, r.taxCode""";
+
+        caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastMonth, query);
+        popolaComboBox(tuttiIDatiDiLastMonth, lineChartLastMonth);
+        mostraTuttiNelGrafico(tuttiIDatiDiLastMonth, lineChartLastMonth);
+
+        query = """
+                SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
+                       u.nome, u.cognome
+                FROM rilevazioniGlicemiche r
+                         JOIN utenti u ON r.taxCode = u.taxCode
+                WHERE date(r.data) >= date('now', '-7 days')
+                ORDER BY r.data DESC, r.taxCode""";
+
+        caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastWeek, query);
+        popolaComboBox(tuttiIDatiDiLastWeek, lineChartLastWeek);
+        mostraTuttiNelGrafico(tuttiIDatiDiLastWeek, lineChartLastWeek);
+
+        // Quando cambia la selezione, aggiorna il grafico
+        pazienteCombo.setOnAction(event -> {
+            String selected = pazienteCombo.getValue();
+            aggiornaGrafico(selected, tuttiIDati, lineChart);
+            aggiornaGrafico(selected, tuttiIDatiDiLastMonth, lineChartLastMonth);
+            aggiornaGrafico(selected, tuttiIDatiDiLastWeek, lineChartLastWeek);
+        });
+
+        pazienteCombo.setValue("Tutti");
     }
 
     // Configura il grafico
@@ -38,18 +86,19 @@ public class VisualizzaStatisticheController {
         lineChart.setTitle("Andamento Glicemico Pazienti");
         lineChart.setCreateSymbols(true); // Mostra i pallini sui punti
         lineChart.setAnimated(false); // Più fluido
+
+        lineChartLastMonth.setCreateSymbols(true);
+        lineChartLastMonth.setAnimated(false);
+
+        lineChartLastWeek.setCreateSymbols(true);
+        lineChartLastWeek.setAnimated(false);
     }
 
     // Carica TUTTI i dati UNA volta sola
-    private void caricaTuttiIDatiDalDatabase() {
-        tuttiIDati.clear(); // Pulisce tutto
+    private void caricaTuttiIDatiDalDatabase(Map<String, List<Rilevazione>> mappaDati, String query) {
+        mappaDati.clear(); // Pulisce tutto
+        taxCodeToNameMap.clear();
         Map<String, String> taxCodeToName = new HashMap<>(); // Mappa taxCode -> nome
-
-        String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, " +
-                "u.nome, u.cognome " +
-                "FROM rilevazioniGlicemiche r " +
-                "JOIN utenti u ON r.taxCode = u.taxCode " +
-                "ORDER BY r.data, r.taxCode";
 
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db");
              Statement stmt = conn.createStatement();
@@ -69,12 +118,12 @@ public class VisualizzaStatisticheController {
                 taxCodeToName.put(taxCode, nomeCompleto);
 
                 // Se non esiste ancora, crea una nuova lista per questo taxCode
-                if (!tuttiIDati.containsKey(taxCode)) {
-                    tuttiIDati.put(taxCode, new ArrayList<>());
+                if (!mappaDati.containsKey(taxCode)) {
+                    mappaDati.put(taxCode, new ArrayList<>());
                 }
 
                 // Aggiungi la rilevazione alla lista del paziente
-                tuttiIDati.get(taxCode).add(new Rilevazione(taxCode, quantita, data, momento, prePost));
+                mappaDati.get(taxCode).add(new Rilevazione(taxCode, quantita, data, momento, prePost));
 
                 this.taxCodeToNameMap = taxCodeToName;
             }
@@ -85,12 +134,12 @@ public class VisualizzaStatisticheController {
     }
 
     // Popola la ComboBox con i taxCode
-    private void popolaComboBox() {
+    private void popolaComboBox(Map<String, List<Rilevazione>> mappaDati, LineChart<String, Number> grafico) {
         pazienteCombo.getItems().clear();
         pazienteCombo.getItems().add("Tutti");
 
         // Aggiungi tutti i taxCode trovati nel database
-        for (String taxCode : tuttiIDati.keySet()) {
+        for (String taxCode : mappaDati.keySet()) {
             String nomeCompleto = taxCodeToNameMap.get(taxCode);
             if (nomeCompleto != null) {
                 pazienteCombo.getItems().add(nomeCompleto);
@@ -100,36 +149,29 @@ public class VisualizzaStatisticheController {
             }
         }
 
-        // Quando cambia la selezione, aggiorna il grafico
-        pazienteCombo.setOnAction(event -> {
-            String selected = pazienteCombo.getValue();
-            aggiornaGrafico(selected);
-        });
-
-        pazienteCombo.setValue("Tutti");
     }
 
     // Mostra TUTTI i pazienti nel grafico
-    private void mostraTuttiNelGrafico() {
-        lineChart.getData().clear(); // Pulisce il grafico
+    private void mostraTuttiNelGrafico(Map<String, List<Rilevazione>> mappaDati, LineChart<String, Number> grafico) {
+        grafico.getData().clear(); // Pulisce il grafico
 
         // Per ogni paziente, crea una linea nel grafico
-        for (Map.Entry<String, List<Rilevazione>> entry : tuttiIDati.entrySet()) {
+        for (Map.Entry<String, List<Rilevazione>> entry : mappaDati.entrySet()) {
             String taxCode = entry.getKey();
             List<Rilevazione> rilevazioni = entry.getValue();
 
             XYChart.Series<String, Number> serie = creaSeriePerPaziente(taxCode, rilevazioni);
-            lineChart.getData().add(serie);
+            grafico.getData().add(serie);
         }
     }
 
     // Aggiorna il grafico in base alla selezione
-    private void aggiornaGrafico(String nomeSelezionato) {
-        lineChart.getData().clear(); // Pulisce il grafico
+    private void aggiornaGrafico(String nomeSelezionato, Map<String, List<Rilevazione>> mappaDati, LineChart<String, Number> grafico) {
+        grafico.getData().clear(); // Pulisce il grafico
 
         if ("Tutti".equals(nomeSelezionato)) {
             // Mostra TUTTI i pazienti
-            mostraTuttiNelGrafico();
+            mostraTuttiNelGrafico(mappaDati, grafico);
         } else {
             String taxCodeSelezionato = null;
             for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
@@ -141,10 +183,10 @@ public class VisualizzaStatisticheController {
 
             // Mostra solo il paziente selezionato
             if (taxCodeSelezionato != null) {
-                List<Rilevazione> rilevazioni = tuttiIDati.get(taxCodeSelezionato);
+                List<Rilevazione> rilevazioni = mappaDati.get(taxCodeSelezionato);
                 if (rilevazioni != null && !rilevazioni.isEmpty()) {
                     XYChart.Series<String, Number> serie = creaSeriePerPaziente(taxCodeSelezionato, rilevazioni);
-                    lineChart.getData().add(serie);
+                    grafico.getData().add(serie);
                 }
             }
         }
