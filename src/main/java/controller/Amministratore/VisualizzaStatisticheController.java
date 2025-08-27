@@ -113,9 +113,9 @@ public class VisualizzaStatisticheController {
         indicazioniTerapia.setCellValueFactory(cellData -> cellData.getValue().indicazioniProperty());
 
 
-        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte ORDER BY taxCode";
+        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
 
-        caricaTerapie(query);
+        caricaTerapie(query, "Tutti");
 
         // LISTENER SU COMBOBOX: quando cambia la selezione, aggiorna il grafico
         pazienteCombo.setOnAction(event -> {
@@ -123,10 +123,21 @@ public class VisualizzaStatisticheController {
             aggiornaGrafico(selected, tuttiIDati, lineChart);
             aggiornaGrafico(selected, tuttiIDatiDiLastMonth, lineChartLastMonth);
             aggiornaGrafico(selected, tuttiIDatiDiLastWeek, lineChartLastWeek);
+
+            final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
+            caricaTerapie(queryUpdateTabellaTerapie, selected);
         });
 
         pazienteCombo.setValue("Tutti");
     }
+
+    /*
+    *
+    *
+    *       ------------>           SEZIONE GRAFICI !!!!    <-----------
+    *
+    *
+     */
 
     // Configura il grafico
     private void setupGrafico() {
@@ -281,16 +292,71 @@ public class VisualizzaStatisticheController {
         }
     }
 
-    private void caricaTerapie(String query){
+    /*
+     *
+     *
+     *       ------------>           FINE SEZIONE GRAFICI !!!!          <-----------
+     *
+     *
+     */
+    /*
+     *
+     *
+     *       ------------>           SEZIONE TABELLA TERAPIE !!!!    <-----------
+     *
+     *
+     */
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
+    private void caricaTerapie(String query, String selected){
+
+        tabellaTerapie.getItems().clear();      //Pulisce il contenuto della tabella
+        String taxCodeSelezionato = null;
+
+        //Controllo sulla selezione della combobox e creazione delle query adeguate in base
+        // a se viene selezionato "Tutti" oppure un nome specifico
+        if(!selected.equals("Tutti")) {
+            query += " WHERE taxCode = ?  ORDER BY taxCode";
+
+            //Rilevazione del taxcode associato al nome selezionato nella combobox
+            for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
+                if (entry.getValue().equals(selected)) {
+                    taxCodeSelezionato = entry.getKey();
+                    System.out.println("Il taxcode selezionato e' " + taxCodeSelezionato);
+                    break;
+                }
+            }
+
+        } else {
+            query += " ORDER BY taxCode";
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+
+            ResultSet rs;
+
+            //Esecuzione delle query in base alla selezione della combobox --> se viene selezionato "tutti" non
+            // abbiamo bisogno di alcun taxCode, altrimenti se viene selezionato un nome specifico
+            // consideriamo anche quello nella query
+            if(!selected.equals("Tutti")) {
+
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, taxCodeSelezionato);
+                rs = pstmt.executeQuery();
+                System.out.println("Eseguita la query: " + query);
+
+            } else {
+
+                Statement stmt = conn.createStatement();
+                rs = stmt.executeQuery(query);
+                System.out.println("Eseguita la query: " + query);
+            }
 
             ObservableList<Terapia> terapie = FXCollections.observableArrayList();
 
+            //Ciclo che scorre ogni terapia trovata per aggiungerla alla tabella
             while (rs.next()) {
 
+                //Creazione della terapia da immettere nella tabella
                 String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
 
                 Terapia terapia = new Terapia(
@@ -304,6 +370,7 @@ public class VisualizzaStatisticheController {
                 terapie.add(terapia);
             }
 
+            //Aggiunta della terapia nella tabella
             tabellaTerapie.setItems(terapie);
 
         } catch (SQLException e) {
@@ -352,6 +419,14 @@ public class VisualizzaStatisticheController {
             return nomePaziente.get() + " " + terapia.get() + " " + farmaco.get();
         }
     }
+
+    /*
+     *
+     *
+     *       ------------>       FINE SEZIONE TABELLA TERAPIE !!!!    <-----------
+     *
+     *
+     */
 
 
     @FXML
