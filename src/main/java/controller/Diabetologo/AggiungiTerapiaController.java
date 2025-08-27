@@ -7,9 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.AggiungiTerapiaModel;
@@ -37,12 +37,16 @@ public class AggiungiTerapiaController {
     @FXML
     private TextField indicazioniField;
 
-    @FXML
-    private Button resetButton;
 
-    @FXML
-    private Button confermaButton;
-    private ActionEvent DettaglioPazienteController;
+    @FXML public void initialize() {
+
+        //Aggiunta di un listener che consente l'inserimento di soli valori numerici --> evita IllegalNUmberException
+        frequenzaField.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
+    }
 
     @FXML
     private void handleHomepage(javafx.event.ActionEvent event) {
@@ -68,7 +72,7 @@ public class AggiungiTerapiaController {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Errore caricamento pagina HomePage: " + e.getMessage());
         }
     }
 
@@ -83,16 +87,26 @@ public class AggiungiTerapiaController {
 
     @FXML
     private void handleConferma(ActionEvent event) {
-        String terapia = terapiaField.getText();
-        String farmaco = farmacoField.getText();
-        int quantita = Integer.parseInt(quantitaField.getText());
-        int frequenza = Integer.parseInt(frequenzaField.getText());
-        String indicazioni = indicazioniField.getText();
 
-        if (terapia.isEmpty() || farmaco.isEmpty()) {
+        if (terapiaField.getText().isEmpty() || farmacoField.getText().isEmpty() || quantitaField.getText().isEmpty() || frequenzaField.getText().isEmpty()) {
             mostraErrore("Tutti i campi obbligatori devono essere compilati.");
             return;
         }
+
+        String terapia = terapiaField.getText();
+        String farmaco = farmacoField.getText();
+        String quantita = quantitaField.getText();
+        String indicazioni = indicazioniField.getText();
+
+        int frequenza;
+
+        try {
+            frequenza = Integer.parseInt(frequenzaField.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Errore nella lettura del numero di assunzioni giornaliere: " + e.getMessage());
+            frequenza = 0;
+        }
+
 
         AggiungiTerapiaModel model = new AggiungiTerapiaModel();
         model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo);
@@ -110,7 +124,7 @@ public class AggiungiTerapiaController {
                     Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
                     stage.setScene(new Scene(root));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Errore caricamento pagina dettaglio paziente: " + e.getMessage());
                 }
             }
         });

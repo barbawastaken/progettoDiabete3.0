@@ -11,7 +11,7 @@ public class AggiungiTerapiaModel {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL);
     }
-    public void insertData(String taxCode, String terapia, String farmacoPrescritto, int quantita, int numeroAssunzioniGiornaliere, String indicazioni, String taxCodeDiabetologo) {
+    public void insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni, String taxCodeDiabetologo) {
 
         String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -21,7 +21,7 @@ public class AggiungiTerapiaModel {
             pstmt.setString(1, taxCode);
             pstmt.setString(2, terapia);
             pstmt.setString(3, farmacoPrescritto);
-            pstmt.setInt(4, quantita);
+            pstmt.setString(4, quantita);
             pstmt.setInt(5, numeroAssunzioniGiornaliere);
             pstmt.setString(6, indicazioni);
 

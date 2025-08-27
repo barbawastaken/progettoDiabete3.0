@@ -321,7 +321,6 @@ public class VisualizzaStatisticheController {
             for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
                 if (entry.getValue().equals(selected)) {
                     taxCodeSelezionato = entry.getKey();
-                    System.out.println("Il taxcode selezionato e' " + taxCodeSelezionato);
                     break;
                 }
             }
@@ -342,13 +341,11 @@ public class VisualizzaStatisticheController {
                 PreparedStatement pstmt = conn.prepareStatement(query);
                 pstmt.setString(1, taxCodeSelezionato);
                 rs = pstmt.executeQuery();
-                System.out.println("Eseguita la query: " + query);
 
             } else {
 
                 Statement stmt = conn.createStatement();
                 rs = stmt.executeQuery(query);
-                System.out.println("Eseguita la query: " + query);
             }
 
             ObservableList<Terapia> terapie = FXCollections.observableArrayList();
