@@ -65,6 +65,7 @@
                     </LineChart>
                 </HBox>
 
+                <!-- Tabella per le terapie associate ai pazienti -->
                 <VBox alignment="CENTER" VBox.vgrow="ALWAYS" spacing="15" style="-fx-padding: 20;">
                     <!-- Titolo -->
                     <Text text="Terapie Prescritte"
@@ -79,6 +80,25 @@
                                 <TableColumn fx:id="quantitaTerapia" text="Quantità" prefWidth="60"/>
                                 <TableColumn fx:id="assunzioniGiornaliereTerapia" text="Assunzioni giornaliere" prefWidth="140"/>
                                 <TableColumn fx:id="indicazioniTerapia" text="Indicazioni" prefWidth="170"/>
+                            </columns>
+                        </TableView>
+                    </HBox>
+                </VBox>
+
+                <!-- Tabella per le assunzioni dei farmaci da parte dei pazienti -->
+                <VBox alignment="CENTER" VBox.vgrow="ALWAYS" spacing="15" style="-fx-padding: 20;">
+                    <!-- Titolo -->
+                    <Text text="Farmaci assunti"
+                          textAlignment="CENTER"
+                          style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <HBox alignment="CENTER">
+                        <TableView fx:id="tabellaAssunzioni" VBox.vgrow="ALWAYS" minHeight="150">
+                            <columns>
+                                <TableColumn fx:id="nomePazienteAssunzione" text="Paziente" prefWidth="160"/>
+                                <TableColumn fx:id="farmacoAssunzione" text="Farmaco" prefWidth="160"/>
+                                <TableColumn fx:id="quantitaAssunzione" text="Quantita" prefWidth="90"/>
+                                <TableColumn fx:id="dataAssunzione" text="Data" prefWidth="110"/>
+                                <TableColumn fx:id="orarioAssunzione" text="Orario" prefWidth="100"/>
                             </columns>
                         </TableView>
                     </HBox>

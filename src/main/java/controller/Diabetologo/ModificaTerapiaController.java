@@ -39,7 +39,7 @@ public class ModificaTerapiaController {
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
 
-    private void inizialize() {
+    public void inizialize() {
 
         String query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzini_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ?";
 

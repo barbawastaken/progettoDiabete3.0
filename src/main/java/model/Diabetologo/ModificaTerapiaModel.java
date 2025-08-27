@@ -10,9 +10,6 @@ public class ModificaTerapiaModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL);
-    }
     public void updateData(String taxCode, String terapia, String farmacoPrescritto, int quantita, int numeroAssunzioniGiornaliere, String indicazioni, String taxCodeDiabetologo) {
 
         String query = "UPDATE terapiePrescritte SET terapia = ?, farmaco_prescritto = ?, quantita = ?, numero_assunzioni_giornaliere = ?, indicazioni = ? WHERE taxCode = ?";
