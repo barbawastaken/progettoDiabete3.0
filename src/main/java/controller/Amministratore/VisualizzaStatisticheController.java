@@ -12,11 +12,13 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class VisualizzaStatisticheController {
@@ -41,7 +43,7 @@ public class VisualizzaStatisticheController {
     private final Map<String, List<Rilevazione>> tuttiIDatiDiLastWeek = new HashMap<>();
 
     //Mappa taxCode --> nome paziente
-    private Map<String, String> taxCodeToNameMap = new HashMap<>();
+    private final Map<String, String> taxCodeToNameMap = new HashMap<>();
 
     /*
     *
@@ -56,6 +58,19 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<Terapia, String> quantitaTerapia;
     @FXML private TableColumn<Terapia, String> assunzioniGiornaliereTerapia;
     @FXML private TableColumn<Terapia, String> indicazioniTerapia;
+
+    /*
+    *
+    *   SEZIONE TABELLA ASSUNZIONI FARMACI !!!
+    *
+     */
+
+    @FXML private TableView<AssunzioneFarmaco> tabellaAssunzioni;
+    @FXML private TableColumn<AssunzioneFarmaco, String> nomePazienteAssunzione;
+    @FXML private TableColumn<AssunzioneFarmaco, String> farmacoAssunzione;
+    @FXML private TableColumn<AssunzioneFarmaco, Integer> quantitaAssunzione;
+    @FXML private TableColumn<AssunzioneFarmaco, LocalDate> dataAssunzione;
+    @FXML private TableColumn<AssunzioneFarmaco, LocalTime> orarioAssunzione;
 
     @FXML
     public void initialize() {
@@ -86,7 +101,7 @@ public class VisualizzaStatisticheController {
                 ORDER BY r.data DESC, r.taxCode""";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastMonth, query);
-        popolaComboBox(tuttiIDatiDiLastMonth);
+        //popolaComboBox(tuttiIDatiDiLastMonth);
         mostraTuttiNelGrafico(tuttiIDatiDiLastMonth, lineChartLastMonth);
 
         /* SETUP GRAFICO ULTIMA SETTIMANA */
@@ -100,7 +115,7 @@ public class VisualizzaStatisticheController {
                 ORDER BY r.data DESC, r.taxCode""";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastWeek, query);
-        popolaComboBox(tuttiIDatiDiLastWeek);
+        //popolaComboBox(tuttiIDatiDiLastWeek);
         mostraTuttiNelGrafico(tuttiIDatiDiLastWeek, lineChartLastWeek);
 
         /* SETUP TABELLA TERAPIE */
@@ -112,10 +127,21 @@ public class VisualizzaStatisticheController {
         assunzioniGiornaliereTerapia.setCellValueFactory(cellData -> cellData.getValue().assunzioniGiornaliereProperty());
         indicazioniTerapia.setCellValueFactory(cellData -> cellData.getValue().indicazioniProperty());
 
-
         query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
 
         caricaTerapie(query, "Tutti");
+
+        /* SETUP TABELLA ASSUNZIONE FARMACI */
+
+        nomePazienteAssunzione.setCellValueFactory(new PropertyValueFactory<>("nomePazienteAssunzione"));
+        farmacoAssunzione.setCellValueFactory(new PropertyValueFactory<>("farmacoAssunzione"));
+        quantitaAssunzione.setCellValueFactory(new PropertyValueFactory<>("quantitaAssunzione"));
+        dataAssunzione.setCellValueFactory(new PropertyValueFactory<>("dataAssunzione"));
+        orarioAssunzione.setCellValueFactory(new PropertyValueFactory<>("orarioAssunzione"));
+
+        query = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
+
+        caricaAssunzioneFarmaci(query, "Tutti");
 
         // LISTENER SU COMBOBOX: quando cambia la selezione, aggiorna il grafico
         pazienteCombo.setOnAction(event -> {
@@ -126,6 +152,9 @@ public class VisualizzaStatisticheController {
 
             final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
             caricaTerapie(queryUpdateTabellaTerapie, selected);
+
+            final String queryUpdateTabellaAssunzioneFarmaci = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
+            caricaAssunzioneFarmaci(queryUpdateTabellaAssunzioneFarmaci, selected);
         });
 
         pazienteCombo.setValue("Tutti");
@@ -154,9 +183,8 @@ public class VisualizzaStatisticheController {
 
     // Carica TUTTI i dati UNA volta sola
     private void caricaTuttiIDatiDalDatabase(Map<String, List<Rilevazione>> mappaDati, String query) {
+
         mappaDati.clear(); // Pulisce tutto
-        taxCodeToNameMap.clear();
-        Map<String, String> taxCodeToName = new HashMap<>(); // Mappa taxCode -> nome
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
@@ -173,8 +201,8 @@ public class VisualizzaStatisticheController {
                 String nome = rs.getString("nome");
                 String cognome = rs.getString("cognome");
                 String nomeCompleto = nome + " " + cognome;
-                taxCodeToName.put(taxCode, nomeCompleto);
 
+                taxCodeToNameMap.putIfAbsent(taxCode, nomeCompleto);
                 // Se non esiste ancora, crea una nuova lista per questo taxCode
                 if (!mappaDati.containsKey(taxCode)) {
                     mappaDati.put(taxCode, new ArrayList<>());
@@ -183,7 +211,6 @@ public class VisualizzaStatisticheController {
                 // Aggiungi la rilevazione alla lista del paziente
                 mappaDati.get(taxCode).add(new Rilevazione(taxCode, quantita, data, momento, prePost));
 
-                this.taxCodeToNameMap = taxCodeToName;
             }
 
         } catch (Exception e) {
@@ -199,8 +226,10 @@ public class VisualizzaStatisticheController {
         // Aggiungi tutti i taxCode trovati nel database
         for (String taxCode : mappaDati.keySet()) {
             String nomeCompleto = taxCodeToNameMap.get(taxCode);
+
             if (nomeCompleto != null) {
                 pazienteCombo.getItems().add(nomeCompleto);
+
             } else {
                 // Evita problemi, se non esiste il nome completo usa il taxcode
                 pazienteCombo.getItems().add(taxCode);
@@ -233,6 +262,7 @@ public class VisualizzaStatisticheController {
         } else {
             String taxCodeSelezionato = null;
             for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
+
                 if (entry.getValue().equals(nomeSelezionato)) {
                     taxCodeSelezionato = entry.getKey();
                     break;
@@ -243,6 +273,7 @@ public class VisualizzaStatisticheController {
             if (taxCodeSelezionato != null) {
                 List<Rilevazione> rilevazioni = mappaDati.get(taxCodeSelezionato);
                 if (rilevazioni != null && !rilevazioni.isEmpty()) {
+
                     XYChart.Series<String, Number> serie = creaSeriePerPaziente(taxCodeSelezionato, rilevazioni);
                     grafico.getData().add(serie);
                 }
@@ -265,8 +296,10 @@ public class VisualizzaStatisticheController {
         // Ordina le rilevazioni per data (cronologicamente)
         rilevazioni.sort((r1, r2) -> r1.data.compareTo(r2.data));
 
+        System.out.println("Aggiungo le rilevazioni come punti dei grafici");
         // Aggiungi ogni rilevazione come punto nel grafico
         for (Rilevazione r : rilevazioni) {
+            System.out.println("Rilevazione: " + r.taxCode + " " + r.quantita + " " + r.data + " " + r.momentoGiornata + " " + r.prePost);
             String labelAsseX = r.data + " - " + r.momentoGiornata + " - " + r.prePost;
             XYChart.Data<String, Number> punto = new XYChart.Data<>(labelAsseX, r.quantita);
             serie.getData().add(punto);
@@ -309,71 +342,53 @@ public class VisualizzaStatisticheController {
 
     private void caricaTerapie(String query, String selected){
 
-        tabellaTerapie.getItems().clear();      //Pulisce il contenuto della tabella
-        String taxCodeSelezionato = null;
+        tabellaTerapie.getItems().clear();  //Pulisce il contenuto della tabella
 
-        //Controllo sulla selezione della combobox e creazione delle query adeguate in base
-        // a se viene selezionato "Tutti" oppure un nome specifico
-        if(!selected.equals("Tutti")) {
-            query += " WHERE taxCode = ?  ORDER BY taxCode";
+        Connection conn = null;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-            //Rilevazione del taxcode associato al nome selezionato nella combobox
-            for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
-                if (entry.getValue().equals(selected)) {
-                    taxCodeSelezionato = entry.getKey();
-                    break;
-                }
-            }
+        try {
 
-        } else {
-            query += " ORDER BY taxCode";
-        }
+            rs = completaQuery(query, selected);
 
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-
-            ResultSet rs;
-
-            //Esecuzione delle query in base alla selezione della combobox --> se viene selezionato "tutti" non
-            // abbiamo bisogno di alcun taxCode, altrimenti se viene selezionato un nome specifico
-            // consideriamo anche quello nella query
-            if(!selected.equals("Tutti")) {
-
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                pstmt.setString(1, taxCodeSelezionato);
-                rs = pstmt.executeQuery();
-
-            } else {
-
-                Statement stmt = conn.createStatement();
-                rs = stmt.executeQuery(query);
-            }
+            if (rs == null) return;
 
             ObservableList<Terapia> terapie = FXCollections.observableArrayList();
 
-            //Ciclo che scorre ogni terapia trovata per aggiungerla alla tabella
-            while (rs.next()) {
+            try {
+                //Ciclo che scorre ogni terapia trovata per aggiungerla alla tabella
+                while (rs.next()) {
 
-                //Creazione della terapia da immettere nella tabella
-                String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
+                    //Creazione della terapia da immettere nella tabella
+                    String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
 
-                Terapia terapia = new Terapia(
-                        nomePaziente,
-                        rs.getString("terapia"),
-                        rs.getString("farmaco_prescritto"),
-                        rs.getString("quantita"),
-                        rs.getString("numero_assunzioni_giornaliere"),
-                        rs.getString("indicazioni")
-                );
-                terapie.add(terapia);
+                    Terapia terapia = new Terapia(
+                            nomePaziente,
+                            rs.getString("terapia"),
+                            rs.getString("farmaco_prescritto"),
+                            rs.getString("quantita"),
+                            rs.getString("numero_assunzioni_giornaliere"),
+                            rs.getString("indicazioni")
+                    );
+                    terapie.add(terapia);
+                }
+
+                //Aggiunta della terapia nella tabella
+                tabellaTerapie.setItems(terapie);
+            } catch (Exception e) {
+                System.out.println("Errore caricamento terapie prescritte: " + e.getMessage());
             }
-
-            //Aggiunta della terapia nella tabella
-            tabellaTerapie.setItems(terapie);
-
-        } catch (SQLException e) {
-            System.out.println("Errore caricamento terapie: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Errore caricamento terapie prescritte: " + e.getMessage());
+        } finally {
+            // Chiudi tutte le risorse in ordine inverso
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (pstmt != null) pstmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* ignore */ }
         }
-
     }
 
     public static class Terapia {
@@ -417,10 +432,149 @@ public class VisualizzaStatisticheController {
         }
     }
 
+    private ResultSet completaQuery(String query, String selected) {
+
+        String taxCodeSelezionato = null;
+        //Controllo sulla selezione della combobox e creazione delle query adeguate in base
+        // a se viene selezionato "Tutti" oppure un nome specifico
+        if(!selected.equals("Tutti")) {
+
+            query += " WHERE taxCode = ?  ORDER BY taxCode";
+
+            //Rilevazione del taxcode associato al nome selezionato nella combobox
+            for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
+                if (entry.getValue().equals(selected)) {
+                    taxCodeSelezionato = entry.getKey();
+                    break;
+                }
+            }
+
+        } else {
+            query += " ORDER BY taxCode";
+        }
+
+        ResultSet rs;
+
+        try {
+
+            Connection conn = DriverManager.getConnection(DB_URL);
+            //Esecuzione delle query in base alla selezione della combobox --> se viene selezionato "tutti" non
+            // abbiamo bisogno di alcun taxCode, altrimenti se viene selezionato un nome specifico
+            // consideriamo anche quello nella query
+            if(!selected.equals("Tutti")) {
+
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, taxCodeSelezionato);
+                rs = pstmt.executeQuery();
+
+            } else {
+
+                Statement stmt = conn.createStatement();
+                rs = stmt.executeQuery(query);
+            }
+
+            return rs;
+
+        } catch (SQLException e) {
+            System.out.println("Errore caricamento dati per tabella: " + e.getMessage());
+            return null;
+        }
+    }
+
     /*
      *
      *
      *       ------------>       FINE SEZIONE TABELLA TERAPIE !!!!    <-----------
+     *
+     *
+     */
+    /*
+     *
+     *
+     *       ------------>       SEZIONE TABELLA ASSUNZIONE FARMACI !!!!    <-----------
+     *
+     *
+     */
+
+    private void caricaAssunzioneFarmaci(String query, String selected){
+
+        tabellaAssunzioni.getItems().clear(); //Pulisce il contenuto della tabella
+        Connection conn = null;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            rs = completaQuery(query, selected);
+
+            if (rs == null) return;
+
+            ObservableList<AssunzioneFarmaco> assunzioneFarmaci = FXCollections.observableArrayList();
+
+            try {
+                //Ciclo che scorre ogni terapia trovata per aggiungerla alla tabella
+                while (rs.next()) {
+
+                    //Creazione della terapia da immettere nella tabella
+                    String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
+
+                    LocalDate dataAssunzioneParsed = LocalDate.parse(rs.getString("dataAssunzione"));
+                    LocalTime orarioAssunzioneParsed = LocalTime.parse(rs.getString("orarioAssunzione"));
+
+                    AssunzioneFarmaco assunzioneFarmaco = new AssunzioneFarmaco(
+                            nomePaziente,
+                            rs.getString("farmacoAssunto"),
+                            rs.getInt("quantitaAssunta"),
+                            dataAssunzioneParsed,
+                            orarioAssunzioneParsed
+                    );
+                    assunzioneFarmaci.add(assunzioneFarmaco);
+                }
+
+                //Aggiunta della terapia nella tabella
+                tabellaAssunzioni.setItems(assunzioneFarmaci);
+            } catch (Exception e) {
+                System.out.println("Errore caricamento assunzione farmaci: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("Errore caricamento assunzione farmaci: " + e.getMessage());
+        } finally {
+            // Chiudi tutte le risorse in ordine inverso
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (pstmt != null) pstmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* ignore */ }
+        }
+
+    }
+
+    public static class AssunzioneFarmaco {
+
+        private final String nomePazienteAssunzione;
+        private final String farmacoAssunzione;
+        private final int quantitaAssunzione;
+        private final LocalDate dataAssunzione;
+        private final LocalTime orarioAssunzione;
+
+        public AssunzioneFarmaco(String nomePazienteAssunzione, String farmacoAssunzione, int quantitaAssunzione, LocalDate dataAssunzione, LocalTime orarioAssunzione) {
+            this.nomePazienteAssunzione = nomePazienteAssunzione;
+            this.farmacoAssunzione = farmacoAssunzione;
+            this.quantitaAssunzione = quantitaAssunzione;
+            this.dataAssunzione = dataAssunzione;
+            this.orarioAssunzione = orarioAssunzione;
+        }
+
+        public String getNomePazienteAssunzione(){ return nomePazienteAssunzione; }
+        public String getFarmacoAssunzione(){ return farmacoAssunzione; }
+        public int getQuantitaAssunzione() { return quantitaAssunzione; }
+        public LocalDate getDataAssunzione() { return dataAssunzione; }
+        public LocalTime getOrarioAssunzione() { return orarioAssunzione; }
+    }
+
+    /*
+     *
+     *
+     *       ------------>       FINE SEZIONE TABELLA ASSUNZIONE FARMACI !!!!    <-----------
      *
      *
      */
