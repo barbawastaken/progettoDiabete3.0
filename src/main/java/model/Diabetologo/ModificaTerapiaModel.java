@@ -30,7 +30,6 @@ public class ModificaTerapiaModel {
             System.out.println("Salvataggio modifiche eseguito!");
 
             LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Terapia modificata(nome originale): " + terapiaDaModificare, taxCode, LocalDate.now());
-            System.out.println("log eseguito");
 
         } catch(Exception e) {
             System.out.println("Errore nel salvataggio dei dati: " + e.getMessage());

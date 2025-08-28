@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Diabetologo.TabellaModificaTerapiaModel;
 import model.Diabetologo.Terapia;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class TabellaModificaTerapiaController implements Initializable {
 
+   @FXML private Pane anchorPane;
     private String taxCode;
     private String nomeTerapia;
     @FXML
@@ -93,6 +95,9 @@ public class TabellaModificaTerapiaController implements Initializable {
             stage.setTitle("Modifica Terapia");
             stage.setScene(new Scene(root));
             stage.show();
+
+            Stage stageCorrente = (Stage) anchorPane.getScene().getWindow();
+            stageCorrente.close();
 
         } catch (IOException e) {
             e.printStackTrace();

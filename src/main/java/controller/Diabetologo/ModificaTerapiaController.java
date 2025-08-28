@@ -92,10 +92,10 @@ public class ModificaTerapiaController {
     private void onHomePagePressed(javafx.event.ActionEvent event) {
        try {
            // Carica la nuova view da FXML
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/tabella_modifica_terapia_view.fxml"));
            Parent root = loader.load();
-           DettaglioPazienteController controller = loader.getController();
-           controller.setPaziente(paziente, taxCodeDiabetologo);
+           TabellaModificaTerapiaController controller = loader.getController();
+           controller.setTaxCode(taxCode, taxCodeDiabetologo);
            // Prendi lo stage corrente dal bottone cliccato
            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -106,7 +106,7 @@ public class ModificaTerapiaController {
            stage.setScene(scene);
 
            //Imposta titolo finestra
-           stage.setTitle("Dettaglio paziente");
+           stage.setTitle("Terapie paziente");
 
            // Mostra la finestra (non chiude, cambia scena)
            stage.show();
@@ -130,23 +130,9 @@ public class ModificaTerapiaController {
        ModificaTerapiaModel model = new ModificaTerapiaModel();
        model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo, this.terapia.getTerapia());
 
-       Alert alert = new Alert(Alert.AlertType.INFORMATION);
-       alert.setTitle("Successo");
-       alert.setHeaderText(null);
-       alert.setContentText("La terapia è stata inserita correttamente nel database.");
-       alert.showAndWait().ifPresent(response -> {
-           if (response == ButtonType.OK) {
-               // Torno indietro alla scena precedente
-               Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-               try {
-                   Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
-                   stage.setScene(new Scene(root));
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
-       });
+       Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+       stage.close();
+       onHomePagePressed(event);
    }
 
     @FXML
