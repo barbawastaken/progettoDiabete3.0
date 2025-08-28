@@ -60,7 +60,7 @@ public class TabellaModificaTerapiaController implements Initializable {
             row.setOnMouseClicked(mouseEvent -> {
                 if (!row.isEmpty() && mouseEvent.getClickCount() == 2) {
                     Terapia terapiaSelezionata = row.getItem();
-                    mostraModificaTerapia(terapiaSelezionata);
+                    mostraModificaTerapia(terapiaSelezionata, this.taxCode, this.taxCodeDiabetologo);
                 }
             });
 
@@ -80,7 +80,7 @@ public class TabellaModificaTerapiaController implements Initializable {
         tabellaTerapie.setItems(terapie);
     }
 
-    public void mostraModificaTerapia(Terapia terapia) {
+    public void mostraModificaTerapia(Terapia terapia, String taxCode, String taxCodeDiabetologo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_terapia_view.fxml"));
             Parent root = loader.load();

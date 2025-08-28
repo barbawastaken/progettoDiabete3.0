@@ -224,11 +224,37 @@ public class VisualizzaStatisticheController {
                     Terapia terapiaSelezionata = row.getItem();
 
                     // Qui apri la nuova schermata
+                    TabellaModificaTerapiaController terapiaDaModificare = new TabellaModificaTerapiaController();
 
+                    String taxCodePaziente = null;
+                    for(String taxCode : taxCodeToNameMap.keySet()){
+                        if(taxCodeToNameMap.get(taxCode).equals(row.getItem().getTaxCode())){ taxCodePaziente = taxCode; }
+                    }
+
+                    terapiaDaModificare.mostraModificaTerapia(terapiaSelezionata, taxCodePaziente, getTaxCodeDiabetologo(taxCodePaziente));
                 }
             });
             return row;
         });
+    }
+
+    private String getTaxCodeDiabetologo(String taxCodePaziente) {
+
+        String query = "SELECT diabetologo FROM utenti WHERE taxCode = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, taxCodePaziente);
+            ResultSet rs = pstmt.executeQuery();
+
+            return rs.getString("diabetologo");
+
+        } catch (Exception e) {
+            System.out.println("Errore ricerca taxCode diabetologo: " + e.getMessage());
+            return null;
+        }
+
     }
 
     /*
