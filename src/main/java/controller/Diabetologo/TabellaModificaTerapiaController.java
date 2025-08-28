@@ -80,13 +80,13 @@ public class TabellaModificaTerapiaController implements Initializable {
         tabellaTerapie.setItems(terapie);
     }
 
-    private void mostraModificaTerapia(Terapia terapia) {
+    public void mostraModificaTerapia(Terapia terapia) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_terapia_view.fxml"));
             Parent root = loader.load();
 
             ModificaTerapiaController controller = loader.getController();
-            controller.setTaxCode(taxCode, taxCodeDiabetologo);
+            controller.setTaxCode(taxCode, taxCodeDiabetologo, terapia);
             controller.inizialize();
 
             Stage stage = new Stage();

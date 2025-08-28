@@ -5,15 +5,15 @@ public class Terapia {
     private String terapia;
     private String farmaco;
     private String quantita;
-    private String frequenza;
+    private String assunzioni;
     private String indicazioni;
 
-    public Terapia(String taxCode, String terapia, String farmaco, String quantita, String frequenza, String indicazioni) {
+    public Terapia(String taxCode, String terapia, String farmaco, String quantita, String assunzioni, String indicazioni) {
         this.taxCode = taxCode;
         this.terapia = terapia;
         this.farmaco = farmaco;
         this.quantita = quantita;
-        this.frequenza = frequenza;
+        this.assunzioni = assunzioni;
         this.indicazioni = indicazioni;
     }
 
@@ -33,9 +33,7 @@ public class Terapia {
         return quantita;
     }
 
-    public String getFrequenza() {
-        return frequenza;
-    }
+    public String getAssunzioni() { return assunzioni; }
 
     public String getIndicazioni() {
         return indicazioni;
@@ -58,9 +56,7 @@ public class Terapia {
         this.farmaco = farmaco;
     }
 
-    public void setFrequenza(String frequenza) {
-        this.frequenza = frequenza;
-    }
+    public void setFrequenza(String assunzioni) { this.assunzioni = assunzioni; }
 
     public void setIndicazioni(String indicazioni) {
         this.indicazioni = indicazioni;

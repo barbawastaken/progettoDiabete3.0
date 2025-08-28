@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.ModificaTerapiaModel;
+import model.Diabetologo.Terapia;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class ModificaTerapiaController {
 
     private String taxCode;
     private Paziente paziente;
+    private Terapia terapia;
     private String taxCodeDiabetologo;
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
@@ -41,12 +43,13 @@ public class ModificaTerapiaController {
 
     public void inizialize() {
 
-        String query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzini_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ?";
+        String query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ? AND terapia = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, taxCode);
+            stmt.setString(2, terapia.getTerapia());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -56,7 +59,7 @@ public class ModificaTerapiaController {
 
             this.quantitaField.setText(rs.getString("quantita"));
 
-            this.frequenzaField.setText(rs.getString("numero_assunzini_giornaliere"));
+            this.frequenzaField.setText(rs.getString("numero_assunzioni_giornaliere"));
 
             this.indicazioniField.setText(rs.getString("indicazioni"));
         } catch(Exception e) {
@@ -118,14 +121,14 @@ public class ModificaTerapiaController {
 
        String terapia = terapiaField.getText();
        String farmaco = farmacoField.getText();
-       int quantita = Integer.parseInt(quantitaField.getText());
+       String quantita = quantitaField.getText();
        int frequenza = Integer.parseInt(frequenzaField.getText());
        String indicazioni = indicazioniField.getText();
 
         if(terapia.isEmpty() || farmaco.isEmpty()) return;
 
        ModificaTerapiaModel model = new ModificaTerapiaModel();
-       model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo);
+       model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo, this.terapia.getTerapia());
 
        Alert alert = new Alert(Alert.AlertType.INFORMATION);
        alert.setTitle("Successo");
@@ -156,9 +159,10 @@ public class ModificaTerapiaController {
         indicazioniField.clear();
     }
 
-    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
+    public void setTaxCode(String taxCode, String taxCodeDiabetologo, Terapia terapia) {
         this.taxCode = taxCode;
         this.taxCodeDiabetologo = taxCodeDiabetologo;
+        this.terapia = terapia;
     }
 
     public void setPaziente(Paziente paziente) {

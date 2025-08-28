@@ -30,6 +30,8 @@
                 <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 5;">
                      <Label text="Seleziona Paziente:" style="-fx-font-weight: bold;"/>
                      <ComboBox fx:id="pazienteCombo" prefWidth="150" minWidth="50" maxWidth="150" promptText="Tutti i pazienti" HBox.hgrow="ALWAYS"/>
+
+                    <Button fx:id="aggiornaInfoButton" prefWidth="100" minWidth="50" text="Aggiorna info" visible="false" />
                 </HBox>
 
                 <!-- Grafico che si adatta automaticamente alle dimensioni -->

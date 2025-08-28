@@ -1,6 +1,6 @@
 package controller.Amministratore;
 
-import javafx.beans.property.SimpleStringProperty;
+import controller.Diabetologo.TabellaModificaTerapiaController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,11 +9,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Diabetologo.Terapia;
 
 import java.io.IOException;
 import java.sql.*;
@@ -27,15 +26,22 @@ public class VisualizzaStatisticheController {
 
     /*
     *
-    *   SEZIONE GRAFICI !!!
+    *   SEZONE COMBOBOX + BUTTON
     *
      */
 
-    //Grafici + ComboBox
+    @FXML private ComboBox<String> pazienteCombo;
+    @FXML private Button aggiornaInfoButton;
+
+    /*
+    *
+    *   SEZIONE GRAFICI !!!
+    *
+    */
+
     @FXML private LineChart<String, Number> lineChart;
     @FXML private LineChart<String, Number> lineChartLastMonth;
     @FXML private LineChart<String, Number> lineChartLastWeek;
-    @FXML private ComboBox<String> pazienteCombo;
 
     // Mappa che contiene TUTTI i dati: taxCode -> lista di rilevazioni
     private final Map<String, List<Rilevazione>> tuttiIDati = new HashMap<>();
@@ -144,12 +150,12 @@ public class VisualizzaStatisticheController {
 
         /* SETUP TABELLA TERAPIE */
 
-        nomePazienteTerapia.setCellValueFactory(cellData -> cellData.getValue().nomePazienteProperty());
-        nomeTerapia.setCellValueFactory(cellData -> cellData.getValue().terapiaProperty());
-        farmacoTerapia.setCellValueFactory(cellData -> cellData.getValue().farmacoProperty());
-        quantitaTerapia.setCellValueFactory(cellData -> cellData.getValue().quantitaProperty());
-        assunzioniGiornaliereTerapia.setCellValueFactory(cellData -> cellData.getValue().assunzioniGiornaliereProperty());
-        indicazioniTerapia.setCellValueFactory(cellData -> cellData.getValue().indicazioniProperty());
+        nomePazienteTerapia.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
+        nomeTerapia.setCellValueFactory(new PropertyValueFactory<>("terapia"));
+        farmacoTerapia.setCellValueFactory(new PropertyValueFactory<>("farmaco"));
+        quantitaTerapia.setCellValueFactory(new PropertyValueFactory<>("quantita"));
+        assunzioniGiornaliereTerapia.setCellValueFactory(new PropertyValueFactory<>("assunzioni"));
+        indicazioniTerapia.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
 
         query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
 
@@ -210,6 +216,19 @@ public class VisualizzaStatisticheController {
         });
 
         pazienteCombo.setValue("Tutti");
+
+        tabellaTerapie.setRowFactory(tv -> {
+            TableRow<Terapia> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) { // doppio click
+                    Terapia terapiaSelezionata = row.getItem();
+
+                    // Qui apri la nuova schermata
+
+                }
+            });
+            return row;
+        });
     }
 
     /*
@@ -311,7 +330,11 @@ public class VisualizzaStatisticheController {
         if ("Tutti".equals(nomeSelezionato)) {
             // Mostra TUTTI i pazienti
             mostraTuttiNelGrafico(mappaDati, grafico);
+            aggiornaInfoButton.setVisible(false);
         } else {
+
+            // Mostra solo il paziente selezionato
+            aggiornaInfoButton.setVisible(true);
             String taxCodeSelezionato = null;
             for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
 
@@ -441,7 +464,7 @@ public class VisualizzaStatisticheController {
         }
     }
 
-    public static class Terapia {
+    /*public static class Terapia {
 
         private final SimpleStringProperty nomePaziente;
         private final SimpleStringProperty terapia;
@@ -480,7 +503,7 @@ public class VisualizzaStatisticheController {
         public String toString() {
             return nomePaziente.get() + " " + terapia.get() + " " + farmaco.get();
         }
-    }
+    }*/
 
     private ResultSet completaQuery(String query, String selected) {
 
