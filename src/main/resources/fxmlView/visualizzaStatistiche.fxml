@@ -96,13 +96,50 @@
                             <columns>
                                 <TableColumn fx:id="nomePazienteAssunzione" text="Paziente" prefWidth="160"/>
                                 <TableColumn fx:id="farmacoAssunzione" text="Farmaco" prefWidth="160"/>
-                                <TableColumn fx:id="quantitaAssunzione" text="Quantita" prefWidth="90"/>
+                                <TableColumn fx:id="quantitaAssunzione" text="Quantità" prefWidth="90"/>
                                 <TableColumn fx:id="dataAssunzione" text="Data" prefWidth="110"/>
                                 <TableColumn fx:id="orarioAssunzione" text="Orario" prefWidth="100"/>
                             </columns>
                         </TableView>
                     </HBox>
                 </VBox>
+
+                <!-- Tabella dei sintomi riscontrati e delle patologie concomitanti -->
+                <HBox spacing="15" alignment="CENTER">
+                    <VBox alignment="CENTER" VBox.vgrow="ALWAYS" spacing="15" style="-fx-padding: 20;">
+                        <!-- Titolo -->
+                        <Text text="Sintomi riscontrati"
+                              textAlignment="CENTER"
+                              style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                        <HBox alignment="CENTER">
+                            <TableView fx:id="tabellaSintomi" VBox.vgrow="ALWAYS" minHeight="150">
+                                <columns>
+                                    <TableColumn fx:id="nomePazienteSintomo" text="Paziente" prefWidth="90"/>
+                                    <TableColumn fx:id="sintomoPrincipale" text="Sintomo principale" prefWidth="130"/>
+                                    <TableColumn fx:id="sintomiSpecificati" text="Altri sintomi" prefWidth="115"/>
+                                    <TableColumn fx:id="dataSintomo" text="Data riferimento"/>
+                                </columns>
+                            </TableView>
+                        </HBox>
+                    </VBox>
+
+                    <VBox alignment="CENTER" VBox.vgrow="ALWAYS" spacing="15" style="-fx-padding: 20;">
+                        <!-- Titolo -->
+                        <Text text="Patologie concomitanti"
+                              textAlignment="CENTER"
+                              style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                        <HBox alignment="CENTER">
+                            <TableView fx:id="tabellaPatologie" VBox.vgrow="ALWAYS" minHeight="150">
+                                <columns>
+                                    <TableColumn fx:id="nomePazientePatologia" text="Paziente" prefWidth="100"/>
+                                    <TableColumn fx:id="patologiaConcomitante" text="Patologia" prefWidth="150"/>
+                                    <TableColumn fx:id="dataInizioPatologia" text="Data inizio"/>
+                                    <TableColumn fx:id="dataFinePatologia" text="Data fine"/>
+                                </columns>
+                            </TableView>
+                        </HBox>
+                    </VBox>
+                </HBox>
 
             </VBox>
         </ScrollPane>

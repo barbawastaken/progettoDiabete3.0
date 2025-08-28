@@ -72,6 +72,30 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<AssunzioneFarmaco, LocalDate> dataAssunzione;
     @FXML private TableColumn<AssunzioneFarmaco, LocalTime> orarioAssunzione;
 
+    /*
+    *
+    *   SEZIONE TABELLA SINTOMI RISCONTRATI !!!
+    *
+     */
+
+    @FXML private TableView<Sintomo> tabellaSintomi;
+    @FXML private TableColumn<Sintomo, String> nomePazienteSintomo;
+    @FXML private TableColumn<Sintomo, String> sintomoPrincipale;
+    @FXML private TableColumn<Sintomo, String> sintomiSpecificati;
+    @FXML private TableColumn<Sintomo, LocalDate> dataSintomo;
+
+    /*
+     *
+     *   SEZIONE TABELLA PATOLOGIE CONCOMITANTI !!!
+     *
+     */
+
+    @FXML private TableView<Patologia> tabellaPatologie;
+    @FXML private TableColumn<Patologia, String> nomePazientePatologia;
+    @FXML private TableColumn<Patologia, String> patologiaConcomitante;
+    @FXML private TableColumn<Patologia, LocalDate> dataInizioPatologia;
+    @FXML private TableColumn<Patologia, LocalDate> dataFinePatologia;
+
     @FXML
     public void initialize() {
 
@@ -143,6 +167,28 @@ public class VisualizzaStatisticheController {
 
         caricaAssunzioneFarmaci(query, "Tutti");
 
+        /*  SETUP TABELLA SINTOMI RISCONTRATI */
+
+        nomePazienteSintomo.setCellValueFactory(new PropertyValueFactory<>("nomePazienteSintomo"));
+        sintomoPrincipale.setCellValueFactory(new PropertyValueFactory<>("sintomoPrincipale"));
+        sintomiSpecificati.setCellValueFactory(new PropertyValueFactory<>("sintomiSpecificati"));
+        dataSintomo.setCellValueFactory(new PropertyValueFactory<>("dataSintomo"));
+
+        query = "SELECT taxCode, sintomoPrincipale, sintomiSpecificati, dataInserimento FROM aggiuntaSintomi";
+
+        caricaSintomi(query, "Tutti");
+
+        /* SETUP TABELLA PATOLOGIE CONCOMITANTI */
+
+        nomePazientePatologia.setCellValueFactory(new PropertyValueFactory<>("nomePazientePatologia"));
+        patologiaConcomitante.setCellValueFactory(new PropertyValueFactory<>("patologiaConcomitante"));
+        dataInizioPatologia.setCellValueFactory(new PropertyValueFactory<>("dataInizioPatologia"));
+        dataFinePatologia.setCellValueFactory(new PropertyValueFactory<>("dataFinePatologia"));
+
+        query = "SELECT taxCode, patologiaConcomitante, dataInizio, dataFine FROM patologieConcomitanti";
+
+        caricaPatologie(query, "Tutti");
+
         // LISTENER SU COMBOBOX: quando cambia la selezione, aggiorna il grafico
         pazienteCombo.setOnAction(event -> {
             String selected = pazienteCombo.getValue();
@@ -155,6 +201,12 @@ public class VisualizzaStatisticheController {
 
             final String queryUpdateTabellaAssunzioneFarmaci = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
             caricaAssunzioneFarmaci(queryUpdateTabellaAssunzioneFarmaci, selected);
+
+            final String queryUpdateTabellaSintomi = "SELECT taxCode, sintomoPrincipale, sintomiSpecificati, dataInserimento FROM aggiuntaSintomi";
+            caricaSintomi(queryUpdateTabellaSintomi, selected);
+
+            final String queryUpdateTabellaPatologie = "SELECT taxCode, patologiaConcomitante, dataInizio, dataFine FROM patologieConcomitanti";
+            caricaPatologie(queryUpdateTabellaPatologie, selected);
         });
 
         pazienteCombo.setValue("Tutti");
@@ -296,10 +348,8 @@ public class VisualizzaStatisticheController {
         // Ordina le rilevazioni per data (cronologicamente)
         rilevazioni.sort((r1, r2) -> r1.data.compareTo(r2.data));
 
-        System.out.println("Aggiungo le rilevazioni come punti dei grafici");
         // Aggiungi ogni rilevazione come punto nel grafico
         for (Rilevazione r : rilevazioni) {
-            System.out.println("Rilevazione: " + r.taxCode + " " + r.quantita + " " + r.data + " " + r.momentoGiornata + " " + r.prePost);
             String labelAsseX = r.data + " - " + r.momentoGiornata + " - " + r.prePost;
             XYChart.Data<String, Number> punto = new XYChart.Data<>(labelAsseX, r.quantita);
             serie.getData().add(punto);
@@ -488,6 +538,7 @@ public class VisualizzaStatisticheController {
      *
      *
      */
+
     /*
      *
      *
@@ -512,10 +563,10 @@ public class VisualizzaStatisticheController {
             ObservableList<AssunzioneFarmaco> assunzioneFarmaci = FXCollections.observableArrayList();
 
             try {
-                //Ciclo che scorre ogni terapia trovata per aggiungerla alla tabella
+                //Ciclo che scorre ogni assunzione di farmaco per aggiungerla alla tabella
                 while (rs.next()) {
 
-                    //Creazione della terapia da immettere nella tabella
+                    //Creazione dell'oggetto assunzioneFarmaco da immettere nella tabella
                     String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
 
                     LocalDate dataAssunzioneParsed = LocalDate.parse(rs.getString("dataAssunzione"));
@@ -531,7 +582,7 @@ public class VisualizzaStatisticheController {
                     assunzioneFarmaci.add(assunzioneFarmaco);
                 }
 
-                //Aggiunta della terapia nella tabella
+                //Aggiunta delle assunzioni nella tabella
                 tabellaAssunzioni.setItems(assunzioneFarmaci);
             } catch (Exception e) {
                 System.out.println("Errore caricamento assunzione farmaci: " + e.getMessage());
@@ -579,6 +630,192 @@ public class VisualizzaStatisticheController {
      *
      */
 
+    /*
+    *
+    *
+    *       ------------>       SEZIONE TABELLA SINTOMI RISCONTRATI !!!!        <------------
+    *
+    *
+     */
+
+    private void caricaSintomi(String query, String selected){
+
+        tabellaSintomi.getItems().clear();  //Pulisce il contenuto della tabella
+
+        Connection conn = null;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            rs = completaQuery(query, selected);
+
+            if (rs == null) return;
+
+            ObservableList<Sintomo> sintomi = FXCollections.observableArrayList();
+
+            try {
+                //Ciclo che scorre ogni sintomo trovato per aggiungerla alla tabella
+                while (rs.next()) {
+
+                    //Creazione del sintomo da immettere nella tabella
+                    String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
+
+                    LocalDate dataSintomiParsed = LocalDate.parse(rs.getString("dataInserimento"));
+
+                    Sintomo sintomo = new Sintomo(
+                            nomePaziente,
+                            rs.getString("sintomoPrincipale"),
+                            rs.getString("sintomiSpecificati"),
+                            dataSintomiParsed
+                    );
+
+                    sintomi.add(sintomo);
+                }
+
+                //Aggiunta dei sintomi nella tabella
+                tabellaSintomi.setItems(sintomi);
+
+            } catch (Exception e) {
+                System.out.println("Errore caricamento sintomi riscontrati: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("Errore caricamento sintomi riscontrati: " + e.getMessage());
+        } finally {
+            // Chiudi tutte le risorse in ordine inverso
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (pstmt != null) pstmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* ignore */ }
+        }
+
+    }
+
+    public static class Sintomo {
+
+        private final String nomePazienteSintomo;
+        private final String sintomoPrincipale;
+        private final String sintomiSpecificati;
+        private final LocalDate dataSintomo;
+
+        public Sintomo(String nomePazienteSintomo, String sintomoPrincipale, String sintomiSpecificati, LocalDate dataSintomo) {
+            this.nomePazienteSintomo = nomePazienteSintomo;
+            this.sintomoPrincipale = sintomoPrincipale;
+            this.sintomiSpecificati = sintomiSpecificati;
+            this.dataSintomo = dataSintomo;
+        }
+
+        public String getNomePazienteSintomo() { return this.nomePazienteSintomo; }
+        public String getSintomoPrincipale() { return this.sintomoPrincipale; }
+        public String getSintomiSpecificati() { return this.sintomiSpecificati; }
+        public LocalDate getDataSintomo() { return this.dataSintomo; }
+
+    }
+
+    /*
+     *
+     *
+     *       ------------>       FINE SEZIONE TABELLA SINTOMI RISCONTRATI !!!!    <-----------
+     *
+     *
+     */
+
+    /*
+     *
+     *
+     *       ------------>       SEZIONE TABELLA PATOLOGIE CONCOMITANTI !!!!    <-----------
+     *
+     *
+     */
+
+    private void caricaPatologie(String query, String selected){
+
+        tabellaPatologie.getItems().clear();  //Pulisce il contenuto della tabella
+
+        Connection conn = null;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            rs = completaQuery(query, selected);
+
+            if (rs == null) return;
+
+            ObservableList<Patologia> patologie = FXCollections.observableArrayList();
+
+            try {
+                //Ciclo che scorre ogni patologia trovata per aggiungerla alla tabella
+                while (rs.next()) {
+
+                    //Creazione della patologia da immettere nella tabella
+                    String nomePaziente = taxCodeToNameMap.get(rs.getString("taxCode"));
+
+                    LocalDate dataInizioPatologiaParsed = LocalDate.parse(rs.getString("dataInizio"));
+
+                    LocalDate dataFinePatologiaParsed = null;
+                    if(!rs.getString("dataFine").isEmpty() && rs.getString("dataFine") != null){
+                        dataFinePatologiaParsed = LocalDate.parse(rs.getString("dataFine"));
+                    }
+
+                    Patologia patologia = new Patologia(
+                            nomePaziente,
+                            rs.getString("patologiaConcomitante"),
+                            dataInizioPatologiaParsed,
+                            dataFinePatologiaParsed
+                    );
+
+                    patologie.add(patologia);
+                }
+
+                //Aggiunta delle patologie nella tabella
+                tabellaPatologie.setItems(patologie);
+
+            } catch (Exception e) {
+                System.out.println("Errore caricamento patologie concomitanti: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("Errore caricamento patologie concomitanti: " + e.getMessage());
+        } finally {
+            // Chiudi tutte le risorse in ordine inverso
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (pstmt != null) pstmt.close(); } catch (SQLException e) { /* ignore */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* ignore */ }
+        }
+
+    }
+
+    public static class Patologia {
+
+        private final String nomePazientePatologia;
+        private final String patologiaConcomitante;
+        private final LocalDate dataInizioPatologia;
+        private final LocalDate dataFinePatologia;
+
+        public Patologia(String nomePazientePatologia, String patologiaConcomitante, LocalDate dataInizioPatologia, LocalDate dataFinePatologia) {
+            this.nomePazientePatologia = nomePazientePatologia;
+            this.patologiaConcomitante = patologiaConcomitante;
+            this.dataInizioPatologia = dataInizioPatologia;
+            this.dataFinePatologia = dataFinePatologia;
+        }
+
+        public String getNomePazientePatologia() { return this.nomePazientePatologia; }
+        public String getPatologiaConcomitante() { return this.patologiaConcomitante; }
+        public LocalDate getDataInizioPatologia() { return this.dataInizioPatologia; }
+        public LocalDate getDataFinePatologia() { return this.dataFinePatologia; }
+
+    }
+
+    /*
+     *
+     *
+     *       ------------>       FINE SEZIONE TABELLA PATOLOGIE CONCOMITANTI !!!!    <-----------
+     *
+     *
+     */
 
     @FXML
     public void onHomePagePressed(){
