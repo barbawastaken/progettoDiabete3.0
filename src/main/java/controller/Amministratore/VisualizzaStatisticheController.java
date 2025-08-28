@@ -490,47 +490,6 @@ public class VisualizzaStatisticheController {
         }
     }
 
-    /*public static class Terapia {
-
-        private final SimpleStringProperty nomePaziente;
-        private final SimpleStringProperty terapia;
-        private final SimpleStringProperty farmaco;
-        private final SimpleStringProperty quantita;
-        private final SimpleStringProperty assunzioniGiornaliere;
-        private final SimpleStringProperty indicazioni;
-
-        public Terapia(String nomePaziente, String terapia, String farmaco, String quantita,
-                       String assunzioniGiornaliere, String indicazioni) {
-            this.nomePaziente = new SimpleStringProperty(nomePaziente);
-            this.terapia = new SimpleStringProperty(terapia);
-            this.farmaco = new SimpleStringProperty(farmaco);
-            this.quantita = new SimpleStringProperty(quantita);
-            this.assunzioniGiornaliere = new SimpleStringProperty(assunzioniGiornaliere);
-            this.indicazioni = new SimpleStringProperty(indicazioni);
-        }
-
-        // Getter classici
-        public String getNomePaziente() { return nomePaziente.get(); }
-        public String getTerapia() { return terapia.get(); }
-        public String getFarmaco() { return farmaco.get(); }
-        public String getQuantita() { return quantita.get(); }
-        public String getAssunzioniGiornaliere() { return assunzioniGiornaliere.get(); }
-        public String getIndicazioni() { return indicazioni.get(); }
-
-        // Metodi Property (per TableView lambda)
-        public SimpleStringProperty nomePazienteProperty() { return nomePaziente; }
-        public SimpleStringProperty terapiaProperty() { return terapia; }
-        public SimpleStringProperty farmacoProperty() { return farmaco; }
-        public SimpleStringProperty quantitaProperty() { return quantita; }
-        public SimpleStringProperty assunzioniGiornaliereProperty() { return assunzioniGiornaliere; }
-        public SimpleStringProperty indicazioniProperty() { return indicazioni; }
-
-        @Override
-        public String toString() {
-            return nomePaziente.get() + " " + terapia.get() + " " + farmaco.get();
-        }
-    }*/
-
     private ResultSet completaQuery(String query, String selected) {
 
         String taxCodeSelezionato = null;
