@@ -10,6 +10,7 @@
 
     <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
     <top>
+        <!--
         <HBox fx:id="topBar" alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
             <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
                     <Image url="@../images/userImage.png" />
@@ -20,6 +21,8 @@
             <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
             <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
         </HBox>
+        -->
+        <HBox fx:id="navbarContainer"></HBox>
     </top>
 
     <center>

@@ -1,12 +1,15 @@
 package model.Paziente;
 
+import controller.Session;
+import model.getUsefulInfos;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PazienteModel {
+public class PazienteModel  {
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
 
@@ -31,6 +34,8 @@ public class PazienteModel {
         conn.close();
         return map;
     }*/
+
+
 
     public List<TerapiaModel> getTerapie(String taxCode){
 

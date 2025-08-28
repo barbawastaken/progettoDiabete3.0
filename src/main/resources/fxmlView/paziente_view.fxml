@@ -62,9 +62,13 @@
 
 </BorderPane> -->
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.PazienteController">
+<?import controller.NavBar?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.PazienteController">
 
-    <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
+    <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili
+     prefHeight="500.0" prefWidth="800.0"-->
+
+    <!--
     <top>
         <HBox fx:id="topBar" alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
             <ImageView fx:id="immagineProfilo" fitHeight="60" fitWidth="60" preserveRatio="true">
@@ -79,6 +83,11 @@
             <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
             <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
         </HBox>
+    </top>
+    -->
+
+    <top>
+        <HBox fx:id="navBarContainer"/>
     </top>
 
     <!-- LEFT: griglia 2x2 di bottoni + scroll -->

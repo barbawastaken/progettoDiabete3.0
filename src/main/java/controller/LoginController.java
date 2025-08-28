@@ -27,6 +27,7 @@ public class LoginController {
 
     @FXML
     private void onLoginPressed() throws IOException {
+
         String taxCode = taxCodeField.getText();
         String password = passwordField.getText();
         System.out.println(taxCode);
@@ -34,12 +35,12 @@ public class LoginController {
         this.taxCode = taxCode;
         if(loginModel.checkLogin(taxCode, password)){
 
+
             /*
             qua ci dovrebbe essere una istanza di viewnavigator che chiamerebbe la funzione
             to
              */
-            Stage stage = (Stage) taxCodeField.getScene().getWindow();
-            stage.close();
+
         } else{error.setVisible(true);}
 
 
@@ -55,6 +56,8 @@ public class LoginController {
 
     @FXML
     private void initialize() {
+
+
         error.setVisible(false);
 
     }

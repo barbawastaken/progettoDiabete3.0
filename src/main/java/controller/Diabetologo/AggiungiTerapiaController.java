@@ -1,5 +1,7 @@
 package controller.Diabetologo;
 
+import controller.NavBar;
+import controller.NavBarTags;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.AggiungiTerapiaModel;
@@ -22,6 +25,8 @@ public class AggiungiTerapiaController {
     private Paziente paziente;
     private String taxCodeDiabetologo;
 
+    @FXML
+    private HBox navbarContainer;
     @FXML
     private TextField terapiaField;
 
@@ -43,6 +48,13 @@ public class AggiungiTerapiaController {
     @FXML
     private Button confermaButton;
     private ActionEvent DettaglioPazienteController;
+
+    @FXML
+    private void initialize(){
+        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
+    }
 
     @FXML
     private void handleHomepage(javafx.event.ActionEvent event) {

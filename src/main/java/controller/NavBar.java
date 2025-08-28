@@ -6,18 +6,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import model.LoginModel;
 
 public class NavBar extends HBox {
-    private boolean isAuthenticated;
-    private String username;
 
-    public NavBar() {
-        this(false, null);
-    }
 
-    public NavBar(boolean isAuthenticated, String username) {
-        this.isAuthenticated = isAuthenticated;
-        this.username = username;
+    private NavBarTags navbarRequested;
+
+
+    public NavBar(NavBarTags navbarRequested) {
+        this.navbarRequested = navbarRequested;
+
         initialize();
     }
 
@@ -25,11 +24,13 @@ public class NavBar extends HBox {
      * Initialize the navigation bar
      */
     private void initialize() {
-        this.setSpacing(10);
+        this.setSpacing(20);
+        this.setMaxWidth(Double.MAX_VALUE);
+
         this.setPadding(new Insets(10));
         this.setStyle("-fx-background-color: #007bff;");
 
-        Label brandLabel = new Label("Dash App");
+        Label brandLabel = new Label("Glucose Keeper");
         brandLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 18px;");
         this.getChildren().add(brandLabel);
 
@@ -38,33 +39,81 @@ public class NavBar extends HBox {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         this.getChildren().add(spacer);
 
-        // Create buttons based on authentication status
-        if (isAuthenticated) {
-            createAuthenticatedNavButtons();
-        } else {
-            createUnauthenticatedNavButtons();
+        if(navbarRequested == NavBarTags.PAZIENTE) {
+            navbarPerPazienti();
+        } else if(navbarRequested == NavBarTags.PAZIENTE_toHomepage) {
+            navbarToHomepagePaziente(Session.getInstance());
+        } else if(navbarRequested == NavBarTags.DIABETOLOGO){
+            navbarPerDiabetologi();
+        } else if (navbarRequested == NavBarTags.DIABETOLOGO_toHomepage) {
+            navbarToHomepageDiabetologo();
         }
     }
 
     /**
      * Create navigation buttons for authenticated users
      */
+
+    /*
     private void createAuthenticatedNavButtons() {
         Button homeBtn = createNavButton("Home", e -> ViewNavigator.navigateToHome());
         Button dashboardBtn = createNavButton("Dashboard", e -> ViewNavigator.navigateToDashboard());
         Button profileBtn = createNavButton("Profile", e -> ViewNavigator.navigateToProfile());
 
-        Label userLabel = new Label("Hello, " + username);
-        userLabel.setStyle("-fx-text-fill: white;");
+        //Label userLabel = new Label("Hello, " + username);
+        //userLabel.setStyle("-fx-text-fill: white;");
 
         Button logoutBtn = createNavButton("Logout", e -> ViewNavigator.logout());
 
-        this.getChildren().addAll(homeBtn, dashboardBtn, profileBtn, userLabel, logoutBtn);
+        this.getChildren().addAll(homeBtn, dashboardBtn, profileBtn, logoutBtn);
     }
+    */
+    /*
+    * creo la navbar per i pazienti
+     */
+
+
+    /*
+    NavBar che ci serve nella homepage del paziente
+     */
+    private void navbarPerPazienti(){
+        Button emailButton = createNavButton("EMAIL", e -> ViewNavigator.navigateToEmail());
+        Button profileButton = createNavButton("PROFILO", e-> ViewNavigator.navigateToProfilePaziente());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+
+        this.getChildren().addAll(emailButton, profileButton, logoutButton);
+    }
+
+    private void navbarPerDiabetologi(){
+        Button profileButton = createNavButton("PROFILO", e-> ViewNavigator.navigateToProfileDiabetologo());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+
+        this.getChildren().addAll(profileButton, logoutButton);
+    }
+
+    /*
+    * NavBar che usiamo in generale quando in un menu c'è solo la possibilità di tornare alla home
+     */
+
+    private void navbarToHomepagePaziente(Session user){
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToPaziente());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+        this.getChildren().addAll(homepageButton, logoutButton);
+    }
+
+    private void navbarToHomepageDiabetologo(){
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToDiabetologo());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+        this.getChildren().addAll(homepageButton, logoutButton);
+    }
+
+
 
     /**
      * Create navigation buttons for unauthenticated users
      */
+
+    /*
     private void createUnauthenticatedNavButtons() {
         Button homeBtn = createNavButton("Home", e -> ViewNavigator.navigateToHome());
         Button loginBtn = createNavButton("Login", e -> ViewNavigator.navigateToLogin());
@@ -72,6 +121,8 @@ public class NavBar extends HBox {
 
         this.getChildren().addAll(homeBtn, loginBtn, registerBtn);
     }
+
+     */
 
     /**
      * Create a styled navigation button
@@ -93,9 +144,9 @@ public class NavBar extends HBox {
     /**
      * Update the navigation bar based on authentication status
      */
-    public void updateAuthStatus(boolean isAuthenticated, String username) {
-        this.isAuthenticated = isAuthenticated;
-        this.username = username;
+    public void updateAuthStatus( String username) {
+
+
         this.getChildren().clear();
         initialize();
     }

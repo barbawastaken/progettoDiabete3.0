@@ -1,5 +1,8 @@
 package controller.Diabetologo;
 
+import controller.NavBar;
+import controller.NavBarTags;
+import controller.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.VisualizzaPazientiModel;
@@ -27,7 +31,7 @@ public class VisualizzaPazientiController implements Initializable {
 
     private String taxCode;
     private final VisualizzaPazientiModel visualizzaPazientiModel = new VisualizzaPazientiModel();
-
+    @FXML private HBox navbarContainer;
     @FXML private TableView<Paziente> tabella;
     @FXML private TableColumn<Paziente, String> taxCodeColumn;
     @FXML private TableColumn<Paziente, String> nomeColumn;
@@ -48,6 +52,12 @@ public class VisualizzaPazientiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        this.setTaxCode(Session.getInstance().getTaxCode()); //IMPORTANTE!! altrimenti si rompe tutto
+        navbarContainer.getChildren().add(navbar);
+
         taxCodeColumn.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
@@ -100,8 +110,9 @@ public class VisualizzaPazientiController implements Initializable {
     }
 
     private void loadPazienti() {
-        pazienti.setAll(visualizzaPazientiModel.getPazientiByDiabetologo(taxCode));
+        pazienti.setAll(visualizzaPazientiModel.getPazientiByDiabetologo(Session.getInstance().getTaxCode()));
         tabella.setItems(pazienti);
+        System.out.println("da load pazienti: " + pazienti.toString());
     }
 
     @FXML

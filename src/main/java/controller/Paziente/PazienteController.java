@@ -1,11 +1,10 @@
 package controller.Paziente;
 
-import controller.LoginController;
+import controller.*;
 import controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController;
 import controller.Paziente.AssunzioneFarmaco.AssunzioneFarmacoController;
 import controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController;
 import controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import model.Paziente.TerapiaModel;
-import view.Paziente.PazienteView;
+
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -31,8 +30,11 @@ import java.util.List;
 
 public class PazienteController {
 
-    private String taxCode;
+    private Session user = Session.getInstance();
+    private String taxCode; //magari questo lo potremo eliminare più avanti, è solo per non far scoppiare tutto
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+
+
 
     @FXML private Button rilevaGlicemia;
     @FXML private ComboBox<String> filtroPeriodoComboBox;
@@ -45,6 +47,7 @@ public class PazienteController {
     @FXML private TableColumn<TerapiaModel, String> farmaco_prescritto;
     @FXML private TableColumn<TerapiaModel, String> quantita;
     @FXML private TableColumn<TerapiaModel, String> numero_assunzioni_giornaliere;
+    @FXML private HBox navBarContainer;
 
     @FXML
     public void initialize() {
@@ -55,9 +58,18 @@ public class PazienteController {
             stage.setMinHeight(500);
         });*/
 
+        /* --> commentato da me (barba 25/08/25)
+
         topBar.heightProperty().addListener((obs, oldVal, newVal) -> {
             immagineProfilo.setFitHeight(newVal.doubleValue());
         });
+        */
+        NavBar navBar = new NavBar(NavBarTags.PAZIENTE);
+        navBar.prefWidthProperty().bind(navBarContainer.widthProperty()); //riga che serve ad adattare la navbar alla pagina
+        System.out.println("tax code quando viene caricato il controller del paziente: " + Session.getInstance().getTaxCode());
+        navBarContainer.getChildren().add(navBar);
+
+        this.setTaxCode();
 
         filtroPeriodoComboBox.setItems(FXCollections.observableArrayList("Ultima settimana", "Ultimo mese", "Tutto"));
         filtroPeriodoComboBox.setValue("Tutto");
@@ -65,8 +77,8 @@ public class PazienteController {
         filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico());
     }
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
+    public void setTaxCode() {
+        this.taxCode = Session.getInstance().getTaxCode();
         caricaDatiGlicemia(LocalDate.of(2025, 1, 1));
 
         terapia.setCellValueFactory(new PropertyValueFactory<>("terapia"));
@@ -83,6 +95,7 @@ public class PazienteController {
         mostraNotifiche(farmaciNotifiche);
     }
 
+
     @FXML
     private void onEmailClicked(){
         try{
@@ -93,10 +106,6 @@ public class PazienteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/email_paziente_view.fxml"));
             Parent root = loader.load();
 
-            EmailPazienteController emailPazienteController = loader.getController();
-            emailPazienteController.setTaxCode(taxCode);
-            emailPaziente.setScene(new Scene(root));
-            emailPaziente.show();
 
         } catch (IOException e){
             System.out.println("Errore caricamento pagina email!" + e.getMessage());
@@ -113,9 +122,6 @@ public class PazienteController {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/profiloPaziente.fxml"));
             Parent root = loader.load();
-
-            ModificaPazienteController modificaPazienteController = loader.getController();
-            modificaPazienteController.setTaxCode(taxCode);
             profiloPaziente.setScene(new Scene(root));
             profiloPaziente.show();
 
@@ -150,59 +156,23 @@ public class PazienteController {
 
     @FXML
     private void onRilevazioneGlicemiaClicked() throws IOException {
-        Stage stage = new Stage();
-        stage.setTitle("Rilevazione Glicemia");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/rilevazione_glicemia_view.fxml"));
-        Parent root = loader.load();
-        RilevazioneGlicemiaController controller = loader.getController();
-        controller.setTaxCode(taxCode);
-        stage.setScene(new Scene(root));
-        stage.show();
+        ViewNavigator.navigateToRilevazioneGlicemia();
 
     }
 
     @FXML
     private void onAddSymptomsClicked() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiunta_sintomi_view.fxml"));
-        Parent root = loader.load();
-        AggiuntaSintomiController controller = loader.getController();
-        controller.setTaxCode(taxCode);
-        Stage stage = new Stage();
-        stage.setTitle("Aggiunta sintomi");
-        stage.setScene(new Scene(root));
-        stage.show();
+        ViewNavigator.navigateToAddSympoms();
     }
 
     @FXML
     private void onAddAssunzioneFarmacoClicked() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/assunzione_farmaco_view.fxml"));
-        Parent root = loader.load();
-        AssunzioneFarmacoController controller = loader.getController();
-        controller.setTaxCode(taxCode);
-
-        Stage stage = new Stage();
-        stage.setTitle("Assunzione farmaco");
-        stage.setScene(new Scene(root));
-        stage.show();
+        ViewNavigator.navigateToAssunzioneFarmaco();
     }
 
     @FXML
     public void onConcomitantiClicked() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/patologie_concomitanti_view.fxml"));
-        Parent root = loader.load();
-        PatologieConcomitantiController controller = loader.getController();
-        controller.setTaxCode(taxCode);
-
-        Stage stage = new Stage();
-        stage.setTitle("Specifica patologie concomitanti");
-        stage.setScene(new Scene(root));
-        stage.show();
-
-    }
-
-    public PazienteController(){
+        ViewNavigator.navigateToAggiungiTerapia();
 
     }
 
@@ -296,46 +266,4 @@ public class PazienteController {
         alert.showAndWait();
     }
 
-
-    public PazienteController(String taxCode, PazienteModel pazienteModel, PazienteView pazienteView) {
-
-
-
-        Stage pazienteStage = new Stage();
-        pazienteStage.setTitle("Homepage paziente");
-        pazienteStage.setScene(pazienteView.getScene());
-
-        pazienteStage.setMinWidth(600);
-        pazienteStage.setMinHeight(800);
-        pazienteStage.alwaysOnTopProperty();
-
-        pazienteStage.show();
-
-
-
-        /*pazienteView.getRilevazioniGlicemiaButton().setOnAction(e -> {
-
-            RilevazioneGlicemiaModel rilevazioneGlicemiaModel = new RilevazioneGlicemiaModel();
-            RilevazioneGlicemiaView rilevazioneGlicemiaView = new RilevazioneGlicemiaView();
-
-            try {
-                new RilevazioneGlicemiaController(taxCode, rilevazioneGlicemiaModel, rilevazioneGlicemiaView, pazienteStage);
-            } catch (Exception ex) {
-                System.out.println("Errore: " + ex.getMessage());
-            }
-        });*/
-
-        /*pazienteView.getInserimentoSintomiButton().setOnAction(e -> {
-
-            AggiuntaSintomiModel aggiuntaSintomiModel = new AggiuntaSintomiModel();
-            AggiuntaSintomiView aggiuntaSintomiView = new AggiuntaSintomiView();
-
-            try {
-                new AggiuntaSintomiController(taxCode, aggiuntaSintomiModel, aggiuntaSintomiView, pazienteStage);
-            } catch (Exception ex) {
-                System.out.println("Errore: " + ex.getMessage());
-            }
-
-        });*/
-    }
 }

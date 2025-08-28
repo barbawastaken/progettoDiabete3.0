@@ -1,10 +1,13 @@
 package controller.Paziente.RilevazioneGlicemia;
 
+import controller.NavBar;
+import controller.NavBarTags;
 import controller.Paziente.PazienteController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
@@ -13,6 +16,9 @@ import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
 import javafx.fxml.FXML;
 
 public class RilevazioneGlicemiaController {
+
+    @FXML
+    private HBox navbarContainer;
 
     @FXML
     private TextField milligrammi;
@@ -37,6 +43,9 @@ public class RilevazioneGlicemiaController {
    private void initialize() {
         prepost.getItems().addAll("PRE", "POST");
         pastoGlicemia.getItems().addAll("Colazione", "Pranzo", "Cena");
+        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().addAll(navbar);
    }
 
     @FXML

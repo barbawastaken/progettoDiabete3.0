@@ -5,16 +5,24 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController">
-   <children>
-      <TextField layoutX="72.0" layoutY="62.0" prefHeight="26.0" prefWidth="64.0" fx:id="milligrammi"/>
-      <ComboBox fx:id="pastoGlicemia" layoutX="72.0" layoutY="125.0" prefWidth="150.0"/>
-      <Text layoutX="68.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi"/>
-      <Text layoutX="68.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasto di misurazione" />
-      <ComboBox layoutX="256.0" layoutY="125.0" prefHeight="26.0" prefWidth="77.0" fx:id="prepost"/>
-      <Text layoutX="256.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" />
-      <DatePicker layoutX="72.0" layoutY="187.0" fx:id="dataRilevamento"/>
-      <Text layoutX="68.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" />
-      <Button layoutX="68.0" layoutY="273.0" mnemonicParsing="false" text="Reset" fx:id="reset" onAction="#onResetPressed"/>
-      <Button layoutX="188.0" layoutY="273.0" mnemonicParsing="false" text="Invia" fx:id="submit" onAction="#onSubmitPressed"/>
+
+
+    <children>
+        <HBox fx:id="navbarContainer"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
+              spacing="10.0"
+              alignment="CENTER_LEFT"> </HBox>
+      <TextField layoutX="72.0" layoutY="75.0" prefHeight="26.0" prefWidth="64.0" fx:id="milligrammi"/>
+      <ComboBox fx:id="pastoGlicemia" layoutX="85.0" layoutY="138.0" prefWidth="150.0"/>
+      <Text layoutX="68.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi"/>
+      <Text layoutX="68.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasto di misurazione" />
+      <ComboBox layoutX="256.0" layoutY="138.0" prefHeight="26.0" prefWidth="77.0" fx:id="prepost"/>
+      <Text layoutX="256.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" />
+      <DatePicker layoutX="72.0" layoutY="200.0" fx:id="dataRilevamento"/>
+      <Text layoutX="68.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" />
+      <Button layoutX="68.0" layoutY="286.0" mnemonicParsing="false" text="Reset" fx:id="reset" onAction="#onResetPressed"/>
+      <Button layoutX="188.0" layoutY="286.0" mnemonicParsing="false" text="Invia" fx:id="submit" onAction="#onSubmitPressed"/>
    </children>
 </AnchorPane>

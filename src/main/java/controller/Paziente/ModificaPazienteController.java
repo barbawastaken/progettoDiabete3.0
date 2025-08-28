@@ -1,6 +1,6 @@
 package controller.Paziente;
 
-import controller.LoginController;
+import controller.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Paziente.PazienteModel;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -23,9 +24,16 @@ import java.util.regex.Pattern;
 
 public class ModificaPazienteController {
 
-    private String taxCode;
+    /*
+        * ho provato a cancellare delle classi che con l'introduzione della navbar non ci servono
+        * più ma si è stra arrabbiato -> da pensarci
+     */
+
+    private Session userData = Session.getInstance();
+
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
-    @FXML private HBox topBar;
+    @FXML private HBox navbarContainer;
+
 
     @FXML private TextField nome;
     @FXML private TextField cognome;
@@ -56,10 +64,9 @@ public class ModificaPazienteController {
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
 
-    public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
-
-    private void inizialize() {
-
+    @FXML
+    public void initialize() {
+        /*
         String query = "SELECT nome, cognome, taxCode, email, telephoneNumber, birthday, gender, Altezza, " +
                 "Peso, address, number, city, cap FROM utenti WHERE taxCode = ?";
 
@@ -67,7 +74,7 @@ public class ModificaPazienteController {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, taxCode);
+            stmt.setString(1, user.getTaxCode());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -133,7 +140,35 @@ public class ModificaPazienteController {
             System.out.println("Errore caricamento dati utente: " + e);
         }
 
+
+         */
+
+        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
+
+
+        Session.getInfos();
+
+        this.nome.setText(userData.getNome());
+        this.cognome.setText(userData.getCognome());
+        this.taxCodeFXML.setText(userData.getTaxCode());
+        this.email.setText(userData.getEmail());
+        this.telefono.setText(userData.getTelephone());
+        this.dataNascita.setText(userData.getBirthday());
+        this.altezza.setText(userData.getHeight().toString());
+        this.peso.setText(userData.getWeight().toString());
+        this.sesso.setText(userData.getSex());
+        this.citta.setText(userData.getCity());
+        this.indirizzo.setText(userData.getAddress());
+        this.cap.setText(userData.getCap().toString());
+        this.numero.setText(userData.getCivic());
+
+
+
     }
+
+
 
     @FXML
     private void onLogoutPressed(){
@@ -144,14 +179,13 @@ public class ModificaPazienteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
             Parent root = loader.load();
             LoginController loginController = loader.getController();
-            loginController.setTaxCode(taxCode);
+            loginController.setTaxCode(userData.getTaxCode());
             loginStage.setScene(new Scene(root));
             loginStage.show();
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
 
-        Stage pazienteStage = (Stage)topBar.getScene().getWindow();
-        pazienteStage.close();
+
 
     }
 
@@ -161,17 +195,17 @@ public class ModificaPazienteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/paziente_view.fxml"));
 
             Parent root = loader.load();
-            PazienteController pazienteController = loader.getController();
-            pazienteController.setTaxCode(taxCode);
             Stage stage = new Stage();
             stage.setTitle("Paziente");
             stage.setScene(new Scene(root, 650, 500));
             stage.show();
 
         } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
-
+        /*
         Stage profiloPaziente = (Stage)topBar.getScene().getWindow();
         profiloPaziente.close();
+        * inutile dato l'inserimento di navbar funzionante
+         */
 
     }
 
@@ -193,11 +227,12 @@ public class ModificaPazienteController {
             stmt.setString(7, citta.getText());
             stmt.setString(8, cap.getText());
 
-            stmt.setString(9, taxCode);
+            stmt.setString(9, userData.getTaxCode());
 
             stmt.executeUpdate();
             System.out.println("Salvataggio modifiche eseguito!");
-            onHomePagePressed();
+            //onHomePagePressed();
+            ViewNavigator.navigateToProfilePaziente();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio dei dati: " + e.getMessage());
@@ -283,7 +318,7 @@ public class ModificaPazienteController {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, nuovaPassword);
-            stmt.setString(2, taxCode);
+            stmt.setString(2, userData.getTaxCode());
 
             stmt.executeUpdate();
 
@@ -298,12 +333,13 @@ public class ModificaPazienteController {
         PreparedStatement stmt = conn.prepareStatement(query)){
 
             stmt.setString(1, nuovaPassword);
-            stmt.setString(2, taxCode);
+            stmt.setString(2, userData.getTaxCode());
 
             stmt.executeUpdate();
 
             System.out.println("Modifiche salvate correttamente!");
-            onHomePagePressed();
+            //onHomePagePressed();
+            ViewNavigator.navigateToProfilePaziente();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio della password (loginTable): " + e.getMessage());

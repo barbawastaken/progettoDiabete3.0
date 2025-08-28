@@ -1,6 +1,6 @@
 package controller.Diabetologo;
 
-import controller.LoginController;
+import controller.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 
 public class ModificaDiabetologoController {
 
-    private String taxCode;
+    private String taxCode = Session.getInstance().getTaxCode() ;
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
-    @FXML private HBox topBar;
+    @FXML private HBox navbarContainer;
     @FXML private TextField nome;
     @FXML private TextField cognome;
     @FXML private TextField password;
@@ -44,9 +44,12 @@ public class ModificaDiabetologoController {
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
 
-    public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
+    @FXML
+    private void initialize() {
 
-    private void inizialize() {
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
 
         String query = "SELECT nome, cognome, password, taxCode, email, telephoneNumber, birthday, gender, " +
                 "address, number, city, cap FROM utenti WHERE taxCode = ?";
@@ -65,8 +68,8 @@ public class ModificaDiabetologoController {
             this.cognome.setText(rs.getString("cognome"));
             this.cognome.setEditable(false);
 
-            this.password.setText(rs.getString("password"));
-            this.password.setEditable(false);
+            //this.password.setText(rs.getString("password"));
+            //this.password.setEditable(false);
 
             this.taxCodeFXML.setText(rs.getString("taxCode"));
             this.taxCodeFXML.setEditable(false);
@@ -111,46 +114,6 @@ public class ModificaDiabetologoController {
 
     }
 
-    @FXML
-    private void onLogoutPressed(){
-        try {
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
-            Parent root = loader.load();
-            LoginController loginController = loader.getController();
-            loginController.setTaxCode(taxCode);
-            loginStage.setScene(new Scene(root));
-            loginStage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
-
-        Stage pazienteStage = (Stage)topBar.getScene().getWindow();
-        pazienteStage.close();
-
-    }
-
-    @FXML void onHomePagePressed(){
-
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/diabetologo_view.fxml"));
-
-            DiabetologoController diabetologoController = new DiabetologoController();
-            diabetologoController.setTaxCode(taxCode);
-            loader.setController(diabetologoController);
-
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Diabetolgo");
-            stage.setScene(new Scene(root, 650, 500));
-            stage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento homepage diabetologo!" + e.getMessage()); }
-
-        Stage profiloPaziente = (Stage)topBar.getScene().getWindow();
-        profiloPaziente.close();
-
-    }
 
     @FXML void onSendButtonPressed(){
 
@@ -170,7 +133,7 @@ public class ModificaDiabetologoController {
             stmt.setString(7, taxCode);
             stmt.executeUpdate();
             System.out.println("Salvataggio modifiche eseguito!");
-            onHomePagePressed();
+            ViewNavigator.navigateToDiabetologo();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio dei dati: " + e.getMessage());
@@ -262,7 +225,7 @@ public class ModificaDiabetologoController {
             stmt.executeUpdate();
 
             System.out.println("Modifiche salvate correttamente!");
-            onHomePagePressed();
+            ViewNavigator.navigateToDiabetologo();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio della password (loginTable): " + e.getMessage());

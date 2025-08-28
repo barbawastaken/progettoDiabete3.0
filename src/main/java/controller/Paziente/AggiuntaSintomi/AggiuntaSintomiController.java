@@ -1,7 +1,10 @@
 package controller.Paziente.AggiuntaSintomi;
 
+import controller.NavBar;
+import controller.NavBarTags;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
@@ -10,7 +13,8 @@ public class AggiuntaSintomiController {
 
     AggiuntaSintomiModel model;
     String taxCode;
-
+    @FXML
+    private HBox navbarContainer;
     @FXML
     private ComboBox<String> symptoms;
     @FXML
@@ -24,7 +28,9 @@ public class AggiuntaSintomiController {
     private void initialize() {
         model = new AggiuntaSintomiModel();
         symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
-
+        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
     }
 
     @FXML

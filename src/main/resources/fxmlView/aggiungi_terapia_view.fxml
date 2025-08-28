@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.AggiungiTerapiaController">
 
-    <children>
-        <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-            <!-- Barra superiore -->
+    <children>
+
+
+        <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox fx:id="navbarContainer" prefHeight="60" />
+            <!-- Barra superiore
             <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="10"/>
@@ -25,17 +26,17 @@
                 <Pane HBox.hgrow="ALWAYS"/>
                 <Button onAction="#handleHomepage" prefHeight="30.0" prefWidth="80.0" text="Homepage" />
             </HBox>
-
+-->
             <!-- Spazio verticale flessibile -->
             <Pane VBox.vgrow="ALWAYS" />
 
             <!-- Form inserimento dati -->
-            <VBox alignment="CENTER_LEFT" spacing="10">
+            <VBox alignment="CENTER_LEFT" prefHeight="330.0" prefWidth="492.0" spacing="10">
                 <padding>
-                    <Insets top="10" right="20" bottom="10" left="20"/>
+                    <Insets bottom="10" left="20" right="20" top="10" />
                 </padding>
 
-                <Label text="Terapia" />
+                <Label prefHeight="18.0" prefWidth="90.0" text="Terapia" />
                 <TextField fx:id="terapiaField" promptText="Inserisci il nome della terapia" />
 
                 <Label text="Farmaco" />
@@ -54,10 +55,10 @@
             <!-- Pulsanti finali -->
             <HBox alignment="CENTER" spacing="20">
                 <padding>
-                    <Insets top="10" right="20" bottom="10" left="20"/>
+                    <Insets bottom="10" left="20" right="20" top="10" />
                 </padding>
-                <Button fx:id="resetButton" text="Reset" onAction="#handleReset" prefWidth="100" />
-                <Button fx:id="confermaButton" text="Conferma" onAction="#handleConferma" prefWidth="100" />
+                <Button fx:id="resetButton" onAction="#handleReset" prefWidth="100" text="Reset" />
+                <Button fx:id="confermaButton" onAction="#handleConferma" prefWidth="100" text="Conferma" />
             </HBox>
 
             <!-- Spazio finale per centrare tutto -->

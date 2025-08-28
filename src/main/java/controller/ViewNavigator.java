@@ -3,6 +3,7 @@ package controller;
 import HomePages.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +18,8 @@ public class ViewNavigator {
 
     // Current authenticated username
     private static String authenticatedUser = null;
+
+    LoginModel loginModel;
 
     /**
      * Set the main controller reference
@@ -35,6 +38,7 @@ public class ViewNavigator {
             URL fxmlUrl = Main.class.getResource("/fxmlView/" + fxml);
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Node view = loader.load();
+            Object controller = loader.getController();
             mainController.setContent(view);
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,52 +46,44 @@ public class ViewNavigator {
         }
     }
 
-    /**
-     * Navigate to the home view
-     */
-    public static void navigateToHome() {
-        loadView("main_view.fxml");
+    public static void goBack(String fxml, String taxCode){
+
     }
-    public static void navigateToSterco(){
-        loadView("sterco.fxml");
-    }
+
 
     /**
      * Navigate to the login view
      */
     public static void navigateToLogin() {
-        loadView("LoginView.fxml");
+        loadView("login_view.fxml");
     }
 
-    /**
-     * Navigate to the register view
-     */
-    public static void navigateToRegister() {
-        loadView("RegisterView.fxml");
-    }
+
+
+
 
     /**
      * Navigate to the dashboard view (protected)
      * Will redirect to login if not authenticated
      */
-    public static void navigateToDashboard() {
-        if (isAuthenticated()) {
-            loadView("DashboardView.fxml");
-        } else {
-            navigateToLogin();
-        }
+
+
+    public static void navigateToEmail(){
+        loadView("email_paziente_view.fxml");
+        System.out.println("taxCode passato da navigateToEmail: " + Session.getInstance().getTaxCode());
     }
 
     /**
      * Navigate to the profile view (protected)
      * Will redirect to login if not authenticated
      */
-    public static void navigateToProfile() {
-        if (isAuthenticated()) {
-            loadView("ProfileView.fxml");
-        } else {
-            navigateToLogin();
-        }
+    public static void navigateToProfilePaziente() {
+
+            loadView("profiloPaziente.fxml");
+    }
+
+    public static void navigateToRilevazioneGlicemia(){
+        loadView("rilevazione_glicemia_view.fxml");
     }
 
     /**
@@ -121,6 +117,52 @@ public class ViewNavigator {
     public static void logout() {
         authenticatedUser = null;
         mainController.updateNavBar(false);
-        navigateToHome();
+        navigateToLogin();
+    }
+
+    public static void navigateToPaziente() {
+        /*
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/paziente_view.fxml"));
+
+                            Parent root = loader.load();
+                            PazienteController pazienteController = loader.getController();
+                            pazienteController.setTaxCode(taxCode);
+                            Stage stage = new Stage();
+                            stage.setTitle("Paziente");
+                            stage.setScene(new Scene(root, 650, 500));
+                            stage.show();
+        */
+
+        System.out.println("taxCode quando si naviga sul paziente: "  + Session.getInstance().getTaxCode());
+        loadView("paziente_view.fxml");
+    }
+
+    public static void navigateToLogout() {
+        Session.getInstance().deleteSession();
+        navigateToLogin();
+    }
+
+
+    public static void navigateToAddSympoms() {
+        loadView("aggiunta_sintomi_view.fxml");
+    }
+
+    public static void navigateToAssunzioneFarmaco(){
+        loadView("assunzione_farmaco_view.fxml");
+    }
+
+    public static void navigateToAggiungiTerapia(){
+        loadView("aggiungi_terapia_view.fxml");
+    }
+
+    public static void navigateToDiabetologo(){
+        loadView("diabetologo_view.fxml");
+    }
+    public static void navigateToProfileDiabetologo() {
+        loadView("profiloDiabetologo.fxml");
+    }
+
+    public static void navigateToVisualizzaPazienti() {
+        loadView("visualizza_pazienti_view.fxml");
     }
 }

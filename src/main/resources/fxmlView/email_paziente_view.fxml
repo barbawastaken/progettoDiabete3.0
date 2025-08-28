@@ -8,6 +8,8 @@
 <BorderPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.EmailPazienteController">
 
     <top>
+        <HBox fx:id="navBarContainer"></HBox>
+        <!--
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
             <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
                 <Image url="@../images/userImage.png" />
@@ -16,6 +18,7 @@
             <Pane HBox.hgrow="ALWAYS" />
             <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
         </HBox>
+        -->
     </top>
     <center>
     <VBox alignment="CENTER" spacing="10">

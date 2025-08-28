@@ -1,32 +1,22 @@
 package model;
 
 import controller.Amministratore.AmministratoreController;
-import controller.Diabetologo.DiabetologoController;
-import controller.Paziente.PazienteController;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Amministratore.AmministratoreModel;
-import model.Diabetologo.DiabetologoModel;
-import model.Paziente.PazienteModel;
-import org.mindrot.jbcrypt.BCrypt;
 import view.Amministratore.AmministratoreView;
-import view.Diabetologo.DiabetologoView;
-import view.LoginView;
-import view.Paziente.PazienteView;
 
 import java.io.IOException;
 import java.sql.*;
 
 public class LoginModel {
 
-
-
     public boolean checkLogin(String taxCode, String password){
+
 
         String DB_URL = "jdbc:sqlite:mydatabase.db";
 
@@ -41,9 +31,14 @@ public class LoginModel {
 
                     String userType = rs.getString("userType");
 
+                    /*
+                        Qui dopo aver trovato una corrispondenza con i campi username e password, si trova il tipo di
+                        utente che ha eseguito l'accesso, e viene anche creata la Sessione dell'utente stesso.
+                     */
+
                     switch (userType) {
                         case "PAZIENTE" -> {
-
+                            /*
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/paziente_view.fxml"));
 
                             Parent root = loader.load();
@@ -53,6 +48,24 @@ public class LoginModel {
                             stage.setTitle("Paziente");
                             stage.setScene(new Scene(root, 650, 500));
                             stage.show();
+                            */
+                            Session user = Session.getInstance();
+
+                            user.setTaxCode(taxCode);
+                            user.setNome(null);
+                            user.setCognome(null);
+
+
+
+                            /*
+                            * appena possibile bisogna creare una nuova query che legga le info dalla tabella utenti anziché la tabella
+                            logintable !!!!
+
+                            *Se no un macello: Session può essere riempito solo con il codice fiscale, che potrebbe anche andare bene
+                            se l'idea è quella di fare una query che ti cerca solo quello in mezzo a utenti
+                             */
+                             ViewNavigator.navigateToPaziente();
+
                             return true;
 
 
@@ -60,21 +73,13 @@ public class LoginModel {
                         case "DIABETOLOGO" -> {
                             // Carica il file FXML associato all'interfaccia del diabetologo.
                             // getClass().getResource(...) cerca il file nella cartella "resources/fxmlView".
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/diabetologo_view.fxml"));
-                            DiabetologoController diabetologoController = new DiabetologoController();
-                            diabetologoController.setTaxCode(taxCode);
-                            loader.setController(diabetologoController);
-                            Parent root = loader.load(); // Carica il contenuto del file FXML e crea la struttura grafica
-                            // Recupera l'istanza del controller associato al file diabetologo_view.fxml.
-                            // Questo è il controller specificato con fx:controller nel file FXML.
 
+                            Session user = Session.getInstance();
+                            user.setTaxCode(taxCode);
+                            user.setNome(null);
+                            user.setCognome(null);
+                            ViewNavigator.navigateToDiabetologo();
 
-                            System.out.println("taxCode in LoginModel: " + taxCode);
-                            Stage stage = new Stage();
-                            stage.setTitle("Diabetologo");
-                            stage.setScene(new Scene(root, 650, 500));
-                            stage.show();
-                            return true;
                         }
                         case "AMMINISTRATORE" -> {
 

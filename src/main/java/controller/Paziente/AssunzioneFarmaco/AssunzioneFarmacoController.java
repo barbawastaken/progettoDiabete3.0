@@ -1,7 +1,10 @@
 package controller.Paziente.AssunzioneFarmaco;
 
+import controller.NavBar;
+import controller.NavBarTags;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
 import model.Paziente.AssunzioneFarmaco.AssunzioneFarmacoModel;
@@ -10,7 +13,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class AssunzioneFarmacoController {
-
+    @FXML private HBox navbarContainer;
     @FXML private ComboBox<String> farmacoAssunto;
     @FXML private TextField quantitaAssunta;
     @FXML private DatePicker dataAssunzione;
@@ -32,7 +35,12 @@ public class AssunzioneFarmacoController {
             {
                 setConverter(new LocalTimeStringConverter(DateTimeFormatter.ofPattern("HH:mm"), null));
                 setValue(LocalTime.of(12, 0)); // valore iniziale
+                NavBar navBar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+                navBar.prefWidthProperty().bind(navbarContainer.widthProperty());
+                navbarContainer.getChildren().add(navBar);
             }
+
+
 
             @Override
             public void decrement(int steps) {
