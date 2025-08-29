@@ -40,7 +40,7 @@ public class AmministratoreController {
 
     @FXML
     private void isVisualizzaStatisticheClicked() {
-
+        /*
         try {
 
             Stage stage = new Stage();
@@ -57,6 +57,10 @@ public class AmministratoreController {
 
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina statistiche!" + e.getMessage()); }
+
+         */
+
+        ViewNavigator.navigateToVisualizzaStatistiche();
 
     }
 

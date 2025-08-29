@@ -172,4 +172,7 @@ public class ViewNavigator {
     public static void navigateToPatientDetails() {loadView("dettaglio_paziente_view.fxml");}
 
     public static void navigateToModificaTerapia() {loadView("modifica_terapia_view.fxml");}
+
+    public static void navigateToVisualizzaStatistiche() {loadView("visualizzaStatistiche.fxml");
+    }
 }

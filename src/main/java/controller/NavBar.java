@@ -127,7 +127,9 @@ public class NavBar extends HBox {
 
     private void navbarToHomepageAmministratore(){
         Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToAmministratore());
-        this.getChildren().addAll(homepageButton);
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+
+        this.getChildren().addAll(homepageButton, logoutButton);
     }
 
 

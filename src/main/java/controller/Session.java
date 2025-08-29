@@ -69,6 +69,41 @@ public class Session {
             System.out.println(e.getMessage());
         }
     }
+
+    public static Paziente getInfosOf(String taxCode) {
+
+        String query = "SELECT * FROM utenti WHERE taxCode='"+ taxCode +"'";
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = stmt.executeQuery();
+            Paziente paziente = new Paziente(
+                    rs.getString("taxCode"),
+                    rs.getString("nome"),
+                    rs.getString("cognome"),
+                    rs.getString("gender"),
+                    rs.getString("birthday"),
+                    null, //password
+                    rs.getString("address"),
+                    rs.getString("number"),
+                    rs.getString("cap"),
+                    rs.getString("CountryOfResidence"),
+                    rs.getString("city"),
+                    rs.getString("email"),
+                    rs.getString("telephoneNumber"),
+                    rs.getString("userType"),
+                    rs.getDouble("Peso"),
+                    rs.getDouble("Altezza")
+
+            );
+            return paziente;
+
+        } catch(SQLException e) {
+            System.out.println("Errore nella raccolta dei dati");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     public String getTaxCode() {
         return taxCode;
     }

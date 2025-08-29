@@ -2,6 +2,8 @@ package controller.Amministratore;
 
 import controller.Diabetologo.TabellaModificaTerapiaController;
 import controller.LoginController;
+import controller.NavBar;
+import controller.NavBarTags;
 import controller.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +15,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Diabetologo.Terapia;
 
@@ -31,7 +34,7 @@ public class VisualizzaStatisticheController {
     *   SEZONE COMBOBOX + BUTTON
     *
      */
-
+    @FXML private HBox navbarContainer;
     @FXML private ComboBox<String> pazienteCombo;
     @FXML private Button aggiornaInfoButton;
 
@@ -108,7 +111,9 @@ public class VisualizzaStatisticheController {
     public void initialize() {
 
         setupGrafico();
-
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
         /* SETUP GRAFICO COMPLETO */
 
         String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, " +
