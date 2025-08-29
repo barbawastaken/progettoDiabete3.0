@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.ModificaTerapiaModel;
+import model.Diabetologo.Terapia;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class ModificaTerapiaController {
 
     private String taxCode;
     private Paziente paziente;
+    private Terapia terapia;
     private String taxCodeDiabetologo;
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
@@ -39,14 +41,16 @@ public class ModificaTerapiaController {
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
 
-    private void inizialize() {
+    @FXML
+    private void initialize() {
 
-        String query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzini_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ?";
+        String query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ? AND terapia = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, taxCode);
+            stmt.setString(2, terapia.getTerapia());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -56,7 +60,7 @@ public class ModificaTerapiaController {
 
             this.quantitaField.setText(rs.getString("quantita"));
 
-            this.frequenzaField.setText(rs.getString("numero_assunzini_giornaliere"));
+            this.frequenzaField.setText(rs.getString("numero_assunzioni_giornaliere"));
 
             this.indicazioniField.setText(rs.getString("indicazioni"));
         } catch(Exception e) {
@@ -89,10 +93,10 @@ public class ModificaTerapiaController {
     private void onHomePagePressed(javafx.event.ActionEvent event) {
        try {
            // Carica la nuova view da FXML
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/tabella_modifica_terapia_view.fxml"));
            Parent root = loader.load();
-           DettaglioPazienteController controller = loader.getController();
-           //controller.setPaziente(paziente, taxCodeDiabetologo);
+           TabellaModificaTerapiaController controller = loader.getController();
+           controller.setTaxCode(taxCode, taxCodeDiabetologo);
            // Prendi lo stage corrente dal bottone cliccato
            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -103,7 +107,7 @@ public class ModificaTerapiaController {
            stage.setScene(scene);
 
            //Imposta titolo finestra
-           stage.setTitle("Dettaglio paziente");
+           stage.setTitle("Terapie paziente");
 
            // Mostra la finestra (non chiude, cambia scena)
            stage.show();
@@ -118,32 +122,18 @@ public class ModificaTerapiaController {
 
        String terapia = terapiaField.getText();
        String farmaco = farmacoField.getText();
-       int quantita = Integer.parseInt(quantitaField.getText());
+       String quantita = quantitaField.getText();
        int frequenza = Integer.parseInt(frequenzaField.getText());
        String indicazioni = indicazioniField.getText();
 
         if(terapia.isEmpty() || farmaco.isEmpty()) return;
 
        ModificaTerapiaModel model = new ModificaTerapiaModel();
-       model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo);
+       model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo, this.terapia.getTerapia());
 
-       Alert alert = new Alert(Alert.AlertType.INFORMATION);
-       alert.setTitle("Successo");
-       alert.setHeaderText(null);
-       alert.setContentText("La terapia è stata inserita correttamente nel database.");
-       alert.showAndWait().ifPresent(response -> {
-           if (response == ButtonType.OK) {
-               // Torno indietro alla scena precedente
-               Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-               try {
-                   Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
-                   stage.setScene(new Scene(root));
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
-       });
+       Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+       stage.close();
+       onHomePagePressed(event);
    }
 
     @FXML
@@ -156,9 +146,10 @@ public class ModificaTerapiaController {
         indicazioniField.clear();
     }
 
-    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
+    public void setTaxCode(String taxCode, String taxCodeDiabetologo, Terapia terapia) {
         this.taxCode = taxCode;
         this.taxCodeDiabetologo = taxCodeDiabetologo;
+        this.terapia = terapia;
     }
 
     public void setPaziente(Paziente paziente) {

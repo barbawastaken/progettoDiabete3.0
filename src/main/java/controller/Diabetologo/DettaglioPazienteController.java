@@ -100,15 +100,15 @@ public class DettaglioPazienteController {
 
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_terapia_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/tabella_modifica_terapia_view.fxml"));
             Parent root = loader.load();
 
-            ModificaTerapiaController controller = loader.getController();
+            TabellaModificaTerapiaController controller = loader.getController();
             controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
-            controller.setPaziente(paziente);
+            //controller.setPaziente(paziente);
             Stage currentStage = (Stage) modificaTerapia.getScene().getWindow();
 
-            currentStage.setTitle("Modifica terapia");
+            currentStage.setTitle("Terapie paziente");
             currentStage.setScene(new Scene(root));
             currentStage.show();
 

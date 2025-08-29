@@ -10,12 +10,14 @@ module org.example.demo {
     opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;
     opens controller.Paziente.AssunzioneFarmaco to javafx.fxml;
     opens controller.Paziente.PatologieConcomitanti to javafx.fxml;
-    opens controller.Amministratore to javafx.fxml;
+    opens controller.Amministratore to javafx.fxml, javafx.base;
     opens HomePages to javafx.fxml;
     opens model.Amministratore to javafx.base;
+    opens model.Diabetologo to javafx.base;
     exports controller.Diabetologo to javafx.fxml;
     opens controller.Diabetologo to javafx.fxml;
     opens controller.Paziente.AggiuntaSintomi to javafx.fxml;
+    exports controller.Amministratore;
 
 
     exports HomePages;
