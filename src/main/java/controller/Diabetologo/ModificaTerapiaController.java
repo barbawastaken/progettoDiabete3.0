@@ -1,15 +1,13 @@
 package controller.Diabetologo;
 
 import controller.LoginController;
-import controller.Paziente.PazienteController;
+import controller.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -25,7 +23,7 @@ import java.sql.ResultSet;
 
 public class ModificaTerapiaController {
 
-    private String taxCode;
+    private String taxCode = Session.getInstance().getTaxCode();
     private Paziente paziente;
     private Terapia terapia;
     private String taxCodeDiabetologo;
@@ -39,7 +37,7 @@ public class ModificaTerapiaController {
     @FXML private TextField frequenzaField;
     @FXML private TextField indicazioniField;
 
-    public void setTaxCode(String taxCode) { this.taxCode = taxCode; inizialize();}
+    public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
 
     @FXML
     private void initialize() {

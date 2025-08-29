@@ -1,6 +1,8 @@
 package controller.Amministratore;
 
 import controller.Diabetologo.TabellaModificaTerapiaController;
+import controller.LoginController;
+import controller.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -856,7 +858,7 @@ public class VisualizzaStatisticheController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
 
             LoginController loginController = loader.getController();
-            loginController.setTaxCode(taxCode);
+            loginController.setTaxCode(Session.getInstance().getTaxCode());
 
             Parent root = loader.load();
             loginStage.setScene(new Scene(root));

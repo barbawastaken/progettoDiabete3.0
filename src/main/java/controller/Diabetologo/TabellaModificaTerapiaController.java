@@ -89,7 +89,6 @@ public class TabellaModificaTerapiaController implements Initializable {
 
             ModificaTerapiaController controller = loader.getController();
             controller.setTaxCode(taxCode, taxCodeDiabetologo, terapia);
-            controller.inizialize();
 
             Stage stage = new Stage();
             stage.setTitle("Modifica Terapia");
