@@ -4,6 +4,8 @@ package controller;
     * Classe a pattern singleton = può esistere solo una sessione per volta (perfetta per il nostro caso)
  */
 
+import model.Amministratore.Paziente;
+
 import java.sql.*;
 
 
@@ -26,6 +28,7 @@ public class Session {
     private String civic;
     private String city;
     private Integer cap;
+    private Paziente pazienteInEsame;
 
     private Session() {
 
@@ -177,6 +180,22 @@ public class Session {
         this.cap = cap;
     }
 
+    public void setCap(Integer cap) {
+        this.cap = cap;
+    }
+
+    public Paziente getPazienteInEsame() {
+        return pazienteInEsame;
+    }
+
+    public void setPazienteInEsame(Paziente pazienteInEsame) {
+        this.pazienteInEsame = pazienteInEsame;
+    }
+
+    public void deletePazienteInEsame(){
+        this.pazienteInEsame = null;
+    }
+
     public void brandNewSession(
             String taxCode,
             String nome,
@@ -205,6 +224,7 @@ public class Session {
         this.civic = civic;
         this.city = city;
         this.cap = cap;
+        this.pazienteInEsame = null;
     }
 
     public void deleteSession(){
@@ -221,6 +241,10 @@ public class Session {
         this.civic = null;
         this.city = null;
         this.cap = null;
+        this.pazienteInEsame = null;
 
     }
+
+
+
 }

@@ -3,6 +3,7 @@ package controller.Diabetologo;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,8 +97,10 @@ public class VisualizzaPazientiController implements Initializable {
 
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 2) { // doppio clic
-                    Paziente pazienteSelezionato = row.getItem();
-                    mostraDettagliPaziente(pazienteSelezionato);
+
+                    Session.getInstance().setPazienteInEsame(row.getItem());
+                    ViewNavigator.navigateToPatientDetails();
+
                 }
             });
             return row;
@@ -115,27 +118,26 @@ public class VisualizzaPazientiController implements Initializable {
         System.out.println("da load pazienti: " + pazienti.toString());
     }
 
-    @FXML
-    public void handleHomepageButton(javafx.event.ActionEvent event) {
-        // Prendi la finestra (stage) corrente dal bottone stesso:
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.close();
-
-    }
-
     private void mostraDettagliPaziente(Paziente paziente) {
         try {
+
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
             Parent root = loader.load();
 
             DettaglioPazienteController controller = loader.getController();
-            controller.setPaziente(paziente, taxCode);
+            //controller.setPaziente(paziente, taxCode);
 
             Stage stage = new Stage();
             stage.setTitle("Dettagli Paziente");
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException e) {
+
+
+
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

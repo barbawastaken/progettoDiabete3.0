@@ -1,6 +1,8 @@
 package controller.Amministratore;
 
 import controller.LoginController;
+import controller.NavBar;
+import controller.NavBarTags;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,11 +32,18 @@ public class AggiungiUtenteController extends GestioneUtenti {
     private ToggleGroup ruolo;
     private HashMap<String, String> diabetologi = new HashMap<>();
     //TOP BAR IN COMUNE CIN MODIFICA UTENTE
-    @FXML private HBox topBar;
+
+    @FXML private HBox navbarContainer;
 
     @FXML
     private void initialize() throws SQLException {
         AggiungiUtenteModel model = new AggiungiUtenteModel();
+
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+
+
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
 
         gender.getItems().addAll("Maschio", "Femmina");
         medicoCurante.getItems().addAll();
@@ -189,8 +198,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
                             selected.getText(), null, null, null); // valori nulli per non pazienti
                 }
                 //Chiudo finestra attuale gg
-                Stage currentStage = (Stage) topBar.getScene().getWindow();
-                currentStage.close();
+
                 //Apro lista utenti(si spera aggiornata)
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
                 Parent root = loader.load();
@@ -226,8 +234,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
 
-        Stage modificaUtenteControllerStage = (Stage)topBar.getScene().getWindow();
-        modificaUtenteControllerStage.close();
+
 
     }
     public void setTaxCode(String taxCode) {
@@ -249,8 +256,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
         } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
 
-        Stage AggiungiUtenteController = (Stage)topBar.getScene().getWindow();
-        AggiungiUtenteController.close();
+
     }
     public AggiungiUtenteController(){ }
 }

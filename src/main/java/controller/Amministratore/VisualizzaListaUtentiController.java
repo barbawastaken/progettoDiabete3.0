@@ -1,5 +1,7 @@
 package controller.Amministratore;
 
+import controller.NavBar;
+import controller.NavBarTags;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.ModificaUtenteModel;
 import javafx.fxml.FXML;
@@ -40,21 +43,31 @@ public class VisualizzaListaUtentiController {
     @FXML private TableColumn<Utente, String> altezzaColumn;
     @FXML private TableColumn<Utente, String> pesoColumn;
     @FXML private TableView<VisualizzaListaUtentiController> tableViewUtenti;
+    @FXML private HBox navbarContainer;
 
     private  VisualizzaListaUtentiModel model;
     private  VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 
     public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage){
+
+
         this.model = model;
         this.view = view;
         this.listaUtentiStage = stage;
         view.start(stage, this);
+
+
     }
     public VisualizzaListaUtentiController(){}
 
     @FXML
     private void initialize() {
+
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
+
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));

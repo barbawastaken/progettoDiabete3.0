@@ -54,16 +54,6 @@ public class LoginModel {
                             user.setTaxCode(taxCode);
                             user.setNome(null);
                             user.setCognome(null);
-
-
-
-                            /*
-                            * appena possibile bisogna creare una nuova query che legga le info dalla tabella utenti anziché la tabella
-                            logintable !!!!
-
-                            *Se no un macello: Session può essere riempito solo con il codice fiscale, che potrebbe anche andare bene
-                            se l'idea è quella di fare una query che ti cerca solo quello in mezzo a utenti
-                             */
                              ViewNavigator.navigateToPaziente();
 
                             return true;
@@ -80,20 +70,17 @@ public class LoginModel {
                             user.setCognome(null);
                             ViewNavigator.navigateToDiabetologo();
 
+                            return true;
+
                         }
                         case "AMMINISTRATORE" -> {
 
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml"));
-                            Parent root = loader.load();
-                            AmministratoreController amministratoreController = loader.getController();
-                            Stage stage = new Stage();
-                            stage.setTitle("Amministratore");
-                            stage.setScene(new Scene(root, 650, 500));
-                            stage.show();
-                            AmministratoreModel model = new AmministratoreModel();
-                            AmministratoreView view = new AmministratoreView();
-                            return true;
-                            //new AmministratoreController(model, view, loginStage);
+                           Session user = Session.getInstance();
+                           user.setNome(null);
+                           user.setCognome(null);
+                           ViewNavigator.navigateToAmministratore();
+
+                           return true;
                         }
 
 
@@ -106,10 +93,7 @@ public class LoginModel {
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());
             return false;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-
     }
 
 }

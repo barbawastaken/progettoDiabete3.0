@@ -55,8 +55,6 @@ public class VisualizzaStatisticheController {
             stage.setTitle("Amministratore");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml"));
 
-            AmministratoreController amministratoreController = loader.getController();
-            amministratoreController.setTaxCode(taxCode);
 
             Parent root = loader.load();
             stage.setScene(new Scene(root, 650, 500));

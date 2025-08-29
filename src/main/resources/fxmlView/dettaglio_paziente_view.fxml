@@ -4,6 +4,10 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DettaglioPazienteController">
+
+    <top>
+        <HBox fx:id="navbarContainer"></HBox>
+    </top>
     <center>
         <VBox spacing="20.0">
             <padding>

@@ -165,4 +165,11 @@ public class ViewNavigator {
     public static void navigateToVisualizzaPazienti() {
         loadView("visualizza_pazienti_view.fxml");
     }
+    public static void navigateToAmministratore(){ loadView("amministratore_view.fxml");}
+    public static void navigateToAddUser(){loadView("aggiungi_utente_view.fxml");}
+    public static void navigateToVisualizzaUtenti(){loadView("visualizza_utenti_view.fxml");}
+
+    public static void navigateToPatientDetails() {loadView("dettaglio_paziente_view.fxml");}
+
+    public static void navigateToModificaTerapia() {loadView("modifica_terapia_view.fxml");}
 }

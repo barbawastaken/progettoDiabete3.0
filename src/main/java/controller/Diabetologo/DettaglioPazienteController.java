@@ -1,9 +1,13 @@
 package controller.Diabetologo;
 
+import controller.NavBar;
+import controller.NavBarTags;
+import controller.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 
@@ -15,7 +19,8 @@ import javafx.scene.control.Label;
 import model.Diabetologo.ModificaTerapiaModel;
 
 public class DettaglioPazienteController {
-
+    
+    @FXML private HBox navbarContainer;
     @FXML private Label nomeLabel;
     @FXML private Label cognomeLabel;
     @FXML private Label codiceFiscaleLabel;
@@ -39,25 +44,34 @@ public class DettaglioPazienteController {
     private Paziente paziente;
     private String taxCodeDiabetologo;
 
-    public void setPaziente(Paziente p, String taxCodeDiabetologo) {
-        this.paziente = p;
-        this.taxCodeDiabetologo = taxCodeDiabetologo;
+    @FXML
+    private void initialize() {
 
-        nomeLabel.setText("Nome: " + p.getNome());
-        cognomeLabel.setText("Cognome: " + p.getCognome());
-        codiceFiscaleLabel.setText("Codice Fiscale: " + p.getTaxCode());
-        sessoLabel.setText("Sesso: " + p.getGender());
-        dataNascitaLabel.setText("Data di Nascita: " + p.getBirthday());
-        passwordLabel.setText("Password: " + p.getPassword());
-        viaLabel.setText("Via: " + p.getAddress());
-        numeroCivicoLabel.setText("Numero Civico: " + p.getNumber());
-        capLabel.setText("CAP: " + p.getCap());
-        paeseLabel.setText("Paese di Residenza: " + p.getCountryOfResidence());
-        cittaLabel.setText("Città: " + p.getCity());
-        emailLabel.setText("Email: " + p.getEmail());
-        cellulareLabel.setText("Cellulare: " + p.getTelephone());
-        pesoLabel.setText("Peso: " + p.getWeight());
-        altezzaLabel.setText("Altezza: " + p.getHeight());
+        NavBar navbar = new NavBar(NavBarTags.toModificaUtenti);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        
+        navbarContainer.getChildren().add(navbar);
+        this.paziente = Session.getInstance().getPazienteInEsame();
+        this.taxCodeDiabetologo = Session.getInstance().getTaxCode();
+
+        System.out.println("VALORE PAZIENTE: " + paziente.toString());
+        System.out.println("TAXCODE DIABETOLOGO: " + taxCodeDiabetologo);
+
+        nomeLabel.setText("Nome: " + paziente.getNome());
+        cognomeLabel.setText("Cognome: " + paziente.getCognome());
+        codiceFiscaleLabel.setText("Codice Fiscale: " + paziente.getTaxCode());
+        sessoLabel.setText("Sesso: " + paziente.getGender());
+        dataNascitaLabel.setText("Data di Nascita: " + paziente.getBirthday());
+        passwordLabel.setText("Password: " + paziente.getPassword());
+        viaLabel.setText("Via: " + paziente.getAddress());
+        numeroCivicoLabel.setText("Numero Civico: " + paziente.getNumber());
+        capLabel.setText("CAP: " + paziente.getCap());
+        paeseLabel.setText("Paese di Residenza: " + paziente.getCountryOfResidence());
+        cittaLabel.setText("Città: " + paziente.getCity());
+        emailLabel.setText("Email: " + paziente.getEmail());
+        cellulareLabel.setText("Cellulare: " + paziente.getTelephone());
+        pesoLabel.setText("Peso: " + paziente.getWeight());
+        altezzaLabel.setText("Altezza: " + paziente.getHeight());
     }
 
 

@@ -1,6 +1,9 @@
 package controller.Amministratore;
 
 import controller.LoginController;
+import controller.NavBar;
+import controller.NavBarTags;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,41 +15,27 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 
 
+
 public class AmministratoreController {
-    @FXML private HBox topBar;
+    @FXML private HBox navbarContainer;
     private String taxCode;
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
     @FXML
-    private void isInserisciUtenteClicked(ActionEvent event) throws IOException {
-        AggiungiUtenteController controller = new AggiungiUtenteController();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiungi_utente_view.fxml"));
-        Parent root = loader.load();
-        controller = loader.getController();
-        Stage stage = new Stage();
-        stage.setTitle("Aggiungi Utente");
-        stage.setScene(new Scene(root));
-        stage.show();
+    private void isInserisciUtenteClicked()  {
+        ViewNavigator.navigateToAddUser();
+    }
 
-        //Chiudete le finestre
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.close();
+    @FXML
+    private void initialize(){
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
     }
 
     @FXML
     private void isVisualizzaUtentiClicked(ActionEvent event) throws IOException {
-        VisualizzaListaUtentiController controller = new VisualizzaListaUtentiController();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        stage.setTitle("Visualizza Utente");
-        stage.setScene(new Scene(root));
-        stage.show();
-
-        //Chiudete le finestre
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.close();
+        ViewNavigator.navigateToVisualizzaUtenti();
     }
 
     @FXML
@@ -65,8 +54,7 @@ public class AmministratoreController {
             stage.show();
 
             // Chiudi la finestra corrente
-            Stage currentStage = (Stage)topBar.getScene().getWindow();
-            currentStage.close();
+
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina statistiche!" + e.getMessage()); }
 
@@ -86,8 +74,6 @@ public class AmministratoreController {
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
 
-        Stage pazienteStage = (Stage)topBar.getScene().getWindow();
-        pazienteStage.close();
 
     }
 
@@ -111,8 +97,7 @@ public class AmministratoreController {
 
         } catch (IOException e) { System.out.println("Errore caricamento homepage amministratore!" + e.getMessage()); }
 
-        Stage amministratore = (Stage)topBar.getScene().getWindow();
-        amministratore.close();
+
 
     }
 

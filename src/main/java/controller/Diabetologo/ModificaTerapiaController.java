@@ -92,7 +92,7 @@ public class ModificaTerapiaController {
            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
            Parent root = loader.load();
            DettaglioPazienteController controller = loader.getController();
-           controller.setPaziente(paziente, taxCodeDiabetologo);
+           //controller.setPaziente(paziente, taxCodeDiabetologo);
            // Prendi lo stage corrente dal bottone cliccato
            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

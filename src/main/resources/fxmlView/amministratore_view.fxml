@@ -11,20 +11,13 @@
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
          <!-- Barra superiore -->
-         <HBox fx:id="topBar" alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
-         <padding>
-               <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-               <image>
-                  <Image url="@../images/userImage.png" />
-               </image>
-            </ImageView>
-            <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Amministratore" />
-            <Pane HBox.hgrow="ALWAYS" />
-            <Button onAction="#onHomePagePressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="HOMEPAGE" />
-            <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
-         </HBox>
+
+         <HBox fx:id="navbarContainer"
+               AnchorPane.topAnchor="0.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0"
+               spacing="10.0"
+               alignment="CENTER_LEFT"> </HBox>
 
          <!-- Spazio verticale -->
          <Pane VBox.vgrow="ALWAYS" />
