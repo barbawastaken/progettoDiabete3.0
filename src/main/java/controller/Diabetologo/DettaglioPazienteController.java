@@ -139,6 +139,23 @@ public class DettaglioPazienteController {
 
     @FXML private void handleAggiornaInfo() {
 
+        try {
+            FXMLLoader loader =  new FXMLLoader(getClass().getResource("fxmlView/aggiorna_info_paziente.fxml"));
+            Parent root = loader.load();
+
+            AggiornaInfoPazienteController controller = loader.getController();
+            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
+
+            Stage currentStage = (Stage) aggiornaInfo.getScene().getWindow();
+
+            currentStage.setTitle("Informazioni aggiuntive");
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         /*
         *
         * Per Riccardo: quando implementerai questo metodo arriverai ad avere un "AggiornaInfoPazienteModel" con
