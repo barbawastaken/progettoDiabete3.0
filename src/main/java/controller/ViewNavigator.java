@@ -121,19 +121,8 @@ public class ViewNavigator {
     }
 
     public static void navigateToPaziente() {
-        /*
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/paziente_view.fxml"));
 
-                            Parent root = loader.load();
-                            PazienteController pazienteController = loader.getController();
-                            pazienteController.setTaxCode(taxCode);
-                            Stage stage = new Stage();
-                            stage.setTitle("Paziente");
-                            stage.setScene(new Scene(root, 650, 500));
-                            stage.show();
-        */
-
-        System.out.println("taxCode quando si naviga sul paziente: "  + Session.getInstance().getTaxCode());
+        //System.out.println("taxCode quando si naviga sul paziente: "  + Session.getInstance().getTaxCode());
         loadView("paziente_view.fxml");
     }
 

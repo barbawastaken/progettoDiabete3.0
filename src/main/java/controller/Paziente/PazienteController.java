@@ -2,6 +2,7 @@ package controller.Paziente;
 
 import controller.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -25,11 +26,16 @@ public class PazienteController {
     @FXML private ComboBox<String> filtroPeriodoComboBox;
     @FXML private LineChart<String, Number> lineChartGlicemia;
 
-    @FXML private TableView<TerapiaModel> contenutoScrollPane;
+    @FXML private TableView<TerapiaModel> terapiaTabella;
     @FXML private TableColumn<TerapiaModel, String> terapia;
     @FXML private TableColumn<TerapiaModel, String> farmaco_prescritto;
     @FXML private TableColumn<TerapiaModel, String> quantita;
     @FXML private TableColumn<TerapiaModel, String> numero_assunzioni_giornaliere;
+    @FXML private TableColumn<TerapiaModel, String> indicazioni;
+
+    @FXML private TableView<Notifica> notificheTabella;
+    @FXML private TableColumn<Notifica, String> notifica;
+
     @FXML private HBox navBarContainer;
 
     @FXML
@@ -39,7 +45,7 @@ public class PazienteController {
         navBar.prefWidthProperty().bind(navBarContainer.widthProperty()); //riga che serve ad adattare la navbar alla pagina
         navBarContainer.getChildren().add(navBar);
 
-        this.setTaxCode();
+        this.taxCode = Session.getInstance().getTaxCode();
 
         String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
         caricaDatiGlicemia(query);
@@ -48,23 +54,37 @@ public class PazienteController {
         farmaco_prescritto.setCellValueFactory(new PropertyValueFactory<>("farmacoPrescritto"));
         quantita.setCellValueFactory(new PropertyValueFactory<>("quantita"));
         numero_assunzioni_giornaliere.setCellValueFactory(new PropertyValueFactory<>("numeroAssunzioniGiornaliere"));
+        indicazioni.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
+
+        terapia.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.25));
+        farmaco_prescritto.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.25));
+        quantita.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.1));
+        numero_assunzioni_giornaliere.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.2));
+        indicazioni.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.2));
+
+        notifica.setCellValueFactory(new PropertyValueFactory<>("notifica"));
+        notifica.prefWidthProperty().bind(notificheTabella.widthProperty().subtract(2));
 
         PazienteModel model = new PazienteModel();
         List<TerapiaModel> lista = model.getTerapie(taxCode);
-        contenutoScrollPane.setItems(FXCollections.observableArrayList(lista));
+        terapiaTabella.setItems(FXCollections.observableArrayList(lista));
 
         ArrayList<String> farmaciNotifiche;
         farmaciNotifiche = model.getFarmaciNotifiche(taxCode);
-        mostraNotifiche(farmaciNotifiche);
+
+        ObservableList<Notifica> notifiche = FXCollections.observableArrayList();
+        for(String farmacoAssunto : farmaciNotifiche){
+            Notifica notifica = new Notifica("Mancata assunzione di " + farmacoAssunto + " per più di 3 giorni");
+            notifiche.add(notifica);
+        }
+
+        notificheTabella.setItems(notifiche);
+        //mostraNotifiche(farmaciNotifiche);
 
         filtroPeriodoComboBox.setItems(FXCollections.observableArrayList("Ultima settimana", "Ultimo mese", "Tutto"));
         filtroPeriodoComboBox.setValue("Tutto");
 
         filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico(query));
-    }
-
-    public void setTaxCode() {
-        this.taxCode = Session.getInstance().getTaxCode();
     }
 
     @FXML
@@ -138,7 +158,7 @@ public class PazienteController {
             System.out.println("Errore caricamento grafico: " + e);
         }
     }
-    private void mostraNotifiche(ArrayList<String> farmaciNotifiche) {
+    /*private void mostraNotifiche(ArrayList<String> farmaciNotifiche) {
 
         for(String f : farmaciNotifiche) {
             messaggioErrore(f);
@@ -152,6 +172,6 @@ public class PazienteController {
         alert.setHeaderText(null); // oppure "Attenzione!"
         alert.setContentText("Non e' stata rilevata alcuna assunzione di " + farmaco + " negli ultimi 3 giorni");
         alert.showAndWait();
-    }
+    }*/
 
 }

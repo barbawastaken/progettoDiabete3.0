@@ -1,8 +1,5 @@
 package model.Paziente;
 
-import controller.Session;
-import model.getUsefulInfos;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ public class PazienteModel  {
 
         List<TerapiaModel> terapie = new ArrayList<>();
 
-        String query = "SELECT terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere FROM terapiePrescritte WHERE taxCode = ?";
+        String query = "SELECT terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -55,7 +52,8 @@ public class PazienteModel  {
                         rs.getString("terapia"),
                         rs.getString("farmaco_prescritto"),
                         rs.getString("quantita"),
-                        rs.getString("numero_assunzioni_giornaliere")
+                        rs.getString("numero_assunzioni_giornaliere"),
+                        rs.getString("indicazioni")
                 );
                 terapie.add(t);
 
@@ -131,7 +129,6 @@ public class PazienteModel  {
         }
 
         //Per i farmaci rimasti dev'essere generata la notifica
-
         return farmaciDaControllare;
     }
 }

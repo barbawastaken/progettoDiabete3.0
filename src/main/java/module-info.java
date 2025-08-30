@@ -4,9 +4,10 @@ module org.example.demo {
     requires java.sql;
     requires java.desktop;
     requires jbcrypt;
-    opens controller to javafx.fxml;
+
+    opens controller to javafx.fxml, javafx.base;   // <--- AGGIUNTA QUI
     opens model.Paziente to javafx.base;
-    opens controller.Paziente to javafx.fxml;
+    opens controller.Paziente to javafx.fxml, javafx.base;
     opens controller.Paziente.RilevazioneGlicemia to javafx.fxml;
     opens controller.Paziente.AssunzioneFarmaco to javafx.fxml;
     opens controller.Paziente.PatologieConcomitanti to javafx.fxml;
@@ -14,11 +15,11 @@ module org.example.demo {
     opens HomePages to javafx.fxml;
     opens model.Amministratore to javafx.base;
     opens model.Diabetologo to javafx.base;
+
     exports controller.Diabetologo to javafx.fxml;
     opens controller.Diabetologo to javafx.fxml;
     opens controller.Paziente.AggiuntaSintomi to javafx.fxml;
     exports controller.Amministratore;
-
-
     exports HomePages;
 }
+

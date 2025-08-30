@@ -30,13 +30,21 @@
                     <Button onAction="#onConcomitantiClicked" maxWidth="Infinity" wrapText="true" text="Sintomi, Patologie, Terapie concomitanti" />
                 </VBox>
 
-                <!-- TableView più piccola -->
-                <TableView fx:id="contenutoScrollPane" VBox.vgrow="ALWAYS" prefHeight="200">
+                <!-- Tabella terapie -->
+                <TableView fx:id="terapiaTabella" VBox.vgrow="ALWAYS" prefHeight="200">
                     <columns>
                         <TableColumn fx:id="terapia" text="Terapia" />
                         <TableColumn fx:id="farmaco_prescritto" text="Farmaco" />
                         <TableColumn fx:id="quantita" prefWidth="60.0" text="Quantita'" />
                         <TableColumn fx:id="numero_assunzioni_giornaliere" prefWidth="130.0" text="Assunzioni giornaliere" />
+                        <TableColumn fx:id="indicazioni" prefWidth="130.0" text="Indicazioni" />
+                    </columns>
+                </TableView>
+
+                <!-- Tabella notifiche -->
+                <TableView fx:id="notificheTabella" VBox.vgrow="ALWAYS" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="notifica" prefWidth="480" text="Notifiche" />
                     </columns>
                 </TableView>
             </VBox>
