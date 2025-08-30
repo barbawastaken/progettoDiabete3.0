@@ -6,7 +6,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.PatologieConcomitanti.PatologieConcomitantiController">
    <children>
-       <Button layoutX="497.0" layoutY="32.0" mnemonicParsing="false" onAction="#onIndietroPressed" text="INDIETRO" />
+       <HBox fx:id="navbarContainer"
+             AnchorPane.topAnchor="0.0"
+             AnchorPane.leftAnchor="0.0"
+             AnchorPane.rightAnchor="0.0"
+             spacing="10.0"
+             alignment="CENTER_LEFT"> </HBox>
+       <!--<Button layoutX="497.0" layoutY="32.0" mnemonicParsing="false" onAction="#onIndietroPressed" text="INDIETRO" />-->
 
        <Text layoutX="186.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomo / Patologia /Terapia concomitante" />
        <TextArea fx:id="patologiaSpecificata" layoutX="198.0" layoutY="87.0" prefHeight="84.0" prefWidth="205.0" />

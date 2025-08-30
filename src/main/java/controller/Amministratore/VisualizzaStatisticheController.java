@@ -457,7 +457,7 @@ public class VisualizzaStatisticheController {
 
         try {
 
-            rs = completaQuery(query, selected);
+            rs = completaQuery(query, selected, null);
 
             if (rs == null) return;
 
@@ -497,14 +497,14 @@ public class VisualizzaStatisticheController {
         }
     }
 
-    private ResultSet completaQuery(String query, String selected) {
+    private ResultSet completaQuery(String query, String selected, String colonnaDataName) {
 
         String taxCodeSelezionato = null;
         //Controllo sulla selezione della combobox e creazione delle query adeguate in base
         // a se viene selezionato "Tutti" oppure un nome specifico
         if(!selected.equals("Tutti")) {
 
-            query += " WHERE taxCode = ?  ORDER BY taxCode";
+            query += " WHERE taxCode = ?  ORDER BY taxCode, " + colonnaDataName + " DESC";
 
             //Rilevazione del taxcode associato al nome selezionato nella combobox
             for (Map.Entry<String, String> entry : taxCodeToNameMap.entrySet()) {
@@ -515,7 +515,7 @@ public class VisualizzaStatisticheController {
             }
 
         } else {
-            query += " ORDER BY taxCode";
+            query += " ORDER BY taxCode, " + colonnaDataName + " DESC";
         }
 
         ResultSet rs;
@@ -571,7 +571,7 @@ public class VisualizzaStatisticheController {
         ResultSet rs = null;
 
         try {
-            rs = completaQuery(query, selected);
+            rs = completaQuery(query, selected, "dataAssunzione");
 
             if (rs == null) return;
 
@@ -664,7 +664,7 @@ public class VisualizzaStatisticheController {
 
         try {
 
-            rs = completaQuery(query, selected);
+            rs = completaQuery(query, selected, "dataInserimento");
 
             if (rs == null) return;
 
@@ -755,7 +755,7 @@ public class VisualizzaStatisticheController {
 
         try {
 
-            rs = completaQuery(query, selected);
+            rs = completaQuery(query, selected, "dataInizio");
 
             if (rs == null) return;
 

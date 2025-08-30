@@ -20,21 +20,19 @@ public class RilevazioneGlicemiaModel {
             if(quantita.isEmpty()) { return 4;}
             int quantitaInt = Integer.parseInt(quantita);
 
-            while (rs.next()) {
+            if(momentoGiornata == null || prePost == null || data.toString().isEmpty()) { return 4; }
 
-                if(momentoGiornata == null || prePost == null || data.toString().isEmpty()) { return 4; }
+            if (quantitaInt < 40 || quantitaInt > 200) { return 2; }
+
+            if (data.isAfter(LocalDate.now())) { return 3; }
+
+            while (rs.next()) {
 
                 if (rs.getString("taxCode").equals(taxCode) && rs.getString("momentoGiornata").equals(momentoGiornata) &&
                         rs.getString("prePost").equals(prePost) && rs.getString("data").equals(data.toString())) {
 
                     return 1;
                 }
-
-                if (quantitaInt < 40 || quantitaInt > 200) { return 2; }
-
-                if (data.isAfter(LocalDate.now())) { return 3; }
-
-                //System.out.println(rs.getString("data") + " " + LocalDate.now().toString());
 
             }
 
@@ -48,7 +46,7 @@ public class RilevazioneGlicemiaModel {
             return 0;
 
         } catch (Exception e) {
-            System.out.println("Errore: " + e);
+            System.out.println("Errore caricamento dati rilevazione: " + e);
             return 5;
         }
     }

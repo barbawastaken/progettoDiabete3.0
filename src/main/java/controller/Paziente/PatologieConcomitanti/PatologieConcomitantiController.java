@@ -1,31 +1,34 @@
 package controller.Paziente.PatologieConcomitanti;
 
+import controller.NavBar;
+import controller.NavBarTags;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
 import model.Paziente.PatologieConcomitanti.PatologieConcomitantiModel;
 
 public class PatologieConcomitantiController {
+
+    @FXML private HBox navbarContainer;
 
     @FXML private TextArea patologiaSpecificata;
     @FXML private DatePicker dataInizio;
     @FXML private DatePicker dataFine;
 
     private String taxCode;
+    private final PatologieConcomitantiModel model = new PatologieConcomitantiModel();
 
-    public PatologieConcomitantiController(){}
+    @FXML private void initialize() {
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
+        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().addAll(navbar);
 
-    @FXML
-    public void onIndietroPressed(){
-
-        Stage stage = (Stage) dataInizio.getScene().getWindow();
-        stage.close();
+        this.taxCode = Session.getInstance().getTaxCode();
 
     }
 
@@ -41,15 +44,11 @@ public class PatologieConcomitantiController {
     @FXML
     public void onSubmitPressed(){
 
-        PatologieConcomitantiModel model = new PatologieConcomitantiModel();
         int risultatoInserimento = model.inserimentoPatologiaConcomitante(taxCode, patologiaSpecificata.getText(), dataInizio.getValue(), dataFine.getValue());
 
         if(risultatoInserimento == 0){
 
-            System.out.println("Valori inseriti correttamente");
-
-            Stage stage = (Stage)dataInizio.getScene().getWindow();
-            stage.close();
+            ViewNavigator.navigateToPaziente();
 
         } else { checkOutput(risultatoInserimento); }
     }

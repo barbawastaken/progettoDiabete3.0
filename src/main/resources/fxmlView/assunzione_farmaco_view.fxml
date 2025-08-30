@@ -30,8 +30,8 @@
        <Text layoutX="345.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orario assunzione" />
        <Spinner fx:id="orarioAssunzione" editable="true" layoutX="358.0" layoutY="232.0" prefHeight="25.0" prefWidth="95.0" />
 
-       <Button fx:id="resetButton" layoutX="222.0" layoutY="307.0" mnemonicParsing="false" onAction="#onResetPressed" prefHeight="25.0" prefWidth="68.0" text="Reset" />
-       <Button fx:id="submitButton" layoutX="332.0" layoutY="307" mnemonicParsing="false" onAction="#onSubmitPressed" prefHeight="25.0" prefWidth="68.0" text="Invia" />
+       <Button layoutX="222.0" layoutY="307.0" mnemonicParsing="false" onAction="#onResetPressed" prefHeight="25.0" prefWidth="68.0" text="Reset" />
+       <Button layoutX="332.0" layoutY="307" mnemonicParsing="false" onAction="#onSubmitPressed" prefHeight="25.0" prefWidth="68.0" text="Invia" />
 
    </children>
 </AnchorPane>

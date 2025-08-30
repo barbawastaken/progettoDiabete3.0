@@ -2,49 +2,52 @@ package controller.Paziente.AggiuntaSintomi;
 
 import controller.NavBar;
 import controller.NavBarTags;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.Paziente.AggiuntaSintomi.AggiuntaSintomiModel;
 
 public class AggiuntaSintomiController {
 
     AggiuntaSintomiModel model;
     String taxCode;
-    @FXML
-    private HBox navbarContainer;
-    @FXML
-    private ComboBox<String> symptoms;
-    @FXML
-    private TextArea otherSpecifications;
-    @FXML
-    private Text otherSpecificationsText;
-    @FXML
-    private DatePicker relevationDate;
+
+    @FXML private HBox navbarContainer;
+
+    @FXML private ComboBox<String> symptoms;
+
+    @FXML private TextArea otherSpecifications;
+
+    @FXML private Text otherSpecificationsText;
+
+    @FXML private DatePicker relevationDate;
 
     @FXML
     private void initialize() {
+
         model = new AggiuntaSintomiModel();
         symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
+
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
+
+        this.taxCode = Session.getInstance().getTaxCode();
     }
 
     @FXML
     private void onSendClicked(){
+
         int aggiuntaSintomi;
 
         aggiuntaSintomi = model.aggiungiSintomi(symptoms.getValue(), otherSpecifications.getText(), relevationDate.getValue(), taxCode);
 
         if(aggiuntaSintomi == 0) {
 
-            System.out.println("Valori inseriti correttamente");
-
-            Stage stage = (Stage) relevationDate.getScene().getWindow();
-            stage.close();
+            ViewNavigator.navigateToPaziente();
 
         } else { checkOutput(aggiuntaSintomi); }
 
@@ -93,7 +96,4 @@ public class AggiuntaSintomiController {
         onResetClicked();
     }
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
 }

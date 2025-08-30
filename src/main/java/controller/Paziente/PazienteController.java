@@ -85,7 +85,7 @@ public class PazienteController {
 
     @FXML
     public void onConcomitantiClicked() {
-        ViewNavigator.navigateToAggiungiTerapia();
+        ViewNavigator.navigateToTerapiaConcomitante();
 
     }
 

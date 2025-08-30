@@ -142,13 +142,16 @@ public class ViewNavigator {
         navigateToLogin();
     }
 
-
     public static void navigateToAddSympoms() {
         loadView("aggiunta_sintomi_view.fxml");
     }
 
     public static void navigateToAssunzioneFarmaco(){
         loadView("assunzione_farmaco_view.fxml");
+    }
+
+    public static void navigateToTerapiaConcomitante(){
+        loadView("patologie_concomitanti_view.fxml");
     }
 
     public static void navigateToAggiungiTerapia(){

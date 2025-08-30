@@ -2,17 +2,14 @@ package controller.Paziente.RilevazioneGlicemia;
 
 import controller.NavBar;
 import controller.NavBarTags;
-import controller.Paziente.PazienteController;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import model.Paziente.PazienteModel;
 import model.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaModel;
-import view.Paziente.PazienteView;
-import view.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaView;
 import javafx.fxml.FXML;
 
 public class RilevazioneGlicemiaController {
@@ -34,31 +31,28 @@ public class RilevazioneGlicemiaController {
 
     private String taxCode;
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
-
-
    @FXML
    private void initialize() {
+
         prepost.getItems().addAll("PRE", "POST");
         pastoGlicemia.getItems().addAll("Colazione", "Pranzo", "Cena");
+
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().addAll(navbar);
+
+       this.taxCode = Session.getInstance().getTaxCode();
    }
 
     @FXML
     private void onSubmitPressed(){
+
         RilevazioneGlicemiaModel model = new RilevazioneGlicemiaModel();
         int risultatoInserimento = model.inserimentoRilevazioneGlicemia(taxCode, milligrammi.getText(), pastoGlicemia.getValue(), prepost.getValue(), dataRilevamento.getValue());
 
         if(risultatoInserimento == 0){
 
-            System.out.println("Valori inseriti correttamente");
-
-            Stage stage = (Stage) milligrammi.getScene().getWindow();
-            stage.close();
+            ViewNavigator.navigateToPaziente();
 
         } else { checkOutput(risultatoInserimento); }
     }
@@ -71,9 +65,6 @@ public class RilevazioneGlicemiaController {
         prepost.setValue(null);
         dataRilevamento.setValue(null);
 
-    }
-
-    public RilevazioneGlicemiaController() {
     }
 
     public void checkOutput(int valoreOutput) {

@@ -2,10 +2,11 @@ package controller.Paziente.AssunzioneFarmaco;
 
 import controller.NavBar;
 import controller.NavBarTags;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
 import model.Paziente.AssunzioneFarmaco.AssunzioneFarmacoModel;
 
@@ -13,6 +14,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class AssunzioneFarmacoController {
+
     @FXML private HBox navbarContainer;
     @FXML private ComboBox<String> farmacoAssunto;
     @FXML private TextField quantitaAssunta;
@@ -20,18 +22,13 @@ public class AssunzioneFarmacoController {
     @FXML private Spinner<LocalTime> orarioAssunzione;
 
     private final AssunzioneFarmacoModel model = new AssunzioneFarmacoModel();
-
     private String taxCode;
-
-    public AssunzioneFarmacoController() {}
-
-    public void setTaxCode(String taxCode) { this.taxCode = taxCode; this.farmacoAssunto.getItems().setAll(model.getFarmaciTerapie(taxCode));}
 
     @FXML
     public void initialize() {
 
         // Imposta un valore iniziale e un range, ad esempio ogni 15 minuti
-        SpinnerValueFactory<LocalTime> valueFactory = new SpinnerValueFactory<LocalTime>() {
+        SpinnerValueFactory<LocalTime> valueFactory = new SpinnerValueFactory<>() {
             {
                 setConverter(new LocalTimeStringConverter(DateTimeFormatter.ofPattern("HH:mm"), null));
                 setValue(LocalTime.of(12, 0)); // valore iniziale
@@ -40,16 +37,14 @@ public class AssunzioneFarmacoController {
                 navbarContainer.getChildren().add(navBar);
             }
 
-
-
             @Override
             public void decrement(int steps) {
-                setValue(getValue().minusMinutes(steps * 30));
+                setValue(getValue().minusMinutes(steps * 30L));
             }
 
             @Override
             public void increment(int steps) {
-                setValue(getValue().plusMinutes(steps * 30));
+                setValue(getValue().plusMinutes(steps * 30L));
             }
         };
 
@@ -72,14 +67,9 @@ public class AssunzioneFarmacoController {
                 }
             }
         });
-    }
 
-    @FXML
-    public void onIndietroPressed(){
-
-        Stage stage = (Stage) farmacoAssunto.getScene().getWindow();
-        stage.close();
-
+        this.taxCode = Session.getInstance().getTaxCode();
+        this.farmacoAssunto.getItems().setAll(model.getFarmaciTerapie(taxCode));
     }
 
     @FXML
@@ -100,10 +90,7 @@ public class AssunzioneFarmacoController {
 
         if(risultatoInserimento == 0){
 
-            System.out.println("Valori inseriti correttamente");
-
-            Stage stage = (Stage)farmacoAssunto.getScene().getWindow();
-            stage.close();
+            ViewNavigator.navigateToPaziente();
 
         } else { checkOutput(risultatoInserimento); }
 
