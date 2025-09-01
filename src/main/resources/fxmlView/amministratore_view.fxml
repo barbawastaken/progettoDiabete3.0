@@ -5,34 +5,35 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AmministratoreController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AmministratoreController">
 
-   <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+   <top>
+      <HBox fx:id="navbarContainer" />
+   </top>
 
-         <!-- Barra superiore -->
-
-         <HBox fx:id="navbarContainer"
-               AnchorPane.topAnchor="0.0"
-               AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0"
-               spacing="10.0"
-               alignment="CENTER_LEFT"> </HBox>
-
-         <!-- Spazio verticale -->
-         <Pane VBox.vgrow="ALWAYS" />
+   <center>
+      <VBox alignment="CENTER">
 
          <!-- Sezione pulsanti centrata -->
-         <VBox alignment="CENTER" spacing="30">
-            <padding>
-               <Insets bottom="0" left="20" right="20" top="0" />
-            </padding>
+         <HBox alignment="CENTER" spacing="30">
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
             <Button onAction="#isInserisciUtenteClicked" prefHeight="40.0" prefWidth="200.0" text="Inserisci Utente" />
+               <Label text="Crea un nuovo utente da aggiungere nel sistema" alignment="CENTER" wrapText="true"/>
+            </VBox>
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
             <Button onAction="#isVisualizzaUtentiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Lista Utenti" />
+               <Label text="Visualizza tutti gli utenti nel sistema" alignment="CENTER" wrapText="true"/>
+            </VBox>
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
             <Button onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" />
-         </VBox>
-
-         <Pane VBox.vgrow="ALWAYS" />
+               <Label text="Visualizza le statistiche di tutti i pazienti" alignment="CENTER" wrapText="true"/>
+            </VBox>
+         </HBox>
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+
+
+
+
+
+</BorderPane>

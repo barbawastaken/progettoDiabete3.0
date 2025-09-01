@@ -4,33 +4,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DiabetologoController">
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DiabetologoController">
 
-   <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+  <top>
+     <HBox fx:id="navbarContainer"/>
+  </top>
 
-         <!-- Barra superiore -->
-          <HBox fx:id="navbarContainer"
-                AnchorPane.topAnchor="0.0"
-                AnchorPane.leftAnchor="0.0"
-                AnchorPane.rightAnchor="0.0"
-                spacing="10.0"
-                alignment="CENTER_LEFT"> </HBox>
-         <!-- Spazio per distanziare verticalmente -->
+   <center>
+      <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" >
+
          <Pane VBox.vgrow="ALWAYS" />
 
          <!-- Sezione pulsanti -->
          <HBox alignment="CENTER" spacing="30">
-            <padding>
-               <Insets bottom="0" left="20" right="20" top="0" />
-            </padding>
-            <Button onAction="#isVisualizzaPazientiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Pazienti" />
-            <Button onAction="#isVisualizzaNotificheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza notifiche" />
-            <Button fx:id="statisticheButton" onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" />
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
+               <Button onAction="#isVisualizzaPazientiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Pazienti" wrapText="true"/>
+               <Label text="Visualizza i pazienti affiliati al diabetologo" wrapText="true" alignment="CENTER"/>
+
+            </VBox>
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
+               <Button onAction="#isVisualizzaNotificheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza notifiche" wrapText="true"/>
+               <Label text="Visualizza le notifiche riguardanti i pazienti" alignment="CENTER" wrapText="true"/>
+
+            </VBox>
+            <VBox spacing="10" alignment="CENTER" styleClass="box">
+               <Button fx:id="statisticheButton" onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" wrapText="true" />
+               <Label text="Visualizza le statistiche sui pazienti" alignment="CENTER" wrapText="true"/>
+
+            </VBox>
+
+
 
          </HBox>
 
          <Pane VBox.vgrow="ALWAYS" />
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>
