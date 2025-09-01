@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DiabetologoController">
@@ -27,6 +26,7 @@
             </padding>
             <Button onAction="#isVisualizzaPazientiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Pazienti" />
             <Button onAction="#isVisualizzaNotificheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza notifiche" />
+            <Button fx:id="statisticheButton" onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" />
 
          </HBox>
 

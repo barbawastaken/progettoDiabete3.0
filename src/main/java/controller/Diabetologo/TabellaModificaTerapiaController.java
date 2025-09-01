@@ -89,6 +89,7 @@ public class TabellaModificaTerapiaController {
     public void mostraModificaTerapiaFromStatistiche(Terapia terapia, String taxCode) {
 
         Session.getInstance().setPazienteInEsame(Session.getInfosOf(taxCode));
+        System.out.println("Paziente impostato: " + Session.getInfosOf(taxCode).getTaxCode());
         mostraModificaTerapia(terapia);
 
     }

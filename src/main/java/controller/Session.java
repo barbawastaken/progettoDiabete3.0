@@ -217,8 +217,6 @@ public class Session {
         this.telephone = telephone;
     }
 
-
-
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }

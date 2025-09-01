@@ -1,16 +1,7 @@
 package model;
 
-import controller.Amministratore.AmministratoreController;
 import controller.Session;
 import controller.ViewNavigator;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import model.Amministratore.AmministratoreModel;
-import view.Amministratore.AmministratoreView;
-
-import java.io.IOException;
 import java.sql.*;
 
 public class LoginModel {
@@ -68,6 +59,19 @@ public class LoginModel {
                             user.setTaxCode(taxCode);
                             user.setNome(null);
                             user.setCognome(null);
+                            ViewNavigator.navigateToDiabetologo();
+
+                            return true;
+
+                        }
+                        case "PRIMARIO" -> {
+                            // Carica il file FXML associato all'interfaccia del diabetologo.
+                            // getClass().getResource(...) cerca il file nella cartella "resources/fxmlView".
+
+                            Session user = Session.getInstance();
+                            user.setTaxCode(taxCode);
+                            user.setNome(null);
+                            user.setCognome(null); //commento per non far uscire il warning di codice duplicato
                             ViewNavigator.navigateToDiabetologo();
 
                             return true;

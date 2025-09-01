@@ -56,6 +56,8 @@ public class NavBar extends HBox {
             navbarPerOperazioniDiabetologo();
         } else if(navbarRequested == NavBarTags.DIABETOLOGO_operazioneRitornoTabellaTerapie){
             navbarPerRitornoTabellaModificaTerapia();
+        } else if(navbarRequested == NavBarTags.AMMINISTRATORE_ritornoVisualizzaStatistiche){
+            navbarPerRitornoVisualizzaStatistiche();
         }
     }
 
@@ -152,6 +154,14 @@ public class NavBar extends HBox {
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
         this.getChildren().addAll(homepageButton, logoutButton);
+    }
+
+    private void navbarPerRitornoVisualizzaStatistiche(){
+        Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToVisualizzaStatistiche());
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToDiabetologo());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+
+        this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
     }
 
 
