@@ -7,7 +7,8 @@
 <BorderPane fx:id="mainContainer"
             xmlns:fx="http://javafx.com/fxml"
 
-            fx:controller="controller.MainController">
+            fx:controller="controller.MainController"
+            stylesheets="@../css/global.css">
 
     <!-- Barra di navigazione in alto -->
     <top>
