@@ -56,14 +56,6 @@
                         </LineChart>
                     </VBox>
                 </HBox>
-
-                <Separator />
-
-                <HBox spacing="10.0" alignment="CENTER">
-                    <Button text="Aggiungi Terapia" onAction="#handleAggiungiTerapia" />
-                    <Button text="Modifica Terapia" onAction="#handleModificaTerapia" />
-                    <Button text="Aggiorna Info" onAction="#handleAggiornaInfo" />
-                </HBox>
             </VBox>
         </ScrollPane>
     </center>
