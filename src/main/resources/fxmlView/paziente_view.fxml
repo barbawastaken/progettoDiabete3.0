@@ -58,6 +58,7 @@
                     <ComboBox fx:id="filtroPeriodoComboBox" prefWidth="150.0">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Tutto" />
                                 <String fx:value="Ultima settimana" />
                                 <String fx:value="Ultimo mese" />
                             </FXCollections>

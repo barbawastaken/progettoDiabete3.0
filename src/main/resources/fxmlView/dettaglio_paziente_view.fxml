@@ -5,6 +5,8 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DettaglioPazienteController">
 
     <top>
@@ -16,7 +18,7 @@
                 <HBox spacing="20" style="-fx-padding: 10;" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
 
                     <!-- Colonna sinistra: dati paziente -->
-                    <VBox spacing="15" style="-fx-padding: 30;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <VBox spacing="15" style="-fx-padding: 20;" minWidth="200" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                         <Label fx:id="nomeLabel" text="Nome: " style="-fx-font-weight: bold;" />
                         <Label fx:id="cognomeLabel" text="Cognome: " style="-fx-font-weight: bold;" />
                         <Label fx:id="codiceFiscaleLabel" text="Codice Fiscale: " style="-fx-font-weight: bold;" />
@@ -44,9 +46,22 @@
                         <TextArea fx:id="infoAggiuntivePaziente" editable="false" prefRowCount="6"
                                   VBox.vgrow="NEVER" HBox.hgrow="NEVER" />
 
+                        <HBox alignment="CENTER" spacing="10">
+                            <Label text="Periodo:" />
+                            <ComboBox fx:id="filtroPeriodoComboBox" prefWidth="150.0" >
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Tutto" />
+                                        <String fx:value="Ultima settimana" />
+                                        <String fx:value="Ultimo mese" />
+                                    </FXCollections>
+                                </items>
+                            </ComboBox>
+                        </HBox>
+
                         <!-- Grafico che occupa spazio ma non tutto -->
                         <LineChart  fx:id="lineChartGlicemia" title="Andamento glicemico paziente" style="-fx-font-weight: bold;"
-                                   VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="250" maxHeight="500">
+                                   VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="250" maxHeight="500" animated="false" createSymbols="true" legendVisible="false">
                             <xAxis>
                                 <CategoryAxis label="Data - Momento - Pre/Post" />
                             </xAxis>

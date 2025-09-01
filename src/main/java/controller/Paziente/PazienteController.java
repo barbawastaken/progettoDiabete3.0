@@ -16,8 +16,6 @@ import java.util.List;
 
 public class PazienteController {
 
-    private String taxCode; //magari questo lo potremo eliminare più avanti, è solo per non far scoppiare tutto
-
     @FXML private ComboBox<String> filtroPeriodoComboBox;
     @FXML private LineChart<String, Number> lineChartGlicemia;
 
@@ -40,9 +38,9 @@ public class PazienteController {
         navBar.prefWidthProperty().bind(navBarContainer.widthProperty()); //riga che serve ad adattare la navbar alla pagina
         navBarContainer.getChildren().add(navBar);
 
-        this.taxCode = Session.getInstance().getTaxCode();
+        String taxCode = Session.getInstance().getTaxCode();
 
-        XYChart.Series<String, Number> serie = Session.caricaDatiGlicemia(null, Session.getInstance().getTaxCode());
+        XYChart.Series<String, Number> serie = Session.caricaDatiGlicemia("Tutto", Session.getInstance().getTaxCode());
         lineChartGlicemia.getData().clear();
         lineChartGlicemia.getData().add(serie);
 
@@ -77,10 +75,17 @@ public class PazienteController {
         notificheTabella.setItems(notifiche);
         //mostraNotifiche(farmaciNotifiche);
 
-        filtroPeriodoComboBox.setItems(FXCollections.observableArrayList("Ultima settimana", "Ultimo mese", "Tutto"));
         filtroPeriodoComboBox.setValue("Tutto");
 
-        filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico());
+        filtroPeriodoComboBox.setOnAction(event -> {
+            final XYChart.Series<String, Number> serieAggiornata = Session.caricaDatiGlicemia(
+                    filtroPeriodoComboBox.getValue(),
+                    Session.getInstance().getTaxCode()
+            );
+
+            lineChartGlicemia.getData().clear();
+            lineChartGlicemia.getData().add(serieAggiornata);
+        });
     }
 
     @FXML
@@ -104,59 +109,5 @@ public class PazienteController {
         ViewNavigator.navigateToTerapiaConcomitante();
 
     }
-
-    @FXML
-    private void aggiornaGrafico() {
-
-        String completaQuery = null;
-
-        if(filtroPeriodoComboBox.getValue().equals("Ultima settimana")) {
-            completaQuery = " AND date(data) >= date('now', '-7 days')";
-        } else if(filtroPeriodoComboBox.getValue().equals("Ultimo mese")) {
-            completaQuery = " AND date(data) >= date('now', '-30 days')";
-        }
-
-        XYChart.Series<String, Number> serie = Session.getInstance().caricaDatiGlicemia(completaQuery, this.taxCode);
-        lineChartGlicemia.getData().clear();
-        lineChartGlicemia.getData().add(serie);
-    }
-
-    /*private void caricaDatiGlicemia(String query) {
-        XYChart.Series<String, Number> serie = new XYChart.Series<>();
-        serie.setName("Valori glicemici");
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, taxCode);
-
-            ResultSet rs = stmt.executeQuery();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-            List<XYChart.Data<String, Number>> dati = new ArrayList<>();
-
-            while (rs.next()) {
-                String dataStr = rs.getString("data");
-                LocalDate data = LocalDate.parse(dataStr);
-                int valore = rs.getInt("quantita");
-                String momento = rs.getString("momentoGiornata");
-                String prePost = rs.getString("prePost");
-
-                String labelX = data.format(formatter) + " - " + momento + " - " + prePost;
-
-                XYChart.Data<String, Number> punto = new XYChart.Data<>(labelX, valore);
-
-                dati.add(punto);
-            }
-
-            // Pulisci il grafico prima di aggiungere nuovi dati
-            lineChartGlicemia.getData().clear();
-            serie.getData().addAll(dati);
-            lineChartGlicemia.getData().add(serie);
-
-        } catch (Exception e) {
-            System.out.println("Errore caricamento grafico: " + e);
-        }
-    }*/
 
 }

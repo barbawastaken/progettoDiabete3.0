@@ -127,14 +127,18 @@ public class Session {
 
     }
 
-    public static XYChart.Series<String, Number> caricaDatiGlicemia(String completaQuery, String taxCode) {
+    public static XYChart.Series<String, Number> caricaDatiGlicemia(String periodo, String taxCode) {
 
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         serie.setName("Valori glicemici");
 
         String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
 
-        if(completaQuery != null){ query += completaQuery; }
+        if(periodo.equals("Ultima settimana")) {
+            query  += " AND date(data) >= date('now', '-7 days')";
+        } else if(periodo.equals("Ultimo mese")) {
+            query += " AND date(data) >= date('now', '-30 days')";
+        }
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {

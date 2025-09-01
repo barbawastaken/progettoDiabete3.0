@@ -7,6 +7,7 @@ import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import model.Amministratore.Paziente;
@@ -34,6 +35,7 @@ public class DettaglioPazienteController {
 
     @FXML private TextArea infoAggiuntivePaziente;
     @FXML private LineChart<String, Number> lineChartGlicemia;
+    @FXML private ComboBox<String> filtroPeriodoComboBox;
 
     @FXML
     private void initialize() {
@@ -66,12 +68,23 @@ public class DettaglioPazienteController {
 
         infoAggiuntivePaziente.setText(Session.getInfoAggiuntiveOf(paziente.getTaxCode()));
 
-        XYChart.Series<String, Number> serie = Session.getInstance().caricaDatiGlicemia(null, paziente.getTaxCode());
+        XYChart.Series<String, Number> serie = Session.caricaDatiGlicemia("Tutto", paziente.getTaxCode());
         lineChartGlicemia.getData().clear();
         lineChartGlicemia.getData().add(serie);
 
-    }
+        filtroPeriodoComboBox.setValue("Tutto");
 
+        filtroPeriodoComboBox.setOnAction(event -> {
+            final XYChart.Series<String, Number> serieAggiornata = Session.caricaDatiGlicemia(
+                    filtroPeriodoComboBox.getValue(),
+                    paziente.getTaxCode()
+            );
+
+            lineChartGlicemia.getData().clear();
+            lineChartGlicemia.getData().add(serieAggiornata);
+        });
+
+    }
 
     @FXML private void handleAggiungiTerapia() {
 
@@ -90,5 +103,6 @@ public class DettaglioPazienteController {
         ViewNavigator.navigateToInfoPaziente();
 
     }
+
 }
 
