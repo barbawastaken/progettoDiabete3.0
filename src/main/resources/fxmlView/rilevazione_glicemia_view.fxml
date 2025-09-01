@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.RilevazioneGlicemia.RilevazioneGlicemiaController">
 
 
     <children>
-        <HBox fx:id="navbarContainer"
-              AnchorPane.topAnchor="0.0"
-              AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0"
-              spacing="10.0"
-              alignment="CENTER_LEFT"> </HBox>
-      <TextField layoutX="72.0" layoutY="75.0" prefHeight="26.0" prefWidth="64.0" fx:id="milligrammi"/>
-      <ComboBox fx:id="pastoGlicemia" layoutX="85.0" layoutY="138.0" prefWidth="150.0"/>
-      <Text layoutX="68.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi"/>
-      <Text layoutX="68.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasto di misurazione" />
-      <ComboBox layoutX="256.0" layoutY="138.0" prefHeight="26.0" prefWidth="77.0" fx:id="prepost"/>
-      <Text layoutX="256.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" />
-      <DatePicker layoutX="72.0" layoutY="200.0" fx:id="dataRilevamento"/>
-      <Text layoutX="68.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" />
-      <Button layoutX="68.0" layoutY="286.0" mnemonicParsing="false" text="Reset" fx:id="reset" onAction="#onResetPressed"/>
-      <Button layoutX="188.0" layoutY="286.0" mnemonicParsing="false" text="Invia" fx:id="submit" onAction="#onSubmitPressed"/>
+        <HBox fx:id="navbarContainer" alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> </HBox>
+
+      <TextField fx:id="milligrammi" layoutX="150.0" layoutY="107.0" prefHeight="26.0" prefWidth="64.0" />
+      <ComboBox fx:id="pastoGlicemia" layoutX="152.0" layoutY="188.0" prefWidth="150.0" />
+      <Text layoutX="147.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi" styleClass="testo"/>
+      <Text layoutX="151.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasto di misurazione" styleClass="testo"/>
+      <ComboBox fx:id="prepost" layoutX="430.0" layoutY="188.0" prefHeight="26.0" prefWidth="77.0" />
+      <Text layoutX="430.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" styleClass="testo"/>
+      <DatePicker fx:id="dataRilevamento" layoutX="152.0" layoutY="256.0" />
+      <Text layoutX="154.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" styleClass="testo"/>
+      <Button fx:id="reset" layoutX="217.0" layoutY="336.0" mnemonicParsing="false" onAction="#onResetPressed" text="Reset" />
+      <Button fx:id="submit" layoutX="339.0" layoutY="336.0" mnemonicParsing="false" onAction="#onSubmitPressed" text="Invia" />
    </children>
 </AnchorPane>

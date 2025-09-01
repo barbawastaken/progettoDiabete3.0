@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.shape.Rectangle?>
 <AnchorPane fx:id="mainPane" prefHeight="500" prefWidth="900" stylesheets="/css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
     <children>
@@ -12,6 +13,8 @@
 
             <!-- FORM Login -->
             <StackPane styleClass="form-container" HBox.hgrow="ALWAYS">
+
+                <Rectangle width="400" height="500" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
                 <VBox fx:id="formPane" alignment="CENTER" maxWidth="300" spacing="15" styleClass="form-box">
                     <Label styleClass="title" text="Welcome Back">
                     </Label>

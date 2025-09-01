@@ -16,15 +16,15 @@ public class EmailPazienteController {
 
     @FXML private TextField oggetto;
     @FXML private TextArea messaggio;
-    @FXML private HBox navBarContainer;
+    @FXML private HBox navbarContainer;
 
 
 
     @FXML
     private void initialize(){
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
-        navbar.prefWidthProperty().bind(navBarContainer.widthProperty());
-        navBarContainer.getChildren().add(navbar);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
     }
 
     @FXML

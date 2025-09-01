@@ -29,14 +29,14 @@ public class PazienteController {
     @FXML private TableView<Notifica> notificheTabella;
     @FXML private TableColumn<Notifica, String> notifica;
 
-    @FXML private HBox navBarContainer;
+    @FXML private HBox navbarContainer;
 
     @FXML
     public void initialize() {
 
         NavBar navBar = new NavBar(NavBarTags.PAZIENTE);
-        navBar.prefWidthProperty().bind(navBarContainer.widthProperty()); //riga che serve ad adattare la navbar alla pagina
-        navBarContainer.getChildren().add(navBar);
+        navBar.prefWidthProperty().bind(navbarContainer.widthProperty()); //riga che serve ad adattare la navbar alla pagina
+        navbarContainer.getChildren().add(navBar);
 
         String taxCode = Session.getInstance().getTaxCode();
 

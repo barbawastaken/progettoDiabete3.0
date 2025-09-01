@@ -11,7 +11,7 @@
 
     <!-- TOP: fascia blu con immagine, Area Paziente, bottoni invisibili -->
     <top>
-        <HBox fx:id="navBarContainer"/>
+        <HBox fx:id="navbarContainer"/>
     </top>
 
     <center>
@@ -22,16 +22,18 @@
 
             <VBox alignment="TOP_CENTER" spacing="15" HBox.hgrow="ALWAYS">
 
-                <!-- Contenitore per i bottoni -->
-                <VBox spacing="10" VBox.vgrow="NEVER">
-                    <Button onAction="#onRilevazioneGlicemiaClicked" maxWidth="Infinity" text="Rileva Glicemia" />
-                    <Button onAction="#onAddSymptomsClicked" maxWidth="Infinity" text="Aggiungi un sintomo" />
-                    <Button onAction="#onAddAssunzioneFarmacoClicked" maxWidth="Infinity" text="Assunzione farmaco" />
-                    <Button onAction="#onConcomitantiClicked" maxWidth="Infinity" wrapText="true" text="Sintomi, Patologie, Terapie concomitanti" />
-                </VBox>
+
+                <HBox alignment="TOP_CENTER" spacing="10">
+                <Button onAction="#onRilevazioneGlicemiaClicked" maxWidth="Infinity" text="Rileva Glicemia" styleClass="bottonePaziente"/>
+                <Button onAction="#onAddSymptomsClicked" maxWidth="Infinity" text="Aggiungi un sintomo" styleClass="bottonePaziente"/>
+                </HBox>
+                <HBox alignment="TOP_CENTER" spacing="10">
+                <Button onAction="#onAddAssunzioneFarmacoClicked" maxWidth="Infinity" text="Assunzione farmaco" styleClass="bottonePaziente"/>
+                <Button onAction="#onConcomitantiClicked" maxWidth="Infinity" wrapText="true" text="Sintomi, Patologie, Terapie concomitanti" styleClass="bottonePaziente"/>
+                </HBox>
 
                 <!-- Tabella terapie -->
-                <TableView fx:id="terapiaTabella" VBox.vgrow="ALWAYS" prefHeight="200">
+                <TableView fx:id="terapiaTabella" VBox.vgrow="ALWAYS" prefHeight="200" styleClass="tabellaPiccola">
                     <columns>
                         <TableColumn fx:id="terapia" text="Terapia" />
                         <TableColumn fx:id="farmaco_prescritto" text="Farmaco" />
@@ -42,7 +44,7 @@
                 </TableView>
 
                 <!-- Tabella notifiche -->
-                <TableView fx:id="notificheTabella" VBox.vgrow="ALWAYS" prefHeight="200">
+                <TableView fx:id="notificheTabella" VBox.vgrow="ALWAYS" prefHeight="200" styleClass="tabellaPiccola">
                     <columns>
                         <TableColumn fx:id="notifica" prefWidth="480" text="Notifiche" />
                     </columns>
@@ -67,6 +69,9 @@
                 </HBox>
 
                 <!-- Grafico -->
+                <padding>
+                    <Insets top="20" right="50" bottom="20" left="0"/>
+                </padding>
                 <LineChart fx:id="lineChartGlicemia" animated="false" createSymbols="true" legendVisible="false" prefHeight="365.0" prefWidth="424.0" title="Andamento Glicemia" VBox.vgrow="ALWAYS">
                     <xAxis>
                         <CategoryAxis label="Data" />

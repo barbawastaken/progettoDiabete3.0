@@ -3,9 +3,14 @@ package controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
+
+import java.util.Objects;
 
 public class NavBar extends HBox {
 
@@ -23,14 +28,10 @@ public class NavBar extends HBox {
      * Initialize the navigation bar
      */
     private void initialize() {
-        this.setSpacing(20);
-        this.setMaxWidth(Double.MAX_VALUE);
-
-        this.setPadding(new Insets(10));
-        //this.setStyle("-fx-background-color: #007bff;");
-
         Label brandLabel = new Label("Glucose Keeper");
-        brandLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 18px;");
+        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/fontLogo.ttf"), 25);
+        brandLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 25px;");
+        brandLabel.setFont(font);
         this.getChildren().add(brandLabel);
 
         // Spacer

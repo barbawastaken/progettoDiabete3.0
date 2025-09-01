@@ -5,10 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.shape.Rectangle?>
 <BorderPane minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.EmailPazienteController">
 
     <top>
-        <HBox fx:id="navBarContainer"></HBox>
+        <HBox fx:id="navbarContainer"></HBox>
         <!--
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
             <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
@@ -21,17 +22,22 @@
         -->
     </top>
     <center>
+        <StackPane>
+            <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
     <VBox alignment="CENTER" spacing="10">
-        <!-- Titolo finestra (puoi impostarlo da codice nello stage) -->
-        <!-- Scene Content -->
-        <Text text="Oggetto" />
-        <TextField fx:id="oggetto" prefHeight="25.0" maxWidth="300" promptText="inserisci l'oggetto dell'email" />
 
-        <Text text="Messaggio" />
-        <TextArea fx:id="messaggio" prefHeight="150.0" maxWidth="300" promptText="scrivi il messaggio da inviare" />
+
+
+        <Text text="Oggetto" styleClass="testo"/>
+        <TextField fx:id="oggetto" styleClass="email" prefHeight="25.0" maxWidth="300" promptText="inserisci l'oggetto dell'email" />
+
+        <Text text="Messaggio" styleClass="testo"/>
+        <TextArea fx:id="messaggio" prefHeight="150.0" styleClass="email" maxWidth="300" promptText="scrivi il messaggio da inviare" />
 
         <Button onAction="#onSendButtonPressed" text="INVIA"/>
     </VBox>
+
+        </StackPane>
     </center>
 
 </BorderPane>
