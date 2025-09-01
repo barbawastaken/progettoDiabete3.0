@@ -4,11 +4,16 @@ package controller;
     * Classe a pattern singleton = può esistere solo una sessione per volta (perfetta per il nostro caso)
  */
 
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import model.Amministratore.Paziente;
+import model.Diabetologo.Terapia;
 
 import java.sql.*;
-
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Session {
@@ -29,6 +34,7 @@ public class Session {
     private String city;
     private Integer cap;
     private Paziente pazienteInEsame;
+    private static Terapia terapiaInEsame;
 
     private Session() {
 
@@ -99,11 +105,70 @@ public class Session {
             return paziente;
 
         } catch(SQLException e) {
-            System.out.println("Errore nella raccolta dei dati");
-            System.out.println(e.getMessage());
+            System.out.println("Errore nella raccolta dei dati" + e.getMessage());
             return null;
         }
     }
+
+    public static String getInfoAggiuntiveOf(String taxCode) {
+
+        String query = "SELECT noteDaDiabetologo FROM infoAggiuntivePaziente WHERE taxCode='"+ taxCode +"'";
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.getString("noteDaDiabetologo");
+
+        } catch(SQLException e) {
+            System.out.println("Errore nella raccolta delle informazioni aggiuntive sul paziente" + e.getMessage());
+            return null;
+        }
+
+    }
+
+    public static XYChart.Series<String, Number> caricaDatiGlicemia(String completaQuery, String taxCode) {
+
+        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+        serie.setName("Valori glicemici");
+
+        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
+
+        if(completaQuery != null){ query += completaQuery; }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, taxCode);
+
+            ResultSet rs = stmt.executeQuery();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+            List<XYChart.Data<String, Number>> dati = new ArrayList<>();
+
+            while (rs.next()) {
+                String dataStr = rs.getString("data");
+                LocalDate data = LocalDate.parse(dataStr);
+                int valore = rs.getInt("quantita");
+                String momento = rs.getString("momentoGiornata");
+                String prePost = rs.getString("prePost");
+
+                String labelX = data.format(formatter) + " - " + momento + " - " + prePost;
+
+                XYChart.Data<String, Number> punto = new XYChart.Data<>(labelX, valore);
+
+                dati.add(punto);
+            }
+
+            serie.getData().addAll(dati);
+            return serie;
+
+        } catch (Exception e) {
+            System.out.println("Errore caricamento grafico: " + e.getMessage());
+            return null;
+        }
+    }
+
     public String getTaxCode() {
         return taxCode;
     }
@@ -230,6 +295,10 @@ public class Session {
     public void deletePazienteInEsame(){
         this.pazienteInEsame = null;
     }
+
+    public Terapia getTerapiaInEsame() { return terapiaInEsame; }
+
+    public static void setTerapiaInEsame(Terapia terapiaInEsameAss) { terapiaInEsame = terapiaInEsameAss; }
 
     public void brandNewSession(
             String taxCode,

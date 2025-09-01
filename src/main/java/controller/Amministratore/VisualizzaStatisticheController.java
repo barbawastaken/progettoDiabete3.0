@@ -238,14 +238,14 @@ public class VisualizzaStatisticheController {
                         if(taxCodeToNameMap.get(taxCode).equals(row.getItem().getTaxCode())){ taxCodePaziente = taxCode; }
                     }
 
-                    terapiaDaModificare.mostraModificaTerapia(terapiaSelezionata, taxCodePaziente, getTaxCodeDiabetologo(taxCodePaziente));
+                    terapiaDaModificare.mostraModificaTerapiaFromStatistiche(terapiaSelezionata, taxCodePaziente);
                 }
             });
             return row;
         });
     }
 
-    private String getTaxCodeDiabetologo(String taxCodePaziente) {
+    /*private String getTaxCodeDiabetologo(String taxCodePaziente) {
 
         String query = "SELECT diabetologo FROM utenti WHERE taxCode = ?";
 
@@ -262,7 +262,7 @@ public class VisualizzaStatisticheController {
             return null;
         }
 
-    }
+    }*/
 
     /*
     *

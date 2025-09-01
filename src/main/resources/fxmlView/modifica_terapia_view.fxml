@@ -2,25 +2,14 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.ModificaTerapiaController">
-
-    <children>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.ModificaTerapiaController">
+    <top>
+        <HBox fx:id="navbarContainer" />
+    </top>
+    <center>
         <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-
-            <!-- Barra superiore -->
-                <HBox fx:id="topBar" alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: dodgerblue;">
-                    <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
-                        <Image url="@../images/userImage.png" />
-                    </ImageView>
-                    <Label prefHeight="27.0" prefWidth="168.0" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Area Diabetologo" />
-                    <Pane HBox.hgrow="ALWAYS" />
-                    <Button onAction="#onHomePagePressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="HOMEPAGE" />
-                    <Button onAction="#onLogoutPressed" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" text="LOGOUT" />
-                    <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
-                </HBox>
 
             <!-- Spazio verticale flessibile -->
             <Pane VBox.vgrow="ALWAYS" />
@@ -52,13 +41,13 @@
                 <padding>
                     <Insets bottom="10" left="20" right="20" top="10" />
                 </padding>
-                <Button fx:id="resetButton" onAction="#handleReset" prefWidth="100" text="Reset" />
-                <Button fx:id="confermaButton" onAction="#onSendButtonPressed" prefWidth="100" text="Conferma" />
+                <Button onAction="#handleReset" prefWidth="100" text="Reset" />
+                <Button onAction="#onSendButtonPressed" prefWidth="100" text="Conferma" />
             </HBox>
 
             <!-- Spazio finale per centrare tutto -->
             <Pane VBox.vgrow="ALWAYS" />
 
         </VBox>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

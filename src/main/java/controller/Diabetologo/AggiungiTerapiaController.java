@@ -2,54 +2,33 @@ package controller.Diabetologo;
 
 import controller.NavBar;
 import controller.NavBarTags;
-import javafx.event.ActionEvent;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import model.Amministratore.Paziente;
 import model.Diabetologo.AggiungiTerapiaModel;
 
-import java.io.IOException;
 
 public class AggiungiTerapiaController {
 
     private String taxCode;
-    private Paziente paziente;
-    private String taxCodeDiabetologo;
 
-    @FXML
-    private HBox navbarContainer;
-    @FXML
-    private TextField terapiaField;
+    @FXML private HBox navbarContainer;
 
-    @FXML
-    private TextField farmacoField;
-
-    @FXML
-    private TextField quantitaField;
-
-    @FXML
-    private TextField frequenzaField;
-
-    @FXML
-    private TextField indicazioniField;
-
-    @FXML
-    private Button resetButton;
+    @FXML private TextField terapiaField;
+    @FXML private TextField farmacoField;
+    @FXML private TextField quantitaField;
+    @FXML private TextField frequenzaField;
+    @FXML private TextField indicazioniField;
 
 
     @FXML
     private void initialize(){
-        NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
+
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
@@ -59,47 +38,24 @@ public class AggiungiTerapiaController {
                 event.consume(); // blocca l'inserimento
             }
         });
-    }
 
-    @FXML
-    private void handleHomepage(javafx.event.ActionEvent event) {
-        try {
-            // Carica la nuova view da FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
-            Parent root = loader.load();
-            DettaglioPazienteController controller = loader.getController();
-            //controller.setPaziente(paziente, taxCodeDiabetologo);
-            // Prendi lo stage corrente dal bottone cliccato
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        this.taxCode = Session.getInstance().getPazienteInEsame().getTaxCode();
 
-            // Crea la nuova scena con il root appena caricato
-            Scene scene = new Scene(root);
-
-            // Imposta la nuova scena sullo stage corrente
-            stage.setScene(scene);
-
-            //Imposta titolo finestra
-            stage.setTitle("Dettaglio paziente");
-
-            // Mostra la finestra (non chiude, cambia scena)
-            stage.show();
-
-        } catch (IOException e) {
-            System.out.println("Errore caricamento pagina HomePage: " + e.getMessage());
-        }
     }
 
     @FXML
     private void handleReset() {
+
         terapiaField.clear();
         farmacoField.clear();
         quantitaField.clear();
         frequenzaField.clear();
         indicazioniField.clear();
+
     }
 
     @FXML
-    private void handleConferma(ActionEvent event) {
+    private void handleConferma() {
 
         if (terapiaField.getText().isEmpty() || farmacoField.getText().isEmpty() || quantitaField.getText().isEmpty() || frequenzaField.getText().isEmpty()) {
             mostraErrore("Tutti i campi obbligatori devono essere compilati.");
@@ -117,30 +73,15 @@ public class AggiungiTerapiaController {
             frequenza = Integer.parseInt(frequenzaField.getText());
         } catch (NumberFormatException e) {
             System.out.println("Errore nella lettura del numero di assunzioni giornaliere: " + e.getMessage());
-            frequenza = 0;
+            mostraErrore("Il numero di assunzioni giornaliere non è valido");
+            frequenzaField.clear();
+            return;
         }
 
-
         AggiungiTerapiaModel model = new AggiungiTerapiaModel();
-        model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, taxCodeDiabetologo);
+        model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Successo");
-        alert.setHeaderText(null);
-        alert.setContentText("La terapia è stata inserita correttamente nel database.");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                // Torno indietro alla scena precedente
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
-                    stage.setScene(new Scene(root));
-                } catch (IOException e) {
-                    System.out.println("Errore caricamento pagina dettaglio paziente: " + e.getMessage());
-                }
-            }
-        });
+        ViewNavigator.navigateToDiabetologo();
     }
 
     private void mostraErrore(String messaggio) {
@@ -151,12 +92,4 @@ public class AggiungiTerapiaController {
         alert.showAndWait();
     }
 
-    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
-        this.taxCode = taxCode;
-        this.taxCodeDiabetologo = taxCodeDiabetologo;
-    }
-
-    public void setPaziente(Paziente paziente) {
-        this.paziente = paziente;
-    }
 }

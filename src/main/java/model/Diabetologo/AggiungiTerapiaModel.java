@@ -1,5 +1,7 @@
 package model.Diabetologo;
 
+import controller.Session;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ public class AggiungiTerapiaModel {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL);
     }
-    public void insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni, String taxCodeDiabetologo) {
+    public void insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni) {
 
         String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -29,7 +31,7 @@ public class AggiungiTerapiaModel {
 
             System.out.println("Terapia salvata correttamente!");
 
-            LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
+            LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
 
         } catch (SQLException e) {
             System.out.println("Errore salvataggio terapia: " + e.getMessage());

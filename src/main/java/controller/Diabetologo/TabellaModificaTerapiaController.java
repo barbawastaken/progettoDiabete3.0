@@ -1,35 +1,26 @@
 package controller.Diabetologo;
 
+import controller.NavBar;
+import controller.NavBarTags;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
 import model.Diabetologo.TabellaModificaTerapiaModel;
 import model.Diabetologo.Terapia;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+public class TabellaModificaTerapiaController {
 
-public class TabellaModificaTerapiaController implements Initializable {
-
-   @FXML private Pane anchorPane;
-    private String taxCode;
-    private String nomeTerapia;
-    @FXML
-    private final TabellaModificaTerapiaModel tabellaModificaTerapie = new TabellaModificaTerapiaModel();
+    @FXML private HBox navbarContainer;
+    @FXML private final TabellaModificaTerapiaModel tabellaModificaTerapie = new TabellaModificaTerapiaModel();
 
     @FXML private TableView<Terapia> tabellaTerapie;
-    //@FXML private TableColumn<Terapia, String> taxCodeColumn;
     @FXML private javafx.scene.control.TableColumn<Terapia, String> colTerapia;
     @FXML private TableColumn<Terapia, String> colFarmaco;
     @FXML private TableColumn<Terapia, String> colQuantita;
@@ -37,10 +28,15 @@ public class TabellaModificaTerapiaController implements Initializable {
     @FXML private TableColumn<Terapia, String> colIndicazioni;
 
     private final ObservableList<Terapia> terapie = FXCollections.observableArrayList();
-    private String taxCodeDiabetologo;
+    private String taxCode;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
+
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
+
         colTerapia.setCellValueFactory(new PropertyValueFactory<>("terapia"));
         colFarmaco.setCellValueFactory(new PropertyValueFactory<>("farmaco"));
         colQuantita.setCellValueFactory(new PropertyValueFactory<>("quantita"));
@@ -62,46 +58,38 @@ public class TabellaModificaTerapiaController implements Initializable {
             row.setOnMouseClicked(mouseEvent -> {
                 if (!row.isEmpty() && mouseEvent.getClickCount() == 2) {
                     Terapia terapiaSelezionata = row.getItem();
-                    mostraModificaTerapia(terapiaSelezionata, this.taxCode, this.taxCodeDiabetologo);
+                    mostraModificaTerapia(terapiaSelezionata);
                 }
             });
 
             return row;
         });
-    }
 
-    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
-        this.taxCode = taxCode;
-        this.nomeTerapia = colTerapia.getText();
-        this.taxCodeDiabetologo = taxCodeDiabetologo;
+        this.taxCode = Session.getInstance().getPazienteInEsame().getTaxCode();
         loadTerapie();
+
     }
 
     private void loadTerapie() {
-        terapie.setAll(tabellaModificaTerapie.getTerapieByTaxCode(taxCode, nomeTerapia));
+        terapie.setAll(tabellaModificaTerapie.getTerapieByTaxCode(taxCode));
         tabellaTerapie.setItems(terapie);
     }
 
-    public void mostraModificaTerapia(Terapia terapia, String taxCode, String taxCodeDiabetologo) {
+    public void mostraModificaTerapia(Terapia terapia) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_terapia_view.fxml"));
-            Parent root = loader.load();
 
-            ModificaTerapiaController controller = loader.getController();
-            controller.setTaxCode(taxCode, taxCodeDiabetologo, terapia);
+            Session.setTerapiaInEsame(terapia);
+            ViewNavigator.navigateToModificaTerapia();
 
-            Stage stage = new Stage();
-            stage.setTitle("Modifica Terapia");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-            Stage stageCorrente = (Stage) anchorPane.getScene().getWindow();
-            stageCorrente.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Errore caricamento schermata di modifica terapia");
         }
     }
 
+    public void mostraModificaTerapiaFromStatistiche(Terapia terapia, String taxCode) {
 
+        Session.getInstance().setPazienteInEsame(Session.getInfosOf(taxCode));
+        mostraModificaTerapia(terapia);
+
+    }
 }
