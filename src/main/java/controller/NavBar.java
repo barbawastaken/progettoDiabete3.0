@@ -27,7 +27,7 @@ public class NavBar extends HBox {
         this.setMaxWidth(Double.MAX_VALUE);
 
         this.setPadding(new Insets(10));
-        this.setStyle("-fx-background-color: #007bff;");
+        //this.setStyle("-fx-background-color: #007bff;");
 
         Label brandLabel = new Label("Glucose Keeper");
         brandLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 18px;");

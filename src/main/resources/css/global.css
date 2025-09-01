@@ -1,0 +1,35 @@
+/* Navbar */
+#navbarContainer {
+    -fx-background-color: #5AC8FA;
+    -fx-padding: 10;
+
+}
+
+@font-face {
+    font-family: "Comfortaa";
+    src:url("../fonts/Comfortaa.ttf");
+    font-size: "normal";
+}
+
+/* Bottoni generici */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-family: Comfortaa;
+}
+
+/* Hover sui bottoni */
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.label{
+    -fx-font-family: "Comfortaa";
+}
+
+.root{
+    -fx-background-color: #F9F9F9;
+}
