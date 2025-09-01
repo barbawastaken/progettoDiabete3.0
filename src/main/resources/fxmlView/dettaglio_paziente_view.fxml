@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.DettaglioPazienteController">
 
     <top>
-        <HBox fx:id="navbarContainer"></HBox>
+        <HBox fx:id="navbarContainer" />
     </top>
     <center>
-        <VBox spacing="20.0">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <VBox spacing="15" style="-fx-padding: 15;">
+                <HBox spacing="20" style="-fx-padding: 10;" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
 
-            <Label fx:id="nomeLabel" text="Nome: " />
-            <Label fx:id="cognomeLabel" text="Cognome: " />
-            <Label fx:id="codiceFiscaleLabel" text="Codice Fiscale: " />
-            <Label fx:id="sessoLabel" text="Sesso: " />
-            <Label fx:id="dataNascitaLabel" text="Data di Nascita: " />
-            <Label fx:id="passwordLabel" text="Password: " />
-            <Label fx:id="viaLabel" text="Via: " />
-            <Label fx:id="numeroCivicoLabel" text="Numero Civico: " />
-            <Label fx:id="capLabel" text="CAP: " />
-            <Label fx:id="paeseLabel" text="Paese di Residenza: " />
-            <Label fx:id="cittaLabel" text="Città: " />
-            <Label fx:id="emailLabel" text="Email: " />
-            <Label fx:id="cellulareLabel" text="Cellulare: " />
-            <Label fx:id="pesoLabel" text="Peso: " />
-            <Label fx:id="altezzaLabel" text="Altezza: " />
+                    <!-- Colonna sinistra: dati paziente -->
+                    <VBox spacing="15" style="-fx-padding: 30;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                        <Label fx:id="nomeLabel" text="Nome: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="cognomeLabel" text="Cognome: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="codiceFiscaleLabel" text="Codice Fiscale: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="sessoLabel" text="Sesso: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="dataNascitaLabel" text="Data di Nascita: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="passwordLabel" text="Password: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="viaLabel" text="Via: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="numeroCivicoLabel" text="Numero Civico: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="capLabel" text="CAP: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="paeseLabel" text="Paese di Residenza: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="cittaLabel" text="Città: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="emailLabel" text="Email: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="cellulareLabel" text="Cellulare: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="pesoLabel" text="Peso: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="altezzaLabel" text="Altezza: " style="-fx-font-weight: bold;" />
+                    </VBox>
 
-            <Separator />
+                    <!-- Colonna destra: info + grafico -->
+                    <VBox spacing="20" style="-fx-padding: 30;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
 
-            <HBox spacing="10.0">
-                <Button fx:id="aggiungiTerapia" text="Aggiungi Terapia" onAction="#handleAggiungiTerapia" />
-                <Button fx:id="modificaTerapia" text="Modifica Terapia" onAction="#handleModificaTerapia" />
-                <Button fx:id="aggiornaInfo" text="Aggiorna Info" onAction="#handleAggiornaInfo" />
-            </HBox>
-        </VBox>
+                        <Label text="Informazioni aggiuntive sul paziente"
+                               style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+
+                        <!-- TextArea proporzionata -->
+                        <TextArea fx:id="infoAggiuntivePaziente" editable="false" prefRowCount="6"
+                                  VBox.vgrow="NEVER" HBox.hgrow="NEVER" />
+
+                        <!-- Grafico che occupa spazio ma non tutto -->
+                        <LineChart  fx:id="lineChartGlicemia" title="Andamento glicemico paziente" style="-fx-font-weight: bold;"
+                                   VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="250" maxHeight="500">
+                            <xAxis>
+                                <CategoryAxis label="Data - Momento - Pre/Post" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Valore Glicemico" />
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
     </center>
+
 </BorderPane>

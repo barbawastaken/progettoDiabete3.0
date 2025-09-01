@@ -6,31 +6,28 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.AggiornaInfoPazienteController">
 
-    <!-- Label in alto -->
     <top>
-        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Informazioni aggiuntive sul paziente:" BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets bottom="10" left="10" right="10" top="20" />
-            </BorderPane.margin>
-        </Label>
+        <HBox fx:id="navbarContainer" />
     </top>
 
     <!-- TextArea al centro -->
     <center>
-        <TextArea fx:id="infoTextArea" style="-fx-font-size: 14px; -fx-control-inner-background: #f9f9f9;                          -fx-background-radius: 8; -fx-border-radius: 8;                          -fx-border-color: #bdc3c7; -fx-border-width: 1;" wrapText="true">
+        <VBox alignment="CENTER" VBox.vgrow="ALWAYS" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Informazioni aggiuntive sul paziente:" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="10" left="20" right="20" top="10" />
+                <Insets bottom="10" left="10" right="10" top="20" />
             </BorderPane.margin>
-        </TextArea>
+            </Label>
+            <TextArea fx:id="infoTextArea" style="-fx-font-size: 14px; -fx-control-inner-background: #f9f9f9;                          -fx-background-radius: 8; -fx-border-radius: 8;                          -fx-border-color: #bdc3c7; -fx-border-width: 1;" wrapText="true">
+                <BorderPane.margin>
+                    <Insets bottom="10" left="20" right="20" top="10" />
+                </BorderPane.margin>
+            </TextArea>
+            <HBox alignment="CENTER" prefHeight="2.0" prefWidth="600.0" spacing="20" style="-fx-padding: 15;">
+                <Button onAction="#onResetClicked" style="-fx-background-color: #e74c3c; -fx-text-fill: white;                            -fx-background-radius: 6; -fx-font-size: 14px;" text="Reset" />
+                <Button onAction="#onSaveClicked" style="-fx-background-color: #27ae60; -fx-text-fill: white;                            -fx-background-radius: 6; -fx-font-size: 14px;" text="Salva" />
+            </HBox>
+        </VBox>
+
     </center>
-
-    <!-- Pulsanti in basso -->
-    <bottom>
-        <HBox alignment="CENTER" prefHeight="2.0" prefWidth="600.0" spacing="20">
-            <Button onAction="#onResetClicked" style="-fx-background-color: #e74c3c; -fx-text-fill: white;                            -fx-background-radius: 6; -fx-font-size: 14px;" text="Reset" />
-            <Button onAction="#onSaveClicked" style="-fx-background-color: #27ae60; -fx-text-fill: white;                            -fx-background-radius: 6; -fx-font-size: 14px;" text="Salva" />
-        </HBox>
-
-    </bottom>
-
 </BorderPane>

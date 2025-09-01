@@ -3,20 +3,15 @@ package controller.Diabetologo;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import model.Amministratore.Paziente;
-
-import java.io.IOException;
-
-import javafx.scene.control.Button;
-
 import javafx.scene.control.Label;
-import model.Diabetologo.ModificaTerapiaModel;
+
 
 public class DettaglioPazienteController {
     
@@ -37,12 +32,8 @@ public class DettaglioPazienteController {
     @FXML private Label pesoLabel;
     @FXML private Label altezzaLabel;
 
-    @FXML private Button aggiungiTerapia;
-    @FXML private Button modificaTerapia;
-    @FXML private Button aggiornaInfo;
-
-    private Paziente paziente;
-    private String taxCodeDiabetologo;
+    @FXML private TextArea infoAggiuntivePaziente;
+    @FXML private LineChart<String, Number> lineChartGlicemia;
 
     @FXML
     private void initialize() {
@@ -51,8 +42,8 @@ public class DettaglioPazienteController {
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         
         navbarContainer.getChildren().add(navbar);
-        this.paziente = Session.getInstance().getPazienteInEsame();
-        this.taxCodeDiabetologo = Session.getInstance().getTaxCode();
+        Paziente paziente = Session.getInstance().getPazienteInEsame();
+        String taxCodeDiabetologo = Session.getInstance().getTaxCode();
 
         System.out.println("VALORE PAZIENTE: " + paziente.toString());
         System.out.println("TAXCODE DIABETOLOGO: " + taxCodeDiabetologo);
@@ -72,108 +63,31 @@ public class DettaglioPazienteController {
         cellulareLabel.setText("Cellulare: " + paziente.getTelephone());
         pesoLabel.setText("Peso: " + paziente.getWeight());
         altezzaLabel.setText("Altezza: " + paziente.getHeight());
+
+        infoAggiuntivePaziente.setText(Session.getInfoAggiuntiveOf(paziente.getTaxCode()));
+
+        XYChart.Series<String, Number> serie = Session.getInstance().caricaDatiGlicemia(null, paziente.getTaxCode());
+        lineChartGlicemia.getData().clear();
+        lineChartGlicemia.getData().add(serie);
+
     }
 
 
     @FXML private void handleAggiungiTerapia() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/aggiungi_terapia_view.fxml"));
-            Parent root = loader.load();
 
-            AggiungiTerapiaController controller = loader.getController();
-            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
-            controller.setPaziente(paziente);
-            Stage currentStage = (Stage) aggiungiTerapia.getScene().getWindow();
-
-            currentStage.setTitle("Aggiungi terapia");
-            currentStage.setScene(new Scene(root));
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        ViewNavigator.navigateToAggiungiTerapia();
 
     }
 
     @FXML private void handleModificaTerapia() {
 
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/tabella_modifica_terapia_view.fxml"));
-            Parent root = loader.load();
-
-            TabellaModificaTerapiaController controller = loader.getController();
-            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
-            //controller.setPaziente(paziente);
-            Stage currentStage = (Stage) modificaTerapia.getScene().getWindow();
-
-            currentStage.setTitle("Terapie paziente");
-            currentStage.setScene(new Scene(root));
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-        *
-        * Per Riccardo: quando implementerai questo metodo arriverai ad avere un "ModificaTerapiaModel" con
-        * un accesso al database per effettuare la modifica di una terapia. Una volta completato il metodo,
-        * se l'operazione va a buon fine devi incollare la seguente riga
-        *
-        * LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Terapia modificata: " + nomeTerapiaOriginale, taxCodePaziente, LocalDate.now());
-        *
-        * Questa riga serve per effettuare il log quindi per mantenere traccia dell'operazione di modifica
-        * terapia in una tabella del database. Guarda il metodo "insertData" della classe "AggiungiTerapiaModel" che
-        * trovi proprio questa riga qua che capisci un po' come ho fatto io, oppure chiedimi. Quando hai fatto tutto
-        * dimmelo che faccio un po' di test.
-        *
-        * ocio che il log deve essere eseguito solo quando l'operazione è andata a buon fine. Ad esempio se
-        * non compilo un campo e quando clicco su "Salva" questo non viene effettivamente salvato per via dei
-        * controlli il log non deve essere scritto.
-        *
-        * */
+        ViewNavigator.navigateToTabellaModificaTerapia();
 
     }
 
     @FXML private void handleAggiornaInfo() {
 
-        try {
-            FXMLLoader loader =  new FXMLLoader(getClass().getResource("fxmlView/aggiorna_info_paziente.fxml"));
-            Parent root = loader.load();
-
-            AggiornaInfoPazienteController controller = loader.getController();
-            controller.setTaxCode(paziente.getTaxCode(), taxCodeDiabetologo);
-
-            Stage currentStage = (Stage) aggiornaInfo.getScene().getWindow();
-
-            currentStage.setTitle("Informazioni aggiuntive");
-            currentStage.setScene(new Scene(root));
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-        *
-        * Per Riccardo: quando implementerai questo metodo arriverai ad avere un "AggiornaInfoPazienteModel" con
-         * un accesso al database per effettuare la modifica delle informazioni di un paziente. Una volta completato
-         *  il metodo, se l'operazione va a buon fine devi incollare la seguente riga
-         *
-         * LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Aggiornate informazioni paziente", taxCodePaziente, LocalDate.now());
-         *
-         * Questa riga serve per effettuare il log quindi per mantenere traccia dell'operazione di aggiornamento
-         * informazioni di un paziente in una tabella del database. Se hai dubbi guarda il metodo "insertData"
-         * della classe "AggiungiTerapiaModel" che trovi proprio questa riga qua che capisci un po' come ho fatto io,
-         * oppure chiedimi. Quando hai fatto tutto dimmelo che faccio un po' di test.
-         *
-         * ocio che il log deve essere eseguito solo quando l'operazione è andata a buon fine. Ad esempio se
-         * non compilo un campo correttaente e quando clicco su "Salva" questo non viene effettivamente salvato
-         * per via dei controlli il log non deve essere scritto.
-         *
-        * */
+        ViewNavigator.navigateToInfoPaziente();
 
     }
 }

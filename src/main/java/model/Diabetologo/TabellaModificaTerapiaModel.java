@@ -8,7 +8,7 @@ public class TabellaModificaTerapiaModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
-    public List<Terapia> getTerapieByTaxCode(String taxCode, String nomeTerapia) {
+    public List<Terapia> getTerapieByTaxCode(String taxCode) {
         List<Terapia> terapie = new ArrayList<>();
 
         String query = "SELECT * FROM terapiePrescritte WHERE taxCode = ?";
@@ -31,7 +31,7 @@ public class TabellaModificaTerapiaModel {
                     terapie.add(t);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("Errore nel caricamento delle terapie: " + e.getMessage());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

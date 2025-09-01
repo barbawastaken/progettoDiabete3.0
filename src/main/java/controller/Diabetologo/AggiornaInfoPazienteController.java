@@ -1,33 +1,39 @@
 package controller.Diabetologo;
 
+import javafx.scene.control.TextArea;
+import controller.NavBar;
+import controller.NavBarTags;
 import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import model.Amministratore.Paziente;
 import model.Diabetologo.AggiornaInfoPazienteModel;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 public class AggiornaInfoPazienteController {
 
-    private String taxCode = Session.getInstance().getTaxCode();
+    private Paziente paziente;
     private String taxCodeDiabetologo;
 
-    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+    private final AggiornaInfoPazienteModel model = new AggiornaInfoPazienteModel();
 
     @FXML private TextArea infoTextArea;
+    @FXML private HBox navbarContainer;
 
-    public void setTaxCode(String taxCode, String taxCodeDiabetologo) {
-        this.taxCode = taxCode;
-        this.taxCodeDiabetologo = taxCodeDiabetologo;
+    public void setTaxCode() {
+        this.paziente = Session.getInstance().getPazienteInEsame();
+        this.taxCodeDiabetologo = Session.getInstance().getTaxCode();
     }
 
     @FXML
     private void initialize() {
-        //parte navBar??
+
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        this.setTaxCode(); //IMPORTANTE! altrimenti si rompe tutto
+        navbarContainer.getChildren().add(navbar);
+
+        infoTextArea.setText(model.getInfoPaziente(paziente.getTaxCode()));
     }
 
     @FXML
@@ -36,17 +42,10 @@ public class AggiornaInfoPazienteController {
     }
 
     @FXML
-    private void onSaveClicked(ActionEvent event) {
-        if(infoTextArea.getText().isEmpty())
-            return;
+    private void onSaveClicked() {
 
-        String info = infoTextArea.getText();
+        model.insertData(paziente.getTaxCode(), infoTextArea.getText(), taxCodeDiabetologo);
 
-        AggiornaInfoPazienteModel model = new AggiornaInfoPazienteModel();
-        model.insertData(taxCode, info, taxCodeDiabetologo);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        stage.close();
+        ViewNavigator.navigateToDiabetologo();
     }
 }

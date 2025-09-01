@@ -5,11 +5,7 @@ import controller.NavBarTags;
 import controller.Session;
 import controller.ViewNavigator;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -17,12 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import model.Amministratore.Paziente;
 import model.Diabetologo.VisualizzaPazientiModel;
-
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class VisualizzaPazientiController implements Initializable {
 
-    private String taxCode;
     private final VisualizzaPazientiModel visualizzaPazientiModel = new VisualizzaPazientiModel();
     @FXML private HBox navbarContainer;
     @FXML private TableView<Paziente> tabella;
@@ -56,8 +47,9 @@ public class VisualizzaPazientiController implements Initializable {
 
         NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
-        this.setTaxCode(Session.getInstance().getTaxCode()); //IMPORTANTE!! altrimenti si rompe tutto
         navbarContainer.getChildren().add(navbar);
+
+        loadPazienti();
 
         taxCodeColumn.setCellValueFactory(new PropertyValueFactory<>("taxCode"));
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -107,39 +99,10 @@ public class VisualizzaPazientiController implements Initializable {
         });
     }
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-        loadPazienti();
-    }
-
     private void loadPazienti() {
         pazienti.setAll(visualizzaPazientiModel.getPazientiByDiabetologo(Session.getInstance().getTaxCode()));
         tabella.setItems(pazienti);
-        System.out.println("da load pazienti: " + pazienti.toString());
-    }
-
-    private void mostraDettagliPaziente(Paziente paziente) {
-        try {
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/dettaglio_paziente_view.fxml"));
-            Parent root = loader.load();
-
-            DettaglioPazienteController controller = loader.getController();
-            //controller.setPaziente(paziente, taxCode);
-
-            Stage stage = new Stage();
-            stage.setTitle("Dettagli Paziente");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("da load pazienti: " + pazienti);
     }
 
 }

@@ -6,27 +6,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Diabetologo.AggiungiTerapiaController">
 
-
     <children>
-
-
         <VBox prefHeight="400.0" prefWidth="600.0" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox fx:id="navbarContainer" prefHeight="60" />
-            <!-- Barra superiore
-            <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: dodgerblue;">
-                <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </padding>
-                <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/userImage.png" />
-                    </image>
-                </ImageView>
-                <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Area Diabetologo" />
-                <Pane HBox.hgrow="ALWAYS"/>
-                <Button onAction="#handleHomepage" prefHeight="30.0" prefWidth="80.0" text="Homepage" />
-            </HBox>
--->
+
             <!-- Spazio verticale flessibile -->
             <Pane VBox.vgrow="ALWAYS" />
 
@@ -57,8 +40,8 @@
                 <padding>
                     <Insets bottom="10" left="20" right="20" top="10" />
                 </padding>
-                <Button fx:id="resetButton" onAction="#handleReset" prefWidth="100" text="Reset" />
-                <Button fx:id="confermaButton" onAction="#handleConferma" prefWidth="100" text="Conferma" />
+                <Button onAction="#handleReset" prefWidth="100" text="Reset" />
+                <Button onAction="#handleConferma" prefWidth="100" text="Conferma" />
             </HBox>
 
             <!-- Spazio finale per centrare tutto -->

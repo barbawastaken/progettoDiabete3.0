@@ -41,8 +41,7 @@ public class ViewNavigator {
             Object controller = loader.getController();
             mainController.setContent(view);
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading view: " + fxml);
+            System.err.println("Error loading " + fxml + " : " + e.getMessage());
         }
     }
 
@@ -143,28 +142,31 @@ public class ViewNavigator {
         loadView("patologie_concomitanti_view.fxml");
     }
 
-    public static void navigateToAggiungiTerapia(){
-        loadView("aggiungi_terapia_view.fxml");
-    }
-
     public static void navigateToDiabetologo(){
         loadView("diabetologo_view.fxml");
     }
+
+    public static void navigateToAmministratore(){ loadView("amministratore_view.fxml");}
+
+    public static void navigateToAddUser(){loadView("aggiungi_utente_view.fxml");}
+
+    public static void navigateToVisualizzaUtenti(){loadView("visualizza_utenti_view.fxml");}
+
     public static void navigateToProfileDiabetologo() {
         loadView("profiloDiabetologo.fxml");
     }
 
-    public static void navigateToVisualizzaPazienti() {
-        loadView("visualizza_pazienti_view.fxml");
-    }
-    public static void navigateToAmministratore(){ loadView("amministratore_view.fxml");}
-    public static void navigateToAddUser(){loadView("aggiungi_utente_view.fxml");}
-    public static void navigateToVisualizzaUtenti(){loadView("visualizza_utenti_view.fxml");}
+    public static void navigateToVisualizzaPazienti() { loadView("visualizza_pazienti_view.fxml"); }
+
+    public static void navigateToAggiungiTerapia(){ loadView("aggiungi_terapia_view.fxml"); }
+
+    public static void navigateToTabellaModificaTerapia() {loadView("tabella_modifica_terapia_view.fxml");}
+
+    public static void navigateToModificaTerapia() { loadView("modifica_terapia_view.fxml");}
 
     public static void navigateToPatientDetails() {loadView("dettaglio_paziente_view.fxml");}
 
-    public static void navigateToModificaTerapia() {loadView("modifica_terapia_view.fxml");}
+    public static void navigateToInfoPaziente() { loadView("aggiorna_info_paziente.fxml"); }
 
-    public static void navigateToVisualizzaStatistiche() {loadView("visualizzaStatistiche.fxml");
-    }
+    public static void navigateToVisualizzaStatistiche() {loadView("visualizzaStatistiche.fxml");}
 }

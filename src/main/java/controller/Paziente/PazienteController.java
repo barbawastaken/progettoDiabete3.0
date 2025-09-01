@@ -11,17 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import model.Paziente.PazienteModel;
 import model.Paziente.TerapiaModel;
-
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PazienteController {
 
     private String taxCode; //magari questo lo potremo eliminare più avanti, è solo per non far scoppiare tutto
-    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
 
     @FXML private ComboBox<String> filtroPeriodoComboBox;
     @FXML private LineChart<String, Number> lineChartGlicemia;
@@ -47,8 +42,9 @@ public class PazienteController {
 
         this.taxCode = Session.getInstance().getTaxCode();
 
-        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
-        caricaDatiGlicemia(query);
+        XYChart.Series<String, Number> serie = Session.caricaDatiGlicemia(null, Session.getInstance().getTaxCode());
+        lineChartGlicemia.getData().clear();
+        lineChartGlicemia.getData().add(serie);
 
         terapia.setCellValueFactory(new PropertyValueFactory<>("terapia"));
         farmaco_prescritto.setCellValueFactory(new PropertyValueFactory<>("farmacoPrescritto"));
@@ -84,7 +80,7 @@ public class PazienteController {
         filtroPeriodoComboBox.setItems(FXCollections.observableArrayList("Ultima settimana", "Ultimo mese", "Tutto"));
         filtroPeriodoComboBox.setValue("Tutto");
 
-        filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico(query));
+        filtroPeriodoComboBox.setOnAction(event -> aggiornaGrafico());
     }
 
     @FXML
@@ -110,18 +106,22 @@ public class PazienteController {
     }
 
     @FXML
-    private void aggiornaGrafico(String query) {
+    private void aggiornaGrafico() {
+
+        String completaQuery = null;
 
         if(filtroPeriodoComboBox.getValue().equals("Ultima settimana")) {
-            query += " AND date(data) >= date('now', '-7 days')";
+            completaQuery = " AND date(data) >= date('now', '-7 days')";
         } else if(filtroPeriodoComboBox.getValue().equals("Ultimo mese")) {
-            query += " AND date(data) >= date('now', '-30 days')";
+            completaQuery = " AND date(data) >= date('now', '-30 days')";
         }
 
-        caricaDatiGlicemia(query);
+        XYChart.Series<String, Number> serie = Session.getInstance().caricaDatiGlicemia(completaQuery, this.taxCode);
+        lineChartGlicemia.getData().clear();
+        lineChartGlicemia.getData().add(serie);
     }
 
-    private void caricaDatiGlicemia(String query) {
+    /*private void caricaDatiGlicemia(String query) {
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         serie.setName("Valori glicemici");
 
@@ -157,21 +157,6 @@ public class PazienteController {
         } catch (Exception e) {
             System.out.println("Errore caricamento grafico: " + e);
         }
-    }
-    /*private void mostraNotifiche(ArrayList<String> farmaciNotifiche) {
-
-        for(String f : farmaciNotifiche) {
-            messaggioErrore(f);
-        }
-
-    }
-
-    public void messaggioErrore(String farmaco) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Notifica!!!");
-        alert.setHeaderText(null); // oppure "Attenzione!"
-        alert.setContentText("Non e' stata rilevata alcuna assunzione di " + farmaco + " negli ultimi 3 giorni");
-        alert.showAndWait();
     }*/
 
 }
