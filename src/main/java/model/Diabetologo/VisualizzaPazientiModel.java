@@ -1,5 +1,6 @@
 package model.Diabetologo;
 
+import controller.Session;
 import model.Amministratore.Paziente;
 
 import java.sql.*;
@@ -11,16 +12,18 @@ public class VisualizzaPazientiModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
     public List<Paziente> getPazientiByDiabetologo(String diabetologoCodiceFiscale) {
+
         List<Paziente> pazienti = new ArrayList<>();
+        String query;
 
-        String query = "SELECT * FROM utenti WHERE diabetologo=?";
-
-
+        if(Session.getInfosOf(diabetologoCodiceFiscale).getRole().equals("PRIMARIO")){
+            query = "SELECT * FROM utenti WHERE userType = 'PAZIENTE'";
+        } else {
+            query = "SELECT * FROM utenti WHERE diabetologo='" + diabetologoCodiceFiscale + "'";
+        }
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, diabetologoCodiceFiscale);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -46,19 +49,14 @@ public class VisualizzaPazientiModel {
                 }
             }
 
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Errore nel caricamento utenti del diabetologo: " + e.getMessage());
         }
         return pazienti;
     }
 
     public List<String> getPazientiInRitardo() throws SQLException {
-        String not = "SELECT taxCode FROM rilevazioniGlicemiche\n" +
-                "GROUP BY taxCode\n" +
-                "HAVING data > DATE('now', '-3 day');";
+        String not = "SELECT taxCode FROM rilevazioniGlicemiche GROUP BY taxCode HAVING data > DATE('now', '-3 day');";
 
         try(Connection conn = DriverManager.getConnection(DB_URL)){
             Statement stmt = conn.createStatement();

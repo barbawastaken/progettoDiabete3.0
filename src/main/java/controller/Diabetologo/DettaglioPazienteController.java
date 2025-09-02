@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 public class DettaglioPazienteController {
     
     @FXML private HBox navbarContainer;
+
     @FXML private Label nomeLabel;
     @FXML private Label cognomeLabel;
     @FXML private Label codiceFiscaleLabel;
@@ -40,15 +41,19 @@ public class DettaglioPazienteController {
     @FXML
     private void initialize() {
 
-        NavBar navbar = new NavBar(NavBarTags.toModificaUtenti);
+        String schermataDiArrivo = Session.getInstance().getSchermataDiArrivo();
+        NavBar navbar;
+
+        if(schermataDiArrivo != null && schermataDiArrivo.equals("TABELLA_PAZIENTI")){
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_toModificaUtenti);
+        } else {
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_toModificaUtentiFromNotifiche);
+        }
+
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
-        
         navbarContainer.getChildren().add(navbar);
         Paziente paziente = Session.getInstance().getPazienteInEsame();
         String taxCodeDiabetologo = Session.getInstance().getTaxCode();
-
-        System.out.println("VALORE PAZIENTE: " + paziente.toString());
-        System.out.println("TAXCODE DIABETOLOGO: " + taxCodeDiabetologo);
 
         nomeLabel.setText("Nome: " + paziente.getNome());
         cognomeLabel.setText("Cognome: " + paziente.getCognome());

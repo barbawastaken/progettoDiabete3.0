@@ -111,7 +111,7 @@ public class VisualizzaStatisticheController {
     public void initialize() {
 
         setupGrafico();
-        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
         /* SETUP GRAFICO COMPLETO */
@@ -238,6 +238,7 @@ public class VisualizzaStatisticheController {
                         if(taxCodeToNameMap.get(taxCode).equals(row.getItem().getTaxCode())){ taxCodePaziente = taxCode; }
                     }
 
+                    Session.setSchermataDiArrivo("STATISTICHE");
                     terapiaDaModificare.mostraModificaTerapiaFromStatistiche(terapiaSelezionata, taxCodePaziente);
                 }
             });

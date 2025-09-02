@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.AmministratoreController">
@@ -23,10 +21,6 @@
             <VBox spacing="10" alignment="CENTER" styleClass="box">
             <Button onAction="#isVisualizzaUtentiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Lista Utenti" />
                <Label text="Visualizza tutti gli utenti nel sistema" alignment="CENTER" wrapText="true"/>
-            </VBox>
-            <VBox spacing="10" alignment="CENTER" styleClass="box">
-            <Button onAction="#isVisualizzaStatisticheClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza statistiche" />
-               <Label text="Visualizza le statistiche di tutti i pazienti" alignment="CENTER" wrapText="true"/>
             </VBox>
          </HBox>
       </VBox>

@@ -58,6 +58,7 @@ public class TabellaModificaTerapiaController {
             row.setOnMouseClicked(mouseEvent -> {
                 if (!row.isEmpty() && mouseEvent.getClickCount() == 2) {
                     Terapia terapiaSelezionata = row.getItem();
+                    Session.setSchermataDiArrivo("TABELLA_TERAPIE");
                     mostraModificaTerapia(terapiaSelezionata);
                 }
             });

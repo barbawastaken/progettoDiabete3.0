@@ -4,11 +4,9 @@ package controller;
     * Classe a pattern singleton = può esistere solo una sessione per volta (perfetta per il nostro caso)
  */
 
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import model.Amministratore.Paziente;
 import model.Diabetologo.Terapia;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +33,7 @@ public class Session {
     private Integer cap;
     private Paziente pazienteInEsame;
     private static Terapia terapiaInEsame;
+    private static String schermataDiArrivo;
 
     private Session() {
 
@@ -301,6 +300,10 @@ public class Session {
     public Terapia getTerapiaInEsame() { return terapiaInEsame; }
 
     public static void setTerapiaInEsame(Terapia terapiaInEsameAss) { terapiaInEsame = terapiaInEsameAss; }
+
+    public String getSchermataDiArrivo() { return schermataDiArrivo; }
+
+    public static void setSchermataDiArrivo(String schermataDiArrivoPar) { schermataDiArrivo = schermataDiArrivoPar; }
 
     public void brandNewSession(
             String taxCode,

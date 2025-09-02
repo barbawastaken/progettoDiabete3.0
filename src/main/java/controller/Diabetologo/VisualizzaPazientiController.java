@@ -91,6 +91,7 @@ public class VisualizzaPazientiController implements Initializable {
                 if (!row.isEmpty() && event.getClickCount() == 2) { // doppio clic
 
                     Session.getInstance().setPazienteInEsame(row.getItem());
+                    Session.setSchermataDiArrivo("TABELLA_PAZIENTI");
                     ViewNavigator.navigateToPatientDetails();
 
                 }

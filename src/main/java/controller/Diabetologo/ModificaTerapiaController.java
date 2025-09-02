@@ -17,7 +17,7 @@ public class ModificaTerapiaController {
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
     @FXML private HBox navbarContainer;
-    private String userType;
+    private String schermataDiArrivo;
 
     @FXML private TextField terapiaField;
     @FXML private TextField farmacoField;
@@ -28,14 +28,15 @@ public class ModificaTerapiaController {
     @FXML
     private void initialize() {
 
-        userType = Session.getInfosOf(Session.getInstance().getTaxCode()).getRole();
-        System.out.println(userType);
+        schermataDiArrivo = Session.getInstance().getSchermataDiArrivo();
         NavBar navbar;
 
-        if(userType != null && userType.equals("PRIMARIO")){
-            navbar = new NavBar(NavBarTags.AMMINISTRATORE_ritornoVisualizzaStatistiche);
-        } else {
+        if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")){
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_ritornoVisualizzaStatistiche);
+        } else if(schermataDiArrivo != null && schermataDiArrivo.equals("TABELLA_TERAPIE")) {
             navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioneRitornoTabellaTerapie);
+        } else {
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_fromNotifiche);
         }
 
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
@@ -81,12 +82,11 @@ public class ModificaTerapiaController {
        ModificaTerapiaModel model = new ModificaTerapiaModel();
        model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
 
-        userType = Session.getInfosOf(Session.getInstance().getTaxCode()).getRole();
+       schermataDiArrivo = Session.getInstance().getSchermataDiArrivo();
 
-       if(userType != null && userType.equals("PRIMARIO")) {
+       if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")) {
            ViewNavigator.navigateToVisualizzaStatistiche();
        } else { ViewNavigator.navigateToDiabetologo(); }
-
    }
 
     @FXML

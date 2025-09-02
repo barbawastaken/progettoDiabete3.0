@@ -40,6 +40,7 @@ public class NotificationModel {
 
                 while(rs.next()){ farmaciPrescritti.add(rs.getString("farmaco_prescritto")); }
 
+
                 String query2 = "SELECT farmacoAssunto, dataAssunzione FROM assunzioneFarmaci WHERE taxCode = ? ORDER BY dataAssunzione DESC";
 
                 try (PreparedStatement ps2 = conn.prepareStatement(query2)) {
@@ -51,23 +52,25 @@ public class NotificationModel {
 
                         LocalDate dataAssunzione = LocalDate.parse(rs2.getString("dataAssunzione"));
 
-                        if(dataAssunzione.isBefore(LocalDate.now().minusDays(3))){
+                        for(String farmacoPrescritto : farmaciPrescritti){
 
-                            for(String s : farmaciPrescritti){
-
-                                if(s.equals(rs2.getString("farmacoAssunto"))){
-                                    Notifica notifica = new Notifica(p.getNome() + " " + p.getCognome(),
-                                            s, "Mancata assunzione per più di tre giorni");
-
-                                    notificheFarmaci.add(notifica);
-                                }
-
+                            if(farmacoPrescritto.equals(rs2.getString("farmacoAssunto")) && dataAssunzione.isAfter(LocalDate.now().minusDays(3))){
+                                farmaciPrescritti.remove(farmacoPrescritto);
                             }
 
                         }
 
                     }
 
+                    for(String farmacoPrescritto : farmaciPrescritti){
+                        Notifica notifica = new Notifica(
+                                p.getNome(),
+                                p.getCognome(),
+                                farmacoPrescritto,
+                                "Mancata assunzione per più di tre giorni");
+
+                        notificheFarmaci.add(notifica);
+                    }
 
                 } catch (Exception e){
                     System.out.println("Errore caricamento farmaci assunti by " + p.getTaxCode() + ": " + e.getMessage());
@@ -110,7 +113,9 @@ public class NotificationModel {
 
                     if((quantita < 80 || quantita > 130) && prePost.equals("PRE")){
 
-                        Notifica notifica = new Notifica(p.getNome(),
+                        Notifica notifica = new Notifica(
+                                p.getNome(),
+                                p.getCognome(),
                                 "Ha registrato un valore glicemico di " + quantita,
                                 prePost + " " + momentoGiornata + " - " + data,
                                 "yellow"

@@ -4,9 +4,12 @@ import controller.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import model.Diabetologo.DiabetologoModel;
+import model.Diabetologo.Terapia;
 import model.NotificationModel;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -59,6 +62,48 @@ public class DiabetologoController {
         NotificationModel notificationModel = new NotificationModel(Session.getInstance().getTaxCode());
         notifichePerFarmaci.setItems(notificationModel.notifyRitardoAssunzioni());
         notifichePerGlicemia.setItems(notificationModel.notifyGlicemia());
+
+        notifichePerFarmaci.setRowFactory(tv -> {
+            TableRow<Notifica> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) { // doppio click
+                    Notifica notificaSelezionata = row.getItem();
+
+                    String farmacoNotifica = notificaSelezionata.getFarmacoFarmaco();
+
+                    DiabetologoModel model = new DiabetologoModel();
+                    String taxCodePaziente = model.getTaxCodeFromPaziente(notificaSelezionata.getNomePazienteFarmaco(), notificaSelezionata.getCognomePazienteFarmaco());
+                    Terapia terapiaDaModificare = model.getTerapia(taxCodePaziente, farmacoNotifica);
+
+                    // Qui apri la nuova schermata
+                    TabellaModificaTerapiaController controller = new TabellaModificaTerapiaController();
+                    Session.setSchermataDiArrivo("NOTIFICHE");
+                    controller.mostraModificaTerapiaFromStatistiche(terapiaDaModificare, taxCodePaziente);
+                }
+            });
+            return row;
+        });
+
+        notifichePerGlicemia.setRowFactory(tv -> {
+            TableRow<Notifica> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) { // doppio click
+                    Notifica notificaSelezionata = row.getItem();
+
+                    String nomePazienteGlicemia = notificaSelezionata.getNomePazienteGlicemia();
+                    String cognomePazienteGlicemia = notificaSelezionata.getCognomePazienteGlicemia();
+
+                    DiabetologoModel model = new DiabetologoModel();
+                    String taxCodePaziente = model.getTaxCodeFromPaziente(nomePazienteGlicemia, cognomePazienteGlicemia);
+
+                    Session.getInstance().setPazienteInEsame(Session.getInfosOf(taxCodePaziente));
+
+                    Session.setSchermataDiArrivo("NOTIFICHE");
+                    ViewNavigator.navigateToPatientDetails();
+                }
+            });
+            return row;
+        });
 
     }
 
