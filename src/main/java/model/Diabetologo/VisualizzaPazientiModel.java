@@ -52,7 +52,6 @@ public class VisualizzaPazientiModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Pazienti: " + pazienti);
         return pazienti;
     }
 

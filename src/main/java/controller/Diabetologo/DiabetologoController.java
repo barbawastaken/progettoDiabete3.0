@@ -3,52 +3,74 @@ package controller.Diabetologo;
 import controller.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import model.NotificationModel;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class DiabetologoController {
 
     @FXML private Button statisticheButton;
     @FXML private HBox navbarContainer;
 
-    public DiabetologoController() { }
+    @FXML private TableView<Notifica> notifichePerFarmaci;
+    @FXML private TableColumn<Notifica, String> pazienteFarmaco;
+    @FXML private TableColumn<Notifica, String> farmacoFarmaco;
+    @FXML private TableColumn<Notifica, String> notificaFarmaco;
+
+    @FXML private TableView<Notifica> notifichePerGlicemia;
+    @FXML private TableColumn<Notifica, String> pazienteGlicemia;
+    @FXML private TableColumn<Notifica, String> notificaGlicemia;
+    @FXML private TableColumn<Notifica, LocalDate> dataGlicemia;
 
 
     @FXML
-    public void isVisualizzaPazientiClicked() {
+    public void initialize() throws SQLException {
 
-        ViewNavigator.navigateToVisualizzaPazienti();
+        Session.getInfos();
+
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
+        navbarContainer.getChildren().add(navbar);
+
+        if(Session.getInfosOf(Session.getInstance().getTaxCode()).getRole().equals("DIABETOLOGO")){
+            this.statisticheButton.setDisable(true);
+        }
+
+        pazienteFarmaco.setCellValueFactory(new PropertyValueFactory<>("pazienteFarmaco"));
+        farmacoFarmaco.setCellValueFactory(new PropertyValueFactory<>("farmacoFarmaco"));
+        notificaFarmaco.setCellValueFactory(new PropertyValueFactory<>("notificaFarmaco"));
+
+        pazienteFarmaco.prefWidthProperty().bind(notifichePerFarmaci.widthProperty().multiply(0.20));
+        farmacoFarmaco.prefWidthProperty().bind(notifichePerFarmaci.widthProperty().multiply(0.30));
+        notificaFarmaco.prefWidthProperty().bind(notifichePerFarmaci.widthProperty().multiply(0.50));
+
+        pazienteGlicemia.setCellValueFactory(new PropertyValueFactory<>("pazienteGlicemia"));
+        notificaGlicemia.setCellValueFactory(new PropertyValueFactory<>("notificaGlicemia"));
+        dataGlicemia.setCellValueFactory(new PropertyValueFactory<>("dataGlicemia"));
+
+        pazienteGlicemia.prefWidthProperty().bind(notifichePerGlicemia.widthProperty().multiply(0.20));
+        notificaGlicemia.prefWidthProperty().bind(notifichePerGlicemia.widthProperty().multiply(0.40));
+        dataGlicemia.prefWidthProperty().bind(notifichePerGlicemia.widthProperty().multiply(0.40));
+
+        NotificationModel notificationModel = new NotificationModel(Session.getInstance().getTaxCode());
+        notifichePerFarmaci.setItems(notificationModel.notifyRitardoAssunzioni());
+        notifichePerGlicemia.setItems(notificationModel.notifyGlicemia());
 
     }
 
-    @FXML
-    public void isVisualizzaNotificheClicked() {
+    @FXML public void isVisualizzaPazientiClicked() {
+
+        ViewNavigator.navigateToVisualizzaPazienti();
 
     }
 
     @FXML public void isVisualizzaStatisticheClicked(){
 
         ViewNavigator.navigateToVisualizzaStatistiche();
-
-    }
-
-    @FXML
-    public void initialize() throws SQLException {
-        Session.getInfos();
-        NotificationModel notificationModel = new NotificationModel(Session.getInstance().getTaxCode());
-        ArrayList<String> results = notificationModel.notifyRitardo();
-        System.out.println(results.toString());
-        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO);
-        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
-        navbarContainer.getChildren().add(navbar);
-
-        System.out.println(Session.getInstance().getCognome());
-
-        if(Session.getInfosOf(Session.getInstance().getTaxCode()).getRole().equals("DIABETOLOGO")){
-            this.statisticheButton.setDisable(true);
-        }
 
     }
 

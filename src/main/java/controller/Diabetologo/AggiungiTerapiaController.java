@@ -79,9 +79,12 @@ public class AggiungiTerapiaController {
         }
 
         AggiungiTerapiaModel model = new AggiungiTerapiaModel();
-        model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
+        int result = model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
 
-        ViewNavigator.navigateToDiabetologo();
+        if(result == 0) { ViewNavigator.navigateToDiabetologo(); }
+        if(result == -1) { mostraErrore("Non puoi prescrivere due volte lo stesso farmaco!"); farmacoField.clear(); }
+        if(result == -2) { mostraErrore("Errore nell'interazione col database!"); ViewNavigator.navigateToDiabetologo(); }
+
     }
 
     private void mostraErrore(String messaggio) {

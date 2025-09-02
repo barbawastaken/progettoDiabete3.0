@@ -2,9 +2,7 @@ package model.Diabetologo;
 
 import controller.Session;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class AggiungiTerapiaModel {
@@ -13,7 +11,24 @@ public class AggiungiTerapiaModel {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL);
     }
-    public void insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni) {
+    public int insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni) {
+
+        String query = "SELECT farmacoPrescritto FROM terapiePrescritte WHERE taxCode = '" + taxCode + "'";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery()){
+
+            while (rs.next()) {
+
+                if(rs.getString("farmacoPrescritto").equals(farmacoPrescritto)) { return -1;}
+
+            }
+
+        } catch (Exception e){
+            System.out.println("Errore caricamento terapie prescritte: " + e.getMessage());
+            return -2;
+        }
 
         String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -32,9 +47,11 @@ public class AggiungiTerapiaModel {
             System.out.println("Terapia salvata correttamente!");
 
             LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
+            return 0;
 
         } catch (SQLException e) {
             System.out.println("Errore salvataggio terapia: " + e.getMessage());
+            return -2;
         }
 
     }
