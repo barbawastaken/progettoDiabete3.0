@@ -85,7 +85,20 @@ public class DiabetologoController {
         });
 
         notifichePerGlicemia.setRowFactory(tv -> {
-            TableRow<Notifica> row = new TableRow<>();
+            TableRow<Notifica> row = new TableRow<Notifica>() {
+                @Override
+                protected void updateItem(Notifica notifica, boolean empty) {
+                    super.updateItem(notifica, empty);
+
+                    if (empty || notifica == null) {
+                        setStyle(""); // Rimuovi lo stile per le righe vuote
+                    } else {
+                        // Applica il colore come sfondo
+                        setStyle("-fx-background-color: " + notifica.getColore() + ";");
+                    }
+                }
+            };
+
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 2) { // doppio click
                     Notifica notificaSelezionata = row.getItem();
@@ -102,6 +115,7 @@ public class DiabetologoController {
                     ViewNavigator.navigateToPatientDetails();
                 }
             });
+
             return row;
         });
 

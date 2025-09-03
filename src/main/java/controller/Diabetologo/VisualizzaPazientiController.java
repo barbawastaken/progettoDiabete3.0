@@ -103,7 +103,6 @@ public class VisualizzaPazientiController implements Initializable {
     private void loadPazienti() {
         pazienti.setAll(visualizzaPazientiModel.getPazientiByDiabetologo(Session.getInstance().getTaxCode()));
         tabella.setItems(pazienti);
-        System.out.println("da load pazienti: " + pazienti);
     }
 
 }

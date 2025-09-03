@@ -105,6 +105,7 @@ public class DettaglioPazienteController {
 
     @FXML private void handleAggiornaInfo() {
 
+        Session.setSchermataDiArrivo("INFO_PAZIENTE");
         ViewNavigator.navigateToInfoPaziente();
 
     }

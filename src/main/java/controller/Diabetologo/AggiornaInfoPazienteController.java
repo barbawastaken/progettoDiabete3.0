@@ -28,10 +28,18 @@ public class AggiornaInfoPazienteController {
     @FXML
     private void initialize() {
 
-        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
+        NavBar navbar;
+
+        if(Session.getInstance().getSchermataDiArrivo().equals("STATISTICHE")){
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_infoFromStatistiche);
+        } else {
+            navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
+        }
+
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
-        this.setTaxCode(); //IMPORTANTE! altrimenti si rompe tutto
         navbarContainer.getChildren().add(navbar);
+
+        this.setTaxCode(); //IMPORTANTE! altrimenti si rompe tutto
 
         infoTextArea.setText(model.getInfoPaziente(paziente.getTaxCode()));
     }
@@ -46,6 +54,11 @@ public class AggiornaInfoPazienteController {
 
         model.insertData(paziente.getTaxCode(), infoTextArea.getText(), taxCodeDiabetologo);
 
-        ViewNavigator.navigateToDiabetologo();
+        if(Session.getInstance().getSchermataDiArrivo().equals("STATISTICHE")){
+            ViewNavigator.navigateToVisualizzaStatistiche();
+        } else {
+            ViewNavigator.navigateToDiabetologo();
+        }
+
     }
 }

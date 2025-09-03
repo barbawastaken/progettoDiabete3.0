@@ -13,7 +13,7 @@ public class AggiungiTerapiaModel {
     }
     public int insertData(String taxCode, String terapia, String farmacoPrescritto, String quantita, int numeroAssunzioniGiornaliere, String indicazioni) {
 
-        String query = "SELECT farmacoPrescritto FROM terapiePrescritte WHERE taxCode = '" + taxCode + "'";
+        String query = "SELECT farmaco_prescritto FROM terapiePrescritte WHERE taxCode = '" + taxCode + "'";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query);
@@ -21,7 +21,7 @@ public class AggiungiTerapiaModel {
 
             while (rs.next()) {
 
-                if(rs.getString("farmacoPrescritto").equals(farmacoPrescritto)) { return -1;}
+                if(rs.getString("farmaco_prescritto").equals(farmacoPrescritto)) { return -1;}
 
             }
 
@@ -43,8 +43,6 @@ public class AggiungiTerapiaModel {
             pstmt.setString(6, indicazioni);
 
             pstmt.executeUpdate();
-
-            System.out.println("Terapia salvata correttamente!");
 
             LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
             return 0;

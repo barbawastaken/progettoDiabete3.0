@@ -20,7 +20,6 @@ public class AggiornaInfoPazienteModel {
             pstmt.setString(1, taxCode);
             ResultSet rs = pstmt.executeQuery();
 
-            System.out.println("Restituisco " + rs.getString("noteDaDiabetologo"));
             return rs.getString("noteDaDiabetologo");
 
         } catch (SQLException e) {
@@ -41,8 +40,6 @@ public class AggiornaInfoPazienteModel {
             pstmt.setString(2, info);
 
             pstmt.executeUpdate();
-
-            System.out.println("Informazioni aggiuntive salvate correttamente.");
 
             LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Aggiornate informazioni paziente", taxCode, LocalDate.now());
 

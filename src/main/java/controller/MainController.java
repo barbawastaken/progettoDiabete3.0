@@ -3,7 +3,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import model.LoginModel;
 
 public class MainController {
@@ -56,6 +55,6 @@ public class MainController {
      * Update the navigation bar based on authentication status
      */
     public void updateNavBar(boolean isAuthenticated) {
-        navBar.updateAuthStatus(ViewNavigator.getAuthenticatedUser());
+        navBar.updateAuthStatus();
     }
 }

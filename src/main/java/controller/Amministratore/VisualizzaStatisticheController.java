@@ -1,10 +1,7 @@
 package controller.Amministratore;
 
+import controller.*;
 import controller.Diabetologo.TabellaModificaTerapiaController;
-import controller.LoginController;
-import controller.NavBar;
-import controller.NavBarTags;
-import controller.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -244,26 +241,20 @@ public class VisualizzaStatisticheController {
             });
             return row;
         });
+
+        aggiornaInfoButton.setOnAction(event -> {
+
+            String taxCodePaziente = null;
+            for(String taxCode : taxCodeToNameMap.keySet()){
+                if(taxCodeToNameMap.get(taxCode).equals(pazienteCombo.getValue())){ taxCodePaziente = taxCode; }
+            }
+
+            Session.getInstance().setPazienteInEsame(Session.getInfosOf(taxCodePaziente));
+            Session.setSchermataDiArrivo("STATISTICHE");
+            ViewNavigator.navigateToInfoPaziente();
+
+        });
     }
-
-    /*private String getTaxCodeDiabetologo(String taxCodePaziente) {
-
-        String query = "SELECT diabetologo FROM utenti WHERE taxCode = ?";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, taxCodePaziente);
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.getString("diabetologo");
-
-        } catch (Exception e) {
-            System.out.println("Errore ricerca taxCode diabetologo: " + e.getMessage());
-            return null;
-        }
-
-    }*/
 
     /*
     *

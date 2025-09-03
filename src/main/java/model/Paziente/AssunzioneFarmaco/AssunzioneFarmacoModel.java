@@ -15,18 +15,9 @@ public class AssunzioneFarmacoModel {
     public int inserimentoFarmacoAssunto(String taxCode, String farmacoAssunto, String quantitaAssunta,
                                          LocalDate dataAssunzione, LocalTime orarioAssunzione) {
 
-        int quantitaAssuntaInt;
+        if(farmacoAssunto == null || farmacoAssunto.isEmpty() || quantitaAssunta.isEmpty() || dataAssunzione == null || orarioAssunzione == null) { return 2; }
 
-        try{
-            quantitaAssuntaInt = Integer.parseInt(quantitaAssunta);
-
-            if(quantitaAssuntaInt <= 0){ return 1; }
-
-        } catch (NumberFormatException e) { return 1; }
-
-        if(farmacoAssunto == null || farmacoAssunto.isEmpty() || dataAssunzione == null || orarioAssunzione == null) { return 2; }
-
-        if (dataAssunzione.isAfter(LocalDate.now())) { return 3; }
+        if (dataAssunzione.isAfter(LocalDate.now()) || (dataAssunzione.equals(LocalDate.now()) && orarioAssunzione.isAfter(LocalTime.now()))) { return 3; }
 
         String sql = "INSERT INTO assunzioneFarmaci (taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione) VALUES (?, ?, ?, ?, ?)";
 
@@ -50,7 +41,7 @@ public class AssunzioneFarmacoModel {
 
             pstmt.setString(1, taxCode);
             pstmt.setString(2, farmacoAssunto);
-            pstmt.setInt(3, quantitaAssuntaInt);
+            pstmt.setString(3, quantitaAssunta);
             pstmt.setString(4, dataAssunzione.toString());
             pstmt.setString(5, orarioAssunzione.toString());
 
@@ -85,7 +76,7 @@ public class AssunzioneFarmacoModel {
         String sql = "SELECT farmaco_prescritto FROM terapiePrescritte WHERE taxCode = ?";
 
         try(Connection conn = DriverManager.getConnection(DB_URL);
-            PreparedStatement pstmt = conn.prepareStatement(sql);){
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setString(1, taxCode);
                 ResultSet rs = pstmt.executeQuery();
 

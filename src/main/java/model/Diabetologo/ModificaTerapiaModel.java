@@ -28,7 +28,6 @@ public class ModificaTerapiaModel {
             stmt.setString(7, Session.getInstance().getTerapiaInEsame().getTerapia());
 
             stmt.executeUpdate();
-            System.out.println("Salvataggio modifiche eseguito!");
 
             LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Terapia modificata(nome originale): " + Session.getInstance().getTerapiaInEsame().getTerapia(), Session.getInstance().getPazienteInEsame().getTaxCode(), LocalDate.now());
 

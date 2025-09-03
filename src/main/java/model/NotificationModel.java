@@ -52,7 +52,9 @@ public class NotificationModel {
 
                         LocalDate dataAssunzione = LocalDate.parse(rs2.getString("dataAssunzione"));
 
-                        for(String farmacoPrescritto : farmaciPrescritti){
+                        for(int i = 0; i < farmaciPrescritti.size(); i++){
+
+                            String farmacoPrescritto = farmaciPrescritti.get(i);
 
                             if(farmacoPrescritto.equals(rs2.getString("farmacoAssunto")) && dataAssunzione.isAfter(LocalDate.now().minusDays(3))){
                                 farmaciPrescritti.remove(farmacoPrescritto);
@@ -96,7 +98,7 @@ public class NotificationModel {
 
         for(Paziente p : pazientiDiabetologo){
 
-            String query = "SELECT quantita, momentoGiornata, prePost, data FROM rilevazioniGlicemiche WHERE taxCode=? ORDER BY data DESC";
+            String query = "SELECT quantita, momentoGiornata, prePost, data FROM rilevazioniGlicemiche WHERE taxCode = ? AND date(data) >= date('now', '-6 days') ORDER BY data DESC";
 
             try(Connection conn = DriverManager.getConnection(DB_url);
                 PreparedStatement ps = conn.prepareStatement(query)){
@@ -106,7 +108,7 @@ public class NotificationModel {
 
                 while(rs.next()){
 
-                    int quantita = rs.getInt("quantita");
+                    int quantita = Integer.parseInt(rs.getString("quantita"));
                     String prePost = rs.getString("prePost");
                     String momentoGiornata = rs.getString("momentoGiornata");
                     String data = rs.getString("data");
@@ -125,10 +127,24 @@ public class NotificationModel {
 
                     } else if(quantita > 180 && prePost.equals("POST")){
 
-                        Notifica notifica = new Notifica(p.getNome(),
+                        Notifica notifica = new Notifica(
+                                p.getNome(),
+                                p.getCognome(),
                                 "Ha registrato un valore glicemico di " + quantita,
                                 prePost + " " + momentoGiornata + " - " + data,
                                 "red"
+                        );
+
+                        notificheGlicemia.add(notifica);
+
+                    } else {
+
+                        Notifica notifica = new Notifica(
+                                p.getNome(),
+                                p.getCognome(),
+                                "Ha registrato un valore glicemico di " + quantita,
+                                prePost + " " + momentoGiornata + " - " + data,
+                                "green"
                         );
 
                         notificheGlicemia.add(notifica);
@@ -140,6 +156,7 @@ public class NotificationModel {
 
             } catch (Exception e){
                 System.out.println("Errore caricamento rilevazioni glicemiche di " + p.getTaxCode() + ": " + e.getMessage());
+                e.printStackTrace();
                 return null;
             }
 

@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 public class NavBar extends HBox {
 
 
-    private NavBarTags navbarRequested;
+    private final NavBarTags navbarRequested;
 
 
     public NavBar(NavBarTags navbarRequested) {
@@ -37,7 +37,7 @@ public class NavBar extends HBox {
         if(navbarRequested == NavBarTags.PAZIENTE) {
             navbarPerPazienti();
         } else if(navbarRequested == NavBarTags.PAZIENTE_toHomepage) {
-            navbarToHomepagePaziente(Session.getInstance());
+            navbarToHomepagePaziente();
         } else if(navbarRequested == NavBarTags.DIABETOLOGO){
             navbarPerDiabetologi();
         } else if (navbarRequested == NavBarTags.DIABETOLOGO_toHomepage) {
@@ -58,6 +58,8 @@ public class NavBar extends HBox {
             navbarPerRitornoVisualizzaStatistiche();
         } else if(navbarRequested == NavBarTags.DIABETOLOGO_fromNotifiche) {
             navbarPerDiabetologoNotifiche();
+        } else if(navbarRequested == NavBarTags.DIABETOLOGO_infoFromStatistiche) {
+            navbarPerInfoPazienteFromNotifiche();
         }
     }
 
@@ -106,7 +108,7 @@ public class NavBar extends HBox {
     * NavBar che usiamo in generale quando in un menu c'è solo la possibilità di tornare alla home
      */
 
-    private void navbarToHomepagePaziente(Session user){
+    private void navbarToHomepagePaziente(){
         Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToPaziente());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
         this.getChildren().addAll(homepageButton, logoutButton);
@@ -180,10 +182,13 @@ public class NavBar extends HBox {
         this.getChildren().addAll(indietroButton, logoutButton);
     }
 
+    private void navbarPerInfoPazienteFromNotifiche() {
+        Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToVisualizzaStatistiche());
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToDiabetologo());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
-    /**
-     * Create navigation buttons for unauthenticated users
-     */
+        this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
+    }
 
     /*
     private void createUnauthenticatedNavButtons() {
@@ -216,9 +221,7 @@ public class NavBar extends HBox {
     /**
      * Update the navigation bar based on authentication status
      */
-    public void updateAuthStatus( String username) {
-
-
+    public void updateAuthStatus() {
         this.getChildren().clear();
         initialize();
     }
