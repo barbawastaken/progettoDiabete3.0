@@ -7,6 +7,7 @@ import model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLOutput;
 
 /**
  * This class handles navigation between different views in the application.
@@ -34,14 +35,23 @@ public class ViewNavigator {
      * @param fxml The name of the FXML file to load
      */
     public static void loadView(String fxml) {
+        URL fxmlUrl = null;
         try {
-            URL fxmlUrl = Main.class.getResource("/fxmlView/" + fxml);
+            fxmlUrl = Main.class.getResource("/fxmlView/" + fxml);
+            if (fxmlUrl == null) {
+                System.out.println("URL NULLOOOOOOOOOOOOOOOOOOO");
+            }
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
+            if (loader == null) {
+                System.out.println("LOADER NULLOOOOOOOOOOOOOOOOOOO");
+            }
             Node view = loader.load();
-            Object controller = loader.getController();
+
             mainController.setContent(view);
         } catch (IOException e) {
-            System.err.println("Error loading " + fxml + " : " + e.getMessage());
+            System.err.println("Error loading " + fxmlUrl + " : " + e.getMessage());
+            e.printStackTrace();
+
         }
     }
 
@@ -148,7 +158,7 @@ public class ViewNavigator {
 
     public static void navigateToAmministratore(){ loadView("amministratore_view.fxml");}
 
-    public static void navigateToAddUser(){loadView("aggiungi_utente_view.fxml");}
+    public static void navigateToAddUser(){loadView("add_user_view.fxml");}
 
     public static void navigateToVisualizzaUtenti(){loadView("visualizza_utenti_view.fxml");}
 

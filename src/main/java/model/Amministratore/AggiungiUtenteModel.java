@@ -46,11 +46,11 @@ public class AggiungiUtenteModel {
 
     public void inserisciUtente(String taxCode, String password, String nome, String cognome, String address,
                                 String cap, String city, String email, String gender, java.sql.Date birthday,
-                                String number, String telephone, String userType, String diabetologoSelezionato, String altezza, String peso)
+                                String number, String telephone, String userType, String diabetologoSelezionato, String country, String altezza, String peso)
             throws SQLException {
 
         String addUserQuery = "INSERT INTO utenti (taxCode, password, nome, cognome, email, birthday, address," +
-                "number, city, cap, gender, telephoneNumber, userType, diabetologo, altezza, peso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "number, city, cap, gender, telephoneNumber, userType, diabetologo, CountryOfResidence, altezza, peso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         String addLoginQuery  = "INSERT INTO loginTable (taxCode, password, userType) VALUES (?, ?, ?);";
 
 
@@ -63,7 +63,7 @@ public class AggiungiUtenteModel {
                 HashMap<String, String> diabetologi = getDiabetologi();
                 System.out.println("Connesso");
                 pstmt.setString(1, taxCode);
-                pstmt.setString(2, BCrypt.hashpw(password, BCrypt.gensalt()));
+                pstmt.setString(2, password);
                 pstmt.setString(3, nome);
                 pstmt.setString(4, cognome);
                 pstmt.setString(5, email);
@@ -80,8 +80,9 @@ public class AggiungiUtenteModel {
                     pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
 
                     System.out.println(diabetologi.get(diabetologoSelezionato));//!!! FACENDO COSÌ UN PAZIENTE NON PUÒ NON AVERE UN MEDICO
-                    pstmt.setString(15, altezza);
-                    pstmt.setString(16, peso);
+                    pstmt.setString(15, country);
+                    pstmt.setString(16, altezza);
+                    pstmt.setString(17, peso);
                 } else{
                     pstmt.setString(14, null);
                     pstmt.setString(15, null);

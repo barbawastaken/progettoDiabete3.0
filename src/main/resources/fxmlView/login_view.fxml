@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.scene.shape.Rectangle?>
-<AnchorPane fx:id="mainPane" prefHeight="500" prefWidth="900" stylesheets="/css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane fx:id="mainPane" prefHeight="500" prefWidth="900"  xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
     <children>
         <HBox spacing="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">

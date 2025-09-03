@@ -3,6 +3,7 @@ package controller.Amministratore;
 import controller.LoginController;
 import controller.NavBar;
 import controller.NavBarTags;
+import controller.ViewNavigator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class AggiungiUtenteController extends GestioneUtenti {
 
 
@@ -33,10 +35,18 @@ public class AggiungiUtenteController extends GestioneUtenti {
     private HashMap<String, String> diabetologi = new HashMap<>();
     //TOP BAR IN COMUNE CIN MODIFICA UTENTE
 
+
+
+
+    @FXML private DatePicker birthday;
+
     @FXML private HBox navbarContainer;
 
     @FXML
     private void initialize() throws SQLException {
+
+
+
         AggiungiUtenteModel model = new AggiungiUtenteModel();
 
         NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
@@ -189,13 +199,13 @@ public class AggiungiUtenteController extends GestioneUtenti {
                             taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
                             cap.getText(), citta.getText(), email.getText(), gender.getValue(),
                             java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
-                            selected.getText(), medicoCurante.getValue(), height.getText(), weight.getText());
+                            selected.getText(), medicoCurante.getValue(), nation.getText(), height.getText(), weight.getText());
                 } else {
                     model.inserisciUtente(
                             taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
                             cap.getText(), citta.getText(), email.getText(), gender.getValue(),
                             java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
-                            selected.getText(), null, null, null); // valori nulli per non pazienti
+                            selected.getText(), null, nation.getText(),null, null); // valori nulli per non pazienti
                 }
                 //Chiudo finestra attuale gg
 
@@ -206,10 +216,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
                 VisualizzaListaUtentiController controller = loader.getController();
                 controller.evidenziaUtente(taxCode.getText());
 
-                Stage newStage = new Stage();
-                newStage.setTitle("Lista Utenti");
-                newStage.setScene(new Scene(root));
-                newStage.show();
+                ViewNavigator.navigateToVisualizzaUtenti();
 
             } catch (SQLException | IOException e) {
                 throw new RuntimeException(e);
@@ -241,22 +248,5 @@ public class AggiungiUtenteController extends GestioneUtenti {
         this.taxCode.setText(taxCode);
     }
 
-    @FXML void onHomePagePressed(){
-
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml.fxml"));
-
-            Parent root = loader.load();
-            AggiungiUtenteController aggiungiUtenteController = loader.getController();
-            aggiungiUtenteController.setTaxCode(taxCode.getText());
-            Stage stage = new Stage();
-            stage.setTitle("Amministratore");
-            stage.setScene(new Scene(root, 650, 500));
-            stage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
-
-
-    }
     public AggiungiUtenteController(){ }
 }

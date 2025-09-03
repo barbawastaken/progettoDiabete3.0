@@ -32,7 +32,7 @@ public class GestioneUtenti {
     @FXML protected Text capError;
     @FXML protected Text birthdayError;
     @FXML protected Text genderError;
-    @FXML protected Text medicoCuranteText;
+    @FXML protected Label medicoCuranteText;
     @FXML protected Text userAddedText;
     @FXML protected TextField nation;
     @FXML protected TextField weight;
@@ -42,15 +42,15 @@ public class GestioneUtenti {
     @FXML protected Text nomeError;
     @FXML protected Text cognomeError;
     @FXML protected Text passwordError;
-    @FXML protected Text heightText;
-    @FXML protected Text weightText;
+    @FXML protected Label heightText;
+    @FXML protected Label weightText;
     @FXML protected Text cityError;
     @FXML protected Text addressError;
     @FXML protected Text nationError;
 
 
     public GestioneUtenti() {}
-
+/*
     @FXML
     private void initialize(){
 
@@ -102,6 +102,8 @@ public class GestioneUtenti {
         gender.getItems().addAll("Maschio", "Femmina");
 
     }
+
+ */
 
     /*
     qui si potrebbe implementare initialize in modo da non avere il aggiungi/modifica utente due classi praticamente uguali
