@@ -23,11 +23,11 @@
             <VBox alignment="TOP_CENTER" spacing="15" HBox.hgrow="ALWAYS">
 
 
-                <HBox alignment="TOP_CENTER" spacing="10">
+                <HBox alignment="TOP_CENTER" spacing="100">
                 <Button onAction="#onRilevazioneGlicemiaClicked" maxWidth="Infinity" text="Rileva Glicemia" styleClass="bottonePaziente"/>
                 <Button onAction="#onAddSymptomsClicked" maxWidth="Infinity" text="Aggiungi un sintomo" styleClass="bottonePaziente"/>
                 </HBox>
-                <HBox alignment="TOP_CENTER" spacing="10">
+                <HBox alignment="TOP_CENTER" spacing="100">
                 <Button onAction="#onAddAssunzioneFarmacoClicked" maxWidth="Infinity" text="Assunzione farmaco" styleClass="bottonePaziente"/>
                 <Button onAction="#onConcomitantiClicked" maxWidth="Infinity" wrapText="true" text="Sintomi, Patologie, Terapie concomitanti" styleClass="bottonePaziente"/>
                 </HBox>

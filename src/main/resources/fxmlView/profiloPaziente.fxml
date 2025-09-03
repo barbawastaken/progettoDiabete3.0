@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
@@ -22,12 +21,12 @@
             <HBox prefHeight="44.0" prefWidth="1.0" spacing="10" />
         </HBox>
         -->
-        <HBox fx:id="navbarContainer"></HBox>
+        <HBox fx:id="navbarContainer"/>
     </top>
 
     <center>
         <ScrollPane fitToHeight="true" fitToWidth="true">
-            <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
+            <VBox alignment="TOP_CENTER" spacing="40" style="-fx-padding: 30;">
                 <HBox alignment="CENTER" prefHeight="53.0" prefWidth="725.0" spacing="20">
                     <VBox spacing="5">
                         <Text text="Nome" />

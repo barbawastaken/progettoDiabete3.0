@@ -8,6 +8,7 @@
 
 #navbarContainer {
     -fx-background-color: #5AC8FA;
+    -fx-alignment: "CENTER";
     -fx-padding: 20;
     -fx-spacing: 20;
     -fx-background-radius: 15;
@@ -23,6 +24,10 @@
     -fx-cursor: hand;
     -fx-font-family: Comfortaa;
     -fx-max-width: 300px;
+}
+
+#tabella{
+    -fx-background-color: #5AC8FA;
 }
 
 
@@ -45,15 +50,18 @@
 .root{
     -fx-background-color: #F9F9F9;
 
+
 }
 
 .tabellaPiccola{
     -fx-max-width: 800px;
+    -fx-max-height: 250;
+
 }
 
 .bottonePaziente{
     -fx-pref-width: 200px;
-    -fx-pref-height: 80px;
+    -fx-pref-height: 90px;
 }
 
 .email{
@@ -67,7 +75,7 @@
     -fx-padding: 5;
 }
 
-.testo{
+.testo {
     -fx-font-family: "Comfortaa";
     -fx-font-size: 15px;
     -fx-font-weight: 700;
@@ -88,3 +96,13 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
+.grigliePaziente{
+    -fx-alignment: CENTER;
+    -fx-hgap: 25;
+    -fx-vgap: 50;
+    -fx-background-color: #83E2F2;
+    -fx-background-radius: 15;
+    -fx-background-position: center;
+    -fx-max-height:500;
+    -fx-max-width: 700;
+}

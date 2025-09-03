@@ -2,24 +2,37 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController">
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.Paziente.AggiuntaSintomi.AggiuntaSintomiController"
+            prefHeight="400.0" prefWidth="600.0">
 
-    <children>
-        <HBox fx:id="navbarContainer"
-              AnchorPane.topAnchor="0.0"
-              AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0"
-              spacing="10.0"
-              alignment="CENTER_LEFT"> </HBox>
-      <ComboBox fx:id="symptoms" layoutX="61.0" layoutY="123.0" prefWidth="150.0" />
-      <Text layoutX="61.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomi Principali:" />
-      <TextArea fx:id="otherSpecifications" layoutX="321.0" layoutY="167.0" prefHeight="144.0" prefWidth="205.0" />
-      <Text fx:id="otherSpecificationsText" layoutX="321.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altre informazioni:" />
-      <Button layoutX="404.0" layoutY="350.0" mnemonicParsing="false" onAction="#onResetClicked" text="Reset" />
-      <Button layoutX="496.0" layoutY="350.0" mnemonicParsing="false" onAction="#onSendClicked" text="Invia" />
-      <DatePicker fx:id="relevationDate" layoutX="61.0" layoutY="257.0" />
-      <Text layoutX="64.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Rilevazione" />
-   </children>
-</AnchorPane>
+    <top>
+        <HBox fx:id="navbarContainer" />
+    </top>
+
+    <center>
+        <GridPane styleClass="grigliePaziente">
+
+            <!-- riga 0 -->
+
+            <Text GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="testo" text="Sintomi Principali:" />
+            <ComboBox fx:id="symptoms" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="150.0" />
+
+            <!-- riga 1 -->
+            <Text fx:id="otherSpecificationsText" styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Altre informazioni:" />
+            <TextArea fx:id="otherSpecifications" GridPane.columnIndex="1" GridPane.rowIndex="1" prefHeight="144.0" prefWidth="205.0" />
+
+            <!-- riga 2 -->
+            <Text GridPane.columnIndex="0" styleClass="testo" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Rilevazione" />
+            <DatePicker fx:id="relevationDate" GridPane.columnIndex="1"  GridPane.rowIndex="2"/>
+
+            <!-- riga 3 (invia e reset) -->
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onResetClicked" text="Reset" />
+            <Button GridPane.columnIndex="1" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onSendClicked" text="Invia" />
+        </GridPane>
+    </center>
+
+</BorderPane>

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.shape.Rectangle?>
+
 <?import javafx.geometry.Insets?>
 <BorderPane fx:id="addUserPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -23,8 +23,8 @@
                     <Insets top="50"/>
                 </padding>
 
-                <Rectangle width="700" height="500" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
-            <GridPane alignment="CENTER" hgap="15" vgap="10">
+
+            <GridPane alignment="CENTER" hgap="25" vgap="40">
 
 
 

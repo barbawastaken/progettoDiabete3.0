@@ -7,7 +7,6 @@ import model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLOutput;
 
 /**
  * This class handles navigation between different views in the application.
@@ -38,13 +37,9 @@ public class ViewNavigator {
         URL fxmlUrl = null;
         try {
             fxmlUrl = Main.class.getResource("/fxmlView/" + fxml);
-            if (fxmlUrl == null) {
-                System.out.println("URL NULLOOOOOOOOOOOOOOOOOOO");
-            }
+
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            if (loader == null) {
-                System.out.println("LOADER NULLOOOOOOOOOOOOOOOOOOO");
-            }
+
             Node view = loader.load();
 
             mainController.setContent(view);
