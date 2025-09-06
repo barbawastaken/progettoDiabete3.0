@@ -81,6 +81,13 @@
     -fx-font-weight: 700;
 }
 
+.error {
+    -fx-fill: red;
+    -fx-font-family: "Comfortaa";
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
 #aggiungiUtentePane{
     -fx-background-color: #5AC8FA;
     -fx-background-radius: 15px;

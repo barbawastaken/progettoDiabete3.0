@@ -5,73 +5,106 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Amministratore.ModificaUtenteController">
+<BorderPane prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.Amministratore.ModificaUtenteController">
 
-    <children>
-        <ScrollPane layoutX="-1.0" prefHeight="1000.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="973.0" prefWidth="602.0">
-                    <children>
-                        <Button fx:id="indietroButton" layoutX="517.0" layoutY="27.0" mnemonicParsing="false" onAction="#onIndietroButtonPressed" text="Indietro" />
-                        <TextField fx:id="nome" layoutX="66.0" layoutY="44.0" promptText="nome" />
-                        <TextField fx:id="cognome" layoutX="324.0" layoutY="44.0" promptText="cognome" />
-                        <PasswordField fx:id="password" layoutX="66.0" layoutY="108.0" promptText="password" />
-                        <TextField fx:id="taxCode" layoutX="324.0" layoutY="108.0" promptText="taxCode" />
-                        <Text layoutX="66.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
-                        <Text layoutX="324.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome" />
-                        <Text layoutX="66.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-                        <Text layoutX="324.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
-                        <DatePicker fx:id="birthday" layoutX="324.0" layoutY="173.0" prefHeight="26.0" prefWidth="160.0" />
-                        <Line endX="100.0" layoutX="301.0" layoutY="458.0" startX="-100.0" />
-                        <ComboBox fx:id="gender" layoutX="66.0" layoutY="173.0" prefWidth="150.0" />
-                        <Text layoutX="66.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sesso" />
-                        <TextField fx:id="address" layoutX="66.0" layoutY="283.0" promptText="address" />
-                        <TextField fx:id="citta" layoutX="63.0" layoutY="415.0" promptText="citta" />
-                        <TextField fx:id="number" layoutX="66.0" layoutY="343.0" prefHeight="26.0" prefWidth="53.0" promptText="number" />
-                        <TextField fx:id="cap" layoutX="316.0" layoutY="283.0" promptText="cap" />
-                        <Text layoutX="324.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di Nascita" />
-                        <Text layoutX="66.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indirizzo" />
-                        <Text layoutX="63.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città" />
-                        <Text layoutX="66.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero" />
-                        <Text layoutX="320.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAP" />
-                        <Line endX="100.0" layoutX="302.0" layoutY="749.0" startX="-100.0" />
-                        <Text layoutX="69.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-                        <Text layoutX="323.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero di Telefono." />
-                        <TextField fx:id="email" layoutX="66.0" layoutY="506.0" />
-                        <TextField fx:id="telephone" layoutX="327.0" layoutY="506.0" />
-                        <ComboBox fx:id="medicoCurante" layoutX="416.0" layoutY="623.0" prefWidth="150.0" />
-                        <Text fx:id="medicoCuranteText" layoutX="412.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medico Curante" />
-                        <Button layoutX="509.0" layoutY="681.0" mnemonicParsing="false" onAction="#onSendButtonPressed" text="Invia" />
+    <!-- TOP: barra con bottone indietro -->
+    <top>
+        <HBox fx:id="navbarContainer"/>
 
-                        <!--NON CANCELLARE GLI ONACTION ANCHE SE SONO ROSSI-->
-                        <Line endX="100.0" layoutX="301.0" layoutY="237.0" startX="-100.0" />
-                        <Text fx:id="taxCodeError" fill="#ff2200" layoutX="277.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il codice fiscale deve contenere 3 caratteri" />
-                        <Text fx:id="birthdayError" fill="#ff2200" layoutX="291.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La data di nascita deve essere valida" />
-                        <Text fx:id="genderError" fill="#ff2200" layoutX="92.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il sesso" />
-                        <Text fx:id="numberError" fill="#ff2200" layoutX="39.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numero richiesto" />
-                        <Text fx:id="capError" fill="#ff2200" layoutX="302.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il cap deve contenere 5 numeri" />
-                        <Text fx:id="emailError" fill="#ff2200" layoutX="17.0" layoutY="546.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'email deve essere di un formato corretto" />
-                        <Text fx:id="telephoneError" fill="#ff2200" layoutX="303.0" layoutY="546.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il numero deve essere composto da 10 cifre" />
-                        <Text fx:id="userAddedText" fill="#4fbc14" layoutX="389.0" layoutY="939.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dati inseriti correttamente!" />
-                        <TextField fx:id="weight" layoutX="235.0" layoutY="681.0" />
-                        <TextField fx:id="height" layoutX="236.0" layoutY="623.0" />
-                        <Text fx:id="weightText" layoutX="240.0" layoutY="674.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peso (in KG)" />
-                        <Text fx:id="heightText" layoutX="241.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Altezza (in CM)" />
-                        <TextField fx:id="nation" layoutX="315.0" layoutY="356.0" />
-                        <Text fx:id="medicoCuranteError" fill="#ff2200" layoutX="349.0" layoutY="850.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona un medico curante" visible="false" />
-                        <Text layoutX="311.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazione" />
-                        <Line endX="100.0" layoutX="291.0" layoutY="573.0" startX="-100.0" />
-                        <Text fx:id="heightError" fill="RED" layoutX="82.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'altezza non è valida" />
-                        <Text fx:id="weightError" fill="RED" layoutX="88.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peso non è valido" />
-                        <Text fx:id="nomeError" fill="#eb0000" layoutX="57.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il nome non può essere nullo" />
-                        <Text fx:id="passwordError" fill="RED" layoutX="43.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La password non può essere nulla" />
-                        <Text fx:id="cognomeError" fill="RED" layoutX="315.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il cognome non può essere nullo" />
-                        <Text fx:id="nationError" fill="RED" layoutX="298.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La nazione non può essere nulla" />
-                        <Text fx:id="cityError" fill="RED" layoutX="60.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La città non può essere nulla" />
-                        <Text fx:id="addressError" fill="RED" layoutX="48.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'indirizzo non può essere vuoto" />
-                    </children>
-                </AnchorPane>
-            </content>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <GridPane alignment="TOP_CENTER" hgap="20" vgap="15" style="-fx-padding: 30;">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints halignment="LEFT"/>
+                </columnConstraints>
+
+                <!-- Riga 1: Nome e Cognome -->
+                <Text text="Nome" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nome" promptText="nome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Text fx:id="nomeError" fill="RED" text="Il nome non può essere nullo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Text text="Cognome" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="cognome" promptText="cognome" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <Text fx:id="cognomeError" fill="RED" text="Il cognome non può essere nullo" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <!-- Riga 2: Password e Codice Fiscale -->
+                <Text text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="password" promptText="password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Text fx:id="passwordError" fill="RED" text="La password non può essere nulla" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Text text="Codice Fiscale" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                <Text fx:id="taxCodeError" fill="RED" text="Il codice fiscale deve contenere 3 caratteri" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+
+                <!-- Riga 3: Data di nascita e Sesso -->
+                <Text text="Data di Nascita" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="birthday" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Text fx:id="birthdayError" fill="RED" text="La data di nascita deve essere valida" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Text text="Sesso" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <ComboBox fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+                <Text fx:id="genderError" fill="RED" text="Inserisci il sesso" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+
+                <!-- Riga 4: Indirizzo e Numero -->
+                <Text text="Indirizzo" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="address" promptText="address" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <Text fx:id="addressError" fill="RED" text="L'indirizzo non può essere vuoto" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Text text="Numero" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                <TextField fx:id="number" promptText="number" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+                <Text fx:id="numberError" fill="RED" text="numero richiesto" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+
+                <!-- Riga 5: Città e CAP -->
+                <Text text="Città" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="citta" promptText="citta" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                <Text fx:id="cityError" fill="RED" text="La città non può essere nulla" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+
+                <Text text="CAP" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                <TextField fx:id="cap" promptText="cap" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+                <Text fx:id="capError" fill="RED" text="il cap deve contenere 5 numeri" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
+
+                <!-- Riga 6: Nazione -->
+                <Text text="Nazione" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                <TextField fx:id="nation" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                <Text fx:id="nationError" fill="RED" text="La nazione non può essere nulla" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+
+                <!-- Riga 7: Email e Telefono -->
+                <Text text="Email" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
+                <TextField fx:id="email" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                <Text fx:id="emailError" fill="RED" text="L'email deve essere di un formato corretto" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+
+                <Text text="Telefono" GridPane.rowIndex="12" GridPane.columnIndex="2"/>
+                <TextField fx:id="telephone" GridPane.rowIndex="12" GridPane.columnIndex="3"/>
+                <Text fx:id="telephoneError" fill="RED" text="il numero deve essere composto da 10 cifre" GridPane.rowIndex="13" GridPane.columnIndex="3"/>
+
+                <!-- Riga 8: Altezza e Peso -->
+                <Text text="Altezza (in CM)" fx:id="heightText" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
+                <TextField fx:id="height" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
+                <Text fx:id="heightError" fill="RED" text="L'altezza non è valida" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
+
+                <Text text="Peso (in KG)" fx:id="weightText" GridPane.rowIndex="14" GridPane.columnIndex="2"/>
+                <TextField fx:id="weight" GridPane.rowIndex="14" GridPane.columnIndex="3"/>
+                <Text fx:id="weightError" fill="RED" text="Il peso non è valido" GridPane.rowIndex="15" GridPane.columnIndex="3"/>
+
+                <!-- Riga 9: Medico Curante -->
+                <Text fx:id="medicoCuranteText" text="Medico Curante" GridPane.rowIndex="16" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="medicoCurante" GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+
+
+                <!-- Riga finale: Pulsante invia -->
+                <Button text="Invia" onAction="#onSendButtonPressed"
+                        GridPane.rowIndex="18" GridPane.columnIndex="3" />
+
+                <!-- Messaggio finale -->
+                <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!"
+                      GridPane.rowIndex="19" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+            </GridPane>
         </ScrollPane>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

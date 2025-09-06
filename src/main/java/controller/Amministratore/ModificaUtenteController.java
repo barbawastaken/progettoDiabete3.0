@@ -1,7 +1,10 @@
 package controller.Amministratore;
 
 import controller.LoginController;
+import controller.NavBar;
+import controller.NavBarTags;
 import controller.Paziente.PazienteController;
+import controller.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,26 +33,28 @@ public class ModificaUtenteController extends GestioneUtenti{
     private Stage listaUtentiStage;
     private VisualizzaListaUtentiController listaUtentiController;
     //QUESTI FXML SONO SOLO PER MODIFICA NON ANCHE PER AGGIUNGI
+    @FXML private HBox navbarContainer;
     @FXML private Text nuovaPasswordText;
     @FXML private TextField nuovaPasswordField;
     @FXML private Text confermaPasswordText;
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
-    //TOP BAR IN COMUNE CON AGGIUNGI UTENTE
-    @FXML private HBox topBar;
+
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
     
     
+    @FXML
+    public void initialize() {
 
-    public void initializeData(VisualizzaListaUtentiController listaUtentiController, Utente utente, VisualizzaListaUtentiModel model, ModificaUtenteModel modificaUtenteModel,
-                               Stage listaUtentiStage) {
 
-        this.listaUtentiController = listaUtentiController;
-        this.utente = utente;
-        this.model = model;
-        this.modificaUtenteModel = modificaUtenteModel;
-        this.listaUtentiStage = listaUtentiStage;
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        navbarContainer.getChildren().add(navbar);
+
+        this.listaUtentiController = new VisualizzaListaUtentiController();
+        this.utente = Session.getInstance().getUtenteInEsame();
+        this.model = new VisualizzaListaUtentiModel();
+        this.modificaUtenteModel = new ModificaUtenteModel();
 
 
         nome.setText(utente.getNome());
@@ -259,8 +264,7 @@ public class ModificaUtenteController extends GestioneUtenti{
 
         } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
 
-        Stage modificaUtenteControllerStage = (Stage)topBar.getScene().getWindow();
-        modificaUtenteControllerStage.close();
+
 
     }
     public void setTaxCode(String taxCode) {
@@ -282,8 +286,6 @@ public class ModificaUtenteController extends GestioneUtenti{
 
         } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
 
-        Stage ModificaUtenteController = (Stage)topBar.getScene().getWindow();
-        ModificaUtenteController.close();
 
     }
 }

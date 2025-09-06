@@ -6,6 +6,7 @@ package controller;
 
 import javafx.scene.chart.XYChart;
 import model.Amministratore.Paziente;
+import model.Amministratore.Utente;
 import model.Diabetologo.Terapia;
 import java.sql.*;
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class Session {
     private String city;
     private Integer cap;
     private Paziente pazienteInEsame;
+    private Utente utenteInEsame;
     private static Terapia terapiaInEsame;
     private static String schermataDiArrivo;
 
@@ -124,6 +126,15 @@ public class Session {
             return null;
         }
 
+    }
+
+
+    public Utente getUtenteInEsame() {
+        return utenteInEsame;
+    }
+
+    public void setUtenteInEsame(Utente utenteInEsame) {
+        this.utenteInEsame = utenteInEsame;
     }
 
     public static XYChart.Series<String, Number> caricaDatiGlicemia(String periodo, String taxCode) {

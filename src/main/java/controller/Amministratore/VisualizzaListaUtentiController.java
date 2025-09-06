@@ -2,6 +2,8 @@ package controller.Amministratore;
 
 import controller.NavBar;
 import controller.NavBarTags;
+import controller.Session;
+import controller.ViewNavigator;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -99,27 +101,36 @@ public class VisualizzaListaUtentiController {
             modificaItem.setOnAction(event -> {
                 Utente selected = row.getItem();
                 if (selected != null) {
+
+                    Session.getInstance().setUtenteInEsame(selected);
+                    ViewNavigator.navigateToModificaUtente();
+
+                    /*
                     try {
+
+
+
+
+
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
                         Parent root = loader.load();
 
                         ModificaUtenteController controller = loader.getController();
-                        controller.initializeData(
-                                this,
-                                selected,
-                                this.model,
-                                new ModificaUtenteModel(),
-                                (Stage) tabella.getScene().getWindow()
-                        );
+                        controller.initializeData();
 
                         Stage modificaStage = new Stage();
                         modificaStage.setTitle("Modifica Utente");
                         modificaStage.setScene(new Scene(root, 650, 500));
                         modificaStage.show();
+
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         new Alert(Alert.AlertType.ERROR, "Errore nell'apertura della finestra di modifica.").showAndWait();
                     }
+
+                     */
                 }
             });
 

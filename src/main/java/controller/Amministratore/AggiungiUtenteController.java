@@ -108,6 +108,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
         addressError.setManaged(false);
 
 
+
         ruolo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
             if(newValue != null) {
@@ -123,7 +124,6 @@ public class AggiungiUtenteController extends GestioneUtenti {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-
                     medicoCuranteText.setVisible(true);
                     medicoCuranteText.setManaged(true);
                     medicoCurante.setVisible(true);
@@ -152,6 +152,10 @@ public class AggiungiUtenteController extends GestioneUtenti {
                     weightText.setManaged(false);
                     heightText.setVisible(false);
                     heightText.setManaged(false);
+                    heightError.setVisible(false);
+                    weightError.setVisible(false);
+                    heightError.setManaged(false);
+                    weightError.setManaged(false);
                     //medicoCurante.setValue(null);
                     //height.setText(null);
                     //weight.setText(null);

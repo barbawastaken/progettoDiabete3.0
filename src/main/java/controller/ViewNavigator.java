@@ -174,4 +174,6 @@ public class ViewNavigator {
     public static void navigateToInfoPaziente() { loadView("aggiorna_info_paziente.fxml"); }
 
     public static void navigateToVisualizzaStatistiche() {loadView("visualizzaStatistiche.fxml");}
+
+    public static void navigateToModificaUtente(){loadView("modifica_utente_view.fxml");}
 }
