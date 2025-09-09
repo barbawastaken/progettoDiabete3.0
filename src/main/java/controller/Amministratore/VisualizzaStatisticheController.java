@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class VisualizzaStatisticheController {
@@ -117,7 +118,7 @@ public class VisualizzaStatisticheController {
                 "u.nome, u.cognome " +
                 "FROM rilevazioniGlicemiche r " +
                 "JOIN utenti u ON r.taxCode = u.taxCode " +
-                "ORDER BY r.data, r.taxCode";
+                "ORDER BY r.taxCode, r.data";
 
 
         caricaTuttiIDatiDalDatabase(tuttiIDati, query);
@@ -393,12 +394,10 @@ public class VisualizzaStatisticheController {
             serie.setName(taxCode); // Evita problemi, se non esiste il nome completo usa il taxcode
         }
 
-        // Ordina le rilevazioni per data (cronologicamente)
-        rilevazioni.sort((r1, r2) -> r1.data.compareTo(r2.data));
-
         // Aggiungi ogni rilevazione come punto nel grafico
         for (Rilevazione r : rilevazioni) {
-            String labelAsseX = r.data + " - " + r.momentoGiornata + " - " + r.prePost;
+
+            String labelAsseX = r.data.format(DateTimeFormatter.ofPattern("dd/MM")) + " - " + r.momentoGiornata + " - " + r.prePost + " - " + taxCode;
             XYChart.Data<String, Number> punto = new XYChart.Data<>(labelAsseX, r.quantita);
             serie.getData().add(punto);
         }

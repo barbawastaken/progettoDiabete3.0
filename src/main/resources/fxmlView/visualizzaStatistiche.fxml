@@ -26,7 +26,7 @@
 
                 <!-- Grafico che si adatta automaticamente alle dimensioni -->
                 <VBox VBox.vgrow="ALWAYS" style="-fx-padding: 5;">
-                    <LineChart fx:id="lineChart" title="Andamento glicemico pazienti" style="-fx-font-weight: bold;" minHeight="350" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <LineChart fx:id="lineChart" title="Andamento glicemico pazienti" style="-fx-font-weight: bold;" minHeight="550" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
                         <xAxis>
                             <CategoryAxis label="Data - Momento - Pre/Post" />
                         </xAxis>
@@ -38,7 +38,7 @@
 
                 <!-- Grafico per andamento glicemico dell'ultimo mese e dell'ultima settimana -->
                 <HBox spacing="20" style="-fx-padding: 5;">
-                    <LineChart fx:id="lineChartLastMonth" title="Andamento glicemico nell'ultimo mese" style="-fx-font-weight: bold;" minHeight="350" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <LineChart fx:id="lineChartLastMonth" title="Andamento glicemico nell'ultimo mese" style="-fx-font-weight: bold;" minHeight="550" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                         <xAxis>
                             <CategoryAxis label="Data - Momento - Pre/Post" />
                         </xAxis>
@@ -47,7 +47,7 @@
                         </yAxis>
                     </LineChart>
 
-                    <LineChart fx:id="lineChartLastWeek" title="Andamento glicemico nell'ultima settimana" style="-fx-font-weight: bold;" minHeight="350" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                    <LineChart fx:id="lineChartLastWeek" title="Andamento glicemico nell'ultima settimana" style="-fx-font-weight: bold;" minHeight="550" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                         <xAxis>
                             <CategoryAxis label="Data - Momento - Pre/Post" />
                         </xAxis>
@@ -64,7 +64,7 @@
                           textAlignment="CENTER"
                           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
                     <HBox alignment="CENTER">
-                        <TableView fx:id="tabellaTerapie" VBox.vgrow="ALWAYS" minHeight="150">
+                        <TableView fx:id="tabellaTerapie" VBox.vgrow="ALWAYS" minHeight="200" minWidth="500">
                             <columns>
                                 <TableColumn fx:id="nomePazienteTerapia" text="Paziente" prefWidth="150"/>
                                 <TableColumn fx:id="nomeTerapia" text="Terapia" prefWidth="150"/>
@@ -84,7 +84,7 @@
                           textAlignment="CENTER"
                           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
                     <HBox alignment="CENTER">
-                        <TableView fx:id="tabellaAssunzioni" VBox.vgrow="ALWAYS" minHeight="150">
+                        <TableView fx:id="tabellaAssunzioni" VBox.vgrow="ALWAYS" minHeight="200" minWidth="500">
                             <columns>
                                 <TableColumn fx:id="nomePazienteAssunzione" text="Paziente" prefWidth="160"/>
                                 <TableColumn fx:id="farmacoAssunzione" text="Farmaco" prefWidth="160"/>
@@ -104,7 +104,7 @@
                               textAlignment="CENTER"
                               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
                         <HBox alignment="CENTER">
-                            <TableView fx:id="tabellaSintomi" VBox.vgrow="ALWAYS" minHeight="150">
+                            <TableView fx:id="tabellaSintomi" VBox.vgrow="ALWAYS" minHeight="200" minWidth="300">
                                 <columns>
                                     <TableColumn fx:id="nomePazienteSintomo" text="Paziente" prefWidth="90"/>
                                     <TableColumn fx:id="sintomoPrincipale" text="Sintomo principale" prefWidth="130"/>
@@ -121,7 +121,7 @@
                               textAlignment="CENTER"
                               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
                         <HBox alignment="CENTER">
-                            <TableView fx:id="tabellaPatologie" VBox.vgrow="ALWAYS" minHeight="150">
+                            <TableView fx:id="tabellaPatologie" VBox.vgrow="ALWAYS" minHeight="200" minWidth="300">
                                 <columns>
                                     <TableColumn fx:id="nomePazientePatologia" text="Paziente" prefWidth="100"/>
                                     <TableColumn fx:id="patologiaConcomitante" text="Patologia" prefWidth="150"/>

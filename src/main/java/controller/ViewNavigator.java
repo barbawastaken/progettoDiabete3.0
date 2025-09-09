@@ -74,7 +74,6 @@ public class ViewNavigator {
 
     public static void navigateToEmail(){
         loadView("email_paziente_view.fxml");
-        System.out.println("taxCode passato da navigateToEmail: " + Session.getInstance().getTaxCode());
     }
 
     /**
