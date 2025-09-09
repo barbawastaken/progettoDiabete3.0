@@ -51,10 +51,33 @@ public class VisualizzaListaUtentiModel {
         return lista;
     }
     public void rimuoviUtente(Utente utente) {
+
         String sql = "DELETE FROM utenti WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM loginTable WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM aggiuntaSintomi WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM assunzioneFarmaci WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM patologieConcomitanti WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM rilevazioniGlicemiche WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+
+        sql = "DELETE FROM terapiePrescritte WHERE taxCode = ?";
+        rimuoviUtenteCompleto(sql, utente);
+    }
+
+    private void rimuoviUtenteCompleto(String query, Utente utente){
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, utente.getTaxCode());
             pstmt.executeUpdate();
@@ -64,7 +87,9 @@ public class VisualizzaListaUtentiModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
     public void aggiornaUtente(Utente utente, String oldTaxCode) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db")) {
             String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?";

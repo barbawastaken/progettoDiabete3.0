@@ -4,28 +4,17 @@ import controller.LoginController;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.ViewNavigator;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
-import org.mindrot.jbcrypt.BCrypt;
-import view.Amministratore.AggiungiUtenteView;
-
 import java.io.IOException;
-import java.util.regex.Pattern;
-
-import java.time.LocalDate;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class AggiungiUtenteController extends GestioneUtenti {

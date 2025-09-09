@@ -1,14 +1,9 @@
 package controller.Amministratore;
 
-import controller.LoginController;
 import controller.NavBar;
 import controller.NavBarTags;
-import controller.Paziente.PazienteController;
 import controller.Session;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -16,9 +11,6 @@ import javafx.stage.Stage;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import org.mindrot.jbcrypt.BCrypt;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -97,6 +89,20 @@ public class ModificaUtenteController extends GestioneUtenti{
                 throw new RuntimeException(e);
             }
         }
+
+        if(utente.getRole().equals("DIABETOLOGO") || utente.getRole().equals("PRIMARIO") || utente.getRole().equals("AMMINISTRATORE")){
+
+            medicoCurante.setVisible(false);
+            medicoCuranteText.setVisible(false);
+            height.setVisible(false);
+            heightText.setVisible(false);
+            weight.setVisible(false);
+            weightText.setVisible(false);
+
+            heightError.setVisible(false);
+            weightError.setVisible(false);
+        }
+
     }
 
     @FXML
@@ -213,7 +219,7 @@ public class ModificaUtenteController extends GestioneUtenti{
             return;
         }
 
-        String passwordCriptata = BCrypt.hashpw(nuovaPassword, BCrypt.gensalt());
+        //String passwordCriptata = BCrypt.hashpw(nuovaPassword, BCrypt.gensalt());
 
         String query1 = "UPDATE utenti SET password = ? WHERE taxCode = ?";
         String query2 = "UPDATE loginTable SET password = ? WHERE taxCode = ?";
@@ -222,11 +228,11 @@ public class ModificaUtenteController extends GestioneUtenti{
              PreparedStatement stmt1 = conn.prepareStatement(query1);
              PreparedStatement stmt2 = conn.prepareStatement(query2)) {
 
-            stmt1.setString(1, passwordCriptata);
+            stmt1.setString(1, nuovaPassword);
             stmt1.setString(2, taxCode.getText());
             stmt1.executeUpdate();
 
-            stmt2.setString(1, passwordCriptata);
+            stmt2.setString(1, nuovaPassword);
             stmt2.setString(2, taxCode.getText());
             stmt2.executeUpdate();
 
@@ -249,44 +255,10 @@ public class ModificaUtenteController extends GestioneUtenti{
             messaggioErrore("Password non salvata correttamente!");
         }
     }
-    @FXML
-    private void onLogoutPressed(){
 
-        try {
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
-            Parent root = loader.load();
-            LoginController loginController = loader.getController();
-            loginController.setTaxCode(taxCode.getText());
-            loginStage.setScene(new Scene(root));
-            loginStage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
-
-
-
-    }
     public void setTaxCode(String taxCode) {
         this.taxCode.setText(taxCode);
     }
 
-    @FXML void onHomePagePressed(){
-
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/amministratore_view.fxml.fxml"));
-
-            Parent root = loader.load();
-            ModificaUtenteController modificaUtenteController = loader.getController();
-            modificaUtenteController.setTaxCode(taxCode.getText());
-            Stage stage = new Stage();
-            stage.setTitle("Amministratore");
-            stage.setScene(new Scene(root, 650, 500));
-            stage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
-
-
-    }
 }
 

@@ -54,7 +54,7 @@
 }
 
 .tabellaPiccola{
-    -fx-max-width: 800px;
+    -fx-max-width: 850px;
     -fx-max-height: 250;
 
 }
@@ -112,4 +112,22 @@
     -fx-background-position: center;
     -fx-max-height:500;
     -fx-max-width: 700;
+}
+
+.table-view {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.chart {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.2, 0, 2);
 }

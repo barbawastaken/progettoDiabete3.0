@@ -18,11 +18,20 @@ public class RilevazioneGlicemiaModel {
              ResultSet rs = stmt.executeQuery("SELECT * FROM rilevazioniGlicemiche ORDER BY taxCode")) {
 
             if(quantita.isEmpty()) { return 4;}
-            int quantitaInt = Integer.parseInt(quantita);
 
-            if(momentoGiornata == null || prePost == null || data.toString().isEmpty()) { return 4; }
+            int quantitaInt;
 
-            if (quantitaInt < 40 || quantitaInt > 200) { return 2; }
+            try {
+
+                quantitaInt = Integer.parseInt(quantita);
+
+                if (quantitaInt < 40 || quantitaInt > 200) { return 2; }
+            } catch (NumberFormatException e) {
+                return 2;
+            }
+
+            if(momentoGiornata == null || prePost == null || data == null) { return 4; }
+
 
             if (data.isAfter(LocalDate.now())) { return 3; }
 
