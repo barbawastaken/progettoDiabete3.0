@@ -47,7 +47,7 @@ public class ModificaUtenteModel {
 
             System.out.println(utente.getTaxCode() + " " + vecchioTaxCode);
             pstmt.setString(1, utente.getTaxCode());
-            pstmt.setString(2, BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
+            pstmt.setString(2, utente.getPassword());
             pstmt.setString(3, utente.getNome());
             pstmt.setString(4, utente.getCognome());
             pstmt.setString(5, utente.getEmail());
@@ -75,7 +75,7 @@ public class ModificaUtenteModel {
 
             // Query loginTable
             pstmt2.setString(1, utente.getTaxCode());
-            pstmt2.setString(2, BCrypt.hashpw(utente.getPassword(), BCrypt.gensalt()));
+            pstmt2.setString(2, utente.getPassword());
             pstmt2.setString(3, utente.getRole());
             pstmt2.setString(4, vecchioTaxCode);
 

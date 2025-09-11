@@ -3,6 +3,7 @@ package controller.Amministratore;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.Session;
+import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -34,16 +35,59 @@ public class ModificaUtenteController extends GestioneUtenti{
 
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
-    
-    
+
     @FXML
     public void initialize() {
 
+        taxCodeError.setVisible(false);
+        taxCodeError.setManaged(false);
+        numberError.setVisible(false);
+        numberError.setManaged(false);
+        telephoneError.setVisible(false);
+        telephoneError.setManaged(false);
+        emailError.setVisible(false);
+        emailError.setManaged(false);
+        capError.setVisible(false);
+        capError.setManaged(false);
+        birthdayError.setVisible(false);
+        birthdayError.setManaged(false);
+        genderError.setVisible(false);
+        genderError.setManaged(false);
+        medicoCurante.setVisible(false);
+        medicoCurante.setManaged(false);
+        medicoCuranteText.setVisible(false);
+        medicoCuranteText.setManaged(false);
+        userAddedText.setVisible(false);
+        userAddedText.setManaged(false);
+        weight.setVisible(false);
+        weight.setManaged(false);
+        height.setVisible(false);
+        height.setManaged(false);
+        heightText.setVisible(false);
+        heightText.setManaged(false);
+        weightText.setVisible(false);
+        weightText.setManaged(false);
+        heightError.setVisible(false);
+        heightError.setManaged(false);
+        weightError.setVisible(false);
+        weightError.setManaged(false);
+        nomeError.setVisible(false);
+        nomeError.setManaged(false);
+        cognomeError.setVisible(false);
+        cognomeError.setManaged(false);
+        passwordError.setVisible(false);
+        passwordError.setManaged(false);
+        nationError.setVisible(false);
+        nationError.setManaged(false);
+        cityError.setVisible(false);
+        cityError.setManaged(false);
+        addressError.setVisible(false);
+        addressError.setManaged(false);
 
         NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
         navbarContainer.getChildren().add(navbar);
 
-        this.listaUtentiController = new VisualizzaListaUtentiController();
+        this.listaUtentiController =(VisualizzaListaUtentiController)ViewNavigator.getControllerUsed();
         this.utente = Session.getInstance().getUtenteInEsame();
         this.model = new VisualizzaListaUtentiModel();
         this.modificaUtenteModel = new ModificaUtenteModel();
@@ -93,14 +137,22 @@ public class ModificaUtenteController extends GestioneUtenti{
         if(utente.getRole().equals("DIABETOLOGO") || utente.getRole().equals("PRIMARIO") || utente.getRole().equals("AMMINISTRATORE")){
 
             medicoCurante.setVisible(false);
+            medicoCurante.setManaged(false);
             medicoCuranteText.setVisible(false);
+            medicoCuranteText.setManaged(false);
             height.setVisible(false);
+            height.setManaged(false);
             heightText.setVisible(false);
+            heightText.setManaged(false);
             weight.setVisible(false);
+            weight.setManaged(false);
             weightText.setVisible(false);
+            weightText.setManaged(false);
 
             heightError.setVisible(false);
+            heightError.setManaged(false);
             weightError.setVisible(false);
+            weightError.setManaged(false);
         }
 
     }
@@ -157,8 +209,7 @@ public class ModificaUtenteController extends GestioneUtenti{
             System.out.println("birthday: " + aggiornato.getBirthday());
             modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
             if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
-            Stage currentStage = (Stage) nome.getScene().getWindow();
-            currentStage.close();
+            ViewNavigator.navigateToVisualizzaUtenti();
         } else if (!isPaziente && !check()) {
             Utente aggiornato = new Utente(
                     taxCode.getText(),
@@ -184,8 +235,7 @@ public class ModificaUtenteController extends GestioneUtenti{
             System.out.println("birthday: " + aggiornato.getBirthday());
             modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
             if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
-            Stage currentStage = (Stage) nome.getScene().getWindow();
-            currentStage.close();
+            ViewNavigator.navigateToVisualizzaUtenti();
 
         }
     }

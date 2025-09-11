@@ -18,8 +18,7 @@ public class ViewNavigator {
 
     // Current authenticated username
     private static String authenticatedUser = null;
-
-    LoginModel loginModel;
+    private static Object controllerUsed;
 
     /**
      * Set the main controller reference
@@ -28,7 +27,9 @@ public class ViewNavigator {
     public static void setMainController(MainController controller) {
         mainController = controller;
     }
-
+    public static Object getControllerUsed() {
+        return controllerUsed;
+    }
     /**
      * Load and switch to a view
      * @param fxml The name of the FXML file to load
@@ -41,7 +42,7 @@ public class ViewNavigator {
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
 
             Node view = loader.load();
-
+            controllerUsed = loader.getController();
             mainController.setContent(view);
         } catch (IOException e) {
             System.err.println("Error loading " + fxmlUrl + " : " + e.getMessage());
@@ -50,7 +51,7 @@ public class ViewNavigator {
         }
     }
 
-    public static void goBack(String fxml, String taxCode){
+    public static void getController(String fxml, String taxCode){
 
     }
 

@@ -186,7 +186,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
         }
 
         if (!hasErrors) {
-            try {
+
                 if (isPaziente) {
                     model.inserisciUtente(
                             taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
@@ -200,43 +200,14 @@ public class AggiungiUtenteController extends GestioneUtenti {
                             java.sql.Date.valueOf(birthday.getValue()), number.getText(), telephone.getText(),
                             selected.getText(), null, nation.getText(),null, null); // valori nulli per non pazienti
                 }
-                //Chiudo finestra attuale gg
 
-                //Apro lista utenti(si spera aggiornata)
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/visualizza_utenti_view.fxml"));
-                Parent root = loader.load();
-                //Parte nome utente evidenziato
-                VisualizzaListaUtentiController controller = loader.getController();
-                controller.evidenziaUtente(taxCode.getText());
 
                 ViewNavigator.navigateToVisualizzaUtenti();
 
-            } catch (SQLException | IOException e) {
-                throw new RuntimeException(e);
-            }
+
         }
     }
 
-    // PARTE AGGIUNTA DA ME (ANDREA) 11 LUGLIO PER BARRA BLU CON LOGOUT E HOME
-
-    @FXML
-    private void onLogoutPressed(){
-
-        try {
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
-            Parent root = loader.load();
-            LoginController loginController = loader.getController();
-            loginController.setTaxCode(taxCode.getText());
-            loginStage.setScene(new Scene(root));
-            loginStage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
-
-
-
-    }
     public void setTaxCode(String taxCode) {
         this.taxCode.setText(taxCode);
     }

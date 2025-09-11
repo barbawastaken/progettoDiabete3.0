@@ -2,108 +2,161 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="1000.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.Amministratore.ModificaUtenteController">
+<?import javafx.scene.text.Text?>
 
-    <!-- TOP: barra con bottone indietro -->
+<?import javafx.geometry.Insets?>
+<BorderPane fx:id="addUserPane" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.Amministratore.ModificaUtenteController"
+            prefHeight="400.0" prefWidth="600.0">
+
     <top>
-        <HBox fx:id="navbarContainer"/>
-
+        <HBox fx:id="navbarContainer" />
     </top>
 
-    <!-- CENTER -->
     <center>
         <ScrollPane fitToWidth="true" fitToHeight="true">
-            <GridPane alignment="TOP_CENTER" hgap="20" vgap="15" style="-fx-padding: 30;">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT"/>
-                    <ColumnConstraints halignment="LEFT"/>
-                </columnConstraints>
+            <StackPane>
 
-                <!-- Riga 1: Nome e Cognome -->
-                <Text text="Nome" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="nome" promptText="nome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <Text fx:id="nomeError" fill="RED" text="Il nome non può essere nullo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Text text="Cognome" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                <TextField fx:id="cognome" promptText="cognome" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-                <Text fx:id="cognomeError" fill="RED" text="Il cognome non può essere nullo" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                <!-- Riga 2: Password e Codice Fiscale -->
-                <Text text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="password" promptText="password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <Text fx:id="passwordError" fill="RED" text="La password non può essere nulla" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <Text text="Codice Fiscale" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
-                <Text fx:id="taxCodeError" fill="RED" text="Il codice fiscale deve contenere 3 caratteri" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
-
-                <!-- Riga 3: Data di nascita e Sesso -->
-                <Text text="Data di Nascita" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="birthday" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                <Text fx:id="birthdayError" fill="RED" text="La data di nascita deve essere valida" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                <Text text="Sesso" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-                <ComboBox fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
-                <Text fx:id="genderError" fill="RED" text="Inserisci il sesso" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
-
-                <!-- Riga 4: Indirizzo e Numero -->
-                <Text text="Indirizzo" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <TextField fx:id="address" promptText="address" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-                <Text fx:id="addressError" fill="RED" text="L'indirizzo non può essere vuoto" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                <Text text="Numero" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
-                <TextField fx:id="number" promptText="number" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
-                <Text fx:id="numberError" fill="RED" text="numero richiesto" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
-
-                <!-- Riga 5: Città e CAP -->
-                <Text text="Città" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                <TextField fx:id="citta" promptText="citta" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-                <Text fx:id="cityError" fill="RED" text="La città non può essere nulla" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-
-                <Text text="CAP" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
-                <TextField fx:id="cap" promptText="cap" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
-                <Text fx:id="capError" fill="RED" text="il cap deve contenere 5 numeri" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
-
-                <!-- Riga 6: Nazione -->
-                <Text text="Nazione" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                <TextField fx:id="nation" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-                <Text fx:id="nationError" fill="RED" text="La nazione non può essere nulla" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-
-                <!-- Riga 7: Email e Telefono -->
-                <Text text="Email" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-                <TextField fx:id="email" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
-                <Text fx:id="emailError" fill="RED" text="L'email deve essere di un formato corretto" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
-
-                <Text text="Telefono" GridPane.rowIndex="12" GridPane.columnIndex="2"/>
-                <TextField fx:id="telephone" GridPane.rowIndex="12" GridPane.columnIndex="3"/>
-                <Text fx:id="telephoneError" fill="RED" text="il numero deve essere composto da 10 cifre" GridPane.rowIndex="13" GridPane.columnIndex="3"/>
-
-                <!-- Riga 8: Altezza e Peso -->
-                <Text text="Altezza (in CM)" fx:id="heightText" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
-                <TextField fx:id="height" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
-                <Text fx:id="heightError" fill="RED" text="L'altezza non è valida" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
-
-                <Text text="Peso (in KG)" fx:id="weightText" GridPane.rowIndex="14" GridPane.columnIndex="2"/>
-                <TextField fx:id="weight" GridPane.rowIndex="14" GridPane.columnIndex="3"/>
-                <Text fx:id="weightError" fill="RED" text="Il peso non è valido" GridPane.rowIndex="15" GridPane.columnIndex="3"/>
-
-                <!-- Riga 9: Medico Curante -->
-                <Text fx:id="medicoCuranteText" text="Medico Curante" GridPane.rowIndex="16" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="medicoCurante" GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+                <padding>
+                    <Insets top="50"/>
+                </padding>
 
 
-                <!-- Riga finale: Pulsante invia -->
-                <Button text="Invia" onAction="#onSendButtonPressed"
-                        GridPane.rowIndex="18" GridPane.columnIndex="3" />
+                <GridPane alignment="CENTER" hgap="25" vgap="40">
 
-                <!-- Messaggio finale -->
-                <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!"
-                      GridPane.rowIndex="19" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
-            </GridPane>
+
+
+                    <!-- Riga 0 -->
+                    <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nome" promptText="nome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Cognome:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                    <TextField fx:id="cognome" promptText="cognome" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 0 Errori -->
+                    <Text fx:id="nomeError" text="Nome non valido" styleClass="error" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Text fx:id="cognomeError" text="Cognome non valido" styleClass="error" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 1 -->
+                    <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="password" promptText="password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Codice Fiscale:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 1 Errori -->
+                    <Text fx:id="passwordError" text="Password non valida" styleClass="error" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Text fx:id="taxCodeError" text="Codice Fiscale non valido" styleClass="error" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 2 -->
+                    <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="gender" prefWidth="150.0" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                    <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 2 Errori -->
+                    <Text fx:id="genderError" text="Inserisci il sesso" styleClass="error" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <Text fx:id="birthdayError" text="Data di nascita non valida" styleClass="error" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 3 -->
+                    <Label text="Indirizzo:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="address" promptText="address" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <Label text="CAP:" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                    <TextField fx:id="cap" promptText="cap" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 3 Errori -->
+                    <Text fx:id="addressError" text="Indirizzo non valido" styleClass="error" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                    <Text fx:id="capError" text="Cap non valido" styleClass="error" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 4 -->
+                    <Label text="Numero:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <TextField fx:id="number" promptText="number" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                    <Label text="Nazione:" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                    <TextField fx:id="nation" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 4 Errori -->
+                    <Text fx:id="numberError" text="Numero Civico non valido" styleClass="error" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+                    <Text fx:id="nationError" text="Nazionalità non valida" styleClass="error" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 5 -->
+                    <Label text="Città:" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                    <TextField fx:id="citta" promptText="citta" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                    <Label text="Email:" GridPane.rowIndex="10" GridPane.columnIndex="2"/>
+                    <TextField fx:id="email" GridPane.rowIndex="10" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 5 Errori -->
+                    <Text fx:id="cityError" text="Città non valida" styleClass="error" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                    <Text fx:id="emailError" text="Email non valida" styleClass="error" GridPane.rowIndex="11" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 6 -->
+                    <Label text="Telefono:" GridPane.rowIndex="12" GridPane.columnIndex="0" styleClass="testo"/>
+                    <TextField fx:id="telephone" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                    <Text fx:id="weightText" text="Peso (in KG):" GridPane.rowIndex="12" GridPane.columnIndex="2" styleClass="testo"/>
+                    <TextField fx:id="weight" GridPane.rowIndex="12" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 6 Errori -->
+                    <Text fx:id="telephoneError" text="Numero di Telefono non valido" styleClass="error" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+                    <Text fx:id="weightError" text="Peso non valido" styleClass="error" GridPane.rowIndex="13" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 7 -->
+                    <Text fx:id="heightText" text="Altezza (in M):" styleClass="testo" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
+                    <TextField fx:id="height" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
+                    <Text fx:id="medicoCuranteText" text="Medico Curante:" GridPane.rowIndex="14" GridPane.columnIndex="2" styleClass="testo"/>
+                    <ComboBox fx:id="medicoCurante" prefWidth="150.0" GridPane.rowIndex="14" GridPane.columnIndex="3"/>
+
+                    <!-- Riga 7 Errori -->
+                    <Text fx:id="heightError" text="Altezza non valida" styleClass="error" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
+
+                    <!-- Riga 8: Bottoni -->
+
+
+                    <!-- DA AGGIUNGERE ONACTIOIN -->
+                    <Button text="Reset" GridPane.rowIndex="16" GridPane.columnIndex="2"/>
+                    <Button text="Invia" onAction="#onSendButtonPressed" GridPane.rowIndex="16" GridPane.columnIndex="3"/>
+                    <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!" GridPane.rowIndex="17"
+                          GridPane.columnIndex="4"/>
+
+
+                    <!--
+                     Messaggi di errore (puoi metterli subito sotto i campi corrispondenti, stessa colonna ma row+1)
+                    <Text fx:id="nomeError" fill="RED" text="Il nome non può essere nullo" GridPane.rowIndex="10"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="cognomeError" fill="RED" text="Il cognome non può essere nullo" GridPane.rowIndex="10"
+                          GridPane.columnIndex="3"/>
+                    <Text fx:id="passwordError" fill="RED" text="La password non può essere nulla" GridPane.rowIndex="11"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="taxCodeError" fill="RED" text="Il codice fiscale deve contenere 3 caratteri"
+                          GridPane.rowIndex="11" GridPane.columnIndex="3"/>
+                    <Text fx:id="genderError" fill="RED" text="Inserisci il sesso" GridPane.rowIndex="12"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="birthdayError" fill="RED" text="La data di nascita deve essere valida"
+                          GridPane.rowIndex="12" GridPane.columnIndex="3"/>
+                    <Text fx:id="addressError" fill="RED" text="L'indirizzo non può essere vuoto" GridPane.rowIndex="13"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="capError" fill="RED" text="Il cap deve contenere 5 numeri" GridPane.rowIndex="13"
+                          GridPane.columnIndex="3"/>
+                    <Text fx:id="numberError" fill="RED" text="Numero richiesto" GridPane.rowIndex="14"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="nationError" fill="RED" text="La nazione non può essere vuota" GridPane.rowIndex="14"
+                          GridPane.columnIndex="3"/>
+                    <Text fx:id="cityError" fill="RED" text="La città non può essere vuota" GridPane.rowIndex="15"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="emailError" fill="RED" text="L'email deve essere di un formato corretto"
+                          GridPane.rowIndex="15" GridPane.columnIndex="3"/>
+                    <Text fx:id="telephoneError" fill="RED" text="Il numero deve essere composto da 10 cifre"
+                          GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+                    <Text fx:id="heightError" fill="RED" text="L'altezza non è valida" GridPane.rowIndex="16"
+                          GridPane.columnIndex="3"/>
+                    <Text fx:id="weightError" fill="RED" text="Il peso non è valido" GridPane.rowIndex="17"
+                          GridPane.columnIndex="1"/>
+                    <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!" GridPane.rowIndex="18"
+                          GridPane.columnIndex="2"/>
+                    -->
+
+                </GridPane>
+            </StackPane>
         </ScrollPane>
     </center>
+
+
 </BorderPane>

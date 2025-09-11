@@ -47,7 +47,7 @@ public class VisualizzaListaUtentiController {
     @FXML private TableView<VisualizzaListaUtentiController> tableViewUtenti;
     @FXML private HBox navbarContainer;
 
-    private  VisualizzaListaUtentiModel model;
+    private  VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
     private  VisualizzaListaUtentiView view;
     private Stage listaUtentiStage;
 

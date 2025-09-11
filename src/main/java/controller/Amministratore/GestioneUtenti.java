@@ -51,7 +51,7 @@ public class GestioneUtenti {
 
 
     public GestioneUtenti() {}
-/*
+
     @FXML
     private void initialize(){
 
@@ -104,7 +104,7 @@ public class GestioneUtenti {
 
     }
 
- */
+
 
     /*
     qui si potrebbe implementare initialize in modo da non avere il aggiungi/modifica utente due classi praticamente uguali
