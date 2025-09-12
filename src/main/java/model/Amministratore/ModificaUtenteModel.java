@@ -1,9 +1,7 @@
 package model.Amministratore;
 
 import controller.Amministratore.GestioneUtenti;
-import controller.Amministratore.VisualizzaListaUtentiController;
-import javafx.stage.Stage;
-import view.Amministratore.VisualizzaListaUtentiView;
+import controller.ViewNavigator;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -13,33 +11,19 @@ public class ModificaUtenteModel {
 
     public ModificaUtenteModel() {}
 
-    public void aggiornaUtente(String vecchioTaxCode, Utente utente) {
+    public void aggiornaUtente(Utente vecchioUtente, Utente utente) {
 
-        if(!GestioneUtenti.singleValues(utente.getTaxCode())){
+        String vecchioTaxCode = vecchioUtente.getTaxCode();
+
+        if(!vecchioTaxCode.equals(utente.getTaxCode()) && !GestioneUtenti.singleValues(utente.getTaxCode())){
             System.out.println("è stato inserito un taxCode già utilizzato");
             return;
         }
 
-        String updateUtenteUtenti = "UPDATE utenti " +
-                "SET " +
-                "taxCode=?, " +
-                "password=?, " +
-                "nome=?, " +
-                "cognome=?, " +
-                "email=?, " +
-                "birthday=?, " +
-                "address=?, " +
-                "number=?, " +
-                "city=?, " +
-                "cap=?, " +
-                "gender=?, " +
-                "telephoneNumber=?, " +
-                "userType=?, " +
-                "diabetologo=?, " +
-                "CountryOfResidence=?, " +
-                "Altezza=?, " +
-                "Peso=? " +
-                "WHERE taxCode=?";
+        String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, " +
+                "number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, " +
+                "Peso=? WHERE taxCode=?";
+
         String updateUtenteLogin = "UPDATE loginTable SET taxCode=?, password=?, userType=? WHERE taxCode=?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -71,6 +55,9 @@ public class ModificaUtenteModel {
             pstmt.setDouble(17,utente.getWeight());
             pstmt.setString(18, vecchioTaxCode); // <-- importante!
 
+            if(!aggiornaTabelleDatabase(vecchioTaxCode, utente.getTaxCode()))
+                return;
+
             int rows = pstmt.executeUpdate();
             if (rows == 0) {
                 System.out.println("Nessun utente aggiornato.");
@@ -88,16 +75,54 @@ public class ModificaUtenteModel {
 
             if(rows != 0) { System.out.println("Login table aggiornata"); }
 
-
             conn.commit();
 
-            VisualizzaListaUtentiModel visualizzaListaUtentiModel = new VisualizzaListaUtentiModel();
-            VisualizzaListaUtentiView visualizzaListaUtentiView = new VisualizzaListaUtentiView();
-            new VisualizzaListaUtentiController(visualizzaListaUtentiModel, visualizzaListaUtentiView, new Stage());
+            ViewNavigator.navigateToVisualizzaUtenti();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private boolean aggiornaTabelleDatabase(String vecchioTaxCode, String nuovoTaxCode) {
+
+        String query = "UPDATE aggiuntaSintomi SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        if(!executeQuery(query))
+            return false;
+
+        query = "UPDATE assunzioneFarmaci SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        if(!executeQuery(query))
+            return false;
+
+        query = "UPDATE infoAggiuntivePaziente SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        if(!executeQuery(query))
+            return false;
+
+        query = "UPDATE patologieConcomitanti SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        if(!executeQuery(query))
+            return false;
+
+        query = "UPDATE rilevazioniGlicemiche SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        if(!executeQuery(query))
+            return false;
+
+        query = "UPDATE terapiePrescritte SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
+        return executeQuery(query);
+    }
+
+    private boolean executeQuery(String query) {
+
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            Statement stmt = conn.createStatement()){
+
+            stmt.executeUpdate(query);
+            return true;
+
+        } catch(Exception e){
+            System.out.println("Errore aggiornamento taxCode utente nelle tabelle del database: " + e.getMessage());
+            return false;
+        }
+
     }
 
     public HashMap<String, String> getDiabetologi() throws SQLException {
@@ -111,18 +136,13 @@ public class ModificaUtenteModel {
 
 
             while (rs.next()) {
-                System.out.println("Zio pera " + rs.getString("taxCode"));
+
                 diabetologi.put(((rs.getString("cognome")) + " (" + rs.getString("taxCode") + ")"),
                         rs.getString("taxCode"));
             }
-
-            for (String key : diabetologi.keySet()) {
-                System.out.println("Keysets: " + key);
-                System.out.println("Diabetologi: " + diabetologi.get(key));
-            }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Errore caricamento diabetologi: " + e.getMessage());
         }
 
         return diabetologi;

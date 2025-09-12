@@ -57,7 +57,7 @@ public class AggiornaInfoPazienteController {
         if(Session.getInstance().getSchermataDiArrivo().equals("STATISTICHE")){
             ViewNavigator.navigateToVisualizzaStatistiche();
         } else {
-            ViewNavigator.navigateToDiabetologo();
+            ViewNavigator.navigateToPatientDetails();
         }
 
     }

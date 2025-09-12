@@ -28,6 +28,12 @@ public class PatologieConcomitantiController {
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().addAll(navbar);
 
+        dataInizio.getEditor().setDisable(true);
+        dataInizio.getEditor().setOpacity(1);
+
+        dataFine.getEditor().setDisable(true);
+        dataFine.getEditor().setOpacity(1);
+
         this.taxCode = Session.getInstance().getTaxCode();
 
     }
@@ -57,24 +63,25 @@ public class PatologieConcomitantiController {
 
         System.out.println("Valori non inseriti");
 
-        patologiaSpecificata.setText("");
-        dataInizio.setValue(null);
-        dataFine.setValue(null);
-
         if(valoreOutput == 1) {
 
             messaggioErrore("Tutti i campi obbligatori devono essere compilati!");
 
         } else if(valoreOutput == 2) {
 
+            dataFine.setValue(null);
             messaggioErrore("La data di fine non deve essere precedente a quella di inizio!");
 
          } else if(valoreOutput == 3) {
 
+            dataFine.setValue(null);
             messaggioErrore("Non si possono inserire specifiche future!");
 
         } else if(valoreOutput == 4) {
 
+            patologiaSpecificata.setText("");
+            dataInizio.setValue(null);
+            dataFine.setValue(null);
             messaggioErrore("Esiste gia' la stessa specifica in un periodo simile!");
 
         } else if(valoreOutput == 5) {

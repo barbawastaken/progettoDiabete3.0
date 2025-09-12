@@ -22,6 +22,7 @@ public class Session {
     private String taxCode;
     private String nome;
     private String cognome;
+    private String password;
     private String email;
     private String telephone;
     private String birthday;
@@ -90,7 +91,7 @@ public class Session {
                     rs.getString("cognome"),
                     rs.getString("gender"),
                     rs.getString("birthday"),
-                    null, //password
+                    rs.getString("password"), //password
                     rs.getString("address"),
                     rs.getString("number"),
                     rs.getString("cap"),
@@ -206,6 +207,10 @@ public class Session {
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
+
+    public void setPassword(String password){ this.password = password; }
+
+    public String getPassword(){ return password; }
 
     public static void setInstance(Session instance) {
         Session.instance = instance;

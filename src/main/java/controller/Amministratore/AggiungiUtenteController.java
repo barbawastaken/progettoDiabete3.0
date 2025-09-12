@@ -181,7 +181,23 @@ public class AggiungiUtenteController extends GestioneUtenti {
         cap.setText("");
         nation.setText("");
         gender.cancelEdit();
-        diabetologo.setText(null);
+        ruolo.selectToggle(null);
+
+        medicoCuranteText.setVisible(false);
+        medicoCuranteText.setManaged(false);
+        medicoCurante.setVisible(false);
+        medicoCurante.setManaged(false);
+        medicoCurante.getItems().clear();
+        weight.setVisible(false);
+        weight.setManaged(false);
+        weight.setText("");
+        height.setVisible(false);
+        height.setManaged(false);
+        height.setText("");
+        weightText.setVisible(false);
+        weightText.setManaged(false);
+        heightText.setVisible(false);
+        heightText.setManaged(false);
 
     }
 

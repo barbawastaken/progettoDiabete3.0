@@ -7,14 +7,9 @@ import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -24,18 +19,11 @@ public class ModificaUtenteController extends GestioneUtenti{
     private Utente utente;
     private  VisualizzaListaUtentiModel model;
     private  ModificaUtenteModel modificaUtenteModel;
-    private Stage listaUtentiStage;
     private VisualizzaListaUtentiController listaUtentiController;
     //QUESTI FXML SONO SOLO PER MODIFICA NON ANCHE PER AGGIUNGI
     @FXML private HBox navbarContainer;
-    @FXML private Text nuovaPasswordText;
-    @FXML private TextField nuovaPasswordField;
-    @FXML private Text confermaPasswordText;
-    @FXML private TextField confermaPasswordField;
-    @FXML private Button confermaPasswordButton;
 
-
-    private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+    private HashMap<String,String> mappaDiabetologi;
 
     @FXML
     public void initialize() {
@@ -143,8 +131,8 @@ public class ModificaUtenteController extends GestioneUtenti{
             weight.setText(String.valueOf(utente.getWeight()));
 
             try {
-                HashMap<String, String> map = modificaUtenteModel.getDiabetologi();
-                for(String s : map.keySet()){
+                this.mappaDiabetologi = modificaUtenteModel.getDiabetologi();
+                for(String s : mappaDiabetologi.keySet()){
                     medicoCurante.getItems().add(s);
                 }
             } catch (SQLException e) {
@@ -176,10 +164,7 @@ public class ModificaUtenteController extends GestioneUtenti{
     }
 
     @FXML
-    private void onIndietroButtonPressed(){ ((Stage) nome.getScene().getWindow()).close(); }
-
-    @FXML
-    private void onSendButtonPressed() throws SQLException {
+    private void onSendButtonPressed() {
         String ruoloSelezionato = utente.getRole();
         boolean isPaziente;
         if(ruoloSelezionato.equals("PAZIENTE")) {
@@ -205,6 +190,7 @@ public class ModificaUtenteController extends GestioneUtenti{
             }
         }
         if(isPaziente && !checkForPazienti()){
+
             Utente aggiornato = new Utente(
                     taxCode.getText(),
                     password.getText(),
@@ -220,14 +206,17 @@ public class ModificaUtenteController extends GestioneUtenti{
                     gender.getValue(),
                     telephone.getText(),
                     ruoloSelezionato,
-                    medicoCurante.getValue(),
+                    mappaDiabetologi.get(medicoCurante.getValue()),
                     peso,
                     altezza
             );
-            System.out.println("birthday: " + aggiornato.getBirthday());
-            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
+
+            modificaUtenteModel.aggiornaUtente(utente, aggiornato);
+
             if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+
             ViewNavigator.navigateToVisualizzaUtenti();
+
         } else if (!isPaziente && !check()) {
             Utente aggiornato = new Utente(
                     taxCode.getText(),
@@ -249,80 +238,15 @@ public class ModificaUtenteController extends GestioneUtenti{
                     0
             );
 
-            System.out.println("Valore nazione: " + aggiornato.getNation());
-            System.out.println("birthday: " + aggiornato.getBirthday());
-            modificaUtenteModel.aggiornaUtente(utente.getTaxCode(), aggiornato);
+            modificaUtenteModel.aggiornaUtente(utente, aggiornato);
             if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
+
             ViewNavigator.navigateToVisualizzaUtenti();
 
         }
     }
+
     public void setUtente(Utente utente){ this.utente = utente; }
-
-    // PARTE AGGIUNTA DA ME (ANDREA) 11 LUGLIO PER BARRA BLU CON LOGOUT E HOME + PASSWORD + NUOVA PASSWORD
-    public void messaggioErrore(String messaggio) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore!!!");
-        alert.setHeaderText(null); // oppure "Attenzione!"
-        alert.setContentText(messaggio);
-        alert.showAndWait();
-    }
-
-    @FXML
-    public void onPasswordPressed(){
-        nuovaPasswordText.setVisible(true);
-        nuovaPasswordField.setVisible(true);
-        confermaPasswordText.setVisible(true);
-        confermaPasswordField.setVisible(true);
-        confermaPasswordButton.setVisible(true);
-    }
-
-    @FXML
-    public void onCambiaPasswordPressed() {
-        String nuovaPassword = nuovaPasswordField.getText();
-        String confermaPassword = confermaPasswordField.getText();
-
-        if (!nuovaPassword.equals(confermaPassword)) {
-            messaggioErrore("La conferma della password non è corretta");
-            return;
-        }
-
-        //String passwordCriptata = BCrypt.hashpw(nuovaPassword, BCrypt.gensalt());
-
-        String query1 = "UPDATE utenti SET password = ? WHERE taxCode = ?";
-        String query2 = "UPDATE loginTable SET password = ? WHERE taxCode = ?";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt1 = conn.prepareStatement(query1);
-             PreparedStatement stmt2 = conn.prepareStatement(query2)) {
-
-            stmt1.setString(1, nuovaPassword);
-            stmt1.setString(2, taxCode.getText());
-            stmt1.executeUpdate();
-
-            stmt2.setString(1, nuovaPassword);
-            stmt2.setString(2, taxCode.getText());
-            stmt2.executeUpdate();
-
-            // Aggiorna il campo password nel form
-            password.setText(nuovaPassword);
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successo");
-            alert.setHeaderText(null);
-            alert.setContentText("Password aggiornata con successo!");
-            alert.showAndWait();
-
-            nuovaPasswordText.setVisible(false);
-            nuovaPasswordField.setVisible(false);
-            confermaPasswordText.setVisible(false);
-            confermaPasswordField.setVisible(false);
-            confermaPasswordButton.setVisible(false);
-        } catch (Exception e) {
-            System.out.println("Errore nel salvataggio della password: " + e.getMessage());
-            messaggioErrore("Password non salvata correttamente!");
-        }
-    }
 
     public void setTaxCode(String taxCode) {
         this.taxCode.setText(taxCode);

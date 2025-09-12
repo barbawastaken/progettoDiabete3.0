@@ -31,6 +31,9 @@ public class AggiuntaSintomiController {
         model = new AggiuntaSintomiModel();
         symptoms.getItems().addAll("Spossatezza", "Nausea", "Mal di testa", "Altro");
 
+        relevationDate.getEditor().setDisable(true);
+        relevationDate.getEditor().setOpacity(1);
+
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
@@ -62,20 +65,19 @@ public class AggiuntaSintomiController {
 
     private void checkOutput(int aggiuntaSintomi) {
 
-        this.symptoms.setValue("");
-        this.otherSpecificationsText.setText("");
-        this.relevationDate.setValue(null);
-
         if(aggiuntaSintomi == 1) {
 
             messaggioErrore("Deve essere specificato un sintomo!");
 
         } else if(aggiuntaSintomi == 2) {
 
+            this.relevationDate.setValue(null);
             messaggioErrore("La data deve essere valida!");
 
         } else if(aggiuntaSintomi == 3) {
 
+            this.symptoms.setValue("");
+            this.otherSpecificationsText.setText("");
             messaggioErrore("e' gia' presente una aggiunta identica dello stesso utente!");
 
         } else if(aggiuntaSintomi == 4) {
@@ -92,8 +94,6 @@ public class AggiuntaSintomiController {
         alert.setHeaderText(null); // oppure "Attenzione!"
         alert.setContentText(messaggio);
         alert.showAndWait();
-
-        onResetClicked();
     }
 
 }

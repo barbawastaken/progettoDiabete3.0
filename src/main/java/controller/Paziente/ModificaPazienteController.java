@@ -2,24 +2,15 @@ package controller.Paziente;
 
 import controller.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import model.Paziente.PazienteModel;
-import org.mindrot.jbcrypt.BCrypt;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.regex.Pattern;
 
 public class ModificaPazienteController {
@@ -66,87 +57,10 @@ public class ModificaPazienteController {
 
     @FXML
     public void initialize() {
-        /*
-        String query = "SELECT nome, cognome, taxCode, email, telephoneNumber, birthday, gender, Altezza, " +
-                "Peso, address, number, city, cap FROM utenti WHERE taxCode = ?";
-
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, user.getTaxCode());
-
-            ResultSet rs = stmt.executeQuery();
-
-            this.nome.setText(rs.getString("nome"));
-            this.nome.setEditable(false);
-
-            this.cognome.setText(rs.getString("cognome"));
-            this.cognome.setEditable(false);
-
-            this.taxCodeFXML.setText(rs.getString("taxCode"));
-            this.taxCodeFXML.setEditable(false);
-
-            this.email.setText(rs.getString("email"));
-
-            this.telefono.setText(rs.getString("telephoneNumber"));
-
-            this.dataNascita.setText(rs.getString("birthday"));
-            this.dataNascita.setEditable(false);
-
-            this.sesso.setText(rs.getString("gender"));
-            this.sesso.setEditable(false);
-
-            this.altezza.setText(rs.getString("Altezza"));
-
-            this.peso.setText(rs.getString("Peso"));
-
-            TextFormatter<String> altezzaFormatter = new TextFormatter<>(change -> {
-                String newText = change.getControlNewText();
-                if (newText.matches("\\d*\\.?\\d*")) {
-                    return change; // accetta il cambiamento
-                } else {
-                    return null; // rifiuta il cambiamento
-                }
-            });
-
-            TextFormatter<String> pesoFormatter = new TextFormatter<>(change -> {
-                String newText = change.getControlNewText();
-                if (newText.matches("\\d*\\.?\\d*")) {
-                    return change; // accetta il cambiamento
-                } else {
-                    return null; // rifiuta il cambiamento
-                }
-            });
-
-            altezza.setTextFormatter(altezzaFormatter);
-            peso.setTextFormatter(pesoFormatter);
-
-            this.indirizzo.setText(rs.getString("address"));
-
-            this.numero.setText(rs.getString("number"));
-            numero.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-                if (!event.getCharacter().matches("\\d")) {
-                    event.consume(); // blocca l'inserimento
-                }
-            });
-
-            this.citta.setText(rs.getString("city"));
-
-            this.cap.setText(rs.getString("cap"));
-
-
-        } catch (Exception e) {
-            System.out.println("Errore caricamento dati utente: " + e);
-        }
-
-
-         */
 
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
-
 
         Session.getInfos();
 
@@ -164,49 +78,23 @@ public class ModificaPazienteController {
         this.cap.setText(userData.getCap().toString());
         this.numero.setText(userData.getCivic());
 
+        numero.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
 
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*\\.?\\d*")) {
+                return change; // accetta il cambiamento
+            } else {
+                return null; // rifiuta il cambiamento
+            }
+        });
 
-    }
-
-
-
-    @FXML
-    private void onLogoutPressed(){
-
-        try {
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/login_view.fxml"));
-            Parent root = loader.load();
-            LoginController loginController = loader.getController();
-            loginController.setTaxCode(userData.getTaxCode());
-            loginStage.setScene(new Scene(root));
-            loginStage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento pagina di login!" + e.getMessage()); }
-
-
-
-    }
-
-    @FXML void onHomePagePressed(){
-
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/paziente_view.fxml"));
-
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Paziente");
-            stage.setScene(new Scene(root, 650, 500));
-            stage.show();
-
-        } catch (IOException e) { System.out.println("Errore caricamento homepage utente!" + e.getMessage()); }
-        /*
-        Stage profiloPaziente = (Stage)topBar.getScene().getWindow();
-        profiloPaziente.close();
-        * inutile dato l'inserimento di navbar funzionante
-         */
-
+        altezza.setTextFormatter(formatter);
+        peso.setTextFormatter(formatter);
     }
 
     @FXML void onSendButtonPressed(){
@@ -309,7 +197,12 @@ public class ModificaPazienteController {
             messaggioErrore("La conferma della password non è corretta");
             return;
         }
-        //String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
+
+        if(nuovaPasswordField.getText().equals(userData.getPassword())){
+            messaggioErrore("La password deve essere diversa dalla vecchia");
+            return;
+        }
+
         String nuovaPassword = confermaPasswordField.getText();
 
         String query = "UPDATE utenti SET password=? WHERE taxCode = ?";

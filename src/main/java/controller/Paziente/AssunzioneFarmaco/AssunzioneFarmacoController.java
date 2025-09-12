@@ -68,6 +68,9 @@ public class AssunzioneFarmacoController {
             }
         });
 
+        dataAssunzione.getEditor().setDisable(true);
+        dataAssunzione.getEditor().setOpacity(1);
+
         this.taxCode = Session.getInstance().getTaxCode();
         this.farmacoAssunto.getItems().setAll(model.getFarmaciTerapie(taxCode));
     }
@@ -101,12 +104,10 @@ public class AssunzioneFarmacoController {
         System.out.println("Valori non inseriti");
 
         farmacoAssunto.cancelEdit();
-        quantitaAssunta.setText("");
-        dataAssunzione.setValue(null);
-        orarioAssunzione.cancelEdit();
 
         if(valoreOutput == 1) {
 
+            quantitaAssunta.setText("");
             messaggioErrore("Quantita' inserita non valida!");
 
         } else if(valoreOutput == 2) {
@@ -115,10 +116,14 @@ public class AssunzioneFarmacoController {
 
         } else if(valoreOutput == 3) {
 
+            dataAssunzione.setValue(null);
+            orarioAssunzione.cancelEdit();
             messaggioErrore("Non puoi inserire rilevazioni future!");
 
         } else if(valoreOutput == 4) {
 
+            dataAssunzione.setValue(null);
+            orarioAssunzione.cancelEdit();
             messaggioErrore("Non puoi inserire la stessa assunzione due volte!");
 
         } else if(valoreOutput == 5) {

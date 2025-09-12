@@ -37,6 +37,9 @@ public class RilevazioneGlicemiaController {
         prepost.getItems().addAll("PRE", "POST");
         pastoGlicemia.getItems().addAll("Colazione", "Pranzo", "Cena");
 
+       dataRilevamento.getEditor().setDisable(true);
+       dataRilevamento.getEditor().setOpacity(1);
+
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().addAll(navbar);
@@ -71,21 +74,21 @@ public class RilevazioneGlicemiaController {
 
         System.out.println("Valori non inseriti");
 
-        milligrammi.setText("");
-        pastoGlicemia.setValue(null);
-        prepost.setValue(null);
-        dataRilevamento.setValue(null);
-
         if(valoreOutput == 1) {
 
+            pastoGlicemia.setValue(null);
+            prepost.setValue(null);
+            dataRilevamento.setValue(null);
             messaggioErrore("Non puoi inserire due rilevazioni nello stesso momento!");
 
         } else if(valoreOutput == 2) {
 
+            milligrammi.setText("");
             messaggioErrore("I valori di glicemia devono essere validi");
 
         } else if(valoreOutput == 3) {
 
+            dataRilevamento.setValue(null);
             messaggioErrore("Non puoi inserire rilevazioni future!");
 
         } else if(valoreOutput == 4) {
