@@ -23,7 +23,6 @@ public class DettaglioPazienteController {
     @FXML private Label codiceFiscaleLabel;
     @FXML private Label sessoLabel;
     @FXML private Label dataNascitaLabel;
-    @FXML private Label passwordLabel;
     @FXML private Label viaLabel;
     @FXML private Label numeroCivicoLabel;
     @FXML private Label capLabel;
@@ -60,7 +59,6 @@ public class DettaglioPazienteController {
         codiceFiscaleLabel.setText("Codice Fiscale: " + paziente.getTaxCode());
         sessoLabel.setText("Sesso: " + paziente.getGender());
         dataNascitaLabel.setText("Data di Nascita: " + paziente.getBirthday());
-        passwordLabel.setText("Password: " + paziente.getPassword());
         viaLabel.setText("Via: " + paziente.getAddress());
         numeroCivicoLabel.setText("Numero Civico: " + paziente.getNumber());
         capLabel.setText("CAP: " + paziente.getCap());

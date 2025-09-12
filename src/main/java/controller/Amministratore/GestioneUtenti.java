@@ -4,8 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class GestioneUtenti {
@@ -48,7 +51,7 @@ public class GestioneUtenti {
     @FXML protected Text addressError;
     @FXML protected Text nationError;
 
-
+    private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
     public GestioneUtenti() {}
 
@@ -137,17 +140,16 @@ public class GestioneUtenti {
 
         if(cap.getText() == null || cap.getText().isBlank())
             return false;
+
         Pattern validCap = Pattern.compile("^\\d{5}$");
 
         return validCap.matcher(cap.getText()).matches();
     }
 
     private boolean isNumberValid(){
-        if(number.getText() == null || number.getText().isEmpty() || Integer.parseInt(number.getText()) <=0)
-            return false;
-        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        return validNumber.matcher(number.getText()).matches();
+        return number.getText() != null && !number.getText().isEmpty();
     }
+
     private boolean isWeightValid(){
         //System.out.println("Peso: " + Double.parseDouble(weight.getText()));
         if(weight.getText() == null || weight.getText().isBlank())
@@ -192,7 +194,6 @@ public class GestioneUtenti {
         }
 
         if(nome.getText().isEmpty()){
-
             nomeError.setVisible(true);
             nomeError.setManaged(true);
             flag = true;
@@ -200,6 +201,7 @@ public class GestioneUtenti {
             nomeError.setVisible(false);
             nomeError.setManaged(false);
         }
+
         if(cognome.getText().isEmpty()){
             cognomeError.setVisible(true);
             cognomeError.setManaged(true);
@@ -225,15 +227,14 @@ public class GestioneUtenti {
             cityError.setVisible(false);
             cityError.setManaged(false);
         }
-        /*if(nation == null || nation.getText() == null || nation.getText().isEmpty()){ //nation.getText() == null potrà essere rimosso quando
-            //cancelleremo gli utenti dal database e generandone di nuovi non ci sarà questa situazione
+        if(nation == null || nation.getText() == null || nation.getText().isEmpty()){
             nationError.setVisible(true);
             nationError.setManaged(true);
             flag = true;
         } else {
             nationError.setVisible(false);
             nationError.setManaged(false);
-        }*/
+        }
 
         if(address.getText().isEmpty()){
             addressError.setVisible(true);
@@ -292,7 +293,7 @@ public class GestioneUtenti {
             genderError.setManaged(false);
         }
 
-        if(birthday.getValue() == null){
+        if(birthday.getValue() == null || birthday.getValue().isAfter(LocalDate.now())){
             birthdayError.setVisible(true);
             birthdayError.setManaged(true);
             flag = true;
@@ -305,7 +306,7 @@ public class GestioneUtenti {
         if(flag){
             System.out.println("Problema trovato!!");
             return flag;
-        }else{
+        } else{
             System.out.println("Nessun problema");
             return flag;
         }
@@ -333,6 +334,30 @@ public class GestioneUtenti {
         }
 
         return flag;
+    }
+
+    public static boolean singleValues(String taxCode){
+
+        String query = "SELECT taxCode, email, telephoneNumber FROM utenti";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)){
+
+            while(rs.next()){
+
+                if(rs.getString("taxCode").equals(taxCode)){
+                    return false;
+                }
+
+            }
+
+        } catch(Exception e){
+            System.out.println("Errore nel controllo dei doppioni (taxCode, email, telephone): " + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
 }

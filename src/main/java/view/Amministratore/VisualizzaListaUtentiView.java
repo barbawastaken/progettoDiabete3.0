@@ -4,12 +4,8 @@ import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Amministratore.Utente;
 
@@ -50,8 +46,8 @@ public class VisualizzaListaUtentiView {
         TableColumn<Utente, String> colAddress = new TableColumn<>("Indirizzo");
         colAddress.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
 
-        TableColumn<Utente, Number> colNumber = new TableColumn<>("Numero Civico");
-        colNumber.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNumber()));
+        TableColumn<Utente, String> colNumber = new TableColumn<>("Numero Civico");
+        colNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumber()));
 
         TableColumn<Utente, String> colCity = new TableColumn<>("Città");
         colCity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCity()));

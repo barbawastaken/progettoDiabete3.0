@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.function.UnaryOperator;
 
 public class ModificaUtenteController extends GestioneUtenti{
     private Utente utente;
@@ -107,6 +108,23 @@ public class ModificaUtenteController extends GestioneUtenti{
         nation.setText(utente.getCountryOfResidence());
         birthday.setValue(LocalDate.now());
 
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*(\\.\\d*)?")) {
+                return change;
+            }
+            return null;
+        };
+
+        TextFormatter<String> formatterHeight = new TextFormatter<>(filter);
+        TextFormatter<String> formatterWeight = new TextFormatter<>(filter);
+
+        height.setTextFormatter(formatterHeight);
+        weight.setTextFormatter(formatterWeight);
+
+        birthday.getEditor().setDisable(true);
+        birthday.getEditor().setOpacity(1);
+
         if(utente.getRole().equals("PAZIENTE")){
             medicoCurante.setVisible(true);
             medicoCurante.setManaged(true);
@@ -195,7 +213,7 @@ public class ModificaUtenteController extends GestioneUtenti{
                     email.getText(),
                     java.sql.Date.valueOf(birthday.getValue()),
                     address.getText(),
-                    Integer.parseInt(number.getText()),
+                    number.getText(),
                     citta.getText(),
                     Integer.parseInt(cap.getText()),
                     nation.getText(),
@@ -219,7 +237,7 @@ public class ModificaUtenteController extends GestioneUtenti{
                     email.getText(),
                     java.sql.Date.valueOf(birthday.getValue()),
                     address.getText(),
-                    Integer.parseInt(number.getText()),
+                    number.getText(),
                     citta.getText(),
                     Integer.parseInt(cap.getText()),
                     nation.getText(),

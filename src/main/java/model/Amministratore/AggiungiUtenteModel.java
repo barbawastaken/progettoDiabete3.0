@@ -1,19 +1,20 @@
 package model.Amministratore;
+import controller.Amministratore.GestioneUtenti;
+
 import java.sql.*;
 import java.util.HashMap;
 
 public class AggiungiUtenteModel {
 
-    private static final String URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
+    private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
+
     public HashMap<String, String> getDiabetologi() throws SQLException {
         String findDiabetologi = "SELECT * FROM utenti WHERE userType='DIABETOLOGO'";
         HashMap<String, String> diabetologi = new HashMap<>();
 
 
-            try (
-                    Connection conn = DriverManager.getConnection(URL);
-                    Statement stmt = conn.createStatement();
-                    ) {
+            try (Connection conn = DriverManager.getConnection(DB_URL);
+                 Statement stmt = conn.createStatement()) {
                 ResultSet rs = stmt.executeQuery(findDiabetologi);
 
 
@@ -45,17 +46,28 @@ public class AggiungiUtenteModel {
                                 String number, String telephone, String userType, String diabetologoSelezionato, String country, String altezza, String peso)
             throws SQLException {
 
+        if(!GestioneUtenti.singleValues(taxCode)){
+            System.out.println("è stato inserito un taxCode già utilizzato");
+            return;
+        }
+
+        double heightParsed = Double.parseDouble(altezza);
+        heightParsed = Math.floor(heightParsed * 100) / 100.0;
+
+        double weightParsed = Double.parseDouble(peso);
+        weightParsed = Math.floor(weightParsed * 100) / 100.0;
+
         String addUserQuery = "INSERT INTO utenti (taxCode, password, nome, cognome, email, birthday, address," +
                 "number, city, cap, gender, telephoneNumber, userType, diabetologo, CountryOfResidence, altezza, peso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         String addLoginQuery  = "INSERT INTO loginTable (taxCode, password, userType) VALUES (?, ?, ?);";
 
 
         try {
-            Connection conn = DriverManager.getConnection(URL);
+            Connection conn = DriverManager.getConnection(DB_URL);
             conn.setAutoCommit(false);
-            try(
-                    PreparedStatement pstmt = conn.prepareStatement(addUserQuery);
-                    PreparedStatement pstmt2 = conn.prepareStatement(addLoginQuery);) {
+            try(PreparedStatement pstmt = conn.prepareStatement(addUserQuery);
+                PreparedStatement pstmt2 = conn.prepareStatement(addLoginQuery)) {
+
                 HashMap<String, String> diabetologi = getDiabetologi();
                 System.out.println("Connesso");
                 pstmt.setString(1, taxCode);
@@ -75,10 +87,10 @@ public class AggiungiUtenteModel {
                     System.out.println(diabetologoSelezionato);
                     pstmt.setString(14, diabetologi.get(diabetologoSelezionato));
 
-                    System.out.println(diabetologi.get(diabetologoSelezionato));//!!! FACENDO COSÌ UN PAZIENTE NON PUÒ NON AVERE UN MEDICO
+                    System.out.println(diabetologi.get(diabetologoSelezionato));//! FACENDO COSÌ UN PAZIENTE NON PUÒ NON AVERE UN MEDICO
                     pstmt.setString(15, country);
-                    pstmt.setString(16, altezza);
-                    pstmt.setString(17, peso);
+                    pstmt.setDouble(16, heightParsed);
+                    pstmt.setDouble(17, weightParsed);
                 } else{
                     pstmt.setString(14, null);
                     pstmt.setString(15, null);
@@ -115,5 +127,6 @@ public class AggiungiUtenteModel {
         }
 
     }
-    }
+}
+
 

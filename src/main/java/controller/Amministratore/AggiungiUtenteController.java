@@ -1,20 +1,15 @@
 package controller.Amministratore;
 
-import controller.LoginController;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.ViewNavigator;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import model.Amministratore.AggiungiUtenteModel;
-import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.function.UnaryOperator;
 
 
 public class AggiungiUtenteController extends GestioneUtenti {
@@ -33,8 +28,6 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
     @FXML
     private void initialize() throws SQLException {
-
-
 
         AggiungiUtenteModel model = new AggiungiUtenteModel();
 
@@ -96,7 +89,22 @@ public class AggiungiUtenteController extends GestioneUtenti {
         addressError.setVisible(false);
         addressError.setManaged(false);
 
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*(\\.\\d*)?")) {
+                return change;
+            }
+            return null;
+        };
 
+        TextFormatter<String> formatterHeight = new TextFormatter<>(filter);
+        TextFormatter<String> formatterWeight = new TextFormatter<>(filter);
+
+        height.setTextFormatter(formatterHeight);
+        weight.setTextFormatter(formatterWeight);
+
+        birthday.getEditor().setDisable(true);
+        birthday.getEditor().setOpacity(1);
 
         ruolo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -162,13 +170,18 @@ public class AggiungiUtenteController extends GestioneUtenti {
     private void resetButtonPressed(){
         nome.setText("");
         cognome.setText("");
-        email.setText("");
-        password.setText("");
-        address.setText("");
-        citta.setText("");
         taxCode.setText("");
+        password.setText("");
+        email.setText("");
+        telephone.setText("");
+        birthday.setValue(null);
         address.setText("");
+        number.setText("");
+        citta.setText("");
         cap.setText("");
+        nation.setText("");
+        gender.cancelEdit();
+        diabetologo.setText(null);
 
     }
 
@@ -188,6 +201,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
         if (!hasErrors) {
 
                 if (isPaziente) {
+                    System.out.println(number.getText());
                     model.inserisciUtente(
                             taxCode.getText(), password.getText(), nome.getText(), cognome.getText(), address.getText(),
                             cap.getText(), citta.getText(), email.getText(), gender.getValue(),
@@ -211,6 +225,4 @@ public class AggiungiUtenteController extends GestioneUtenti {
     public void setTaxCode(String taxCode) {
         this.taxCode.setText(taxCode);
     }
-
-    public AggiungiUtenteController(){ }
 }

@@ -1,9 +1,8 @@
 package model.Amministratore;
 
+import controller.Amministratore.GestioneUtenti;
 import controller.Amministratore.VisualizzaListaUtentiController;
 import javafx.stage.Stage;
-import org.mindrot.jbcrypt.BCrypt;
-import view.Amministratore.ModificaUtenteView;
 import view.Amministratore.VisualizzaListaUtentiView;
 
 import java.sql.*;
@@ -15,6 +14,12 @@ public class ModificaUtenteModel {
     public ModificaUtenteModel() {}
 
     public void aggiornaUtente(String vecchioTaxCode, Utente utente) {
+
+        if(!GestioneUtenti.singleValues(utente.getTaxCode())){
+            System.out.println("è stato inserito un taxCode già utilizzato");
+            return;
+        }
+
         String updateUtenteUtenti = "UPDATE utenti " +
                 "SET " +
                 "taxCode=?, " +
@@ -53,7 +58,7 @@ public class ModificaUtenteModel {
             pstmt.setString(5, utente.getEmail());
             pstmt.setString(6, utente.getBirthday().toString());
             pstmt.setString(7, utente.getAddress());
-            pstmt.setInt(8, utente.getNumber());
+            pstmt.setString(8, utente.getNumber());
             pstmt.setString(9, utente.getCity());
             pstmt.setInt(10, utente.getCap());
             pstmt.setString(11, utente.getGender());
@@ -95,37 +100,13 @@ public class ModificaUtenteModel {
         }
     }
 
-    private Utente utenteModificato(ModificaUtenteView modificaUtenteView) {
-        return new Utente(
-                modificaUtenteView.getTaxCode(),
-                modificaUtenteView.getPassword(),
-                modificaUtenteView.getNome(),
-                modificaUtenteView.getCognome(),
-                modificaUtenteView.getEmail(),
-                java.sql.Date.valueOf(modificaUtenteView.getBirthday()),
-                modificaUtenteView.getAddress(),
-                modificaUtenteView.getNumber(),
-                modificaUtenteView.getCity(),
-                modificaUtenteView.getCap(),
-                modificaUtenteView.getCountryOfResidence(),
-                modificaUtenteView.getGender(),
-                modificaUtenteView.getTelephone(),
-                modificaUtenteView.getRole(),
-                modificaUtenteView.getDiabetologo(),
-                modificaUtenteView.getWeight(),
-                modificaUtenteView.getHeight()
-        );
-
-    }
     public HashMap<String, String> getDiabetologi() throws SQLException {
         String findDiabetologi = "SELECT * FROM utenti WHERE userType='DIABETOLOGO'";
         HashMap<String, String> diabetologi = new HashMap<>();
 
 
-        try (
-                Connection conn = DriverManager.getConnection(DB_URL);
-                Statement stmt = conn.createStatement();
-        ) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(findDiabetologi);
 
 

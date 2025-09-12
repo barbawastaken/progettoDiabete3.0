@@ -24,12 +24,11 @@
                         <Label fx:id="codiceFiscaleLabel" text="Codice Fiscale: " style="-fx-font-weight: bold;" />
                         <Label fx:id="sessoLabel" text="Sesso: " style="-fx-font-weight: bold;" />
                         <Label fx:id="dataNascitaLabel" text="Data di Nascita: " style="-fx-font-weight: bold;" />
-                        <Label fx:id="passwordLabel" text="Password: " style="-fx-font-weight: bold;" />
                         <Label fx:id="viaLabel" text="Via: " style="-fx-font-weight: bold;" />
                         <Label fx:id="numeroCivicoLabel" text="Numero Civico: " style="-fx-font-weight: bold;" />
                         <Label fx:id="capLabel" text="CAP: " style="-fx-font-weight: bold;" />
-                        <Label fx:id="paeseLabel" text="Paese di Residenza: " style="-fx-font-weight: bold;" />
                         <Label fx:id="cittaLabel" text="Città: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="paeseLabel" text="Paese di Residenza: " style="-fx-font-weight: bold;" />
                         <Label fx:id="emailLabel" text="Email: " style="-fx-font-weight: bold;" />
                         <Label fx:id="cellulareLabel" text="Cellulare: " style="-fx-font-weight: bold;" />
                         <Label fx:id="pesoLabel" text="Peso: " style="-fx-font-weight: bold;" />

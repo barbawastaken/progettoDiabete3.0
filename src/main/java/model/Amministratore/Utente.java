@@ -10,7 +10,7 @@ public class Utente {
     private final String email;
     private final Date birthDate;
     private final String address;
-    private final int number;
+    private final String number;
     private final String city;
     private final int cap;
     private final String countryOfResidence;
@@ -22,7 +22,7 @@ public class Utente {
     private final double height;
 
     public Utente(String taxCode, String password, String nome, String cognome, String email, Date birthDate, String address,
-                  int number, String city, int cap, String countryOfResidence, String gender, String telephoneNumber, String ruolo,
+                  String number, String city, int cap, String countryOfResidence, String gender, String telephoneNumber, String ruolo,
                   String diabetologo, double weight, double height) {
         this.taxCode = taxCode;
         this.password = password;
@@ -50,7 +50,7 @@ public class Utente {
     public String getEmail() { return email; }
     public Date getBirthday() { return birthDate; }
     public String getAddress() { return address; }
-    public int getNumber() { return number; }
+    public String getNumber() { return number; }
     public String getCity() { return city; }
     public int getCap() { return cap; }
     public String getCountryOfResidence() { return countryOfResidence; }

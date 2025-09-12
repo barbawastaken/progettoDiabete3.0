@@ -3,7 +3,6 @@ package model.Amministratore;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class VisualizzaListaUtentiModel {
@@ -27,7 +26,7 @@ public class VisualizzaListaUtentiModel {
                 String birthDateStr = rs.getString("birthday");
                 Date birthDate = Date.valueOf(birthDateStr); // java.sql.Date
                 String address = rs.getString("address");
-                int number = rs.getInt("number");
+                String number = rs.getString("number");
                 String city = rs.getString("city");
                 int cap = rs.getInt("cap");
                 String countryOfResidence = rs.getString("CountryOfResidence");
@@ -101,7 +100,7 @@ public class VisualizzaListaUtentiModel {
                 stmt.setString(5, utente.getEmail());
                 stmt.setString(6, utente.getBirthday().toString());
                 stmt.setString(7, utente.getAddress());
-                stmt.setInt(8, utente.getNumber());
+                stmt.setString(8, utente.getNumber());
                 stmt.setString(9, utente.getCity());
                 stmt.setInt(10, utente.getCap());
                 stmt.setString(11, utente.getGender());
