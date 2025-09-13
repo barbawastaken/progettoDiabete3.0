@@ -1,6 +1,7 @@
 package model.Amministratore;
 
 import controller.Amministratore.GestioneUtenti;
+import controller.Session;
 import controller.ViewNavigator;
 
 import java.sql.*;
@@ -11,8 +12,8 @@ public class ModificaUtenteModel {
 
     public ModificaUtenteModel() {}
 
-    public void aggiornaUtente(Utente vecchioUtente, Utente utente) {
-
+    public static void aggiornaUtente(Utente vecchioUtente, Utente utente) {
+        System.out.println("dentro aggiorna utente");
         String vecchioTaxCode = vecchioUtente.getTaxCode();
 
         if(!vecchioTaxCode.equals(utente.getTaxCode()) && !GestioneUtenti.singleValues(utente.getTaxCode())){
@@ -53,7 +54,7 @@ public class ModificaUtenteModel {
             pstmt.setString(15, utente.getCountryOfResidence());
             pstmt.setDouble(16,utente.getHeight());
             pstmt.setDouble(17,utente.getWeight());
-            pstmt.setString(18, vecchioTaxCode); // <-- importante!
+            pstmt.setString(18, Session.getInstance().getTaxCode()); // <-- importante!
 
             if(!aggiornaTabelleDatabase(vecchioTaxCode, utente.getTaxCode()))
                 return;
@@ -84,7 +85,7 @@ public class ModificaUtenteModel {
         }
     }
 
-    private boolean aggiornaTabelleDatabase(String vecchioTaxCode, String nuovoTaxCode) {
+    private static boolean aggiornaTabelleDatabase(String vecchioTaxCode, String nuovoTaxCode) {
 
         String query = "UPDATE aggiuntaSintomi SET taxCode = '" + nuovoTaxCode + "' WHERE taxCode = '" + vecchioTaxCode + "'";
         if(!executeQuery(query))
@@ -110,7 +111,7 @@ public class ModificaUtenteModel {
         return executeQuery(query);
     }
 
-    private boolean executeQuery(String query) {
+    private static boolean executeQuery(String query) {
 
         try(Connection conn = DriverManager.getConnection(DB_URL);
             Statement stmt = conn.createStatement()){

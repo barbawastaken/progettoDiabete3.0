@@ -28,6 +28,7 @@ public class ModificaUtenteController extends GestioneUtenti{
     @FXML
     public void initialize() {
 
+
         taxCodeError.setVisible(false);
         taxCodeError.setManaged(false);
         numberError.setVisible(false);
@@ -211,7 +212,7 @@ public class ModificaUtenteController extends GestioneUtenti{
                     altezza
             );
 
-            modificaUtenteModel.aggiornaUtente(utente, aggiornato);
+            ModificaUtenteModel.aggiornaUtente(utente, aggiornato);
 
             if(listaUtentiController != null){ listaUtentiController.aggiornaTabellaUtenti();}
 

@@ -1,5 +1,7 @@
 package model.Paziente;
 
+import model.Amministratore.Utente;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,7 +34,36 @@ public class PazienteModel  {
         return map;
     }*/
 
+    public static void updateData(Utente utente) throws SQLException {
 
+        String query = "UPDATE utenti SET password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?;";
+
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement stmt = conn.prepareStatement(query)){
+
+            stmt.setString(1, utente.getPassword());
+            stmt.setString(2, utente.getNome());
+            stmt.setString(3, utente.getCognome());
+            stmt.setString(4, utente.getEmail());
+            stmt.setString(5, utente.getBirthday().toString());
+            stmt.setString(6, utente.getAddress());
+            stmt.setString(7, utente.getNumber());
+            stmt.setString(8, utente.getCity());
+            stmt.setString(9, String.valueOf(utente.getCap()));
+            stmt.setString(10, utente.getGender());
+            stmt.setString(11, utente.getTelephone());
+            stmt.setString(12, utente.getRole());
+            stmt.setString(13, utente.getDiabetologo());
+            stmt.setString(14, utente.getCountryOfResidence());
+            stmt.setDouble(15, utente.getHeight());
+            stmt.setDouble(16, utente.getWeight());
+            stmt.setString(17, utente.getTaxCode());
+
+            stmt.executeUpdate();
+        } catch(SQLException x){
+            System.out.println(x.getErrorCode());
+        }
+    }
 
     public List<TerapiaModel> getTerapie(String taxCode){
 

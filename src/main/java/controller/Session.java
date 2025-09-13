@@ -33,6 +33,8 @@ public class Session {
     private String civic;
     private String city;
     private Integer cap;
+    private String countryOfResidence;
+    private String medicoCurante;
     private Paziente pazienteInEsame;
     private Utente utenteInEsame;
     private static Terapia terapiaInEsame;
@@ -70,13 +72,33 @@ public class Session {
                     rs.getString("address"),
                     rs.getString("number"),
                     rs.getString("city"),
-                    rs.getInt("cap")
+                    rs.getString("diabetologo"),
+                    rs.getInt("cap"),
+                    rs.getString("CountryOfResidence")
             );
+
+
 
         } catch(SQLException e) {
             System.out.println("Errore nella raccolta dei dati");
             System.out.println(e.getMessage());
         }
+    }
+
+    public String getCountryOfResidence() {
+        return countryOfResidence;
+    }
+
+    public void setCountryOfResidence(String countryOfResidence) {
+        this.countryOfResidence = countryOfResidence;
+    }
+
+    public String getMedicoCurante() {
+        return medicoCurante;
+    }
+
+    public void setMedicoCurante(String medicoCurante) {
+        this.medicoCurante = medicoCurante;
     }
 
     public static Paziente getInfosOf(String taxCode) {
@@ -347,7 +369,9 @@ public class Session {
             String address,
             String civic,
             String city,
-            int cap
+            String medicoCurante,
+            int cap,
+            String nation
     ){
         this.taxCode = taxCode;
         this.nome = nome;
@@ -363,7 +387,9 @@ public class Session {
         this.civic = civic;
         this.city = city;
         this.cap = cap;
+        this.medicoCurante = medicoCurante;
         this.pazienteInEsame = null;
+        this.countryOfResidence = nation;
     }
 
     public void deleteSession(){

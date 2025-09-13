@@ -8,7 +8,7 @@ public class AggiungiUtenteModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
 
-    public HashMap<String, String> getDiabetologi() throws SQLException {
+    public static HashMap<String, String> getDiabetologi() throws SQLException {
         String findDiabetologi = "SELECT * FROM utenti WHERE userType='DIABETOLOGO'";
         HashMap<String, String> diabetologi = new HashMap<>();
 
@@ -19,7 +19,7 @@ public class AggiungiUtenteModel {
 
 
                 while (rs.next()) {
-                    System.out.println("Zio pera " + rs.getString("taxCode"));
+
                     diabetologi.put(((rs.getString("cognome")) + " (" + rs.getString("taxCode") + ")"),
                             rs.getString("taxCode"));
                 }
