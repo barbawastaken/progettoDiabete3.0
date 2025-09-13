@@ -21,6 +21,9 @@ public class ModificaPazienteController {
     private final Session userData = Session.getInstance();
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+
+    private boolean passwordChanged = false;
+    private String newPassword;
     @FXML private HBox navbarContainer;
     HashMap<String, String> diabetologo = AggiungiUtenteModel.getDiabetologi();
 
@@ -38,6 +41,7 @@ public class ModificaPazienteController {
     @FXML private TextField citta;
     @FXML private TextField cap;
     @FXML private TextField nation;
+    @FXML private TextField password;
 
 
     @FXML private Text emailError;
@@ -75,9 +79,7 @@ public class ModificaPazienteController {
 
         this.nation.setText(userData.getCountryOfResidence());
 
-        for(String s : diabetologo.keySet()){
-            medicoCurante.getItems().add(s);
-        }
+        medicoCurante.getItems().addAll(diabetologo.keySet());
         taxCodeError.setVisible(false);
         taxCodeError.setManaged(false);
         numberError.setVisible(false);
@@ -131,7 +133,16 @@ public class ModificaPazienteController {
         this.address.setText(userData.getAddress());
         this.cap.setText(userData.getCap().toString());
         this.number.setText(userData.getCivic());
-        this.medicoCurante.setValue(userData.getMedicoCurante());
+        String keyMedico = "";
+        for(String s : diabetologo.keySet()){
+            if(s.contains(userData.getMedicoCurante())) {
+                keyMedico = s;
+                break;
+            }
+        }
+        this.medicoCurante.setValue(keyMedico);
+        //this.password.setText(userData.getPassword());
+        this.nation.setText(userData.getCountryOfResidence());
 
         cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (!event.getCharacter().matches("\\d")) {
@@ -212,6 +223,12 @@ public class ModificaPazienteController {
         */
 
         PazienteModel.updateData(user);
+
+        if(passwordChanged)
+            ViewNavigator.relogPaziente(taxCode.getText(), newPassword);
+        else
+            ViewNavigator.relogPaziente(taxCode.getText(), Session.getInstance().getPassword());
+
     }
 
     private String arrotonda(String valore) {
@@ -290,6 +307,13 @@ public class ModificaPazienteController {
             return;
         }
 
+        if(nuovaPasswordField.getText().isEmpty() || confermaPasswordField.getText().isEmpty()){
+            messaggioErrore("I campi della password devono essere compilati");
+            return;
+        }
+
+        this.newPassword = nuovaPasswordField.getText();
+        this.passwordChanged = true;
         String nuovaPassword = confermaPasswordField.getText();
 
         String query = "UPDATE utenti SET password=? WHERE taxCode = ?";

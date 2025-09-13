@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class LoginModel {
 
-    public boolean checkLogin(String taxCode, String password){
+    public static boolean checkLogin(String taxCode, String password){
 
 
         String DB_URL = "jdbc:sqlite:mydatabase.db";

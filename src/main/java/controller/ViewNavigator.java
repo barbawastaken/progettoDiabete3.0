@@ -176,4 +176,14 @@ public class ViewNavigator {
     public static void navigateToVisualizzaStatistiche() {loadView("visualizzaStatistiche.fxml");}
 
     public static void navigateToModificaUtente(){loadView("modifica_utente_view.fxml");}
+
+    public static void relogPaziente(String TaxCode, String password) {
+
+        Session.getInstance().deleteSession();
+        Session.getInstance().setTaxCode(TaxCode);
+        Session.getInstance().setPassword(password);
+        Session.getInfos();
+        navigateToProfilePaziente();
+
+    }
 }

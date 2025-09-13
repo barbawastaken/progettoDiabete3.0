@@ -39,10 +39,17 @@
                     <Text fx:id="cognomeError" text="Cognome non valido" styleClass="error" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
                     <!-- Riga 1 -->
-                    <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="password" promptText="password" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <VBox GridPane.rowIndex="2" GridPane.columnIndex="0">
+                        <Button onAction="#onPasswordPressed" text="Cambia password..." />
+                        <Text text="Nuova password" fx:id="nuovaPasswordText" visible="false" />
+                        <TextField fx:id="nuovaPasswordField" visible="false" />
+                        <Text text="Conferma password" fx:id="confermaPasswordText" visible="false" />
+                        <TextField fx:id="confermaPasswordField" visible="false" />
+                        <Button fx:id="confermaPasswordButton" onAction="#onCambiaPasswordPressed" text="Conferma" visible="false" />
+                    </VBox>
                     <Label text="Codice Fiscale:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
                     <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
 
                     <!-- Riga 1 Errori -->
                     <Text fx:id="passwordError" text="Password non valida" styleClass="error" GridPane.rowIndex="3" GridPane.columnIndex="1"/>

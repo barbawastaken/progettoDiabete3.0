@@ -28,7 +28,7 @@ public class LoginController {
         System.out.println(taxCode);
         System.out.println(password);
         this.taxCode = taxCode;
-        if(!loginModel.checkLogin(taxCode, password))
+        if(!LoginModel.checkLogin(taxCode, password))
             error.setVisible(true);
 
     }
