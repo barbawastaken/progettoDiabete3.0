@@ -60,6 +60,7 @@ public class Session {
                     rs.getString("taxCode"),
                     rs.getString("nome"),
                     rs.getString("cognome"),
+                    rs.getString("password"),
                     rs.getString("email"),
                     rs.getString("telephoneNumber"),
                     rs.getString("birthday"),
@@ -143,7 +144,18 @@ public class Session {
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         serie.setName("Valori glicemici");
 
-        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
+        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ? ORDER BY data ASC,\n" +
+                "    CASE momentoGiornata\n" +
+                "        WHEN 'Colazione' THEN 1\n" +
+                "        WHEN 'Pranzo'    THEN 2\n" +
+                "        WHEN 'Cena'      THEN 3\n" +
+                "        ELSE 4\n" +
+                "    END,\n" +
+                "    CASE prePost\n" +
+                "        WHEN 'PRE'  THEN 1\n" +
+                "        WHEN 'POST' THEN 2\n" +
+                "        ELSE 3\n" +
+                "    END;";
 
         if(periodo.equals("Ultima settimana")) {
             query  += " AND date(data) >= date('now', '-7 days')";
@@ -325,6 +337,7 @@ public class Session {
             String taxCode,
             String nome,
             String cognome,
+            String password,
             String email,
             String telephone,
             String birthday,
@@ -339,6 +352,7 @@ public class Session {
         this.taxCode = taxCode;
         this.nome = nome;
         this.cognome = cognome;
+        this.password = password;
         this.email = email;
         this.telephone = telephone;
         this.birthday = birthday;

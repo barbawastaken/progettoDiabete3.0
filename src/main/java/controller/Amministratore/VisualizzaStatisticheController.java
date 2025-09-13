@@ -114,11 +114,19 @@ public class VisualizzaStatisticheController {
         navbarContainer.getChildren().add(navbar);
         /* SETUP GRAFICO COMPLETO */
 
-        String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, " +
-                "u.nome, u.cognome " +
-                "FROM rilevazioniGlicemiche r " +
-                "JOIN utenti u ON r.taxCode = u.taxCode " +
-                "ORDER BY r.taxCode, r.data";
+        String query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, u.nome, u.cognome FROM rilevazioniGlicemiche r JOIN utenti u ON r.taxCode = u.taxCode\n" +
+                "ORDER BY r.taxCode, r.data ASC,\n" +
+                "    CASE r.momentoGiornata\n" +
+                "        WHEN 'Colazione' THEN 1\n" +
+                "        WHEN 'Pranzo'    THEN 2\n" +
+                "        WHEN 'Cena'      THEN 3\n" +
+                "        ELSE 4\n" +
+                "    END,\n" +
+                "    CASE r.prePost\n" +
+                "        WHEN 'PRE'  THEN 1\n" +
+                "        WHEN 'POST' THEN 2\n" +
+                "        ELSE 3\n" +
+                "    END;";
 
 
         caricaTuttiIDatiDalDatabase(tuttiIDati, query);
@@ -127,13 +135,20 @@ public class VisualizzaStatisticheController {
 
         /* SETUP GRAFICO ULTIMO MESEE */
 
-        query = """
-                SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
-                       u.nome, u.cognome
-                FROM rilevazioniGlicemiche r
-                         JOIN utenti u ON r.taxCode = u.taxCode
-                WHERE date(r.data) >= date('now', '-30 days')
-                ORDER BY r.data DESC, r.taxCode""";
+        query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, u.nome, u.cognome FROM rilevazioniGlicemiche r JOIN utenti u ON r.taxCode = u.taxCode \n" +
+                "WHERE date(r.data) >= date('now', '-30 days') \n" +
+                "ORDER BY r.taxCode, r.data ASC,\n" +
+                "    CASE r.momentoGiornata\n" +
+                "        WHEN 'Colazione' THEN 1\n" +
+                "        WHEN 'Pranzo'    THEN 2\n" +
+                "        WHEN 'Cena'      THEN 3\n" +
+                "        ELSE 4\n" +
+                "    END,\n" +
+                "    CASE r.prePost\n" +
+                "        WHEN 'PRE'  THEN 1\n" +
+                "        WHEN 'POST' THEN 2\n" +
+                "        ELSE 3\n" +
+                "    END;";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastMonth, query);
         //popolaComboBox(tuttiIDatiDiLastMonth);
@@ -141,13 +156,20 @@ public class VisualizzaStatisticheController {
 
         /* SETUP GRAFICO ULTIMA SETTIMANA */
 
-        query = """
-                SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost,
-                       u.nome, u.cognome
-                FROM rilevazioniGlicemiche r
-                         JOIN utenti u ON r.taxCode = u.taxCode
-                WHERE date(r.data) >= date('now', '-7 days')
-                ORDER BY r.data DESC, r.taxCode""";
+        query = "SELECT r.taxCode, r.quantita, r.data, r.momentoGiornata, r.prePost, u.nome, u.cognome FROM rilevazioniGlicemiche r JOIN utenti u ON r.taxCode = u.taxCode \n" +
+                "WHERE date(r.data) >= date('now', '-7 days') \n" +
+                "ORDER BY r.taxCode, r.data ASC,\n" +
+                "    CASE r.momentoGiornata\n" +
+                "        WHEN 'Colazione' THEN 1\n" +
+                "        WHEN 'Pranzo'    THEN 2\n" +
+                "        WHEN 'Cena'      THEN 3\n" +
+                "        ELSE 4\n" +
+                "    END,\n" +
+                "    CASE r.prePost\n" +
+                "        WHEN 'PRE'  THEN 1\n" +
+                "        WHEN 'POST' THEN 2\n" +
+                "        ELSE 3\n" +
+                "    END;";
 
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastWeek, query);
         //popolaComboBox(tuttiIDatiDiLastWeek);

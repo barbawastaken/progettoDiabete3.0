@@ -15,12 +15,7 @@ import java.util.regex.Pattern;
 
 public class ModificaPazienteController {
 
-    /*
-        * ho provato a cancellare delle classi che con l'introduzione della navbar non ci servono
-        * più ma si è stra arrabbiato -> da pensarci
-     */
-
-    private Session userData = Session.getInstance();
+    private final Session userData = Session.getInstance();
 
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
     @FXML private HBox navbarContainer;
@@ -78,13 +73,13 @@ public class ModificaPazienteController {
         this.cap.setText(userData.getCap().toString());
         this.numero.setText(userData.getCivic());
 
-        numero.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (!event.getCharacter().matches("\\d")) {
                 event.consume(); // blocca l'inserimento
             }
         });
 
-        TextFormatter<String> formatter = new TextFormatter<>(change -> {
+        TextFormatter<String> altezzaFormatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.matches("\\d*\\.?\\d*")) {
                 return change; // accetta il cambiamento
@@ -93,8 +88,17 @@ public class ModificaPazienteController {
             }
         });
 
-        altezza.setTextFormatter(formatter);
-        peso.setTextFormatter(formatter);
+        TextFormatter<String> pesoFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*\\.?\\d*")) {
+                return change; // accetta il cambiamento
+            } else {
+                return null; // rifiuta il cambiamento
+            }
+        });
+
+        altezza.setTextFormatter(altezzaFormatter);
+        peso.setTextFormatter(pesoFormatter);
     }
 
     @FXML void onSendButtonPressed(){
@@ -118,8 +122,7 @@ public class ModificaPazienteController {
             stmt.setString(9, userData.getTaxCode());
 
             stmt.executeUpdate();
-            System.out.println("Salvataggio modifiche eseguito!");
-            //onHomePagePressed();
+
             ViewNavigator.navigateToProfilePaziente();
 
         } catch (Exception e) {
@@ -167,9 +170,7 @@ public class ModificaPazienteController {
         int capInt = Integer.parseInt(cap.getText());
         if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { erroreCap.setVisible(true); return false;}
 
-        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        int numeroInt = Integer.parseInt(numero.getText());
-        if(!validNumber.matcher(numero.getText()).matches() && numeroInt > 0) { erroreNumero.setVisible(true); return false;}
+        if (!numero.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("Numero civico non è valido!"); return false; }
 
         return true;
     }
@@ -195,11 +196,14 @@ public class ModificaPazienteController {
     public void onCambiaPasswordPressed(){
         if(!nuovaPasswordField.getText().equals(confermaPasswordField.getText())){
             messaggioErrore("La conferma della password non è corretta");
+            confermaPasswordField.setText("");
             return;
         }
 
         if(nuovaPasswordField.getText().equals(userData.getPassword())){
             messaggioErrore("La password deve essere diversa dalla vecchia");
+            nuovaPasswordField.setText("");
+            confermaPasswordField.setText("");
             return;
         }
 
@@ -230,8 +234,6 @@ public class ModificaPazienteController {
 
             stmt.executeUpdate();
 
-            System.out.println("Modifiche salvate correttamente!");
-            //onHomePagePressed();
             ViewNavigator.navigateToProfilePaziente();
 
         } catch (Exception e) {

@@ -2,18 +2,10 @@ package controller.Diabetologo;
 
 import controller.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import org.mindrot.jbcrypt.BCrypt;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,12 +14,12 @@ import java.util.regex.Pattern;
 
 public class ModificaDiabetologoController {
 
-    private String taxCode = Session.getInstance().getTaxCode() ;
+    private final Session userData = Session.getInstance();
     private final static String DB_URL = "jdbc:sqlite:mydatabase.db";
+
     @FXML private HBox navbarContainer;
     @FXML private TextField nome;
     @FXML private TextField cognome;
-    @FXML private TextField password;
     @FXML private TextField taxCodeFXML;
     @FXML private TextField email;
     @FXML private TextField telefono;
@@ -51,14 +43,12 @@ public class ModificaDiabetologoController {
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
-        String query = "SELECT nome, cognome, password, taxCode, email, telephoneNumber, birthday, gender, " +
-                "address, number, city, cap FROM utenti WHERE taxCode = ?";
-
+        String query = "SELECT nome, cognome, password, taxCode, email, telephoneNumber, birthday, gender, address, number, city, cap FROM utenti WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, taxCode);
+            stmt.setString(1, userData.getTaxCode());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -67,9 +57,6 @@ public class ModificaDiabetologoController {
 
             this.cognome.setText(rs.getString("cognome"));
             this.cognome.setEditable(false);
-
-            //this.password.setText(rs.getString("password"));
-            //this.password.setEditable(false);
 
             this.taxCodeFXML.setText(rs.getString("taxCode"));
             this.taxCodeFXML.setEditable(false);
@@ -84,24 +71,6 @@ public class ModificaDiabetologoController {
             this.sesso.setText(rs.getString("gender"));
             this.sesso.setEditable(false);
 
-            TextFormatter<String> altezzaFormatter = new TextFormatter<>(change -> {
-                String newText = change.getControlNewText();
-                if (newText.matches("\\d*\\.?\\d*")) {
-                    return change; // accetta il cambiamento
-                } else {
-                    return null; // rifiuta il cambiamento
-                }
-            });
-
-            TextFormatter<String> pesoFormatter = new TextFormatter<>(change -> {
-                String newText = change.getControlNewText();
-                if (newText.matches("\\d*\\.?\\d*")) {
-                    return change; // accetta il cambiamento
-                } else {
-                    return null; // rifiuta il cambiamento
-                }
-            });
-
             this.indirizzo.setText(rs.getString("address"));
             this.numero.setText(rs.getString("number"));
             this.citta.setText(rs.getString("city"));
@@ -111,6 +80,18 @@ public class ModificaDiabetologoController {
         } catch (Exception e) {
             System.out.println("Errore caricamento dati utente: " + e);
         }
+
+        cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
+
+        telefono.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
 
     }
 
@@ -130,21 +111,15 @@ public class ModificaDiabetologoController {
             stmt.setString(4, numero.getText());
             stmt.setString(5, citta.getText());
             stmt.setString(6, cap.getText());
-            stmt.setString(7, taxCode);
+            stmt.setString(7, userData.getTaxCode());
             stmt.executeUpdate();
-            System.out.println("Salvataggio modifiche eseguito!");
-            ViewNavigator.navigateToDiabetologo();
+
+            ViewNavigator.navigateToProfileDiabetologo();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio dei dati: " + e.getMessage());
         }
 
-    }
-
-    private String arrotonda(String valore) {
-        return new BigDecimal(valore)
-                .setScale(2, RoundingMode.HALF_UP)
-                .toPlainString();
     }
 
     public boolean checkDati(){
@@ -164,9 +139,7 @@ public class ModificaDiabetologoController {
         Pattern validCap = Pattern.compile("^\\d{5}$");
         if(!validCap.matcher(cap.getText()).matches()) { messaggioErrore("Il cap specificato non è valido!");return false;}
 
-        Pattern validNumber = Pattern.compile("^\\d{1,3}$");
-        if(!validNumber.matcher(numero.getText()).matches()) { messaggioErrore("Il numero civico specificato non è valido!"); return false;}
-
+        if (!numero.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("Numero civico non è valido!"); return false; }
 
         return true;
     }
@@ -195,18 +168,26 @@ public class ModificaDiabetologoController {
 
         if(!nuovaPasswordField.getText().equals(confermaPasswordField.getText())){
             messaggioErrore("La conferma della password non è corretta");
+            confermaPasswordField.setText("");
             return;
         }
 
-        String passwordCriptata = BCrypt.hashpw(nuovaPasswordField.getText(), BCrypt.gensalt());
+        if(nuovaPasswordField.getText().equals(userData.getPassword())){
+            messaggioErrore("La password deve essere diversa dalla vecchia");
+            nuovaPasswordField.setText("");
+            confermaPasswordField.setText("");
+            return;
+        }
+
+        String nuovaPassword = nuovaPasswordField.getText();
 
         String query = "UPDATE utenti SET password=? WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, passwordCriptata);
-            stmt.setString(2, taxCode);
+            stmt.setString(1, nuovaPassword);
+            stmt.setString(2, userData.getTaxCode());
 
             stmt.executeUpdate();
         } catch(Exception e) {
@@ -219,13 +200,12 @@ public class ModificaDiabetologoController {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)){
 
-            stmt.setString(1, passwordCriptata);
-            stmt.setString(2, taxCode);
+            stmt.setString(1, nuovaPassword);
+            stmt.setString(2, userData.getTaxCode());
 
             stmt.executeUpdate();
 
-            System.out.println("Modifiche salvate correttamente!");
-            ViewNavigator.navigateToDiabetologo();
+            ViewNavigator.navigateToProfileDiabetologo();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio della password (loginTable): " + e.getMessage());
