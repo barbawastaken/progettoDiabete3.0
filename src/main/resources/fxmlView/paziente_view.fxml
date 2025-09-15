@@ -40,6 +40,7 @@
                         <TableColumn fx:id="quantita" prefWidth="60.0" text="Quantita'" />
                         <TableColumn fx:id="numero_assunzioni_giornaliere" prefWidth="130.0" text="Assunzioni giornaliere" />
                         <TableColumn fx:id="indicazioni" prefWidth="130.0" text="Indicazioni" />
+                        <TableColumn fx:id="dataPrescrizione" prefWidth="130.0" text="Data prescrizione" />
                     </columns>
                 </TableView>
 

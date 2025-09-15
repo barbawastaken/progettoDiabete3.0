@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Amministratore.Paziente;
 import model.Diabetologo.VisualizzaPazientiModel;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -113,19 +112,7 @@ public class NotificationModel {
                     String momentoGiornata = rs.getString("momentoGiornata");
                     String data = rs.getString("data");
 
-                    if((quantita < 80 || quantita > 130) && prePost.equals("PRE")){
-
-                        Notifica notifica = new Notifica(
-                                p.getNome(),
-                                p.getCognome(),
-                                "Ha registrato un valore glicemico di " + quantita,
-                                prePost + " " + momentoGiornata + " - " + data,
-                                "yellow"
-                        );
-
-                        notificheGlicemia.add(notifica);
-
-                    } else if(quantita > 180 && prePost.equals("POST")){
+                    if(quantita > 180 || quantita < 80){
 
                         Notifica notifica = new Notifica(
                                 p.getNome(),
@@ -137,6 +124,18 @@ public class NotificationModel {
 
                         notificheGlicemia.add(notifica);
 
+                    } else if(quantita > 130 && prePost.equals("PRE")){
+
+                        Notifica notifica = new Notifica(
+                                p.getNome(),
+                                p.getCognome(),
+                                "Ha registrato un valore glicemico di " + quantita,
+                                prePost + " " + momentoGiornata + " - " + data,
+                                "yellow"
+                        );
+
+                        notificheGlicemia.add(notifica);
+
                     } else {
 
                         Notifica notifica = new Notifica(
@@ -144,7 +143,7 @@ public class NotificationModel {
                                 p.getCognome(),
                                 "Ha registrato un valore glicemico di " + quantita,
                                 prePost + " " + momentoGiornata + " - " + data,
-                                "green"
+                                "lightGreen"
                         );
 
                         notificheGlicemia.add(notifica);
@@ -156,7 +155,6 @@ public class NotificationModel {
 
             } catch (Exception e){
                 System.out.println("Errore caricamento rilevazioni glicemiche di " + p.getTaxCode() + ": " + e.getMessage());
-                e.printStackTrace();
                 return null;
             }
 

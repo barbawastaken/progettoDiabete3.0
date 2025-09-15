@@ -30,13 +30,9 @@
 
                     <!-- Riga 0 -->
                     <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <TextField fx:id="nome" promptText="nome" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <TextField fx:id="nome" promptText="nome" GridPane.rowIndex="0" GridPane.columnIndex="1" disable="true"/>
                     <Label text="Cognome:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                    <TextField fx:id="cognome" promptText="cognome" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-
-                    <!-- Riga 0 Errori -->
-                    <Text fx:id="nomeError" text="Nome non valido" styleClass="error" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                    <Text fx:id="cognomeError" text="Cognome non valido" styleClass="error" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                    <TextField fx:id="cognome" promptText="cognome" GridPane.rowIndex="0" GridPane.columnIndex="3" disable="true"/>
 
                     <!-- Riga 1 -->
                     <VBox GridPane.rowIndex="2" GridPane.columnIndex="0">
@@ -48,22 +44,17 @@
                         <Button fx:id="confermaPasswordButton" onAction="#onCambiaPasswordPressed" text="Conferma" visible="false" />
                     </VBox>
                     <Label text="Codice Fiscale:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                    <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                    <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3" disable="true"/>
 
 
                     <!-- Riga 1 Errori -->
                     <Text fx:id="passwordError" text="Password non valida" styleClass="error" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                    <Text fx:id="taxCodeError" text="Codice Fiscale non valido" styleClass="error" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
                     <!-- Riga 2 -->
                     <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <ComboBox fx:id="gender" prefWidth="150.0" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                    <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-                    <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
-
-                    <!-- Riga 2 Errori -->
-                    <Text fx:id="genderError" text="Inserisci il sesso" styleClass="error" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                    <Text fx:id="birthdayError" text="Data di nascita non valida" styleClass="error" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+                    <Text fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
+                    <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2" />
+                    <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3" disable="true" />
 
                     <!-- Riga 3 -->
                     <Label text="Indirizzo:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
@@ -109,7 +100,7 @@
                     <Text fx:id="heightText" text="Altezza (in M):" styleClass="testo" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
                     <TextField fx:id="height" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
                     <Text fx:id="medicoCuranteText" text="Medico Curante:" GridPane.rowIndex="14" GridPane.columnIndex="2" styleClass="testo"/>
-                    <ComboBox fx:id="medicoCurante" prefWidth="150.0" GridPane.rowIndex="14" GridPane.columnIndex="3"/>
+                    <Text fx:id="medicoCurante" GridPane.rowIndex="14" GridPane.columnIndex="3" disable="true" />
 
                     <!-- Riga 7 Errori -->
                     <Text fx:id="heightError" text="Altezza non valida" styleClass="error" GridPane.rowIndex="15" GridPane.columnIndex="1"/>

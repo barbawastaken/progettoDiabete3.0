@@ -9,9 +9,6 @@ import javafx.scene.text.Text;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.Utente;
 import model.Paziente.PazienteModel;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -33,7 +30,7 @@ public class ModificaPazienteController {
     @FXML private TextField email;
     @FXML private TextField telephone;
     @FXML private DatePicker birthday;
-    @FXML private ComboBox<String> gender;
+    @FXML private Text gender;
     @FXML private TextField height;
     @FXML private TextField weight;
     @FXML private TextField address;
@@ -41,8 +38,7 @@ public class ModificaPazienteController {
     @FXML private TextField citta;
     @FXML private TextField cap;
     @FXML private TextField nation;
-    @FXML private TextField password;
-
+    @FXML private Text medicoCurante;
 
     @FXML private Text emailError;
     @FXML private Text telephoneError;
@@ -57,10 +53,6 @@ public class ModificaPazienteController {
     @FXML private Text taxCodeError;
     @FXML private Text birthdayError;
     @FXML private Text genderError;
-    @FXML private ComboBox<String> medicoCurante;
-    @FXML private Text medicoCuranteText;
-    @FXML private Text heightText;
-    @FXML private Text weightText;
     @FXML private Text userAddedText;
     @FXML private Text passwordError;
     @FXML private Text nationError;
@@ -79,9 +71,6 @@ public class ModificaPazienteController {
 
         this.nation.setText(userData.getCountryOfResidence());
 
-        medicoCurante.getItems().addAll(diabetologo.keySet());
-        taxCodeError.setVisible(false);
-        taxCodeError.setManaged(false);
         numberError.setVisible(false);
         numberError.setManaged(false);
         telephoneError.setVisible(false);
@@ -90,20 +79,12 @@ public class ModificaPazienteController {
         emailError.setManaged(false);
         capError.setVisible(false);
         capError.setManaged(false);
-        birthdayError.setVisible(false);
-        birthdayError.setManaged(false);
-        genderError.setVisible(false);
-        genderError.setManaged(false);
         weightError.setVisible(false);
         weightError.setManaged(false);
         heightError.setVisible(false);
         heightError.setManaged(false);
         userAddedText.setVisible(false);
         userAddedText.setManaged(false);
-        nomeError.setVisible(false);
-        nomeError.setManaged(false);
-        cognomeError.setVisible(false);
-        cognomeError.setManaged(false);
         passwordError.setVisible(false);
         passwordError.setManaged(false);
         nationError.setVisible(false);
@@ -112,13 +93,12 @@ public class ModificaPazienteController {
         cityError.setManaged(false);
         addressError.setVisible(false);
         addressError.setManaged(false);
+
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
         Session.getInfos();
-
-        gender.getItems().addAll("Maschio", "Femmina");
 
         this.nome.setText(userData.getNome());
         this.cognome.setText(userData.getCognome());
@@ -128,23 +108,27 @@ public class ModificaPazienteController {
         this.birthday.setValue(Date.valueOf(userData.getBirthday()).toLocalDate());
         this.height.setText(userData.getHeight().toString());
         this.weight.setText(userData.getWeight().toString());
-        this.gender.setValue(userData.getSex());
+        this.gender.setText(userData.getSex());
         this.citta.setText(userData.getCity());
         this.address.setText(userData.getAddress());
         this.cap.setText(userData.getCap().toString());
         this.number.setText(userData.getCivic());
-        String keyMedico = "";
+
         for(String s : diabetologo.keySet()){
-            if(s.contains(userData.getMedicoCurante())) {
-                keyMedico = s;
-                break;
-            }
+            if(diabetologo.get(s).equals(userData.getMedicoCurante()))
+                this.medicoCurante.setText(s);
         }
-        this.medicoCurante.setValue(keyMedico);
+
         //this.password.setText(userData.getPassword());
         this.nation.setText(userData.getCountryOfResidence());
 
         cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
+
+        telephone.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (!event.getCharacter().matches("\\d")) {
                 event.consume(); // blocca l'inserimento
             }
@@ -188,10 +172,10 @@ public class ModificaPazienteController {
                 this.citta.getText(),
                 Integer.parseInt(this.cap.getText()),
                 this.nation.getText(),
-                this.gender.getValue(),
+                this.gender.getText(),
                 this.telephone.getText(),
                 "PAZIENTE",
-                diabetologo.get(this.medicoCurante.getValue()),
+                diabetologo.get(this.medicoCurante.getText()),
                 Double.parseDouble(this.weight.getText()),
                 Double.parseDouble(this.height.getText())
         );
@@ -229,12 +213,6 @@ public class ModificaPazienteController {
         else
             ViewNavigator.relogPaziente(taxCode.getText(), Session.getInstance().getPassword());
 
-    }
-
-    private String arrotonda(String valore) {
-        return new BigDecimal(valore)
-                .setScale(2, RoundingMode.HALF_UP)
-                .toPlainString();
     }
 
     public boolean checkDati(){

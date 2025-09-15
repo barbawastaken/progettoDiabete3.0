@@ -2,6 +2,7 @@ package controller.Diabetologo;
 
 import controller.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import model.Diabetologo.ModificaTerapiaModel;
@@ -10,6 +11,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModificaTerapiaController {
 
@@ -24,6 +27,8 @@ public class ModificaTerapiaController {
     @FXML private TextField quantitaField;
     @FXML private TextField frequenzaField;
     @FXML private TextField indicazioniField;
+
+    private String farmacoOriginale;
 
     @FXML
     private void initialize() {
@@ -57,6 +62,7 @@ public class ModificaTerapiaController {
             this.terapiaField.setText(rs.getString("terapia"));
 
             this.farmacoField.setText(rs.getString("farmaco_prescritto"));
+            farmacoOriginale = rs.getString("farmaco_prescritto");
 
             this.quantitaField.setText(rs.getString("quantita"));
 
@@ -71,22 +77,55 @@ public class ModificaTerapiaController {
    @FXML
     private void onSendButtonPressed() {
 
+       if (terapiaField.getText().isEmpty() || farmacoField.getText().isEmpty() || quantitaField.getText().isEmpty() || frequenzaField.getText().isEmpty()) {
+           mostraErrore("Tutti i campi obbligatori devono essere compilati.");
+           return;
+       }
+
        String terapia = terapiaField.getText();
        String farmaco = farmacoField.getText();
        String quantita = quantitaField.getText();
-       int frequenza = Integer.parseInt(frequenzaField.getText());
        String indicazioni = indicazioniField.getText();
 
-        if(terapia.isEmpty() || farmaco.isEmpty()) return;
+       int frequenza;
+
+       try {
+           frequenza = Integer.parseInt(frequenzaField.getText());
+       } catch (NumberFormatException e) {
+           System.out.println("Errore nella lettura del numero di assunzioni giornaliere: " + e.getMessage());
+           mostraErrore("Il numero di assunzioni giornaliere non è valido");
+           frequenzaField.clear();
+           return;
+       }
+
+       Pattern pattern = Pattern.compile("[-+]?\\d+");
+       Matcher matcher = pattern.matcher(quantita);
+
+       if (matcher.find()) {
+           int quantitaInt = Integer.parseInt(matcher.group());
+
+           if(quantitaInt < 0){
+               mostraErrore("La quantità inserita non è valida!");
+               quantitaField.clear();
+               return;
+           }
+
+       }
 
        ModificaTerapiaModel model = new ModificaTerapiaModel();
-       model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
+       int result = model.updateData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni, farmacoOriginale);
 
-       schermataDiArrivo = Session.getInstance().getSchermataDiArrivo();
+       if(result == 0){
+           schermataDiArrivo = Session.getInstance().getSchermataDiArrivo();
 
-       if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")) {
-           ViewNavigator.navigateToVisualizzaStatistiche();
-       } else { ViewNavigator.navigateToDiabetologo(); }
+           if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")) {
+               ViewNavigator.navigateToVisualizzaStatistiche();
+           } else { ViewNavigator.navigateToDiabetologo(); }
+       }
+       if(result == -1) { mostraErrore("Non puoi prescrivere due volte lo stesso farmaco!"); farmacoField.clear(); }
+       if(result == -2) { mostraErrore("Errore nell'interazione col database!"); ViewNavigator.navigateToDiabetologo(); }
+
+
    }
 
     @FXML
@@ -97,5 +136,13 @@ public class ModificaTerapiaController {
         quantitaField.clear();
         frequenzaField.clear();
         indicazioniField.clear();
+    }
+
+    private void mostraErrore(String messaggio) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Errore");
+        alert.setHeaderText(null);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
 }

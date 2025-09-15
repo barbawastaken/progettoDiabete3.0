@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.input.KeyEvent;
 import model.Diabetologo.AggiungiTerapiaModel;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class AggiungiTerapiaController {
 
@@ -78,10 +81,24 @@ public class AggiungiTerapiaController {
             return;
         }
 
+        Pattern pattern = Pattern.compile("[-+]?\\d+");
+        Matcher matcher = pattern.matcher(quantita);
+
+        if (matcher.find()) {
+            int quantitaInt = Integer.parseInt(matcher.group());
+
+            if(quantitaInt < 0){
+                mostraErrore("La quantità inserita non è valida!");
+                quantitaField.clear();
+                return;
+            }
+
+        }
+
         AggiungiTerapiaModel model = new AggiungiTerapiaModel();
         int result = model.insertData(taxCode, terapia, farmaco, quantita, frequenza, indicazioni);
 
-        if(result == 0) { ViewNavigator.navigateToDiabetologo(); }
+        if(result == 0) { ViewNavigator.navigateToTabellaModificaTerapia(); }
         if(result == -1) { mostraErrore("Non puoi prescrivere due volte lo stesso farmaco!"); farmacoField.clear(); }
         if(result == -2) { mostraErrore("Errore nell'interazione col database!"); ViewNavigator.navigateToDiabetologo(); }
 

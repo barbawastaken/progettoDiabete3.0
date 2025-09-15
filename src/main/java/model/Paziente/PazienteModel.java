@@ -34,7 +34,7 @@ public class PazienteModel  {
         return map;
     }*/
 
-    public static void updateData(Utente utente) throws SQLException {
+    public static void updateData(Utente utente) {
 
         String query = "UPDATE utenti SET nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?;";
 
@@ -68,7 +68,7 @@ public class PazienteModel  {
 
         List<TerapiaModel> terapie = new ArrayList<>();
 
-        String query = "SELECT terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte WHERE taxCode = ?";
+        String query = "SELECT terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte WHERE taxCode = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -83,7 +83,8 @@ public class PazienteModel  {
                         rs.getString("farmaco_prescritto"),
                         rs.getString("quantita"),
                         rs.getString("numero_assunzioni_giornaliere"),
-                        rs.getString("indicazioni")
+                        rs.getString("indicazioni"),
+                        rs.getString("dataPrescrizione")
                 );
                 terapie.add(t);
 

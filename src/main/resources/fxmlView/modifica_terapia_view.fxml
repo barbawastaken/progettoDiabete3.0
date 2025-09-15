@@ -26,7 +26,7 @@
                 <Label text="Farmaco" />
                 <TextField fx:id="farmacoField" promptText="Inserisci il nome del farmaco" />
 
-                <Label text="Quantità Assunta" />
+                <Label text="Quantità da assumere" />
                 <TextField fx:id="quantitaField" promptText="Inserisci la quantità assunta" />
 
                 <Label text="Numero di Assunzioni Giornaliere" />

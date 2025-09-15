@@ -30,7 +30,7 @@ public class AggiungiTerapiaModel {
             return -2;
         }
 
-        String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO terapiePrescritte (taxCode, terapia, `farmaco_prescritto`, quantita, `numero_assunzioni_giornaliere`, `indicazioni`, 'dataPrescrizione' VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              var pstmt = conn.prepareStatement(sql)) {
@@ -41,6 +41,7 @@ public class AggiungiTerapiaModel {
             pstmt.setString(4, quantita);
             pstmt.setInt(5, numeroAssunzioniGiornaliere);
             pstmt.setString(6, indicazioni);
+            pstmt.setString(7, LocalDate.now().toString());
 
             pstmt.executeUpdate();
 

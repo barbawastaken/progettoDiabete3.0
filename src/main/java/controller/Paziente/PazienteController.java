@@ -25,6 +25,7 @@ public class PazienteController {
     @FXML private TableColumn<TerapiaModel, String> quantita;
     @FXML private TableColumn<TerapiaModel, String> numero_assunzioni_giornaliere;
     @FXML private TableColumn<TerapiaModel, String> indicazioni;
+    @FXML private TableColumn<TerapiaModel, String> dataPrescrizione;
 
     @FXML private TableView<Notifica> notificheTabella;
     @FXML private TableColumn<Notifica, String> notifica;
@@ -49,12 +50,14 @@ public class PazienteController {
         quantita.setCellValueFactory(new PropertyValueFactory<>("quantita"));
         numero_assunzioni_giornaliere.setCellValueFactory(new PropertyValueFactory<>("numeroAssunzioniGiornaliere"));
         indicazioni.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
+        dataPrescrizione.setCellValueFactory(new PropertyValueFactory<>("dataPrescrizione"));
 
-        terapia.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.25));
-        farmaco_prescritto.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.25));
+        terapia.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.20));
+        farmaco_prescritto.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.20));
         quantita.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.1));
-        numero_assunzioni_giornaliere.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.2));
+        numero_assunzioni_giornaliere.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.15));
         indicazioni.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.2));
+        dataPrescrizione.prefWidthProperty().bind(terapiaTabella.widthProperty().multiply(0.15));
 
         notifica.setCellValueFactory(new PropertyValueFactory<>("notifica"));
         notifica.prefWidthProperty().bind(notificheTabella.widthProperty().subtract(2));
@@ -68,7 +71,7 @@ public class PazienteController {
 
         ObservableList<Notifica> notifiche = FXCollections.observableArrayList();
         for(String farmacoAssunto : farmaciNotifiche){
-            Notifica notifica = new Notifica("Mancata assunzione di " + farmacoAssunto + " per più di 3 giorni");
+            Notifica notifica = new Notifica("Si ricorda di assumere  " + farmacoAssunto + " come da terapia prescritta");
             notifiche.add(notifica);
         }
 
@@ -91,7 +94,6 @@ public class PazienteController {
     @FXML
     private void onRilevazioneGlicemiaClicked() {
         ViewNavigator.navigateToRilevazioneGlicemia();
-
     }
 
     @FXML

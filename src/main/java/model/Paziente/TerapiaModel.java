@@ -8,13 +8,15 @@ public class TerapiaModel {
     private final SimpleStringProperty quantita;
     private final SimpleStringProperty numeroAssunzioniGiornaliere;
     private final SimpleStringProperty indicazioni;
+    private final SimpleStringProperty dataPrescrizione;
 
-    public TerapiaModel(String terapia, String farmacoPrescritto, String quantita, String numeroAssunzioniGiornaliere, String indicazioni) {
+    public TerapiaModel(String terapia, String farmacoPrescritto, String quantita, String numeroAssunzioniGiornaliere, String indicazioni, String dataPrescrizione) {
         this.terapia = new SimpleStringProperty(terapia);
         this.farmacoPrescritto = new SimpleStringProperty(farmacoPrescritto);
         this.quantita = new SimpleStringProperty(quantita);
         this.numeroAssunzioniGiornaliere = new SimpleStringProperty(numeroAssunzioniGiornaliere);
         this.indicazioni = new SimpleStringProperty(indicazioni);
+        this.dataPrescrizione = new SimpleStringProperty(dataPrescrizione);
     }
 
     public String getTerapia() {
@@ -34,4 +36,6 @@ public class TerapiaModel {
     }
 
     public String getIndicazioni() { return indicazioni.get(); }
+
+    public String getDataPrescrizione() { return dataPrescrizione.get(); }
 }

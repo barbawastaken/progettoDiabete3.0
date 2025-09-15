@@ -166,24 +166,23 @@ public class Session {
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
         serie.setName("Valori glicemici");
 
-        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ? ORDER BY data ASC,\n" +
-                "    CASE momentoGiornata\n" +
-                "        WHEN 'Colazione' THEN 1\n" +
-                "        WHEN 'Pranzo'    THEN 2\n" +
-                "        WHEN 'Cena'      THEN 3\n" +
-                "        ELSE 4\n" +
-                "    END,\n" +
-                "    CASE prePost\n" +
-                "        WHEN 'PRE'  THEN 1\n" +
-                "        WHEN 'POST' THEN 2\n" +
-                "        ELSE 3\n" +
-                "    END;";
+        String query = "SELECT data, quantita, momentoGiornata, prePost FROM rilevazioniGlicemiche WHERE taxCode = ?";
 
         if(periodo.equals("Ultima settimana")) {
             query  += " AND date(data) >= date('now', '-7 days')";
         } else if(periodo.equals("Ultimo mese")) {
             query += " AND date(data) >= date('now', '-30 days')";
         }
+
+        query += "ORDER BY data ASC, CASE momentoGiornata  " +
+                "WHEN 'Colazione' THEN 1 " +
+                "WHEN 'Pranzo'    THEN 2 " +
+                "WHEN 'Cena'      THEN 3 " +
+                "ELSE 4 END, " +
+                "CASE prePost " +
+                "WHEN 'PRE'  THEN 1 " +
+                "WHEN 'POST' THEN 2 " +
+                "ELSE 3 END;";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {

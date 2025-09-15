@@ -24,10 +24,6 @@ public class AggiungiUtenteModel {
                             rs.getString("taxCode"));
                 }
 
-                for (String key : diabetologi.keySet()) {
-                    System.out.println("Keysets: " + key);
-                    System.out.println("Diabetologi: " + diabetologi.get(key));
-                }
             }
         catch (SQLException e) {
             e.printStackTrace();
