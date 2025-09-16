@@ -12,10 +12,6 @@ public class AmministratoreController {
     private String taxCode;
 
     public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
-    @FXML
-    private void isInserisciUtenteClicked()  {
-        ViewNavigator.navigateToAddUser();
-    }
 
     @FXML
     private void initialize(){
@@ -23,10 +19,19 @@ public class AmministratoreController {
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
     }
+    @FXML
+    private void isInserisciUtenteClicked()  {
+        ViewNavigator.navigateToAddUser();
+    }
 
     @FXML
     private void isVisualizzaUtentiClicked() {
         ViewNavigator.navigateToVisualizzaUtenti();
+    }
+
+    @FXML
+    private void isVisualizzaOperazioniClicked(){
+        ViewNavigator.navigateToOperazioniDiabetologi();
     }
 
 }

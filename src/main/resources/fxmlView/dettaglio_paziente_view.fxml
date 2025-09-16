@@ -42,9 +42,12 @@
                         <Label text="Informazioni aggiuntive sul paziente"
                                style="-fx-font-weight: bold; -fx-font-size: 14px;" />
 
-                        <!-- TextArea proporzionata -->
-                        <TextArea fx:id="infoAggiuntivePaziente" editable="false" prefRowCount="6"
-                                  VBox.vgrow="NEVER" HBox.hgrow="NEVER" />
+                        <!-- Container proporzionale -->
+                        <VBox spacing="10" VBox.vgrow="ALWAYS">
+                            <!-- TextArea (1/3) -->
+                            <TextArea fx:id="infoAggiuntivePaziente" editable="false" prefRowCount="8"
+                                      VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
+                        </VBox>
 
                         <HBox alignment="CENTER" spacing="10">
                             <Label text="Periodo:" />
@@ -59,17 +62,23 @@
                             </ComboBox>
                         </HBox>
 
-                        <!-- Grafico che occupa spazio ma non tutto -->
-                        <LineChart  fx:id="lineChartGlicemia" title="Andamento glicemico paziente" style="-fx-font-weight: bold;"
-                                   VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" minHeight="250" maxHeight="500" animated="false" createSymbols="true" legendVisible="false">
-                            <xAxis>
-                                <CategoryAxis label="Data - Momento - Pre/Post" />
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis label="Valore Glicemico" />
-                            </yAxis>
-                        </LineChart>
+                        <!-- Container proporzionale -->
+                        <VBox spacing="10" VBox.vgrow="ALWAYS">
+                            <!-- Grafico (2/3) -->
+                            <LineChart fx:id="lineChartGlicemia" title="Andamento glicemico paziente" style="-fx-font-weight: bold;"
+                                       VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"
+                                       animated="false" createSymbols="true" legendVisible="false">
+                                <xAxis>
+                                    <CategoryAxis label="Data - Momento - Pre/Post" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Valore Glicemico" />
+                                </yAxis>
+                            </LineChart>
+                        </VBox>
+
                     </VBox>
+
                 </HBox>
             </VBox>
         </ScrollPane>

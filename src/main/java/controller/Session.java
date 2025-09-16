@@ -11,8 +11,7 @@ import model.Diabetologo.Terapia;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class Session {
@@ -144,7 +143,70 @@ public class Session {
 
             ResultSet rs = stmt.executeQuery();
 
-            return rs.getString("noteDaDiabetologo");
+            String result = "";
+            if(rs.next()) {
+                result += rs.getString("noteDaDiabetologo") + "\n";
+            }
+
+            HashMap<String, LocalDate> mapInfoPaziente = new HashMap<>();
+
+            query = "SELECT * FROM assunzioneFarmaci WHERE taxCode='"+ taxCode +"'";
+
+            Statement stmt2 = conn.createStatement();
+            ResultSet rs2 = stmt2.executeQuery(query);
+
+            while(rs2.next()) {
+
+                mapInfoPaziente.put("Assunzione di " + rs2.getString("farmacoAssunto") +
+                        ", quantità: " + rs2.getString("quantitaAssunta") +
+                        ", il " + rs2.getString("dataAssunzione") + " alle " + rs2.getString("orarioAssunzione") ,
+                        LocalDate.parse(rs2.getString("dataAssunzione")));
+
+            }
+
+            query = "SELECT * FROM aggiuntaSintomi WHERE taxCode='"+ taxCode +"'";
+
+            Statement stmt3 = conn.createStatement();
+            ResultSet rs3 = stmt3.executeQuery(query);
+
+            while(rs3.next()) {
+
+                mapInfoPaziente.put("Riscontrato/a " + rs3.getString("sintomoPrincipale") +
+                        ", specificato: " + rs3.getString("sintomiSpecificati") +
+                        ", il " + rs3.getString("dataInserimento"),
+                        LocalDate.parse(rs3.getString("dataInserimento")));
+
+            }
+
+            query = "SELECT * FROM patologieConcomitanti WHERE taxCode='"+ taxCode +"'";
+
+            Statement stmt4 = conn.createStatement();
+            ResultSet rs4 = stmt4.executeQuery(query);
+
+            while(rs4.next()) {
+
+                mapInfoPaziente.put("Patologia/Terapia concomitante: " + rs4.getString("patologiaConcomitante") +
+                        ", dal : " + rs4.getString("dataInizio") +
+                        ", al: " + rs4.getString("dataFine"),
+                        LocalDate.parse(rs4.getString("dataInizio")));
+
+            }
+
+            //Ordina gli elementi della mappa per data decrescente
+            LinkedHashMap<String, LocalDate> ordinata = mapInfoPaziente.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.<String, LocalDate>comparingByValue().reversed())
+                    .collect(
+                            LinkedHashMap::new,
+                            (map, entry) -> map.put(entry.getKey(), entry.getValue()),
+                            LinkedHashMap::putAll
+                    );
+
+            for(Map.Entry<String, LocalDate> entry : ordinata.entrySet()) {
+                result += "\n" + entry.getKey();
+            }
+
+            return result;
 
         } catch(SQLException e) {
             System.out.println("Errore nella raccolta delle informazioni aggiuntive sul paziente" + e.getMessage());

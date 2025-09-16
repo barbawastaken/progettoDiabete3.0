@@ -157,6 +157,8 @@ public class ViewNavigator {
 
     public static void navigateToVisualizzaUtenti(){loadView("visualizza_utenti_view.fxml");}
 
+    public static void navigateToOperazioniDiabetologi() { loadView("visualizza_operazioni_view.fxml"); }
+
     public static void navigateToProfileDiabetologo() {
         loadView("profiloDiabetologo.fxml");
     }
