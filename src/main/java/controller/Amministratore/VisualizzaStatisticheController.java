@@ -35,6 +35,9 @@ public class VisualizzaStatisticheController {
     @FXML private HBox navbarContainer;
     @FXML private ComboBox<String> pazienteCombo;
     @FXML private Button aggiornaInfoButton;
+    private final List<LineChart<?, ?>> observersLineCharts = new ArrayList<>();
+    private final List<TableView<?>> observersTables = new ArrayList<>();
+    private final HashMap<LineChart<String, Number>, Map<String, List<Rilevazione>>> lineChartsToDataMap = new HashMap<>();
 
     /*
     *
@@ -69,6 +72,8 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<Terapia, String> indicazioniTerapia;
     @FXML private TableColumn<Terapia, String> dataPrescrizione;
 
+    private String queryUpdateTabellaTerapie;
+
     /*
     *
     *   SEZIONE TABELLA ASSUNZIONI FARMACI !!!
@@ -82,6 +87,8 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<AssunzioneFarmaco, LocalDate> dataAssunzione;
     @FXML private TableColumn<AssunzioneFarmaco, LocalTime> orarioAssunzione;
 
+    private String queryUpdateTabellaAssunzioneFarmaci;
+
     /*
     *
     *   SEZIONE TABELLA SINTOMI RISCONTRATI !!!
@@ -94,6 +101,8 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<Sintomo, String> sintomiSpecificati;
     @FXML private TableColumn<Sintomo, LocalDate> dataSintomo;
 
+    private String queryUpdateTabellaSintomi;
+
     /*
      *
      *   SEZIONE TABELLA PATOLOGIE CONCOMITANTI !!!
@@ -105,6 +114,8 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<Patologia, String> patologiaConcomitante;
     @FXML private TableColumn<Patologia, LocalDate> dataInizioPatologia;
     @FXML private TableColumn<Patologia, LocalDate> dataFinePatologia;
+
+    private String queryUpdateTabellaPatologie;
 
     @FXML
     public void initialize() {
@@ -133,6 +144,8 @@ public class VisualizzaStatisticheController {
         caricaTuttiIDatiDalDatabase(tuttiIDati, query);
         popolaComboBox(tuttiIDati);
         mostraTuttiNelGrafico(tuttiIDati, lineChart);
+        addObserver(lineChart);
+        lineChartsToDataMap.put(lineChart, tuttiIDati);
 
         /* SETUP GRAFICO ULTIMO MESEE */
 
@@ -154,6 +167,8 @@ public class VisualizzaStatisticheController {
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastMonth, query);
         //popolaComboBox(tuttiIDatiDiLastMonth);
         mostraTuttiNelGrafico(tuttiIDatiDiLastMonth, lineChartLastMonth);
+        addObserver(lineChartLastMonth);
+        lineChartsToDataMap.put(lineChartLastMonth, tuttiIDatiDiLastMonth);
 
         /* SETUP GRAFICO ULTIMA SETTIMANA */
 
@@ -175,6 +190,8 @@ public class VisualizzaStatisticheController {
         caricaTuttiIDatiDalDatabase(tuttiIDatiDiLastWeek, query);
         //popolaComboBox(tuttiIDatiDiLastWeek);
         mostraTuttiNelGrafico(tuttiIDatiDiLastWeek, lineChartLastWeek);
+        addObserver(lineChartLastWeek);
+        lineChartsToDataMap.put(lineChartLastWeek, tuttiIDatiDiLastWeek);
 
         /* SETUP TABELLA TERAPIE */
 
@@ -186,9 +203,9 @@ public class VisualizzaStatisticheController {
         indicazioniTerapia.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
         dataPrescrizione.setCellValueFactory(new PropertyValueFactory<>("dataPrescrizione"));
 
-        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
+        queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
 
-        caricaTerapie(query, "Tutti");
+        caricaTerapie(queryUpdateTabellaTerapie, "Tutti");
 
         /* SETUP TABELLA ASSUNZIONE FARMACI */
 
@@ -198,9 +215,9 @@ public class VisualizzaStatisticheController {
         dataAssunzione.setCellValueFactory(new PropertyValueFactory<>("dataAssunzione"));
         orarioAssunzione.setCellValueFactory(new PropertyValueFactory<>("orarioAssunzione"));
 
-        query = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
+        queryUpdateTabellaAssunzioneFarmaci = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
 
-        caricaAssunzioneFarmaci(query, "Tutti");
+        caricaAssunzioneFarmaci(queryUpdateTabellaAssunzioneFarmaci, "Tutti");
 
         /*  SETUP TABELLA SINTOMI RISCONTRATI */
 
@@ -209,9 +226,9 @@ public class VisualizzaStatisticheController {
         sintomiSpecificati.setCellValueFactory(new PropertyValueFactory<>("sintomiSpecificati"));
         dataSintomo.setCellValueFactory(new PropertyValueFactory<>("dataSintomo"));
 
-        query = "SELECT taxCode, sintomoPrincipale, sintomiSpecificati, dataInserimento FROM aggiuntaSintomi";
+        queryUpdateTabellaSintomi = "SELECT taxCode, sintomoPrincipale, sintomiSpecificati, dataInserimento FROM aggiuntaSintomi";
 
-        caricaSintomi(query, "Tutti");
+        caricaSintomi(queryUpdateTabellaSintomi, "Tutti");
 
         /* SETUP TABELLA PATOLOGIE CONCOMITANTI */
 
@@ -220,18 +237,25 @@ public class VisualizzaStatisticheController {
         dataInizioPatologia.setCellValueFactory(new PropertyValueFactory<>("dataInizioPatologia"));
         dataFinePatologia.setCellValueFactory(new PropertyValueFactory<>("dataFinePatologia"));
 
-        query = "SELECT taxCode, patologiaConcomitante, dataInizio, dataFine FROM patologieConcomitanti";
+        queryUpdateTabellaPatologie = "SELECT taxCode, patologiaConcomitante, dataInizio, dataFine FROM patologieConcomitanti";
 
-        caricaPatologie(query, "Tutti");
+        caricaPatologie(queryUpdateTabellaPatologie, "Tutti");
+
+        addObserver(tabellaTerapie);
+        addObserver(tabellaAssunzioni);
+        addObserver(tabellaSintomi);
+        addObserver(tabellaPatologie);
 
         // LISTENER SU COMBOBOX: quando cambia la selezione, aggiorna il grafico
         pazienteCombo.setOnAction(event -> {
             String selected = pazienteCombo.getValue();
-            aggiornaGrafico(selected, tuttiIDati, lineChart);
+            notifyObservers(selected);
+
+            /* aggiornaGrafico(selected, tuttiIDati, lineChart);
             aggiornaGrafico(selected, tuttiIDatiDiLastMonth, lineChartLastMonth);
             aggiornaGrafico(selected, tuttiIDatiDiLastWeek, lineChartLastWeek);
 
-            final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
+            /*final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
             caricaTerapie(queryUpdateTabellaTerapie, selected);
 
             final String queryUpdateTabellaAssunzioneFarmaci = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
@@ -241,7 +265,7 @@ public class VisualizzaStatisticheController {
             caricaSintomi(queryUpdateTabellaSintomi, selected);
 
             final String queryUpdateTabellaPatologie = "SELECT taxCode, patologiaConcomitante, dataInizio, dataFine FROM patologieConcomitanti";
-            caricaPatologie(queryUpdateTabellaPatologie, selected);
+            caricaPatologie(queryUpdateTabellaPatologie, selected);*/
         });
 
         pazienteCombo.setValue("Tutti");
@@ -279,6 +303,37 @@ public class VisualizzaStatisticheController {
             ViewNavigator.navigateToInfoPaziente();
 
         });
+    }
+
+    private void addObserver(Object observer) {
+
+        if(observer instanceof LineChart<?, ?>)
+            observersLineCharts.add((LineChart<?, ?>) observer);
+
+        if(observer instanceof TableView<?>)
+            observersTables.add((TableView<?>) observer);
+
+    }
+
+    private void notifyObservers(String selected) {
+
+        for(LineChart<?, ?> lineChart : observersLineCharts){
+            for(LineChart<String, Number> lineChartMap : lineChartsToDataMap.keySet()){
+
+                if(lineChart.equals(lineChartMap)){
+                    aggiornaGrafico(selected, lineChartsToDataMap.get(lineChartMap), (LineChart<String, Number>) lineChart);
+                }
+
+            }
+        }
+
+        for(TableView<?> table : observersTables){
+            if(table.equals(tabellaTerapie)) { caricaTerapie(queryUpdateTabellaTerapie, selected); }
+            if(table.equals(tabellaAssunzioni)) { caricaAssunzioneFarmaci(queryUpdateTabellaAssunzioneFarmaci, selected); }
+            if(table.equals(tabellaSintomi)) { caricaSintomi(queryUpdateTabellaSintomi, selected); }
+            if (table.equals(tabellaPatologie)) { caricaPatologie(queryUpdateTabellaPatologie, selected); }
+        }
+
     }
 
     /*
