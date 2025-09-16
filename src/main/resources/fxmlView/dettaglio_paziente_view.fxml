@@ -33,6 +33,7 @@
                         <Label fx:id="cellulareLabel" text="Cellulare: " style="-fx-font-weight: bold;" />
                         <Label fx:id="pesoLabel" text="Peso: " style="-fx-font-weight: bold;" />
                         <Label fx:id="altezzaLabel" text="Altezza: " style="-fx-font-weight: bold;" />
+                        <Label fx:id="diabetologoLabel" style="-fx-font-weight: bold;" />
                     </VBox>
 
                     <!-- Colonna destra: info + grafico -->

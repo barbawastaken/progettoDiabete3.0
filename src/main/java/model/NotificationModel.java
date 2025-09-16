@@ -27,7 +27,7 @@ public class NotificationModel {
 
         for(Paziente p : pazientiDiabetologo){ //per ogni paziente nella lista guardo se negli ultimi 3 giorni c'è stata una assunzione farmaco
 
-            String query = "SELECT farmaco_prescritto FROM terapiePrescritte WHERE taxCode=?";
+            String query = "SELECT farmaco_prescritto, dataPrescrizione FROM terapiePrescritte WHERE taxCode=?";
 
             try(Connection conn = DriverManager.getConnection(DB_url);
                 PreparedStatement ps = conn.prepareStatement(query)){
@@ -37,7 +37,15 @@ public class NotificationModel {
 
                 List<String> farmaciPrescritti = new ArrayList<>();
 
-                while(rs.next()){ farmaciPrescritti.add(rs.getString("farmaco_prescritto")); }
+                while(rs.next()){
+
+                    LocalDate dataPrescrizioneLocalDate = LocalDate.parse(rs.getString("dataPrescrizione"));
+
+                    if(dataPrescrizioneLocalDate.isBefore(LocalDate.now().minusDays(3))){
+                        farmaciPrescritti.add(rs.getString("farmaco_prescritto"));
+                    }
+
+                }
 
 
                 String query2 = "SELECT farmacoAssunto, dataAssunzione FROM assunzioneFarmaci WHERE taxCode = ? ORDER BY dataAssunzione DESC";

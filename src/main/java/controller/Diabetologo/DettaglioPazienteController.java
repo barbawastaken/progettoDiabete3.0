@@ -3,15 +3,18 @@ package controller.Diabetologo;
 import controller.NavBar;
 import controller.NavBarTags;
 import controller.Session;
-import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.Paziente;
 import javafx.scene.control.Label;
+
+import java.sql.SQLException;
+import java.util.HashMap;
 
 
 public class DettaglioPazienteController {
@@ -32,6 +35,7 @@ public class DettaglioPazienteController {
     @FXML private Label cellulareLabel;
     @FXML private Label pesoLabel;
     @FXML private Label altezzaLabel;
+    @FXML private Label diabetologoLabel;
 
     @FXML private TextArea infoAggiuntivePaziente;
     @FXML private LineChart<String, Number> lineChartGlicemia;
@@ -52,7 +56,6 @@ public class DettaglioPazienteController {
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
         Paziente paziente = Session.getInstance().getPazienteInEsame();
-        String taxCodeDiabetologo = Session.getInstance().getTaxCode();
 
         nomeLabel.setText("Nome: " + paziente.getNome());
         cognomeLabel.setText("Cognome: " + paziente.getCognome());
@@ -68,6 +71,25 @@ public class DettaglioPazienteController {
         cellulareLabel.setText("Cellulare: " + paziente.getTelephone());
         pesoLabel.setText("Peso: " + paziente.getWeight());
         altezzaLabel.setText("Altezza: " + paziente.getHeight());
+        diabetologoLabel.setVisible(false);
+
+        if(Session.getInfosOf(Session.getInstance().getTaxCode()).getRole().equals("PRIMARIO")){
+            diabetologoLabel.setVisible(true);
+
+            try {
+
+                HashMap<String, String> diabetologi = AggiungiUtenteModel.getDiabetologi();
+
+                for(String key : diabetologi.keySet()){
+                    if(diabetologi.get(key).equals(paziente.getMedicoCurante())){
+                        diabetologoLabel.setText("Diabetologo: " + key);
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Errore caricamento diabetologi: " + e.getMessage());
+            }
+        }
 
         infoAggiuntivePaziente.setText(Session.getInfoAggiuntiveOf(paziente.getTaxCode()));
 
@@ -88,25 +110,5 @@ public class DettaglioPazienteController {
         });
 
     }
-
-    @FXML private void handleAggiungiTerapia() {
-
-        ViewNavigator.navigateToAggiungiTerapia();
-
-    }
-
-    @FXML private void handleModificaTerapia() {
-
-        ViewNavigator.navigateToTabellaModificaTerapia();
-
-    }
-
-    @FXML private void handleAggiornaInfo() {
-
-        Session.setSchermataDiArrivo("INFO_PAZIENTE");
-        ViewNavigator.navigateToInfoPaziente();
-
-    }
-
 }
 

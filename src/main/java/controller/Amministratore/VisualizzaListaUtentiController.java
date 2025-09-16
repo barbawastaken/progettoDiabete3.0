@@ -6,23 +6,18 @@ import controller.Session;
 import controller.ViewNavigator;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import model.Amministratore.ModificaUtenteModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
 import view.Amministratore.VisualizzaListaUtentiView;
-import java.io.IOException;
 import java.util.List;
 
 public class VisualizzaListaUtentiController {

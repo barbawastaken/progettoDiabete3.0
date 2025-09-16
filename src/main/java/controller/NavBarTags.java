@@ -13,6 +13,7 @@ public enum NavBarTags {
     DIABETOLOGO_operazioneRitornoTabellaTerapie,
     DIABETOLOGO_ritornoVisualizzaStatistiche,
     DIABETOLOGO_fromNotifiche,
-    DIABETOLOGO_infoFromStatistiche
+    DIABETOLOGO_infoFromStatistiche,
+    DIABETOLOGO_fromVisualizzaTerapie
 
 }

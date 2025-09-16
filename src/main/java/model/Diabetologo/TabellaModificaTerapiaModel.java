@@ -26,7 +26,8 @@ public class TabellaModificaTerapiaModel {
                             rs.getString("farmaco_prescritto"),
                             rs.getString("quantita"),
                             rs.getString("numero_assunzioni_giornaliere"),
-                            rs.getString("indicazioni")
+                            rs.getString("indicazioni"),
+                            rs.getString("dataPrescrizione")
                     );
                     terapie.add(t);
                 }

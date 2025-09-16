@@ -60,6 +60,8 @@ public class NavBar extends HBox {
             navbarPerDiabetologoNotifiche();
         } else if(navbarRequested == NavBarTags.DIABETOLOGO_infoFromStatistiche) {
             navbarPerInfoPazienteFromNotifiche();
+        } else if(navbarRequested == NavBarTags.DIABETOLOGO_fromVisualizzaTerapie) {
+            navbarPerVisualizzaTerapie();
         }
     }
 
@@ -90,7 +92,7 @@ public class NavBar extends HBox {
     NavBar che ci serve nella homepage del paziente
      */
     private void navbarPerPazienti(){
-        Button emailButton = createNavButton("EMAIL", e -> ViewNavigator.navigateToEmail());
+        Button emailButton = createNavButton("CONTATTI", e -> ViewNavigator.navigateToEmail());
         Button profileButton = createNavButton("PROFILO", e-> ViewNavigator.navigateToProfilePaziente());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
@@ -120,21 +122,19 @@ public class NavBar extends HBox {
         this.getChildren().addAll(homepageButton, logoutButton);
     }
     private void navbarPerVisualizzaPaziente(){
-        Button aggiungiTerapiaButton = createNavButton("AGGIUNGI TERAPIA", e->ViewNavigator.navigateToAggiungiTerapia());
-        Button modificaTerapiaButton = createNavButton("MODIFICA TERAPIA", e->ViewNavigator.navigateToTabellaModificaTerapia());
+        Button modificaTerapiaButton = createNavButton("VISUALIZZA TERAPIE", e->ViewNavigator.navigateToTabellaModificaTerapia());
         Button modificaInfoButton = createNavButton("MODIFICA INFO", e->ViewNavigator.navigateToInfoPaziente());
         Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToVisualizzaPazienti());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
-        this.getChildren().addAll(aggiungiTerapiaButton, modificaTerapiaButton, modificaInfoButton, indietroButton, logoutButton);
+        this.getChildren().addAll(modificaTerapiaButton, modificaInfoButton, indietroButton, logoutButton);
     }
 
     private void navbarPerVisualizzaPazienteFromNotifiche(){
-        Button aggiungiTerapiaButton = createNavButton("AGGIUNGI TERAPIA", e->ViewNavigator.navigateToAggiungiTerapia());
-        Button modificaTerapiaButton = createNavButton("MODIFICA TERAPIA", e->ViewNavigator.navigateToTabellaModificaTerapia());
+        Button modificaTerapiaButton = createNavButton("VISUALIZZA TERAPIE", e->ViewNavigator.navigateToTabellaModificaTerapia());
         Button modificaInfoButton = createNavButton("MODIFICA INFO", e->ViewNavigator.navigateToInfoPaziente());
         Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToDiabetologo());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
-        this.getChildren().addAll(aggiungiTerapiaButton, modificaTerapiaButton, modificaInfoButton, indietroButton, logoutButton);
+        this.getChildren().addAll(modificaTerapiaButton, modificaInfoButton, indietroButton, logoutButton);
     }
 
     private void navbarPerOperazioniDiabetologo(){
@@ -145,8 +145,17 @@ public class NavBar extends HBox {
         this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
     }
 
-    private void navbarPerRitornoTabellaModificaTerapia(){
+    private void navbarPerVisualizzaTerapie(){
+        Button aggiungiTerapiaButton = createNavButton("AGGIUNGI TERAPIA", e->ViewNavigator.navigateToAggiungiTerapia());
+        Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToPatientDetails());
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToDiabetologo());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
+        this.getChildren().addAll(aggiungiTerapiaButton, indietroButton, homepageButton, logoutButton);
+    }
+
+    private void navbarPerRitornoTabellaModificaTerapia(){
+        //Button aggiungiTerapiaButton = createNavButton("AGGIUNGI TERAPIA", e->ViewNavigator.navigateToAggiungiTerapia());
         Button indietroButton = createNavButton("INDIETRO" , e->ViewNavigator.navigateToTabellaModificaTerapia());
         Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToDiabetologo());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());

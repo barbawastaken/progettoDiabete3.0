@@ -124,7 +124,8 @@ public class Session {
                     rs.getString("telephoneNumber"),
                     rs.getString("userType"),
                     rs.getDouble("Peso"),
-                    rs.getDouble("Altezza")
+                    rs.getDouble("Altezza"),
+                    rs.getString("diabetologo")
 
             );
             return paziente;

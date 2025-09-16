@@ -43,7 +43,8 @@ public class VisualizzaPazientiModel {
                             rs.getString("telephoneNumber"),
                             rs.getString("userType"),
                             rs.getDouble("Peso"),
-                            rs.getDouble("Altezza")
+                            rs.getDouble("Altezza"),
+                            rs.getString("diabetologo")
                     );
                     pazienti.add(p);
                 }

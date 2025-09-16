@@ -72,6 +72,7 @@
                                 <TableColumn fx:id="quantitaTerapia" text="Quantità" prefWidth="60"/>
                                 <TableColumn fx:id="assunzioniGiornaliereTerapia" text="Assunzioni giornaliere" prefWidth="140"/>
                                 <TableColumn fx:id="indicazioniTerapia" text="Indicazioni" prefWidth="170"/>
+                                <TableColumn fx:id="dataPrescrizione" text="Data di prescrizione" />
                             </columns>
                         </TableView>
                     </HBox>

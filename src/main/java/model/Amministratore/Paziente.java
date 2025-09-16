@@ -15,12 +15,13 @@ public class Paziente {
     private final String email;
     private final String telephone;
     private final String role;
+    private final String medicoCurante;
     private final double weight;
     private final double height;
 
     public Paziente(String taxCode, String nome, String cognome, String gender, String birthday,
                     String password, String address, String number, String cap, String countryOfResidence, String city,
-                    String email, String telephone, String role, double weight, double height) {
+                    String email, String telephone, String role, double weight, double height, String medicoCurante) {
         this.taxCode = taxCode;
         this.nome = nome;
         this.cognome = cognome;
@@ -37,6 +38,7 @@ public class Paziente {
         this.role = role;
         this.weight = weight;
         this.height = height;
+        this.medicoCurante = medicoCurante;
     }
 
     public String getTaxCode() { return taxCode; }
@@ -55,4 +57,5 @@ public class Paziente {
     public String getRole() { return role; }
     public double getWeight() { return weight; }
     public double getHeight(){ return height;}
+    public String getMedicoCurante() { return medicoCurante; }
 }

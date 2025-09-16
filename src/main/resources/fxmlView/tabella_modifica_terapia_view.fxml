@@ -10,11 +10,12 @@
     <center>
         <TableView fx:id="tabellaTerapie" layoutX="10" layoutY="10" prefWidth="780" prefHeight="400">
             <columns>
-                <TableColumn fx:id="colTerapia" text="Terapia" prefWidth="120"/>
-                <TableColumn fx:id="colFarmaco" text="Farmaco" prefWidth="120"/>
-                <TableColumn fx:id="colQuantita" text="Quantità" prefWidth="80"/>
-                <TableColumn fx:id="colAssunzioni" text="Assunzioni/giorno" prefWidth="120"/>
-                <TableColumn fx:id="colIndicazioni" text="Indicazioni" prefWidth="300"/>
+                <TableColumn fx:id="colTerapia" text="Terapia" />
+                <TableColumn fx:id="colFarmaco" text="Farmaco" />
+                <TableColumn fx:id="colQuantita" text="Quantità" />
+                <TableColumn fx:id="colAssunzioni" text="Assunzioni/giorno" />
+                <TableColumn fx:id="colIndicazioni" text="Indicazioni" />
+                <TableColumn fx:id="colDataPrescrizione" text="Data prescrizione" />
             </columns>
         </TableView>
     </center>

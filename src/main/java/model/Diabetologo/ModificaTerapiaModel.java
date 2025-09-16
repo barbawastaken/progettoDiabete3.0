@@ -31,7 +31,7 @@ public class ModificaTerapiaModel {
             return -2;
         }
 
-        String query2 = "UPDATE terapiePrescritte SET terapia = ?, farmaco_prescritto = ?, quantita = ?, numero_assunzioni_giornaliere = ?, indicazioni = ? dataPrescrizione = ? WHERE taxCode = ? AND terapia = ?";
+        String query2 = "UPDATE terapiePrescritte SET terapia = ?, farmaco_prescritto = ?, quantita = ?, numero_assunzioni_giornaliere = ?, indicazioni = ?, dataPrescrizione = ? WHERE taxCode = ? AND terapia = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query2)) {

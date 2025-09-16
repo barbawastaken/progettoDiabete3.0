@@ -67,6 +67,7 @@ public class VisualizzaStatisticheController {
     @FXML private TableColumn<Terapia, String> quantitaTerapia;
     @FXML private TableColumn<Terapia, String> assunzioniGiornaliereTerapia;
     @FXML private TableColumn<Terapia, String> indicazioniTerapia;
+    @FXML private TableColumn<Terapia, String> dataPrescrizione;
 
     /*
     *
@@ -183,8 +184,9 @@ public class VisualizzaStatisticheController {
         quantitaTerapia.setCellValueFactory(new PropertyValueFactory<>("quantita"));
         assunzioniGiornaliereTerapia.setCellValueFactory(new PropertyValueFactory<>("assunzioni"));
         indicazioniTerapia.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
+        dataPrescrizione.setCellValueFactory(new PropertyValueFactory<>("dataPrescrizione"));
 
-        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
+        query = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
 
         caricaTerapie(query, "Tutti");
 
@@ -229,7 +231,7 @@ public class VisualizzaStatisticheController {
             aggiornaGrafico(selected, tuttiIDatiDiLastMonth, lineChartLastMonth);
             aggiornaGrafico(selected, tuttiIDatiDiLastWeek, lineChartLastWeek);
 
-            final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni FROM terapiePrescritte";
+            final String queryUpdateTabellaTerapie = "SELECT taxCode, terapia, farmaco_prescritto, quantita, numero_assunzioni_giornaliere, indicazioni, dataPrescrizione FROM terapiePrescritte";
             caricaTerapie(queryUpdateTabellaTerapie, selected);
 
             final String queryUpdateTabellaAssunzioneFarmaci = "SELECT taxCode, farmacoAssunto, quantitaAssunta, dataAssunzione, orarioAssunzione FROM assunzioneFarmaci";
@@ -489,7 +491,8 @@ public class VisualizzaStatisticheController {
                             rs.getString("farmaco_prescritto"),
                             rs.getString("quantita"),
                             rs.getString("numero_assunzioni_giornaliere"),
-                            rs.getString("indicazioni")
+                            rs.getString("indicazioni"),
+                            rs.getString("dataPrescrizione")
                     );
                     terapie.add(terapia);
                 }

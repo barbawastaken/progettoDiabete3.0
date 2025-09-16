@@ -1,5 +1,6 @@
 package model.Paziente;
 
+import controller.Session;
 import javafx.scene.control.Alert;
 
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class EmailPazienteModel {
 
@@ -85,4 +87,46 @@ public class EmailPazienteModel {
 
     }
 
+    public ArrayList<String> infoDiabetologo() {
+
+        String sql = "SELECT diabetologo FROM utenti WHERE taxCode = ?";
+
+        try(Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, Session.getInstance().getTaxCode());
+            ResultSet rs = pstmt.executeQuery();
+
+            String taxCodeDiabetologo = rs.getString("diabetologo");
+
+            sql = "SELECT nome, cognome, telephoneNumber, email, address, number, city FROM utenti WHERE taxCode = ?";
+
+            try {
+                PreparedStatement pstmt2 = conn.prepareStatement(sql);
+                pstmt2.setString(1, taxCodeDiabetologo);
+
+                ResultSet rs2 = pstmt2.executeQuery();
+
+                String diabetologo = rs2.getString("nome") + " " + rs2.getString("cognome");
+                String indirizzo = rs2.getString("address") + ", " + rs2.getString("number") + ", " + rs2.getString("city");
+
+                ArrayList<String> infoDiabetologo = new ArrayList<>();
+
+                infoDiabetologo.add(diabetologo);
+                infoDiabetologo.add(rs2.getString("telephoneNumber"));
+                infoDiabetologo.add(rs2.getString("email"));
+                infoDiabetologo.add(indirizzo);
+
+                return infoDiabetologo;
+            } catch (Exception e) {
+                System.out.println("Errore caricamento dati diabetologo: " + e.getMessage());
+                return null;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Errore ricerca diabetologo: " + e.getMessage());
+            return null;
+        }
+
+    }
 }

@@ -85,7 +85,7 @@ public class DiabetologoController {
         });
 
         notifichePerGlicemia.setRowFactory(tv -> {
-            TableRow<Notifica> row = new TableRow<Notifica>() {
+            TableRow<Notifica> row = new TableRow<>() {
                 @Override
                 protected void updateItem(Notifica notifica, boolean empty) {
                     super.updateItem(notifica, empty);

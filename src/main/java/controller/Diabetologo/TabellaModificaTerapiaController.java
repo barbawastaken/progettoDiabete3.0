@@ -26,6 +26,7 @@ public class TabellaModificaTerapiaController {
     @FXML private TableColumn<Terapia, String> colQuantita;
     @FXML private TableColumn<Terapia, String> colAssunzioni;
     @FXML private TableColumn<Terapia, String> colIndicazioni;
+    @FXML private TableColumn<Terapia, String> colDataPrescrizione;
 
     private final ObservableList<Terapia> terapie = FXCollections.observableArrayList();
     private String taxCode;
@@ -33,7 +34,7 @@ public class TabellaModificaTerapiaController {
     @FXML
     public void initialize() {
 
-        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_operazioniDiabetologo);
+        NavBar navbar = new NavBar(NavBarTags.DIABETOLOGO_fromVisualizzaTerapie);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
@@ -42,6 +43,14 @@ public class TabellaModificaTerapiaController {
         colQuantita.setCellValueFactory(new PropertyValueFactory<>("quantita"));
         colAssunzioni.setCellValueFactory(new PropertyValueFactory<>("assunzioni"));
         colIndicazioni.setCellValueFactory(new PropertyValueFactory<>("indicazioni"));
+        colDataPrescrizione.setCellValueFactory(new PropertyValueFactory<>("dataPrescrizione"));
+
+        colTerapia.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.2));
+        colFarmaco.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.15));
+        colQuantita.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.1));
+        colAssunzioni.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.1));
+        colIndicazioni.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.3));
+        colDataPrescrizione.prefWidthProperty().bind(tabellaTerapie.widthProperty().multiply(0.15));
 
         tabellaTerapie.setRowFactory(terapiaTableView -> {
 

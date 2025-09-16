@@ -12,6 +12,8 @@ import model.Paziente.AssunzioneFarmaco.AssunzioneFarmacoModel;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AssunzioneFarmacoController {
 
@@ -70,6 +72,20 @@ public class AssunzioneFarmacoController {
 
         dataAssunzione.getEditor().setDisable(true);
         dataAssunzione.getEditor().setOpacity(1);
+
+        Pattern pattern = Pattern.compile("[-+]?\\d+");
+        Matcher matcher = pattern.matcher(quantitaAssunta.getText());
+
+        if (matcher.find()) {
+            int quantitaInt = Integer.parseInt(matcher.group());
+
+            if(quantitaInt < 0){
+                messaggioErrore("La quantità inserita non è valida!");
+                quantitaAssunta.clear();
+                return;
+            }
+
+        }
 
         this.taxCode = Session.getInstance().getTaxCode();
         this.farmacoAssunto.getItems().setAll(model.getFarmaciTerapie(taxCode));

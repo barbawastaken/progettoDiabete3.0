@@ -4,6 +4,7 @@ import controller.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import model.Diabetologo.ModificaTerapiaModel;
 import model.Diabetologo.Terapia;
@@ -72,6 +73,12 @@ public class ModificaTerapiaController {
         } catch(Exception e) {
             System.out.println("Errore caricamento dati utente: " + e);
         }
+
+        frequenzaField.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
     }
 
    @FXML
@@ -120,7 +127,7 @@ public class ModificaTerapiaController {
 
            if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")) {
                ViewNavigator.navigateToVisualizzaStatistiche();
-           } else { ViewNavigator.navigateToDiabetologo(); }
+           } else { ViewNavigator.navigateToPatientDetails(); }
        }
        if(result == -1) { mostraErrore("Non puoi prescrivere due volte lo stesso farmaco!"); farmacoField.clear(); }
        if(result == -2) { mostraErrore("Errore nell'interazione col database!"); ViewNavigator.navigateToDiabetologo(); }

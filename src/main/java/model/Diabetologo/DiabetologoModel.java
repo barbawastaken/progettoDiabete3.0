@@ -46,7 +46,8 @@ public class DiabetologoModel {
                     farmacoNotifica,
                     rs.getString("quantita"),
                     rs.getString("numero_assunzioni_giornaliere"),
-                    rs.getString("indicazioni")
+                    rs.getString("indicazioni"),
+                    rs.getString("dataPrescrizione")
             );
 
         } catch (Exception e) {

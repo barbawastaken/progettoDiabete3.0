@@ -7,14 +7,16 @@ public class Terapia {
     private String quantita;
     private String assunzioni;
     private String indicazioni;
+    private String dataPrescrizione;
 
-    public Terapia(String taxCode, String terapia, String farmaco, String quantita, String assunzioni, String indicazioni) {
+    public Terapia(String taxCode, String terapia, String farmaco, String quantita, String assunzioni, String indicazioni, String dataPrescrizione) {
         this.taxCode = taxCode;
         this.terapia = terapia;
         this.farmaco = farmaco;
         this.quantita = quantita;
         this.assunzioni = assunzioni;
         this.indicazioni = indicazioni;
+        this.dataPrescrizione = dataPrescrizione;
     }
 
     public String getTaxCode() {
@@ -39,6 +41,7 @@ public class Terapia {
         return indicazioni;
     }
 
+    public String getDataPrescrizione() { return dataPrescrizione; }
 
     public void setTaxCode(String taxCode) {
         this.taxCode = taxCode;
@@ -61,4 +64,6 @@ public class Terapia {
     public void setIndicazioni(String indicazioni) {
         this.indicazioni = indicazioni;
     }
+
+    public void setDataPrescrizione(String dataPrescrizione) { this.dataPrescrizione = dataPrescrizione; }
 }
