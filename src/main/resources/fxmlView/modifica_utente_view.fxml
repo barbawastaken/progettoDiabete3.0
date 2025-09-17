@@ -52,7 +52,7 @@
                     <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                     <ComboBox fx:id="gender" prefWidth="150.0" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                     <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-                    <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+                    <DatePicker fx:id="birthday" promptText="data di nascita" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
 
                     <!-- Riga 2 Errori -->
                     <Text fx:id="genderError" text="Inserisci il sesso" styleClass="error" GridPane.rowIndex="5" GridPane.columnIndex="1"/>

@@ -44,7 +44,7 @@
                         <Button fx:id="confermaPasswordButton" onAction="#onCambiaPasswordPressed" text="Conferma" visible="false" />
                     </VBox>
                     <Label text="Codice Fiscale:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                    <TextField fx:id="taxCode" promptText="taxCode" GridPane.rowIndex="2" GridPane.columnIndex="3" disable="true"/>
+                    <TextField fx:id="taxCode" promptText="codice fiscale" GridPane.rowIndex="2" GridPane.columnIndex="3" disable="true"/>
 
 
                     <!-- Riga 1 Errori -->
@@ -52,13 +52,13 @@
 
                     <!-- Riga 2 -->
                     <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <TextField fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
+                    <TextField fx:id="gender" promptText="sesso" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
                     <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2" />
                     <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3" disable="true" />
 
                     <!-- Riga 3 -->
                     <Label text="Indirizzo:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                    <TextField fx:id="address" promptText="address" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <TextField fx:id="address" promptText="indirizzo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
                     <Label text="CAP:" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
                     <TextField fx:id="cap" promptText="cap" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
 
@@ -67,10 +67,10 @@
                     <Text fx:id="capError" text="Cap non valido" styleClass="error" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
 
                     <!-- Riga 4 -->
-                    <Label text="Numero:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                    <TextField fx:id="number" promptText="number" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                    <Label text="Civico:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <TextField fx:id="number" promptText="civico" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
                     <Label text="Nazione:" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
-                    <TextField fx:id="nation" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+                    <TextField fx:id="nation" promptText="nazione" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
 
                     <!-- Riga 4 Errori -->
                     <Text fx:id="numberError" text="Numero Civico non valido" styleClass="error" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
@@ -78,9 +78,9 @@
 
                     <!-- Riga 5 -->
                     <Label text="Città:" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                    <TextField fx:id="citta" promptText="citta" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                    <TextField fx:id="citta" promptText="città" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
                     <Label text="Email:" GridPane.rowIndex="10" GridPane.columnIndex="2"/>
-                    <TextField fx:id="email" GridPane.rowIndex="10" GridPane.columnIndex="3"/>
+                    <TextField fx:id="email" promptText="email" GridPane.rowIndex="10" GridPane.columnIndex="3"/>
 
                     <!-- Riga 5 Errori -->
                     <Text fx:id="cityError" text="Città non valida" styleClass="error" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
@@ -88,7 +88,7 @@
 
                     <!-- Riga 6 -->
                     <Label text="Telefono:" GridPane.rowIndex="12" GridPane.columnIndex="0" styleClass="testo"/>
-                    <TextField fx:id="telephone" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                    <TextField fx:id="telephone" promptText="telefono" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
 
 
                     <!-- Riga 6 Errori -->
