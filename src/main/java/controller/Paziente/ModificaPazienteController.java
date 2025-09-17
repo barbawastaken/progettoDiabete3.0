@@ -72,27 +72,16 @@ public class ModificaPazienteController {
         this.nation.setText(userData.getCountryOfResidence());
 
         numberError.setVisible(false);
-        numberError.setManaged(false);
         telephoneError.setVisible(false);
-        telephoneError.setManaged(false);
         emailError.setVisible(false);
-        emailError.setManaged(false);
         capError.setVisible(false);
-        capError.setManaged(false);
         weightError.setVisible(false);
-        weightError.setManaged(false);
         heightError.setVisible(false);
-        heightError.setManaged(false);
         userAddedText.setVisible(false);
-        userAddedText.setManaged(false);
         passwordError.setVisible(false);
-        passwordError.setManaged(false);
         nationError.setVisible(false);
-        nationError.setManaged(false);
         cityError.setVisible(false);
-        cityError.setManaged(false);
         addressError.setVisible(false);
-        addressError.setManaged(false);
 
         NavBar navbar = new NavBar(NavBarTags.PAZIENTE_toHomepage);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
@@ -106,13 +95,14 @@ public class ModificaPazienteController {
         this.email.setText(userData.getEmail());
         this.telephone.setText(userData.getTelephone());
         this.birthday.setValue(Date.valueOf(userData.getBirthday()).toLocalDate());
-        this.height.setText(userData.getHeight().toString());
-        this.weight.setText(userData.getWeight().toString());
         this.gender.setText(userData.getSex());
         this.citta.setText(userData.getCity());
         this.address.setText(userData.getAddress());
         this.cap.setText(userData.getCap().toString());
         this.number.setText(userData.getCivic());
+        this.weight.setText(Double.toString(userData.getWeight()));
+        this.height.setText(Double.toString(userData.getHeight()));
+
 
         for(String s : diabetologo.keySet()){
             if(diabetologo.get(s).equals(userData.getMedicoCurante()))
@@ -152,8 +142,6 @@ public class ModificaPazienteController {
             }
         });
 
-        height.setTextFormatter(heightFormatter);
-        weight.setTextFormatter(weightFormatter);
     }
 
     @FXML void onSendButtonPressed() throws SQLException {
@@ -222,36 +210,56 @@ public class ModificaPazienteController {
             messaggioErrore("Uno o più campi sono vuoti!");
         }
 
-        if(email.getText().isEmpty()) { emailError.setVisible(true); return false; }
+        boolean flag = true;
+        if(email.getText().isEmpty()) { emailError.setVisible(true); flag = false; }
+        else{emailError.setVisible(false);}
 
-        if(telephone.getText().isEmpty()) { telephoneError.setVisible(true); return false; }
+        if(weight.getText().isEmpty()) {weightError.setVisible(true); flag = false; }
+        else{weightError.setVisible(false); }
 
-        if(height.getText().isEmpty()) { heightError.setVisible(true); return false; }
+        if(height.getText().isEmpty()) {heightError.setVisible(true); flag = false; }
+        else{heightError.setVisible(false); }
 
-        if(weight.getText().isEmpty()) { weightError.setVisible(true); return false; }
+        if(telephone.getText().isEmpty()) { telephoneError.setVisible(true); flag = false; }
+        else{telephoneError.setVisible(false); }
 
-        if(address.getText().isEmpty()) { addressError.setVisible(true); return false; }
+        if(address.getText().isEmpty()) { addressError.setVisible(true); flag = false; }
+        else{addressError.setVisible(false); }
 
-        if(number.getText().isEmpty()) { numberError.setVisible(true); return false; }
+        if(number.getText().isEmpty()) { numberError.setVisible(true); flag = false; }
+        else{numberError.setVisible(false); }
 
-        if(citta.getText().isEmpty()) { cityError.setVisible(true); return false; }
+        if(citta.getText().isEmpty()) { cityError.setVisible(true); flag = false; }
+        else{cityError.setVisible(false); }
 
-        if(cap.getText().isEmpty()) { capError.setVisible(true); return false; }
+        if(cap.getText().isEmpty()) { capError.setVisible(true); flag = false; }
+        else{capError.setVisible(false); }
+
+        if(nation.getText().isEmpty()) {nationError.setVisible(true); flag = false; }
+        else{nationError.setVisible(false); }
 
         Pattern validEmail = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
-        if(!validEmail.matcher(email.getText()).matches()) { emailError.setVisible(true); return false;}
+        if(!validEmail.matcher(email.getText()).matches()) { emailError.setVisible(true); flag = false;}
+        else{emailError.setVisible(false); }
 
         Pattern validTelephone = Pattern.compile("^\\d{10}$");
-        if(!validTelephone.matcher(telephone.getText()).matches()) { telephoneError.setVisible(true); return false;}
+        if(!validTelephone.matcher(telephone.getText()).matches()) { telephoneError.setVisible(true); flag = false;}
+        else{telephoneError.setVisible(false); }
 
         Pattern validCap = Pattern.compile("^\\d{5}$");
-        int capInt = Integer.parseInt(cap.getText());
-        if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { capError.setVisible(true); return false;}
+        int capInt = 0;
+        if(!cap.getText().isEmpty())
+            capInt = Integer.parseInt(cap.getText());
+        if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { capError.setVisible(true); flag = false;}
+        else{capError.setVisible(false); }
 
-        if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("number civico non è valido!"); return false; }
+        if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("number civico non è valido!"); flag = false; }
 
-        return true;
+        return flag;
     }
+
+
+
 
     public void messaggioErrore(String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

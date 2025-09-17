@@ -15,9 +15,9 @@
               AnchorPane.rightAnchor="0.0"
               spacing="10.0"
               alignment="CENTER_LEFT"> </HBox>
-      <ScrollPane prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
          <content>
-            <TableView fx:id="tabella">
+            <TableView fx:id="tabella" styleClass="table-view">
               <columns>
                 <TableColumn fx:id="taxCodeColumn" prefWidth="75.0" text="Codice Fiscale" />
                 <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Nome" />

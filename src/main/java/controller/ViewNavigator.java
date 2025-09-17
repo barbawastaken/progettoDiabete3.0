@@ -188,4 +188,14 @@ public class ViewNavigator {
         navigateToProfilePaziente();
 
     }
+
+    public static void relogDiabetologo(String TaxCode, String password) {
+
+
+        Session.getInstance().deleteSession();
+        Session.getInstance().setTaxCode(TaxCode);
+        Session.getInstance().setPassword(password);
+        Session.getInfos();
+        navigateToProfileDiabetologo();
+    }
 }

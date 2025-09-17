@@ -14,15 +14,15 @@
 
          <!-- Sezione pulsanti centrata -->
          <VBox alignment="CENTER" spacing="30">
-            <VBox spacing="10" alignment="CENTER" styleClass="box">
+            <VBox spacing="10" alignment="CENTER" styleClass="box" maxWidth="600">
                <Button onAction="#isInserisciUtenteClicked" prefHeight="40.0" prefWidth="200.0" text="Inserisci Utente" />
                <Label text="Crea un nuovo utente da aggiungere nel sistema" alignment="CENTER" wrapText="true"/>
             </VBox>
-            <VBox spacing="10" alignment="CENTER" styleClass="box">
+            <VBox spacing="10" alignment="CENTER" styleClass="box" maxWidth="600">
                <Button onAction="#isVisualizzaUtentiClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Lista Utenti" />
                <Label text="Visualizza tutti gli utenti nel sistema" alignment="CENTER" wrapText="true"/>
             </VBox>
-            <VBox spacing="10" alignment="CENTER" styleClass="box">
+            <VBox spacing="10" alignment="CENTER" styleClass="box" maxWidth="600">
                <Button onAction="#isVisualizzaOperazioniClicked" prefHeight="40.0" prefWidth="200.0" text="Visualizza Operazioni Diabetologi" />
                <Label text="Visualizza tutte le operazioni dei diabetologi" alignment="CENTER" wrapText="true"/>
             </VBox>
