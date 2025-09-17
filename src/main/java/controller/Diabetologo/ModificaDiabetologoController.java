@@ -31,7 +31,7 @@ public class ModificaDiabetologoController {
     @FXML private TextField email;
     @FXML private TextField telephone;
     @FXML private DatePicker birthday;
-    @FXML private Text gender;
+    @FXML private TextField gender;
     @FXML private TextField address;
     @FXML private TextField number;
     @FXML private TextField citta;
@@ -318,6 +318,17 @@ public class ModificaDiabetologoController {
             messaggioErrore("Password non salvata correttamente!");
         }
 
+    }
+
+    @FXML
+    private void onResetPressed(){
+        email.setText("");
+        telephone.setText("");
+        address.setText("");
+        number.setText("");
+        citta.setText("");
+        cap.setText("");
+        nation.setText("");
     }
 }
 

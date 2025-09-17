@@ -5,6 +5,7 @@ import controller.NavBarTags;
 import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import model.Amministratore.AggiungiUtenteModel;
 import java.sql.*;
@@ -105,6 +106,18 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
         birthday.getEditor().setDisable(true);
         birthday.getEditor().setOpacity(1);
+
+        cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
+
+        telephone.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
 
         ruolo.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 

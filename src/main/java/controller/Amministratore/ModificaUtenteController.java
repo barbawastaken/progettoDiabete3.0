@@ -6,6 +6,7 @@ import controller.Session;
 import controller.ViewNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import model.Amministratore.ModificaUtenteModel;
 import model.Amministratore.Utente;
@@ -28,6 +29,7 @@ public class ModificaUtenteController extends GestioneUtenti{
     @FXML
     public void initialize() {
 
+        gender.getItems().addAll("Maschio", "Femmina");
 
         taxCodeError.setVisible(false);
         taxCodeError.setManaged(false);
@@ -75,6 +77,7 @@ public class ModificaUtenteController extends GestioneUtenti{
         addressError.setManaged(false);
 
         NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
         this.listaUtentiController =(VisualizzaListaUtentiController)ViewNavigator.getControllerUsed();
@@ -104,6 +107,18 @@ public class ModificaUtenteController extends GestioneUtenti{
             }
             return null;
         };
+
+        cap.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
+
+        telephone.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("\\d")) {
+                event.consume(); // blocca l'inserimento
+            }
+        });
 
         TextFormatter<String> formatterHeight = new TextFormatter<>(filter);
         TextFormatter<String> formatterWeight = new TextFormatter<>(filter);
@@ -251,6 +266,26 @@ public class ModificaUtenteController extends GestioneUtenti{
 
     public void setTaxCode(String taxCode) {
         this.taxCode.setText(taxCode);
+    }
+
+    @FXML
+    private void resetButtonPressed(){
+        nome.setText("");
+        cognome.setText("");
+        taxCode.setText("");
+        password.setText("");
+        email.setText("");
+        telephone.setText("");
+        birthday.setValue(null);
+        address.setText("");
+        number.setText("");
+        citta.setText("");
+        cap.setText("");
+        nation.setText("");
+        gender.cancelEdit();
+        weight.setText("");
+        height.setText("");
+
     }
 
 }

@@ -52,7 +52,7 @@
 
                     <!-- Riga 2 -->
                     <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <Text fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
+                    <TextField fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
                     <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2" />
                     <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3" disable="true" />
 
@@ -100,13 +100,13 @@
                     <Text fx:id="heightText" text="Altezza (in M):" styleClass="testo" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
                     <TextField fx:id="height" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
                     <Text fx:id="medicoCuranteText" text="Medico Curante:" GridPane.rowIndex="14" GridPane.columnIndex="2" styleClass="testo"/>
-                    <Text fx:id="medicoCurante" GridPane.rowIndex="14" GridPane.columnIndex="3" disable="true" />
+                    <TextField fx:id="medicoCurante" GridPane.rowIndex="14" GridPane.columnIndex="3" disable="true" />
 
                     <!-- Riga 7 Errori -->
                     <Text fx:id="heightError" text="Altezza non valida" styleClass="error" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
 
                     <!-- Riga 8: Bottoni -->
-                    <Button text="Reset" GridPane.rowIndex="17" GridPane.columnIndex="2"/>
+                    <Button text="Reset" onAction="#onResetPressed" GridPane.rowIndex="17" GridPane.columnIndex="2"/>
                     <Button text="Invia" onAction="#onSendButtonPressed" GridPane.rowIndex="17" GridPane.columnIndex="3"/>
                     <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!" GridPane.rowIndex="17" GridPane.columnIndex="4"/>
 

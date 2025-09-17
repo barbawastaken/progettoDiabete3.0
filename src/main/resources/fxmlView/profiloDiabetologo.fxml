@@ -52,7 +52,7 @@
 
                     <!-- Riga 2 -->
                     <Label text="Sesso:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <Text fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
+                    <TextField fx:id="gender" GridPane.rowIndex="4" GridPane.columnIndex="1" disable="true" />
                     <Label text="Data di Nascita:" GridPane.rowIndex="4" GridPane.columnIndex="2" />
                     <DatePicker fx:id="birthday" prefWidth="160.0" GridPane.rowIndex="4" GridPane.columnIndex="3" disable="true" />
 
@@ -97,7 +97,7 @@
 
 
                     <!-- Riga 8: Bottoni -->
-                    <Button text="Reset" GridPane.rowIndex="14" GridPane.columnIndex="2"/>
+                    <Button text="Reset" onAction="#onResetPressed" GridPane.rowIndex="14" GridPane.columnIndex="2"/>
                     <Button text="Invia" onAction="#onSendButtonPressed" GridPane.rowIndex="14" GridPane.columnIndex="3"/>
                     <Text fx:id="userAddedText" fill="#4fbc14" text="Dati inseriti correttamente!" GridPane.rowIndex="14" GridPane.columnIndex="4"/>
 

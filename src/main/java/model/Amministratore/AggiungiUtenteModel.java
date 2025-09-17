@@ -47,11 +47,15 @@ public class AggiungiUtenteModel {
             return;
         }
 
-        double heightParsed = Double.parseDouble(altezza);
-        heightParsed = Math.floor(heightParsed * 100) / 100.0;
+        double heightParsed = 0;
+        double weightParsed = 0;
+        if(altezza != null && peso != null){
+            heightParsed = Double.parseDouble(altezza);
+            heightParsed = Math.floor(heightParsed * 100) / 100.0;
 
-        double weightParsed = Double.parseDouble(peso);
-        weightParsed = Math.floor(weightParsed * 100) / 100.0;
+            weightParsed = Double.parseDouble(peso);
+            weightParsed = Math.floor(weightParsed * 100) / 100.0;
+        }
 
         String addUserQuery = "INSERT INTO utenti (taxCode, password, nome, cognome, email, birthday, address," +
                 "number, city, cap, gender, telephoneNumber, userType, diabetologo, CountryOfResidence, altezza, peso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";

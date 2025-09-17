@@ -42,7 +42,7 @@ public class PatologieConcomitantiModel {
 
             if(dataFine != null){
                 pstmt.setString(4, dataFine.toString());
-            } else { pstmt.setString(4, ""); }
+            } else { pstmt.setString(4, LocalDate.now().toString()); }
 
             pstmt.executeUpdate();
             return 0;

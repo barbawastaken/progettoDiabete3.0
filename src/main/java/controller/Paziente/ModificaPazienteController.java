@@ -30,7 +30,7 @@ public class ModificaPazienteController {
     @FXML private TextField email;
     @FXML private TextField telephone;
     @FXML private DatePicker birthday;
-    @FXML private Text gender;
+    @FXML private TextField gender;
     @FXML private TextField height;
     @FXML private TextField weight;
     @FXML private TextField address;
@@ -38,7 +38,7 @@ public class ModificaPazienteController {
     @FXML private TextField citta;
     @FXML private TextField cap;
     @FXML private TextField nation;
-    @FXML private Text medicoCurante;
+    @FXML private TextField medicoCurante;
 
     @FXML private Text emailError;
     @FXML private Text telephoneError;
@@ -334,6 +334,19 @@ public class ModificaPazienteController {
             messaggioErrore("Password non salvata correttamente!");
         }
 
+    }
+
+    @FXML
+    private void onResetPressed(){
+        email.setText("");
+        telephone.setText("");
+        address.setText("");
+        number.setText("");
+        citta.setText("");
+        cap.setText("");
+        nation.setText("");
+        weight.setText("");
+        height.setText("");
     }
 }
 
