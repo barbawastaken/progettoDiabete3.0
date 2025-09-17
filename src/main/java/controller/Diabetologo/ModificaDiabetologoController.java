@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.Utente;
@@ -58,7 +59,7 @@ public class ModificaDiabetologoController {
     @FXML private Text confermaPasswordText;
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
-
+    @FXML private VBox passwordExpandArea;
 
 
     public ModificaDiabetologoController() throws SQLException {
@@ -195,11 +196,7 @@ public class ModificaDiabetologoController {
 
     public boolean checkDati(){
 
-        if(email.getText().isEmpty() || telephone.getText().isEmpty() ||
-                address.getText().isEmpty() || number.getText().isEmpty() ||
-                citta.getText().isEmpty()|| cap.getText().isEmpty()) {
-            messaggioErrore("Uno o più campi sono vuoti!");
-        }
+
         boolean flag = true;
         if(email.getText().isEmpty()) { emailError.setVisible(true); flag = false; }
         else{emailError.setVisible(false);}
@@ -237,7 +234,7 @@ public class ModificaDiabetologoController {
         if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { capError.setVisible(true); flag = false;}
         else{capError.setVisible(false); }
 
-        if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("number civico non è valido!"); flag = false; }
+        if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { numberError.setVisible(true); flag = false; }
 
         return flag;
     }
@@ -260,6 +257,8 @@ public class ModificaDiabetologoController {
         confermaPasswordText.setVisible(true);
         confermaPasswordField.setVisible(true);
         confermaPasswordButton.setVisible(true);
+        passwordExpandArea.setVisible(true);
+        passwordExpandArea.setManaged(true);
     }
 
     @FXML
@@ -329,6 +328,17 @@ public class ModificaDiabetologoController {
         citta.setText("");
         cap.setText("");
         nation.setText("");
+    }
+
+    @FXML
+    private void onChiudiPasswordPressed() {
+        // Richiudi l'area
+        passwordExpandArea.setVisible(false);
+        passwordExpandArea.setManaged(false);
+        // Pulisci i campi
+        nuovaPasswordField.clear();
+        confermaPasswordField.clear();
+        passwordError.setVisible(false);
     }
 }
 
