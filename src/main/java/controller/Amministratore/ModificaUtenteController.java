@@ -194,16 +194,7 @@ public class ModificaUtenteController extends GestioneUtenti{
 
         double peso = 0.0;
         double altezza = 0.0;
-        if (ruoloSelezionato.equals("PAZIENTE")) {
-            try {
-                peso = Double.parseDouble(weight.getText());
-                altezza = Double.parseDouble(height.getText());
-            } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Peso e altezza devono essere validi.");
-                alert.showAndWait();
-                return;
-            }
-        }
+
         if(isPaziente && !checkForPazienti()){
 
             Utente aggiornato = new Utente(

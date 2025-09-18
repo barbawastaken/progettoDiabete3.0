@@ -91,9 +91,9 @@
                         </VBox>
                     </VBox>
 
-                    <!-- Sezione Dati Fisici - Nuova per il paziente -->
+                    <!-- Sezione Dati Sanitari - Nuova per il paziente -->
                     <VBox spacing="20" styleClass="box">
-                        <Label text="Dati " styleClass="section-title"/>
+                        <Label text="Dati Sanitari" styleClass="section-title"/>
 
                         <GridPane alignment="CENTER" hgap="20" vgap="15">
                             <!-- Riga 1: Altezza e Peso -->

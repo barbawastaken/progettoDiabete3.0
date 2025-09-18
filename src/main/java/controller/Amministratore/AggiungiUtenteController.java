@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import model.Amministratore.AggiungiUtenteModel;
 import java.sql.*;
 import java.util.HashMap;
@@ -24,7 +25,6 @@ public class AggiungiUtenteController extends GestioneUtenti {
 
 
     @FXML private DatePicker birthday;
-
     @FXML private HBox navbarContainer;
 
     @FXML
@@ -244,10 +244,7 @@ public class AggiungiUtenteController extends GestioneUtenti {
                             selected.getText(), null, nation.getText(),null, null); // valori nulli per non pazienti
                 }
 
-
                 ViewNavigator.navigateToVisualizzaUtenti();
-
-
         }
     }
 
