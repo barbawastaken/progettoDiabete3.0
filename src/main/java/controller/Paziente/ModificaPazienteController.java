@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Amministratore.AggiungiUtenteModel;
 import model.Amministratore.Utente;
@@ -62,6 +63,7 @@ public class ModificaPazienteController {
     @FXML private Text confermaPasswordText;
     @FXML private TextField confermaPasswordField;
     @FXML private Button confermaPasswordButton;
+    @FXML private VBox passwordExpandArea;
 
     public ModificaPazienteController() throws SQLException {
     }
@@ -195,20 +197,10 @@ public class ModificaPazienteController {
         */
 
         PazienteModel.updateData(user);
-
-        if(passwordChanged)
-            ViewNavigator.relogPaziente(taxCode.getText(), newPassword);
-        else
-            ViewNavigator.relogPaziente(taxCode.getText(), Session.getInstance().getPassword());
-
+        ViewNavigator.navigateToPaziente();
     }
 
     public boolean checkDati(){
-
-        if(email.getText().isEmpty() || telephone.getText().isEmpty() || height.getText().isEmpty() || weight.getText().isEmpty() ||
-        address.getText().isEmpty() || number.getText().isEmpty() || citta.getText().isEmpty()|| cap.getText().isEmpty()) {
-            messaggioErrore("Uno o più campi sono vuoti!");
-        }
 
         boolean flag = true;
         if(email.getText().isEmpty()) { emailError.setVisible(true); flag = false; }
@@ -247,13 +239,10 @@ public class ModificaPazienteController {
         else{telephoneError.setVisible(false); }
 
         Pattern validCap = Pattern.compile("^\\d{5}$");
-        int capInt = 0;
-        if(!cap.getText().isEmpty())
-            capInt = Integer.parseInt(cap.getText());
-        if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { capError.setVisible(true); flag = false;}
+        if(cap.getText().isEmpty()){capError.setVisible(true); flag = false;}
+        if(!validCap.matcher(cap.getText()).matches() ) { capError.setVisible(true); flag = false;}
         else{capError.setVisible(false); }
 
-        if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { messaggioErrore("number civico non è valido!"); flag = false; }
 
         return flag;
     }
@@ -276,6 +265,8 @@ public class ModificaPazienteController {
         confermaPasswordText.setVisible(true);
         confermaPasswordField.setVisible(true);
         confermaPasswordButton.setVisible(true);
+        passwordExpandArea.setVisible(true);
+        passwordExpandArea.setManaged(true);
     }
 
     @FXML
@@ -347,6 +338,14 @@ public class ModificaPazienteController {
         nation.setText("");
         weight.setText("");
         height.setText("");
+    }
+
+    @FXML
+    public void onChiudiPasswordPressed(){
+        passwordExpandArea.setVisible(false);
+        passwordExpandArea.setManaged(false);
+        nuovaPasswordField.setText("");
+        confermaPasswordField.setText("");
     }
 }
 

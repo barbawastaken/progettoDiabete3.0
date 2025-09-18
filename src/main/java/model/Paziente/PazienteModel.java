@@ -59,6 +59,7 @@ public class PazienteModel  {
             stmt.setString(16, utente.getTaxCode());
 
             stmt.executeUpdate();
+            
         } catch(SQLException x){
             System.out.println(x.getErrorCode());
         }

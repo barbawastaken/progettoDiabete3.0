@@ -185,17 +185,11 @@ public class ModificaDiabetologoController {
         }
         */
 
-        PazienteModel.updateData(user); //anche se si chiama user questo metodo aggiorna comunque una riga quindi stiamo a posto
-
-        if(passwordChanged)
-            ViewNavigator.relogDiabetologo(taxCode.getText(), newPassword);
-        else
-            ViewNavigator.relogDiabetologo(taxCode.getText(), Session.getInstance().getPassword());
-
+        PazienteModel.updateData(user);//anche se si chiama user questo metodo aggiorna comunque una riga quindi stiamo a posto
+        ViewNavigator.navigateToDiabetologo();
     }
 
     public boolean checkDati(){
-
 
         boolean flag = true;
         if(email.getText().isEmpty()) { emailError.setVisible(true); flag = false; }
@@ -228,10 +222,8 @@ public class ModificaDiabetologoController {
         else{telephoneError.setVisible(false); }
 
         Pattern validCap = Pattern.compile("^\\d{5}$");
-        int capInt = 0;
-        if(!cap.getText().isEmpty())
-            capInt = Integer.parseInt(cap.getText());
-        if(!validCap.matcher(cap.getText()).matches() && capInt > 0) { capError.setVisible(true); flag = false;}
+        if(cap.getText().isEmpty()) {capError.setVisible(true); flag = false;}
+        if(!validCap.matcher(cap.getText()).matches()) { capError.setVisible(true); flag = false;}
         else{capError.setVisible(false); }
 
         if (!number.getText().matches("\\d+([/]?[A-Za-z])?")) { numberError.setVisible(true); flag = false; }
@@ -310,7 +302,7 @@ public class ModificaDiabetologoController {
 
             stmt.executeUpdate();
 
-            ViewNavigator.navigateToProfilePaziente();
+            ViewNavigator.navigateToProfileDiabetologo();
 
         } catch (Exception e) {
             System.out.println("Errore nel salvataggio della password (loginTable): " + e.getMessage());

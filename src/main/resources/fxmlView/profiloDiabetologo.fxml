@@ -58,7 +58,7 @@
                         <HBox spacing="15" alignment="CENTER_LEFT">
                             <Label text="Sicurezza Account" styleClass="section-title"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button onAction="#onPasswordPressed" text="🔒 Cambia Password" styleClass="secondary-button"/>
+                            <Button onAction="#onPasswordPressed" text="Cambia Password" styleClass="secondary-button"/>
                         </HBox>
 
                         <!-- Area espandibile per cambio password -->
