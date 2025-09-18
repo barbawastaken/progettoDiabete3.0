@@ -3,7 +3,6 @@ package controller;
 import HomePages.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,8 +15,6 @@ public class ViewNavigator {
     // Reference to the main controller
     private static MainController mainController;
 
-    // Current authenticated username
-    private static String authenticatedUser = null;
     private static Object controllerUsed;
 
     /**
@@ -46,15 +43,9 @@ public class ViewNavigator {
             mainController.setContent(view);
         } catch (IOException e) {
             System.err.println("Error loading " + fxmlUrl + " : " + e.getMessage());
-            e.printStackTrace();
 
         }
     }
-
-    public static void getController(String fxml, String taxCode){
-
-    }
-
 
     /**
      * Navigate to the login view
@@ -91,38 +82,8 @@ public class ViewNavigator {
     }
 
     /**
-     * Set the authenticated user
-     * @param username The username of the authenticated user
-     */
-    public static void setAuthenticatedUser(String username) {
-        authenticatedUser = username;
-        mainController.updateNavBar(isAuthenticated());
-    }
-
-    /**
-     * Get the authenticated user
-     * @return The username of the authenticated user, or null if not authenticated
-     */
-    public static String getAuthenticatedUser() {
-        return authenticatedUser;
-    }
-
-    /**
-     * Check if a user is authenticated
-     * @return true if a user is authenticated, false otherwise
-     */
-    public static boolean isAuthenticated() {
-        return authenticatedUser != null;
-    }
-
-    /**
      * Logout the current user
      */
-    public static void logout() {
-        authenticatedUser = null;
-        mainController.updateNavBar(false);
-        navigateToLogin();
-    }
 
     public static void navigateToPaziente() {
 

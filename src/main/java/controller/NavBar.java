@@ -62,6 +62,8 @@ public class NavBar extends HBox {
             navbarPerInfoPazienteFromNotifiche();
         } else if(navbarRequested == NavBarTags.DIABETOLOGO_fromVisualizzaTerapie) {
             navbarPerVisualizzaTerapie();
+        } else if(navbarRequested == NavBarTags.AMMINISTRATORE_ritornoVisualizzaListaUtenti){
+            navbarPerRitornoVisualizzaListaUtenti();
         }
     }
 
@@ -170,10 +172,19 @@ public class NavBar extends HBox {
     }
 
     private void navbarToHomepageAmministratore(){
+        Button indietroButton = createNavButton("INDIETRO", e->ViewNavigator.navigateToAmministratore());
         Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToAmministratore());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
-        this.getChildren().addAll(homepageButton, logoutButton);
+        this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
+    }
+
+    private void navbarPerRitornoVisualizzaListaUtenti(){
+        Button indietroButton = createNavButton("INDIETRO", e->ViewNavigator.navigateToVisualizzaUtenti());
+        Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToAmministratore());
+        Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
+
+        this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
     }
 
     private void navbarPerRitornoVisualizzaStatistiche(){

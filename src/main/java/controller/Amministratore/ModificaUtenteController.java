@@ -76,7 +76,7 @@ public class ModificaUtenteController extends GestioneUtenti{
         addressError.setVisible(false);
         addressError.setManaged(false);
 
-        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_toHomepage);
+        NavBar navbar = new NavBar(NavBarTags.AMMINISTRATORE_ritornoVisualizzaListaUtenti);
         navbar.prefWidthProperty().bind(navbarContainer.widthProperty());
         navbarContainer.getChildren().add(navbar);
 
@@ -196,7 +196,6 @@ public class ModificaUtenteController extends GestioneUtenti{
         double altezza = 0.0;
         if (ruoloSelezionato.equals("PAZIENTE")) {
             try {
-                System.out.println("paziente selezionato");
                 peso = Double.parseDouble(weight.getText());
                 altezza = Double.parseDouble(height.getText());
             } catch (NumberFormatException e) {

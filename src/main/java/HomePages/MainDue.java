@@ -34,7 +34,7 @@ public class MainDue extends Application {
         //scene.getStylesheets().add(cssUrl.toExternalForm());
 
         // Configure and show the stage
-        primaryStage.setTitle("Dash App - JavaFX Version");
+        primaryStage.setTitle("Glucose Keeper - Application");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

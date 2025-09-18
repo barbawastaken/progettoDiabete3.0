@@ -307,7 +307,6 @@ public class GestioneUtenti {
             System.out.println("Problema trovato!!");
             return flag;
         } else{
-            System.out.println("Nessun problema");
             return flag;
         }
 

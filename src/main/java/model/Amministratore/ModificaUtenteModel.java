@@ -13,7 +13,6 @@ public class ModificaUtenteModel {
     public ModificaUtenteModel() {}
 
     public static void aggiornaUtente(Utente vecchioUtente, Utente utente) {
-        System.out.println("dentro aggiorna utente");
         String vecchioTaxCode = vecchioUtente.getTaxCode();
 
         if(!vecchioTaxCode.equals(utente.getTaxCode()) && !GestioneUtenti.singleValues(utente.getTaxCode())){
@@ -35,7 +34,6 @@ public class ModificaUtenteModel {
 
             // Query utenti
 
-            System.out.println(utente.getTaxCode() + " " + vecchioTaxCode);
             pstmt.setString(1, utente.getTaxCode());
             pstmt.setString(2, utente.getPassword());
             pstmt.setString(3, utente.getNome());
@@ -49,12 +47,11 @@ public class ModificaUtenteModel {
             pstmt.setString(11, utente.getGender());
             pstmt.setString(12, utente.getTelephone());
             pstmt.setString(13, utente.getRole());
-            System.out.println(utente.getRole());
             pstmt.setString(14, utente.getDiabetologo());
             pstmt.setString(15, utente.getCountryOfResidence());
             pstmt.setDouble(16,utente.getHeight());
             pstmt.setDouble(17,utente.getWeight());
-            pstmt.setString(18, Session.getInstance().getTaxCode()); // <-- importante!
+            pstmt.setString(18, vecchioTaxCode);
 
             if(!aggiornaTabelleDatabase(vecchioTaxCode, utente.getTaxCode()))
                 return;

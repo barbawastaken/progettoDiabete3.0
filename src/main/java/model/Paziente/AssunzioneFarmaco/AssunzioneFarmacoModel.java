@@ -10,8 +10,6 @@ public class AssunzioneFarmacoModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
-    public AssunzioneFarmacoModel() {}
-
     public int inserimentoFarmacoAssunto(String taxCode, String farmacoAssunto, String quantitaAssunta,
                                          LocalDate dataAssunzione, LocalTime orarioAssunzione) {
 
