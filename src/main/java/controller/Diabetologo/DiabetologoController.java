@@ -114,6 +114,7 @@ public class DiabetologoController {
                     Session.setSchermataDiArrivo("NOTIFICHE");
                     ViewNavigator.navigateToPatientDetails();
                 }
+
             });
 
             return row;

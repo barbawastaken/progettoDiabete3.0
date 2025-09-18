@@ -35,6 +35,10 @@ public class MainDue extends Application {
 
         // Configure and show the stage
         primaryStage.setTitle("Glucose Keeper - Application");
+        primaryStage.setMaximized(true);
+        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(600);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
