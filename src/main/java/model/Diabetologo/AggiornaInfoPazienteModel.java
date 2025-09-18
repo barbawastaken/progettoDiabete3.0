@@ -2,6 +2,7 @@ package model.Diabetologo;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AggiornaInfoPazienteModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
@@ -41,7 +42,7 @@ public class AggiornaInfoPazienteModel {
 
             pstmt.executeUpdate();
 
-            LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Aggiornate informazioni paziente", taxCode, LocalDate.now());
+            LogOperationModel.loadLogOperation(taxCodeDiabetologo, "Aggiornate informazioni paziente", taxCode, LocalDateTime.now());
 
         } catch (SQLException e) {
             System.out.println("Errore salvataggio info paziente: " + e.getMessage());

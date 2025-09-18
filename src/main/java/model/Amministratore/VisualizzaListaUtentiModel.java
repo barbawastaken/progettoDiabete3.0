@@ -34,8 +34,8 @@ public class VisualizzaListaUtentiModel {
                 String telephoneNumber = rs.getString("telephoneNumber");
                 String userType = rs.getString("userType");
                 String diabetologo = rs.getString("diabetologo");
-                Double weight = rs.getDouble("Peso");
-                Double height = rs.getDouble("Altezza");
+                double weight = rs.getDouble("Peso");
+                double height = rs.getDouble("Altezza");
 
                 Utente utente = new Utente(taxCode, password, nome, cognome, email, birthDate, address, number, city, cap, countryOfResidence, gender, telephoneNumber, userType, diabetologo, weight, height);
                 lista.add(utente);
@@ -44,7 +44,7 @@ public class VisualizzaListaUtentiModel {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Errore caricamento degli utenti: " + e.getMessage());
         }
 
         return lista;
@@ -71,6 +71,8 @@ public class VisualizzaListaUtentiModel {
 
         sql = "DELETE FROM terapiePrescritte WHERE taxCode = ?";
         rimuoviUtenteCompleto(sql, utente);
+
+        System.out.println("Utente eliminato: " + utente.getTaxCode());
     }
 
     private void rimuoviUtenteCompleto(String query, Utente utente){
@@ -81,42 +83,9 @@ public class VisualizzaListaUtentiModel {
             pstmt.setString(1, utente.getTaxCode());
             pstmt.executeUpdate();
 
-            System.out.println("Utente eliminato: " + utente.getTaxCode());
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Errore rimozione utente '" + utente.getTaxCode() + "' : " + e.getMessage());
         }
 
-    }
-
-    public void aggiornaUtente(Utente utente, String oldTaxCode) {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:mydatabase.db")) {
-            String sql = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, Peso=? WHERE taxCode=?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, utente.getTaxCode());
-                stmt.setString(2, utente.getPassword());
-                stmt.setString(3, utente.getNome());
-                stmt.setString(4, utente.getCognome());
-                stmt.setString(5, utente.getEmail());
-                stmt.setString(6, utente.getBirthday().toString());
-                stmt.setString(7, utente.getAddress());
-                stmt.setString(8, utente.getNumber());
-                stmt.setString(9, utente.getCity());
-                stmt.setInt(10, utente.getCap());
-                stmt.setString(11, utente.getGender());
-                stmt.setString(12, utente.getTelephone());
-                stmt.setString(13, utente.getRole());
-                stmt.setString(14, utente.getDiabetologo());
-                stmt.setString(15, utente.getCountryOfResidence());
-                stmt.setDouble(16, utente.getWeight());
-                stmt.setDouble(17, utente.getHeight());
-                stmt.setString(18, oldTaxCode);
-
-                stmt.executeUpdate();
-                System.out.println("Utente aggiornato: " + utente.getTaxCode());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -4,12 +4,11 @@ import controller.NavBar;
 import controller.NavBarTags;
 import controller.Session;
 import controller.ViewNavigator;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import model.Diabetologo.TabellaModificaTerapiaModel;
@@ -72,6 +71,26 @@ public class TabellaModificaTerapiaController {
                 }
             });
 
+            return row;
+        });
+
+        tabellaTerapie.setRowFactory(utenteTableView -> {
+            TableRow<Terapia> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem eliminaItem = new MenuItem("Elimina terapia");
+            eliminaItem.setOnAction(event -> {
+                Terapia selected = row.getItem();
+                if (selected != null) {
+                    TabellaModificaTerapiaModel.rimuoviTerapia(selected);
+                    tabellaTerapie.getItems().remove(selected); // Aggiorna vista
+                }
+            });
+
+            contextMenu.getItems().addAll(eliminaItem);
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(contextMenu)
+            );
             return row;
         });
 

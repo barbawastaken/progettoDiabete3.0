@@ -4,6 +4,7 @@ import controller.Session;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AggiungiTerapiaModel {
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db?busy_timeout=5000";
@@ -45,7 +46,7 @@ public class AggiungiTerapiaModel {
 
             pstmt.executeUpdate();
 
-            LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Prescritta terapia: " + terapia, taxCode, LocalDate.now());
+            LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Prescritta terapia: " + terapia, taxCode, LocalDateTime.now());
             return 0;
 
         } catch (SQLException e) {

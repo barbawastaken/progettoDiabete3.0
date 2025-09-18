@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LogOperationModel {
 
     private static final String DB_URL = "jdbc:sqlite:mydatabase.db";
 
-    public static void loadLogOperation(String taxCodeDiabetologo, String operazione, String taxCodePaziente, LocalDate data){
+    public static void loadLogOperation(String taxCodeDiabetologo, String operazione, String taxCodePaziente, LocalDateTime data){
 
         try(Connection conn = DriverManager.getConnection(DB_URL)){
 
@@ -20,7 +22,11 @@ public class LogOperationModel {
             pstmtLog.setString(1, taxCodeDiabetologo);
             pstmtLog.setString(2, operazione);
             pstmtLog.setString(3, taxCodePaziente);
-            pstmtLog.setString(4, data.toString());
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = data.format(formatter);
+
+            pstmtLog.setString(4, formattedDateTime);
 
             pstmtLog.executeUpdate();
 

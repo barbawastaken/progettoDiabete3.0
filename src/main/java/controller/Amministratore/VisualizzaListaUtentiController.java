@@ -11,13 +11,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Amministratore.Utente;
 import model.Amministratore.VisualizzaListaUtentiModel;
-import view.Amministratore.VisualizzaListaUtentiView;
 import java.util.List;
 
 public class VisualizzaListaUtentiController {
@@ -39,23 +37,10 @@ public class VisualizzaListaUtentiController {
     @FXML private TableColumn<Utente, String> countryOfResidenceColumn;
     @FXML private TableColumn<Utente, String> altezzaColumn;
     @FXML private TableColumn<Utente, String> pesoColumn;
-    @FXML private TableView<VisualizzaListaUtentiController> tableViewUtenti;
     @FXML private HBox navbarContainer;
 
     private  VisualizzaListaUtentiModel model = new VisualizzaListaUtentiModel();
-    private  VisualizzaListaUtentiView view;
-    private Stage listaUtentiStage;
 
-    public VisualizzaListaUtentiController(VisualizzaListaUtentiModel model, VisualizzaListaUtentiView view, Stage stage){
-
-
-        this.model = model;
-        this.view = view;
-        this.listaUtentiStage = stage;
-        view.start(stage, this);
-
-
-    }
     public VisualizzaListaUtentiController(){}
 
     @FXML
@@ -83,6 +68,24 @@ public class VisualizzaListaUtentiController {
         altezzaColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
         pesoColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
+        nomeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        cognomeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        emailColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.1));
+        telephoneColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.09));
+        taxCodeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        addressColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.1));
+        cityColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        capColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        roleColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        numberColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        diabetologoColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        genderColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        passwordColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        birthdayColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        countryOfResidenceColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        altezzaColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        pesoColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+
         if(this.model == null) { this.model = new VisualizzaListaUtentiModel(); }
 
         List<Utente> utenti = this.model.getTuttiGliUtenti();
@@ -100,32 +103,6 @@ public class VisualizzaListaUtentiController {
                     Session.getInstance().setUtenteInEsame(selected);
                     ViewNavigator.navigateToModificaUtente();
 
-                    /*
-                    try {
-
-
-
-
-
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlView/modifica_utente_view.fxml"));
-                        Parent root = loader.load();
-
-                        ModificaUtenteController controller = loader.getController();
-                        controller.initializeData();
-
-                        Stage modificaStage = new Stage();
-                        modificaStage.setTitle("Modifica Utente");
-                        modificaStage.setScene(new Scene(root, 650, 500));
-                        modificaStage.show();
-
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        new Alert(Alert.AlertType.ERROR, "Errore nell'apertura della finestra di modifica.").showAndWait();
-                    }
-
-                     */
                 }
             });
 
@@ -148,17 +125,6 @@ public class VisualizzaListaUtentiController {
     public void aggiornaTabellaUtenti() {
         List<Utente> utentiAggiornati = model.getTuttiGliUtenti();
         tabella.setItems(FXCollections.observableList(utentiAggiornati));
-    }
-
-    //Nome evidenziato
-    public void evidenziaUtente(String taxCode) {
-        for (Utente u : tabella.getItems()) {
-            if (u.getTaxCode().equalsIgnoreCase(taxCode)) {
-                tabella.getSelectionModel().select(u);
-                tabella.scrollTo(u);
-                break;
-            }
-        }
     }
 
 }

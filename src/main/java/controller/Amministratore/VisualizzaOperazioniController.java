@@ -50,7 +50,7 @@ public class VisualizzaOperazioniController {
 
     private List<Operazione> caricaOperazioni() {
 
-        String query = "SELECT * FROM logTable";
+        String query = "SELECT * FROM logTable ORDER BY data DESC";
 
         try(Connection conn = DriverManager.getConnection(DB_URL);
             Statement stmt = conn.createStatement()){

@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ModificaTerapiaModel {
 
@@ -48,7 +49,7 @@ public class ModificaTerapiaModel {
 
             stmt.executeUpdate();
 
-            LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Terapia modificata(nome originale): " + Session.getInstance().getTerapiaInEsame().getTerapia(), Session.getInstance().getPazienteInEsame().getTaxCode(), LocalDate.now());
+            LogOperationModel.loadLogOperation(Session.getInstance().getTaxCode(), "Terapia modificata(nome originale): " + Session.getInstance().getTerapiaInEsame().getTerapia(), Session.getInstance().getPazienteInEsame().getTaxCode(), LocalDateTime.now());
             return 0;
 
         } catch(Exception e) {

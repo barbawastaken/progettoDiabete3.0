@@ -65,6 +65,22 @@ public class VisualizzaPazientiController implements Initializable {
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
         heightColumn.setCellValueFactory(new PropertyValueFactory<>("height"));
+
+        nomeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        cognomeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        emailColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.13));
+        telephoneColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.09));
+        taxCodeColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        addressColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.1));
+        cityColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        capColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        numberColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        genderColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        birthdayColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        countryOfResidenceColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.07));
+        heightColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+        weightColumn.prefWidthProperty().bind(tabella.widthProperty().multiply(0.05));
+
         ArrayList<String> pazientiInRitardo;
         try {
             pazientiInRitardo = new ArrayList<>(visualizzaPazientiModel.getPazientiInRitardo());
