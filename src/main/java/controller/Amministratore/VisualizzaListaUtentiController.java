@@ -88,6 +88,7 @@ public class VisualizzaListaUtentiController {
 
         if(this.model == null) { this.model = new VisualizzaListaUtentiModel(); }
 
+
         List<Utente> utenti = this.model.getTuttiGliUtenti();
         tabella.setItems(FXCollections.observableList(utenti));
 

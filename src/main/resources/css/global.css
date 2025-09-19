@@ -11,7 +11,6 @@
     -fx-alignment: "CENTER";
     -fx-padding: 20;
     -fx-spacing: 20;
-    -fx-background-radius: 15;
    /* -fx-max-width: infinity;*/
 
 }
@@ -120,43 +119,61 @@
     -fx-border-width: 1px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-padding: 0;
     -fx-effect: dropshadow(three-pass-box, rgba(74, 144, 226, 0.2), 10, 0, 0, 2);
+    -fx-table-cell-border-color: transparent;
 }
+
 
 .table-view .column-header-background {
     -fx-background-color: #5AC8FA;
     -fx-border-color: #5AC8FA;
     -fx-border-width: 0 0 2px 0;
-    }
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: #5AC8FA;
+}
 
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-border-color: rgba(90, 200, 250, 1);
-    -fx-border-width: 0 1px 0 0;
-    -fx-padding: 12px 8px;
+    -fx-border-color: rgba(90, 200, 250, 0.3);
+    -fx-border-width: 0 0 0 0;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .column-header .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
+    -fx-font-family: "Comfortaa";
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #333;
+    -fx-padding: 0;
 }
 
 .table-view .table-row-cell {
     -fx-background-color: white;
-    -fx-border-color: #e8f4fd;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
     -fx-pref-height: 40px;
     -fx-min-height: 40px;
+    -fx-max-height: 40px;
 }
 
 .table-view .table-row-cell:selected {
     -fx-background-color: #bbdefb !important;
-    -fx-text-fill: #1976d2;
-    -fx-effect: dropshadow(one-pass-box, rgba(74, 144, 226, 0.4), 5, 0, 0, 2);
+    -fx-text-fill: #1976d2 !important;
+    fx-effect: dropshadow(one-pass-box, rgba(74, 144, 226, 0.4), 5, 0, 0, 2);
+    -fx-border-color: transparent;
 }
 
-.table-view .table-cell {
-
-    -fx-alignment: center-left;
+.table-view .table-cell:selected {
+    -fx-text-fill: #1976d2 !important;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-text-fill: #333;
-    -fx-font-size: 13px;
-    -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-pref-height: 40px;
-    -fx-min-height: 40px;
+}
+
+.table-view:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1976d2 !important;
+    -fx-border-color: transparent;
 }

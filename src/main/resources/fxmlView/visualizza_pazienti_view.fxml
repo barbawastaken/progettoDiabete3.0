@@ -17,7 +17,7 @@
               alignment="CENTER_LEFT"> </HBox>
 
         <!-- ScrollPane con tabella adattiva -->
-        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
             <content>
                 <TableView fx:id="tabella" prefHeight="200.0" prefWidth="600.0" styleClass="table-view">
                     <columns>
