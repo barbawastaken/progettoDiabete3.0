@@ -14,33 +14,29 @@
         <HBox fx:id="navbarContainer" alignment="CENTER_LEFT"/>
     </top>
     <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: white">
-          <padding>
-              <Insets top="50"/>
-          </padding>
-         <content>
-            <TableView fx:id="tabella" styleClass="table-view">
-              <columns>
-                <TableColumn fx:id="taxCodeColumn" text="Codice Fiscale" />
-                <TableColumn fx:id="nomeColumn" text="Nome" />
-                  <TableColumn fx:id="cognomeColumn" text="Cognome" />
-                  <TableColumn fx:id="genderColumn" text="Sesso" />
-                  <TableColumn fx:id="altezzaColumn" text="Altezza" />
-                  <TableColumn fx:id="pesoColumn" text="Peso" />
-                  <TableColumn fx:id="birthdayColumn" text="Data di Nascita" />
-                  <TableColumn fx:id="passwordColumn" text="Password" />
-                  <TableColumn fx:id="addressColumn" text="Via" />
-                  <TableColumn fx:id="numberColumn" text="Numero Civico" />
-                  <TableColumn fx:id="capColumn" text="CAP" />
-                  <TableColumn fx:id="cityColumn" text="Città" />
-                  <TableColumn fx:id="countryOfResidenceColumn" text="Nazione" />
-                  <TableColumn fx:id="emailColumn" text="email" />
-                  <TableColumn fx:id="telephoneColumn" text="Cellulare" />
-                  <TableColumn fx:id="roleColumn" text="Ruolo" />
-                  <TableColumn fx:id="diabetologoColumn" text="Medico Curante" />
-              </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
+        <ScrollPane fitToHeight="true" style="-fx-background-color: white;">
+
+                <TableView fx:id="tabella" styleClass="table-view" prefWidth="1800" maxWidth="1800">
+                    <columns>
+                        <TableColumn fx:id="taxCodeColumn" text="Codice Fiscale"/>
+                        <TableColumn fx:id="nomeColumn" text="Nome"/>
+                        <TableColumn fx:id="cognomeColumn" text="Cognome"/>
+                        <TableColumn fx:id="genderColumn" text="Sesso"/>
+                        <TableColumn fx:id="altezzaColumn" text="Altezza"/>
+                        <TableColumn fx:id="pesoColumn" text="Peso"/>
+                        <TableColumn fx:id="birthdayColumn" text="Data di Nascita"/>
+                        <TableColumn fx:id="passwordColumn" text="Password"/>
+                        <TableColumn fx:id="addressColumn" text="Via"/>
+                        <TableColumn fx:id="numberColumn" text="Numero Civico"/>
+                        <TableColumn fx:id="capColumn" text="CAP"/>
+                        <TableColumn fx:id="cityColumn" text="Città"/>
+                        <TableColumn fx:id="countryOfResidenceColumn" text="Nazione"/>
+                        <TableColumn fx:id="emailColumn" text="email"/>
+                        <TableColumn fx:id="telephoneColumn" text="Cellulare"/>
+                        <TableColumn fx:id="roleColumn" text="Ruolo"/>
+                        <TableColumn fx:id="diabetologoColumn" text="Medico Curante"/>
+                    </columns>
+                </TableView>
+        </ScrollPane>
     </center>
 </BorderPane>

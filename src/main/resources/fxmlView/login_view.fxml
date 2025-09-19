@@ -14,20 +14,20 @@
             <!-- FORM Login -->
             <StackPane styleClass="form-container" HBox.hgrow="ALWAYS">
 
-                <Rectangle width="400" height="500" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
+                <Rectangle width="400" height="500" fill="#609EF0" arcWidth="15" arcHeight="15"/>
                 <VBox fx:id="formPane" alignment="CENTER" maxWidth="300" spacing="15" styleClass="form-box">
-                    <Label styleClass="title" text="Welcome Back">
+                    <Label styleClass="label-alt" text="Welcome Back">
                     </Label>
 
-                    <Label text="Codice Fiscale" />
+                    <Label text="Codice Fiscale" styleClass="label-alt" />
                     <TextField fx:id="taxCodeField" prefHeight="26.0" prefWidth="24.0" />
 
-                    <Label text="Password" />
+                    <Label text="Password" styleClass="label-alt" />
                     <PasswordField fx:id="passwordField" />
 
                     <HBox alignment="CENTER" spacing="10">
-                        <Button onAction="#onResetPressed" text="Reset" />
-                        <Button onAction="#onLoginPressed" text="Accedi" />
+                        <Button onAction="#onResetPressed" text="Reset" styleClass="bottone-alt" />
+                        <Button onAction="#onLoginPressed" text="Accedi" styleClass="bottone-alt" />
                     </HBox>
                <Text fx:id="error" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Username e/o password errati" />
                 </VBox>

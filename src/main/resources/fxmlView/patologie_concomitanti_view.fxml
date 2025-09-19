@@ -17,21 +17,21 @@
         <GridPane styleClass="grigliePaziente">
 
             <!-- riga 0 -->
-            <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomo / Patologia /Terapia concomitante" />
+            <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sintomo / Patologia /Terapia concomitante" />
             <TextArea fx:id="patologiaSpecificata" GridPane.columnIndex="1" GridPane.rowIndex="0" prefHeight="84.0" prefWidth="205.0" />
 
             <!-- riga 1 -->
-            <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento iniziale" wrappingWidth="151.13671875" />
+            <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento iniziale" wrappingWidth="151.13671875" />
             <DatePicker fx:id="dataInizio" GridPane.columnIndex="1" GridPane.rowIndex="1" prefHeight="25.0" prefWidth="151.0" />
 
             <!-- riga 2 -->
-            <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento finale" />
+            <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di riferimento finale" />
             <DatePicker fx:id="dataFine" GridPane.columnIndex="1" GridPane.rowIndex="2" prefHeight="25.0" prefWidth="151.0" />
 
 
             <!-- riga 3 -->
-            <Button GridPane.columnIndex="0" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onResetPressed" text="RESET" />
-            <Button GridPane.columnIndex="1" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onSubmitPressed" text="INVIA" />
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onResetPressed" text="Reset" styleClass="bottone-alt"/>
+            <Button GridPane.columnIndex="1" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onSubmitPressed" text="Invia" styleClass="bottone-alt"/>
         </GridPane>
     </center>
 

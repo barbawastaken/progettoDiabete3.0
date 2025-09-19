@@ -15,7 +15,7 @@
         <HBox spacing="50" alignment="CENTER">
             <!-- Rettangolo sinistro -->
             <StackPane>
-                <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
+                <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15" style="-fx-fill: #609EF0"/>
                 <VBox alignment="CENTER" spacing="15">
                     <Text fx:id="diabetologo" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <Text fx:id="telefono" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
@@ -26,7 +26,7 @@
 
             <!-- Rettangolo destro -->
             <StackPane>
-                <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15"/>
+                <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15" style="-fx-fill: #609EF0"/>
                 <VBox alignment="CENTER" spacing="15">
                     <Text text="Oggetto" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <TextField fx:id="oggetto" styleClass="email" prefHeight="25.0" maxWidth="300" promptText="inserisci l'oggetto dell'email" />
@@ -34,7 +34,7 @@
                     <Text text="Messaggio" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                     <TextArea fx:id="messaggio" prefHeight="150.0" styleClass="email" maxWidth="300" promptText="scrivi il messaggio da inviare" />
 
-                    <Button onAction="#onSendButtonPressed" text="INVIA" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <Button onAction="#onSendButtonPressed" text="Invia" style="-fx-font-size: 14px; -fx-font-weight: bold" styleClass="bottone-alt"/>
                 </VBox>
             </StackPane>
         </HBox>

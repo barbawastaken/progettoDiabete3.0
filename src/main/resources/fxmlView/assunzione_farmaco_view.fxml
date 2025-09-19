@@ -16,25 +16,25 @@
       <GridPane styleClass="grigliePaziente" >
 
          <!-- riga 0 -->
-         <Text GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Farmaco assunto" styleClass="testo"/>
+         <Text GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Farmaco assunto" styleClass="testo-alt"/>
          <ComboBox fx:id="farmacoAssunto" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="150.0" />
 
          <!-- riga 1 -->
-         <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantità assunta" />
+         <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantità assunta" />
          <TextField fx:id="quantitaAssunta" GridPane.columnIndex="1" GridPane.rowIndex="1" prefHeight="25.0" prefWidth="131.0" />
 
          <!-- riga 2 -->
-         <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0" text="Data assunzione" />
+         <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0" text="Data assunzione" />
          <DatePicker fx:id="dataAssunzione" GridPane.columnIndex="1" GridPane.rowIndex="2" prefHeight="25.0" prefWidth="131.0" />
 
          <!-- riga 3 -->
-         <Text styleClass="testo" GridPane.columnIndex="0" GridPane.rowIndex="3" strokeType="OUTSIDE" strokeWidth="0.0" text="Orario assunzione" />
+         <Text styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="3" strokeType="OUTSIDE" strokeWidth="0.0" text="Orario assunzione" />
          <Spinner fx:id="orarioAssunzione" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" prefHeight="25.0" prefWidth="95.0" />
 
          <!-- riga 4 -->
 
-         <Button GridPane.columnIndex="0" GridPane.rowIndex="4" mnemonicParsing="false" onAction="#onResetPressed" prefHeight="25.0" prefWidth="68.0" text="Reset" />
-         <Button GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#onSubmitPressed" prefHeight="25.0" prefWidth="68.0" text="Invia" />
+         <Button GridPane.columnIndex="0" GridPane.rowIndex="4" mnemonicParsing="false" onAction="#onResetPressed" prefHeight="25.0" prefWidth="68.0" text="Reset" styleClass="bottone-alt"/>
+         <Button GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#onSubmitPressed" prefHeight="25.0" prefWidth="68.0" text="Invia" styleClass="bottone-alt" />
       </GridPane>
    </center>
 

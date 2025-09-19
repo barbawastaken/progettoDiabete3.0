@@ -17,23 +17,23 @@
         <GridPane styleClass="grigliePaziente">
 
             <!-- riga 0 -->
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="testo"/>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Calcolo in milligrammi" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="testo-alt"/>
             <TextField fx:id="milligrammi" GridPane.columnIndex="1" GridPane.rowIndex="0" prefHeight="26.0" prefWidth="64.0" />
 
             <!-- riga 1 -->
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="0" GridPane.rowIndex="1" text="Pasto di misurazione" styleClass="testo"/>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="testo-alt" text="Pasto di misurazione"/>
             <ComboBox fx:id="pastoGlicemia"  GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="150.0" />
-            <Text GridPane.columnIndex="2" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" styleClass="testo"/>
+            <Text GridPane.columnIndex="2" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0" text="Pre/Post pasto" styleClass="testo-alt"/>
             <ComboBox fx:id="prepost" GridPane.columnIndex="3" GridPane.rowIndex="1" prefHeight="26.0" prefWidth="77.0" />
 
 
             <!-- riga 2 -->
-            <Text GridPane.rowIndex="2" GridPane.columnIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" styleClass="testo"/>
+            <Text GridPane.rowIndex="2" GridPane.columnIndex="0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data di rilevamento" styleClass="testo-alt"/>
             <DatePicker fx:id="dataRilevamento" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
             <!-- riga 3 (invia/reset) -->
-            <Button fx:id="reset" GridPane.columnIndex="1" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onResetPressed" text="Reset" />
-            <Button fx:id="submit" GridPane.columnIndex="2" GridPane.rowIndex="3"  mnemonicParsing="false" onAction="#onSubmitPressed" text="Invia" />
+            <Button fx:id="reset" GridPane.columnIndex="1" GridPane.rowIndex="3" mnemonicParsing="false" onAction="#onResetPressed" text="Reset" styleClass="bottone-alt" />
+            <Button fx:id="submit" GridPane.columnIndex="2" GridPane.rowIndex="3"  mnemonicParsing="false" onAction="#onSubmitPressed" text="Invia" styleClass="bottone-alt" />
 
         </GridPane>
     </center>
