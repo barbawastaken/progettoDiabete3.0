@@ -40,7 +40,7 @@ public class AggiungiUtenteModel {
     public void inserisciUtente(String taxCode, String password, String nome, String cognome, String address,
                                 String cap, String city, String email, String gender, java.sql.Date birthday,
                                 String number, String telephone, String userType, String diabetologoSelezionato, String country, String altezza, String peso)
-            throws SQLException {
+             {
 
         if(!GestioneUtenti.singleValues(taxCode)){
             System.out.println("è stato inserito un taxCode già utilizzato");
