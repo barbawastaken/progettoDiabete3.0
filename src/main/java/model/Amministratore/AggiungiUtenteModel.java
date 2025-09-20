@@ -114,7 +114,7 @@ public class AggiungiUtenteModel {
                     System.err.println("rollback eseguito");
                 } catch (SQLException rollback) {
 
-                    rollback.printStackTrace();
+                    System.out.println("Errore: " + rollback.getMessage());
                 }
                 System.err.println("Errore durante inserimento login:");
                 System.out.println("Errore: "+ e.getMessage());
