@@ -71,11 +71,6 @@ public class TabellaModificaTerapiaController {
                 }
             });
 
-            return row;
-        });
-
-        tabellaTerapie.setRowFactory(utenteTableView -> {
-            TableRow<Terapia> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
 
             MenuItem eliminaItem = new MenuItem("Elimina terapia");
@@ -87,12 +82,14 @@ public class TabellaModificaTerapiaController {
                 }
             });
 
+
             contextMenu.getItems().addAll(eliminaItem);
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(contextMenu)
             );
             return row;
         });
+
 
         this.taxCode = Session.getInstance().getPazienteInEsame().getTaxCode();
         loadTerapie();
