@@ -16,22 +16,22 @@
             <!-- Rettangolo sinistro -->
             <StackPane>
                 <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15" style="-fx-fill: #609EF0"/>
-                <VBox alignment="CENTER" spacing="15">
-                    <Text fx:id="diabetologo" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                    <Text fx:id="telefono" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                    <Text fx:id="email" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                    <Text fx:id="indirizzo" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                </VBox>
+                <GridPane alignment="CENTER" vgap="50">
+                    <Text fx:id="diabetologo" styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Text fx:id="telefono" styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Text fx:id="email" styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Text fx:id="indirizzo" styleClass="testo-alt" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                </GridPane>
             </StackPane>
 
             <!-- Rettangolo destro -->
             <StackPane>
                 <Rectangle width="400" height="430" fill="#5AC8FA" arcWidth="15" arcHeight="15" style="-fx-fill: #609EF0"/>
                 <VBox alignment="CENTER" spacing="15">
-                    <Text text="Oggetto" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <Text text="Oggetto" styleClass="testo-alt"/>
                     <TextField fx:id="oggetto" styleClass="email" prefHeight="25.0" maxWidth="300" promptText="inserisci l'oggetto dell'email" />
 
-                    <Text text="Messaggio" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <Text text="Messaggio" styleClass="testo-alt"/>
                     <TextArea fx:id="messaggio" prefHeight="150.0" styleClass="email" maxWidth="300" promptText="scrivi il messaggio da inviare" />
 
                     <Button onAction="#onSendButtonPressed" text="Invia" style="-fx-font-size: 14px; -fx-font-weight: bold" styleClass="bottone-alt"/>
