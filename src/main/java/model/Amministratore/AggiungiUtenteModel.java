@@ -97,7 +97,7 @@ public class AggiungiUtenteModel {
                     pstmt.setString(16, null);
                 }
 
-                System.out.println("Siamo sull'execute update");
+
                 pstmt.executeUpdate();
                 System.out.println("Utente aggiunto!");
 
