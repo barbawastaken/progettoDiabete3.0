@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
+
 <BorderPane prefHeight="400.0" prefWidth="1200.0"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -16,7 +16,7 @@
     <center>
         <ScrollPane fitToHeight="true" style="-fx-background-color: white;">
 
-                <TableView fx:id="tabella" styleClass="table-view" prefWidth="1800" maxWidth="1800">
+                <TableView fx:id="tabella" styleClass="table-view" prefWidth="1920">
                     <columns>
                         <TableColumn fx:id="taxCodeColumn" text="Codice Fiscale"/>
                         <TableColumn fx:id="nomeColumn" text="Nome"/>
