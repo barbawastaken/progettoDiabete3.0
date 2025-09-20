@@ -26,7 +26,7 @@ public class AggiungiUtenteModel {
 
             }
         catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Errore: " + e.getMessage());
         }
 
         return diabetologi;
@@ -117,7 +117,7 @@ public class AggiungiUtenteModel {
                     rollback.printStackTrace();
                 }
                 System.err.println("Errore durante inserimento login:");
-                e.printStackTrace();
+                System.out.println("Errore: "+ e.getMessage());
             }
 
 
