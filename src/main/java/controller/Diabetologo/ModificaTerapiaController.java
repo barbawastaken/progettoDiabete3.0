@@ -127,7 +127,7 @@ public class ModificaTerapiaController {
 
            if(schermataDiArrivo != null && schermataDiArrivo.equals("STATISTICHE")) {
                ViewNavigator.navigateToVisualizzaStatistiche();
-           } else { ViewNavigator.navigateToPatientDetails(); }
+           } else { ViewNavigator.navigateToTabellaModificaTerapia(); }
        }
        if(result == -1) { mostraErrore("Non puoi prescrivere due volte lo stesso farmaco!"); farmacoField.clear(); }
        if(result == -2) { mostraErrore("Errore nell'interazione col database!"); ViewNavigator.navigateToDiabetologo(); }
