@@ -144,6 +144,9 @@ public class ModificaPazienteController {
             }
         });
 
+        height.setTextFormatter(heightFormatter);
+        weight.setTextFormatter(weightFormatter);
+
     }
 
     @FXML void onSendButtonPressed() throws SQLException {
