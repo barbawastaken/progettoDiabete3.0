@@ -172,11 +172,11 @@ public class NavBar extends HBox {
     }
 
     private void navbarToHomepageAmministratore(){
-        Button indietroButton = createNavButton("INDIETRO", e->ViewNavigator.navigateToAmministratore());
+
         Button homepageButton = createNavButton("HOMEPAGE", e->ViewNavigator.navigateToAmministratore());
         Button logoutButton = createNavButton("LOGOUT", e -> ViewNavigator.navigateToLogout());
 
-        this.getChildren().addAll(indietroButton, homepageButton, logoutButton);
+        this.getChildren().addAll( homepageButton, logoutButton);
     }
 
     private void navbarPerRitornoVisualizzaListaUtenti(){
