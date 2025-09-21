@@ -338,9 +338,9 @@ public class GestioneUtenti {
 
     public static boolean singleValues(String taxCode){
 
-        String taxCodeAttuale = Session.getInstance().getUtenteInEsame().getTaxCode();
 
-        if (!taxCodeAttuale.equals(taxCode)) {
+
+        if (Session.getInstance().getUtenteInEsame() == null || !Session.getInstance().getUtenteInEsame().getTaxCode().equals(taxCode)) {
             String query = "SELECT taxCode, email, telephoneNumber FROM utenti";
 
             try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -363,5 +363,7 @@ public class GestioneUtenti {
         }
         return true;
     }
+
+
 
 }
