@@ -97,7 +97,7 @@
 
                         <GridPane alignment="CENTER" hgap="20" vgap="15">
                             <!-- Riga 1: Altezza e Peso -->
-                            <Label text="Altezza (cm):" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="label"/>
+                            <Label text="Altezza (m):" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="label"/>
                             <TextField fx:id="height" promptText="Altezza in cm" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="120"/>
                             <Text fx:id="heightError" text="Altezza non valida" styleClass="error"
                                   GridPane.rowIndex="1" GridPane.columnIndex="1" visible="false"/>

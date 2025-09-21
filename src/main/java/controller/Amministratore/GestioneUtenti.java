@@ -148,7 +148,7 @@ public class GestioneUtenti {
     }
 
     private boolean isNumberValid(){
-        return number.getText() != null && !number.getText().isEmpty();
+        return number.getText() != null && !number.getText().isEmpty() && number.getText().matches("\\d+([/]?[A-Za-z])?");
     }
 
     private boolean isWeightValid(){

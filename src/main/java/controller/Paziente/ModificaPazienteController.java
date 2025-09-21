@@ -73,6 +73,7 @@ public class ModificaPazienteController {
 
         this.nation.setText(userData.getCountryOfResidence());
 
+
         numberError.setVisible(false);
         telephoneError.setVisible(false);
         emailError.setVisible(false);
@@ -143,6 +144,9 @@ public class ModificaPazienteController {
                 return null; // rifiuta il cambiamento
             }
         });
+
+        weight.setTextFormatter(weightFormatter);
+        height.setTextFormatter(heightFormatter);
 
     }
 
@@ -218,7 +222,8 @@ public class ModificaPazienteController {
         if(address.getText().isEmpty()) { addressError.setVisible(true); flag = false; }
         else{addressError.setVisible(false); }
 
-        if(number.getText().isEmpty()) { numberError.setVisible(true); flag = false; }
+        if(number.getText().isEmpty()) { numberError.setVisible(true); flag = false;
+            System.out.println("CAP NON VALIDO");}
         else{numberError.setVisible(false); }
 
         if(citta.getText().isEmpty()) { cityError.setVisible(true); flag = false; }
@@ -243,8 +248,30 @@ public class ModificaPazienteController {
         if(!validCap.matcher(cap.getText()).matches() ) { capError.setVisible(true); flag = false;}
         else{capError.setVisible(false); }
 
+        Pattern validCivic = Pattern.compile("\\d+([/]?[A-Za-z])?");
+        if (!validCivic.matcher(number.getText()).matches()) {numberError.setVisible(true); flag = false;}
+
+        if(!isWeightValid()) {weightError.setVisible(true); flag = false;}
+        if(!isHeightValid()) {heightError.setVisible(true); flag = false;}
 
         return flag;
+    }
+
+
+    private boolean isWeightValid(){
+        //System.out.println("Peso: " + Double.parseDouble(weight.getText()));
+        if(weight.getText() == null || weight.getText().isBlank())
+            return false;
+
+        return (Double.parseDouble(weight.getText()) > 0.00 && Double.parseDouble(weight.getText()) < 999.9 && !(weight.getText() == null));
+    }
+
+    private boolean isHeightValid(){
+
+        if(height.getText() == null || height.getText().isBlank())
+            return false;
+
+        return (Double.parseDouble(height.getText()) > 0.00 && Double.parseDouble(height.getText()) < 10.0 && !(height.getText() == null));
     }
 
 
