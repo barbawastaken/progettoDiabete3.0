@@ -42,11 +42,6 @@ public class AggiungiUtenteModel {
                                 String number, String telephone, String userType, String diabetologoSelezionato, String country, String altezza, String peso)
              {
 
-        if(!GestioneUtenti.singleValues(taxCode)){
-            System.out.println("è stato inserito un taxCode già utilizzato");
-            return;
-        }
-
         double heightParsed = 0;
         double weightParsed = 0;
         if(altezza != null && peso != null){

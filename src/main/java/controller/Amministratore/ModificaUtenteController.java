@@ -213,8 +213,8 @@ public class ModificaUtenteController extends GestioneUtenti{
                     telephone.getText(),
                     ruoloSelezionato,
                     mappaDiabetologi.get(medicoCurante.getValue()),
-                    peso,
-                    altezza
+                    Double.parseDouble(weight.getText()),
+                    Double.parseDouble(height.getText())
             );
 
             ModificaUtenteModel.aggiornaUtente(utente, aggiornato);

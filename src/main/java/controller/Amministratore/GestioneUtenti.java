@@ -1,5 +1,6 @@
 package controller.Amministratore;
 
+import controller.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -173,7 +174,7 @@ public class GestioneUtenti {
         weightError.setManaged(false);
         weightError.setVisible(false);
         boolean flag = false;
-        if(taxCode.getText().length() != 3){
+        if(taxCode.getText().length() != 3 || !singleValues(taxCode.getText())){
             taxCodeError.setVisible(true);
             taxCodeError.setManaged(true);
             flag = true;
@@ -337,25 +338,29 @@ public class GestioneUtenti {
 
     public static boolean singleValues(String taxCode){
 
-        String query = "SELECT taxCode, email, telephoneNumber FROM utenti";
+        String taxCodeAttuale = Session.getInstance().getUtenteInEsame().getTaxCode();
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)){
+        if (!taxCodeAttuale.equals(taxCode)) {
+            String query = "SELECT taxCode, email, telephoneNumber FROM utenti";
 
-            while(rs.next()){
+            try (Connection conn = DriverManager.getConnection(DB_URL);
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)){
 
-                if(rs.getString("taxCode").equals(taxCode)){
-                    return false;
+                while(rs.next()){
+
+                    if(rs.getString("taxCode").equals(taxCode)){
+                        return false;
+                    }
+
                 }
 
+            } catch(Exception e){
+                System.out.println("Errore nel controllo dei doppioni (taxCode, email, telephone): " + e.getMessage());
+                return false;
             }
 
-        } catch(Exception e){
-            System.out.println("Errore nel controllo dei doppioni (taxCode, email, telephone): " + e.getMessage());
-            return false;
         }
-
         return true;
     }
 

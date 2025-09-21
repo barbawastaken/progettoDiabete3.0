@@ -15,11 +15,6 @@ public class ModificaUtenteModel {
     public static void aggiornaUtente(Utente vecchioUtente, Utente utente) {
         String vecchioTaxCode = vecchioUtente.getTaxCode();
 
-        if(!vecchioTaxCode.equals(utente.getTaxCode()) && !GestioneUtenti.singleValues(utente.getTaxCode())){
-            System.out.println("è stato inserito un taxCode già utilizzato");
-            return;
-        }
-
         String updateUtenteUtenti = "UPDATE utenti SET taxCode=?, password=?, nome=?, cognome=?, email=?, birthday=?, address=?, " +
                 "number=?, city=?, cap=?, gender=?, telephoneNumber=?, userType=?, diabetologo=?, CountryOfResidence=?, Altezza=?, " +
                 "Peso=? WHERE taxCode=?";
