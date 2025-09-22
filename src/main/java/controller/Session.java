@@ -38,6 +38,7 @@ public class Session {
     private Utente utenteInEsame;
     private static Terapia terapiaInEsame;
     private static String schermataDiArrivo;
+    private static String role;
 
     private Session() {
 
@@ -73,7 +74,8 @@ public class Session {
                     rs.getString("city"),
                     rs.getString("diabetologo"),
                     rs.getInt("cap"),
-                    rs.getString("CountryOfResidence")
+                    rs.getString("CountryOfResidence"),
+                    rs.getString("userType")
             );
 
 
@@ -125,7 +127,6 @@ public class Session {
                     rs.getDouble("Peso"),
                     rs.getDouble("Altezza"),
                     rs.getString("diabetologo")
-
             );
             return paziente;
 
@@ -397,6 +398,8 @@ public class Session {
         this.cap = cap;
     }
 
+    public String getRole() { return role; }
+
     public Paziente getPazienteInEsame() {
         return pazienteInEsame;
     }
@@ -433,7 +436,8 @@ public class Session {
             String city,
             String medicoCurante,
             int cap,
-            String nation
+            String nation,
+            String userType
     ){
         this.taxCode = taxCode;
         this.nome = nome;
@@ -452,6 +456,7 @@ public class Session {
         this.medicoCurante = medicoCurante;
         this.pazienteInEsame = null;
         this.countryOfResidence = nation;
+        role = userType;
     }
 
     public void deleteSession(){

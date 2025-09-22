@@ -153,7 +153,7 @@ public class ModificaDiabetologoController {
                 this.nation.getText(),
                 this.gender.getText(),
                 this.telephone.getText(),
-                "DIABETOLOGO",
+                Session.getInstance().getRole(),
                 null,
                 Double.parseDouble("0"),
                 Double.parseDouble("0")
